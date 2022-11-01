@@ -1,7 +1,7 @@
 import CommonTextField from '@/components/inputs/CommonTextField';
+import arrayOrEmpty from '@/helpers/formatHelpers/arrayOrEmpty';
 import Autocomplete, { AutocompleteInputChangeReason } from '@mui/material/Autocomplete';
 import CircularProgress from '@mui/material/CircularProgress';
-import { arrayOrEmpty } from 'helpers/arrays';
 import debounce from 'lodash/debounce';
 import React from 'react';
 import defaultRenderOption from './defaultRenderOption';
@@ -25,7 +25,7 @@ const CommonAutoCompleteField: React.FC<TAutoCompleteQueryOnRequestProps> = (pro
 
   const handleChangeTextDelay = React.useMemo(() => {
     return debounce((e: React.SyntheticEvent<Element, Event>, text: string, reason: AutocompleteInputChangeReason) => {
-      onInputChange?.(text, reason);
+      onInputChange?.(e, text, reason);
     }, 400);
   }, [onInputChange]);
 

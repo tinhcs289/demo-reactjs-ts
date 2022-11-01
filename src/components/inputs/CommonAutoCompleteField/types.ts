@@ -14,7 +14,7 @@ export type TAutoCompleteOption = {
   [x: string]: any;
 };
 
-export type TAutocompleteQueryFailReason = 'not_found' | 'api_error';
+export type TAutocompleteQueryFailReason = 'not_found' | 'api_error' | 'invalid_params';
 export type TAutoCompleteQueryOnRequestProps = Pick<TextFieldProps, 'label'> &
   Omit<
     AutocompleteProps<
