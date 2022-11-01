@@ -1,0 +1,19 @@
+{
+  "files.exclude": {
+    "**/.gitignore": true,
+    "**/.vscode": true,
+    "**/public": true,
+    "**/build": true,
+    "**/node_modules": true,
+    "**/tsconfig.json": true,
+    "**/tsconfig.absolute-imports.json": true,
+    "**/package-lock.json": true,
+    "**/.prettierrc": true,
+    "**/src/App.test.tsx": true,
+    "**/src/logo.svg": true,
+    "**/src/react-app-env.d.ts": true,
+    "**/src/reportWebVitals.ts": true,
+    "**/src/setupTests.ts": true,
+    "**/README.md": true
+  }
+}
