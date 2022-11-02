@@ -22,7 +22,7 @@ type TRequestError = {
   [x: string]: any;
 };
 
-function withQueryRequest<T>(
+function withAxiosRequestForSuggestions<T>(
   requestCall: (searchText: string) => Promise<AxiosResponse<{ result?: T[] }>>,
   toOption: (o: T) => TAutoCompleteOption,
   minTextLengthToCallRequest: number = 3,
@@ -111,4 +111,4 @@ function withQueryRequest<T>(
     );
   };
 }
-export default withQueryRequest;
+export default withAxiosRequestForSuggestions;
