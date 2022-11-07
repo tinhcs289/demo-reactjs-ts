@@ -5,7 +5,7 @@ import {
   AutocompleteInputChangeReason,
 } from '@mui/material/Autocomplete';
 import React from 'react';
-import { TAutoCompleteOption, TAutocompleteQueryFailReason, TAutoCompleteQueryOnRequestProps } from '../types';
+import { TAutoCompleteOption, TAutocompleteQueryFailReason, TCommonAutoCompleteFieldProps } from '../types';
 
 import { AxiosResponse } from 'axios';
 
@@ -27,7 +27,7 @@ function withAxiosRequestForSuggestions<T>(
   toOption: (o: T) => TAutoCompleteOption,
   minTextLengthToCallRequest: number = 3,
 ) {
-  return (WrappedComponent: React.FC<TAutoCompleteQueryOnRequestProps>) => (props: TAutoCompleteQueryOnRequestProps) => {
+  return (WrappedComponent: React.FC<TCommonAutoCompleteFieldProps>) => (props: TCommonAutoCompleteFieldProps) => {
     const { loading: unusedLoading, options: unusedOptions, onQuery: unusedOnquery, onChange, ...otherProps } = props;
 
     const [preText, setPreText] = React.useState<string | null>(null);

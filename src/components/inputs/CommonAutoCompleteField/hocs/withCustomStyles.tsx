@@ -1,9 +1,9 @@
 import { styled, Theme } from '@mui/material';
 import React from 'react';
-import { TAutoCompleteQueryOnRequestProps } from '../types';
+import { TCommonAutoCompleteFieldProps } from '../types';
 
-const withCustomStyles = (WrappedComponent: React.FC<TAutoCompleteQueryOnRequestProps>) => {
-  return styled(WrappedComponent)<TAutoCompleteQueryOnRequestProps>((args: { theme: Theme }) => {
+const withCustomStyles = (WrappedComponent: React.FC<TCommonAutoCompleteFieldProps>) => {
+  return styled(WrappedComponent)<TCommonAutoCompleteFieldProps>((args: { theme: Theme }) => {
     const { theme } = args;
     return {
       //TODO: jss here

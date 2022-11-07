@@ -5,9 +5,9 @@ import CircularProgress from '@mui/material/CircularProgress';
 import debounce from 'lodash/debounce';
 import React from 'react';
 import defaultRenderOption from './defaultRenderOption';
-import { TAutoCompleteQueryOnRequestProps } from './types';
+import { TCommonAutoCompleteFieldProps } from './types';
 
-const CommonAutoCompleteField: React.FC<TAutoCompleteQueryOnRequestProps> = (props) => {
+const CommonAutoCompleteField: React.FC<TCommonAutoCompleteFieldProps> = (props) => {
   const {
     label,
     onInputChange,

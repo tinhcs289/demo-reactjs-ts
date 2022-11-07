@@ -4,7 +4,7 @@ import Divider from '@mui/material/Divider';
 import Popper, { PopperProps } from '@mui/material/Popper';
 import Typography from '@mui/material/Typography';
 import React from 'react';
-import { TAutoCompleteQueryOnRequestProps } from '../types';
+import { TCommonAutoCompleteFieldProps } from '../types';
 
 const PopperStyled = styled(Popper)<PopperProps>((args: { theme: Theme }) => {
   const { theme } = args;
@@ -42,7 +42,7 @@ const CustomPopper =
   };
 
 const withTotalCountLabel =
-  (WrappedComponent: React.FC<TAutoCompleteQueryOnRequestProps>) => (props: TAutoCompleteQueryOnRequestProps) => {
+  (WrappedComponent: React.FC<TCommonAutoCompleteFieldProps>) => (props: TCommonAutoCompleteFieldProps) => {
     const { options, loading, ...otherProps } = props;
 
     const memoOptions = React.useMemo(() => {
