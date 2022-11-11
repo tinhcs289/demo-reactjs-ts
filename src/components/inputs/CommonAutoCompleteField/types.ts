@@ -14,8 +14,8 @@ export type TAutoCompleteOption = {
   [x: string]: any;
 };
 
-export type TAutocompleteQueryFailReason = 'not_found' | 'api_error';
-export type TAutoCompleteQueryOnRequestProps = Pick<TextFieldProps, 'label'> &
+export type TAutocompleteQueryFailReason = 'not_found' | 'api_error' | 'invalid_params';
+export type TCommonAutoCompleteFieldProps = Pick<TextFieldProps, 'label'> &
   Omit<
     AutocompleteProps<
       TAutoCompleteOption,
