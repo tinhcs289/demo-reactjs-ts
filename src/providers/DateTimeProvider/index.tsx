@@ -15,7 +15,7 @@ const DateTimeProvider: React.FC<DateTimeProviderProps> = (props) => {
       {...otherProps}
       dateAdapter={AdapterMoment}
       moment={moment}
-      locale={moment.locale(LANGUAGE_VIETNAMESE)}
+      adapterLocale={moment.locale(LANGUAGE_VIETNAMESE)}
     >
       {children}
     </LocalizationProvider>

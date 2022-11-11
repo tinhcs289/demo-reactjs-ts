@@ -1,6 +1,7 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { ThemeProviderProps } from '@mui/system';
 import customThemeOptions from './customThemeOptions';
+import CssBaseline from '@mui/material/CssBaseline';
 
 const theme = createTheme(customThemeOptions);
 
@@ -10,6 +11,7 @@ const MUIThemeV5Provider: React.FC<MUIThemeV5ProviderProps<any>> = (props) => {
   const { children, ...otherProps } = props;
   return (
     <ThemeProvider {...otherProps} theme={theme}>
+      <CssBaseline />
       {children}
     </ThemeProvider>
   );
