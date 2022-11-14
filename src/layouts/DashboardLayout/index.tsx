@@ -1,4 +1,4 @@
-import { useDashboardLayoutContext } from '@/providers/DashboardLayoutProvider';
+import DashboardLayoutProvider, { useDashboardLayoutContext } from '@/providers/DashboardLayoutProvider';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import MenuIcon from '@mui/icons-material/Menu';
 import NotificationsIcon from '@mui/icons-material/Notifications';
@@ -17,7 +17,7 @@ import AppBarStyled from './AppBarStyled';
 import DrawerStyled from './DrawerStyled';
 import { mainListItems, secondaryListItems } from './listItems';
 
-const DashboardLayout: React.FC<{ children?: React.ReactNode }> = (props) => {
+const Dashboard: React.FC<{ children?: React.ReactNode }> = (props) => {
   const { children } = props;
   const theme = useTheme();
   const { layoutAction, layoutState } = useDashboardLayoutContext();
@@ -115,4 +115,15 @@ const DashboardLayout: React.FC<{ children?: React.ReactNode }> = (props) => {
     </Box>
   );
 };
+
+const DashboardLayout: React.FC<{ children?: React.ReactNode }> = (props) => {
+  const { children } = props;
+
+  return (
+    <DashboardLayoutProvider>
+      <Dashboard>{children}</Dashboard>
+    </DashboardLayoutProvider>
+  );
+};
+
 export default DashboardLayout;
