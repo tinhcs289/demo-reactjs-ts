@@ -1,23 +1,34 @@
+import RHFCheck from '@/components/rhfInputs/RHFCheck';
+import RHFText from '@/components/rhfInputs/RHFText';
+import { required } from '@/constants/rhfRules';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import { useTheme } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
-import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import React from 'react';
+import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import { TLoginFormData } from './types';
 
 const LoginPage: React.FC<any> = (props) => {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+  const theme = useTheme();
+
+  const { t } = useTranslation();
+
+  const { handleSubmit, control } = useForm<TLoginFormData>({
+    defaultValues: {
+      Account: '',
+      Password: '',
+      RememberMe: false,
+    },
+  });
+
+  const onSubmit = (formData: TLoginFormData) => {
+    console.log(formData);
   };
 
   return (
@@ -26,42 +37,43 @@ const LoginPage: React.FC<any> = (props) => {
         <LockOutlinedIcon />
       </Avatar>
       <Typography component="h1" variant="h5">
-        Sign in
+        {t('login:login')}
       </Typography>
-      <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          id="email"
-          label="Email Address"
-          name="email"
-          autoComplete="email"
-          autoFocus
+      <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate sx={{ mt: 1 }}>
+        <RHFText
+          name="Account"
+          label={t('login:account')}
+          control={control}
+          rules={required(t('common:pleaseEnter'))}
+          sx={{
+            mb: theme.spacing(3),
+          }}
         />
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          name="password"
-          label="Password"
+        <RHFText
+          name="Password"
+          label={t('login:password')}
           type="password"
-          id="password"
-          autoComplete="current-password"
+          control={control}
+          rules={required(t('common:pleaseEnter'))}
         />
-        <FormControlLabel control={<Checkbox value="remember" color="primary" />} label="Remember me" />
+        <RHFCheck
+          control={control}
+          name="RememberMe"
+          label={t('login:rememberMe')}
+          rules={required(t('common:pleaseCheck'))}
+        />
         <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-          Sign In
+          {t('login:login')}
         </Button>
         <Grid container>
           <Grid item xs>
             <Link href="#" variant="body2">
-              Forgot password?
+              {t('login:forgotPassword')}
             </Link>
           </Grid>
           <Grid item>
             <Link href="#" variant="body2">
-              {"Don't have an account? Sign Up"}
+              {t('login:dontHaveAccount_register')}
             </Link>
           </Grid>
         </Grid>
