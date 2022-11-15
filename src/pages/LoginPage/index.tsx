@@ -55,13 +55,11 @@ const LoginPage: React.FC<any> = (props) => {
           type="password"
           control={control}
           rules={required(t('common:pleaseEnter'))}
+          sx={{
+            mb: theme.spacing(3),
+          }}
         />
-        <RHFCheck
-          control={control}
-          name="RememberMe"
-          label={t('login:rememberMe')}
-          rules={required(t('common:pleaseCheck'))}
-        />
+        <RHFCheck control={control} name="RememberMe" label={t('login:rememberMe')} />
         <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
           {t('login:login')}
         </Button>

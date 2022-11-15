@@ -2,7 +2,7 @@ import DashboardLayoutProvider, { useDashboardLayoutContext } from '@/providers/
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import MenuIcon from '@mui/icons-material/Menu';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { useTheme } from '@mui/material';
+import { Theme, useMediaQuery, useTheme } from '@mui/material';
 import Badge from '@mui/material/Badge';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -12,7 +12,7 @@ import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import AppBarStyled from './AppBarStyled';
 import DrawerStyled from './DrawerStyled';
 import { mainListItems, secondaryListItems } from './listItems';
@@ -31,6 +31,21 @@ const Dashboard: React.FC<{ children?: React.ReactNode }> = (props) => {
     }
     layoutAction?.toggleAside?.();
   }, [layoutAction]);
+
+  const isMediumScreenOrLower = useMediaQuery((t: Theme) => t?.breakpoints?.down?.('md'));
+
+  useEffect(() => {
+    if (isMediumScreenOrLower && isAsideOpen) {
+      toggleAside();
+      return;
+    }
+
+    if (!isMediumScreenOrLower && !isAsideOpen) {
+      toggleAside();
+      return;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isMediumScreenOrLower]);
 
   const asideMenu = useMemo(() => {
     return (
