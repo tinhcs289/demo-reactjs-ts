@@ -1,53 +1,37 @@
+import InputErrorTextWithIcon from '@/components/inputs/InputErrorTextWithIcon';
+import { useTheme } from '@mui/material';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
 import React from 'react';
-// import FormControlLabel from '@mui/material/FormControlLabel';
-// import InputErrorTextWithIcon from '@/components/inputs/InputErrorTextWithIcon';
+import { TCommonCheckFieldProps } from './types';
 
-// const CommonCheckField: React.FC<{}> = (props) => {
-//   const theme = useTheme();
-
-//   const theme = useTheme();
-//   return (
-//     <FormControlLabel
-//       label={
-//         <>
-//           {label}
-//           {required ? ` *` : ''}
-//         </>
-//       }
-//       control={
-//         <React.Fragment>
-//           <Checkbox
-//             checked={value}
-//             onChange={(event, checked) => {
-//               if (typeof event?.stopPropagation === 'function') event.stopPropagation();
-//               if (typeof event?.preventDefault === 'function') event.preventDefault();
-
-//               onChange(checked);
-//             }}
-//             {...(error === true ? { style: { color: theme.palette.error.main } } : { color })}
-//             size={size}
-//           />
-//           {error === true && !!helperText && <InputErrorTextWithIcon>{'Bắt buộc'}</InputErrorTextWithIcon>}
-//         </React.Fragment>
-//       }
-//       {...props}
-//     />
-//   );
-// };
-
-// // const CommonCheckField = ({
-// //     label,
-// //     value = false,
-// //     size = "small",
-// //     color = "primary",
-// //     onChange = (value = false) => { },
-// //     error = false,
-// //     helperText,
-// //     required = false,
-// //     ...props
-// // }) => {
-
-// // };
-
-const CommonCheckField = () => <></>;
+const CommonCheckField: React.FC<TCommonCheckFieldProps> = (props) => {
+  const { name, label, error, checked, value, onChange, errorText, required, inputProps, ...formControlProps } = props;
+  const theme = useTheme();
+  return (
+    <FormControlLabel
+      label={
+        <>
+          {label}
+          {required ? ` *` : ''}
+        </>
+      }
+      control={
+        <>
+          <Checkbox
+            name={name}
+            checked={!!checked}
+            onChange={onChange}
+            value={value}
+            color="primary"
+            {...(!!error ? { style: { ...(inputProps?.style || {}), color: theme.palette.error.main } } : {})}
+            {...inputProps}
+          />
+          {!!error && !!errorText && <InputErrorTextWithIcon>{errorText}</InputErrorTextWithIcon>}
+        </>
+      }
+      {...formControlProps}
+    />
+  );
+};
 export default CommonCheckField;

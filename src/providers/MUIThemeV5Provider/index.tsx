@@ -1,15 +1,20 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { ThemeProviderProps } from '@mui/system';
-import customThemeOptions from './customThemeOptions';
+import lightThemeOptions from './lightThemeOptions';
+// import darkThemeOptions from './darkThemeOptions';
+import CssBaseline from '@mui/material/CssBaseline';
 
-const theme = createTheme(customThemeOptions);
+const lightTheme = createTheme(lightThemeOptions);
+// const darkTheme = createTheme(darkThemeOptions);
 
 export type MUIThemeV5ProviderProps<T> = Omit<ThemeProviderProps<T>, 'theme'>;
 
 const MUIThemeV5Provider: React.FC<MUIThemeV5ProviderProps<any>> = (props) => {
   const { children, ...otherProps } = props;
+  //TODO here to switch theme
   return (
-    <ThemeProvider {...otherProps} theme={theme}>
+    <ThemeProvider {...otherProps} theme={lightTheme}>
+      <CssBaseline />
       {children}
     </ThemeProvider>
   );
