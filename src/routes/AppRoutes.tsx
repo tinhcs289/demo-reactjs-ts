@@ -10,6 +10,7 @@ import React from 'react';
 import { BrowserRouter, BrowserRouterProps, Redirect, Route, Switch } from 'react-router-dom';
 
 const AppRoutes: React.FC<BrowserRouterProps> = (props) => {
+  //TODO add more handle to swith routes group by folowing bussiness
   return (
     <React.Suspense fallback={<PageLoadingFallback />}>
       <BrowserRouter {...props}>
