@@ -1,2 +1,2 @@
-const isBlankString = (value: any) => typeof value === 'string' && value.trim() !== '';
-export default isBlankString;
+const isNotBlankString = (value: any) => typeof value === 'string' && value.trim() !== '';
+export default isNotBlankString;
