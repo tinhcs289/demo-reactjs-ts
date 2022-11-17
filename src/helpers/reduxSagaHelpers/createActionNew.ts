@@ -1,4 +1,4 @@
-import { TGenericAction, TObject } from '@/helpers/reduxSagaHelpers/types';
+import { TGenericAction, TObject } from '@/helpers/reduxSagaHelpers/_types';
 import { ImmutableObject } from 'seamless-immutable';
 
 const _action =

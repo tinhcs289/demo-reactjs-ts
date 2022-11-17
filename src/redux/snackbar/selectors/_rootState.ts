@@ -1,4 +1,4 @@
-import { TObject } from '@/helpers/reduxSagaHelpers/types';
+import { TObject } from '@/helpers/reduxSagaHelpers/_types';
 import { rootName } from '../state';
 import { TReduxStateSnackbar } from '../_types';
 

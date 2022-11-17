@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { all, fork } from 'redux-saga/effects';
-import { TReducerRoot } from './types';
+import { TReducerRoot } from './_types';
 
 const createRootReducer = (name: string, reducers: TReducerRoot[]) => {
   let combine = {} as { [x: string]: any };

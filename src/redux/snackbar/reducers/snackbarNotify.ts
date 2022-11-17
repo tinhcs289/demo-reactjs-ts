@@ -1,4 +1,4 @@
-import { TGenericAction } from '@/helpers/reduxSagaHelpers/types';
+import { TGenericAction } from '@/helpers/reduxSagaHelpers/_types';
 import newGuid from '@/helpers/stringHelpers/newGuid';
 import { ImmutableObject } from 'seamless-immutable';
 import { TActionPushMessagePayload } from '../actions/_types';

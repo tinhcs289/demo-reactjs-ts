@@ -1,7 +1,8 @@
 import Box, { BoxProps } from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
 import React from 'react';
+import LandingBannerSubTitle from './LandingBannerSubTitle';
+import LandingBannerTitle from './LandingBannerTitle';
 
 const LandingBanner: React.FC<
   {
@@ -15,27 +16,13 @@ const LandingBanner: React.FC<
   const memoHeading = React.useMemo(() => {
     if (!heading) return null;
 
-    if (typeof heading === 'string')
-      return (
-        <Typography component="h1" variant="h2" align="center" color="text.primary" gutterBottom>
-          {heading}
-        </Typography>
-      );
-
-    return <>{heading}</>;
+    return <LandingBannerTitle>{heading}</LandingBannerTitle>;
   }, [heading]);
 
   const memoSubHeading = React.useMemo(() => {
     if (!subHeading) return null;
 
-    if (typeof subHeading === 'string')
-      return (
-        <Typography variant="h5" align="center" color="text.secondary" paragraph>
-          {subHeading}
-        </Typography>
-      );
-
-    return <>{subHeading}</>;
+    return <LandingBannerSubTitle>{subHeading}</LandingBannerSubTitle>;
   }, [subHeading]);
 
   return (

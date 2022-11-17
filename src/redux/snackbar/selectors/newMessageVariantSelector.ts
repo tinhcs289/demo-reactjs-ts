@@ -1,4 +1,4 @@
-import { TObject } from '@/helpers/reduxSagaHelpers/types';
+import { TObject } from '@/helpers/reduxSagaHelpers/_types';
 import rootState from './_rootState';
 
 const newMessageVariantSelector = (state: TObject) => rootState(state)?.variant;

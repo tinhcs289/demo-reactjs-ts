@@ -5,7 +5,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import debounce from 'lodash/debounce';
 import React from 'react';
 import defaultRenderOption from './defaultRenderOption';
-import { TCommonAutoCompleteFieldProps } from './types';
+import { TCommonAutoCompleteFieldProps } from './_types';
 
 const CommonAutoCompleteField: React.FC<TCommonAutoCompleteFieldProps> = (props) => {
   const {

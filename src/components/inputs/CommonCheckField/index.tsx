@@ -3,7 +3,7 @@ import { useTheme } from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import React from 'react';
-import { TCommonCheckFieldProps } from './types';
+import { TCommonCheckFieldProps } from './_types';
 
 const CommonCheckField: React.FC<TCommonCheckFieldProps> = (props) => {
   const { name, label, error, checked, value, onChange, errorText, required, inputProps, ...formControlProps } = props;

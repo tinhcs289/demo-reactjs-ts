@@ -1,7 +1,7 @@
 import { CommonTextNumericFieldDebounced } from '@/components/inputs/CommonTextNumericField';
 import React from 'react';
 import { Controller } from 'react-hook-form';
-import { RHFTextNumericProps } from './types';
+import { RHFTextNumericProps } from './_types';
 
 const RHFNumber: React.FC<RHFTextNumericProps> = (props) => {
   const { name, control, rules, defaultValue, shouldUnregister, ...inputProps } = props;

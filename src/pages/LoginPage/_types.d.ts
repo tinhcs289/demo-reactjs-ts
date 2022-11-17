@@ -3,3 +3,7 @@ export type TLoginFormData = {
   Password: string;
   RememberMe: boolean;
 };
+
+export interface ILoginPageProps {
+  onSubmitLoginForm?: (data: TLoginFormData) => void;
+}

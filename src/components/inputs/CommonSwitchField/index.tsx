@@ -3,7 +3,7 @@ import { useTheme } from '@mui/material';
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import React from 'react';
-import { TCommonSwitchFieldProps } from './types';
+import { TCommonSwitchFieldProps } from './_types';
 
 const CommonSwitchField: React.FC<TCommonSwitchFieldProps> = (props) => {
   const { name, label, error, checked, value, onChange, errorText, required, inputProps, ...formControlProps } = props;

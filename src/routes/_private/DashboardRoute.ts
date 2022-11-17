@@ -1,5 +1,5 @@
 import paths from '@/routes/paths';
-import { TRouteConfig } from '@/routes/types';
+import { TRouteConfig } from '@/routes/_types';
 import { lazy } from 'react';
 
 const DashboardPage = lazy(() => import('@/pages/DashboardPage'));

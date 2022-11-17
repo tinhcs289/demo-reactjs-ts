@@ -1,6 +1,6 @@
 import { AutocompleteRenderOptionState } from '@mui/material/Autocomplete';
 import React from 'react';
-import { TAutoCompleteOption } from './types';
+import { TAutoCompleteOption } from './_types';
 
 const defaultRenderOption = (
   props: React.HTMLAttributes<HTMLLIElement>,
