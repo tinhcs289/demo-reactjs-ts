@@ -1,4 +1,4 @@
-import { AutoCompleteOption } from './types';
+import { AutoCompleteOption } from './_types';
 
 const _mergeFormater = (...fns: ((t: string) => string)[]) => {
   return fns.reduceRight((f, g) => (t) => f(g(t)));

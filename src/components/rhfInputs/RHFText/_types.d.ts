@@ -1,4 +1,4 @@
-import { TRHFRules } from '@/components/rhfInputs/types';
+import { TRHFRules } from '@/components/rhfInputs/_types';
 import { TextFieldProps } from '@mui/material/TextField';
 import { Control } from 'react-hook-form';
 

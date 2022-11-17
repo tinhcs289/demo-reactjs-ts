@@ -1,7 +1,7 @@
 import CommonSwitchField from '@/components/inputs/CommonSwitchField';
 import React from 'react';
 import { Controller } from 'react-hook-form';
-import { TRHFSwitchProps } from './types';
+import { TRHFSwitchProps } from './_types';
 
 const RHFSwitch: React.FC<TRHFSwitchProps> = (props) => {
   const { name, control, rules, defaultValue, shouldUnregister, label, ...inputProps } = props;

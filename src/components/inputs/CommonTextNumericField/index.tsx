@@ -2,7 +2,7 @@ import CommonTextField from '@/components/inputs/CommonTextField';
 import debounce from 'lodash/debounce';
 import React from 'react';
 import { InputAttributes, NumberFormatValues, PatternFormat, SourceInfo } from 'react-number-format';
-import { TCommonTextNumericFieldProps } from './types';
+import { TCommonTextNumericFieldProps } from './_types';
 
 const CommonTextNumericField: React.FC<TCommonTextNumericFieldProps> = (props) => {
   return (

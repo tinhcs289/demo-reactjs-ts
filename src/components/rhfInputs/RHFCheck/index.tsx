@@ -1,7 +1,7 @@
 import CommonCheckField from '@/components/inputs/CommonCheckField';
 import React from 'react';
 import { Controller } from 'react-hook-form';
-import { TRHFCheckProps } from './types';
+import { TRHFCheckProps } from './_types';
 
 const RHFCheck: React.FC<TRHFCheckProps> = (props) => {
   const { name, control, rules, defaultValue, shouldUnregister, label, ...inputProps } = props;

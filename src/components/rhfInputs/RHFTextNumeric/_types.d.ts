@@ -1,5 +1,5 @@
-import { TCommonTextNumericFieldProps } from '@/components/inputs/CommonTextNumericField/types';
-import { TRHFRules } from '@/components/rhfInputs/types';
+import { TCommonTextNumericFieldProps } from '@/components/inputs/CommonTextNumericField/_types';
+import { TRHFRules } from '@/components/rhfInputs/_types';
 import { Control } from 'react-hook-form';
 
 export type RHFTextNumericProps = {

@@ -1,5 +1,5 @@
 import CommonTextField from '@/components/inputs/CommonTextField';
-import { TRHFTextProps } from './types';
+import { TRHFTextProps } from './_types';
 import React from 'react';
 import { Controller } from 'react-hook-form';
 

@@ -5,7 +5,7 @@ import {
   AutocompleteInputChangeReason,
 } from '@mui/material/Autocomplete';
 import React from 'react';
-import { TAutoCompleteOption, TAutocompleteQueryFailReason, TCommonAutoCompleteFieldProps } from '../types';
+import { TAutoCompleteOption, TAutocompleteQueryFailReason, TCommonAutoCompleteFieldProps } from '../_types';
 
 import { AxiosResponse } from 'axios';
 

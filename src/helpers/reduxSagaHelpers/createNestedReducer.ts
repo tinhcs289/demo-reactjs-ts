@@ -1,5 +1,5 @@
 import { all, fork } from 'redux-saga/effects';
-import { TInitState, TReducer, TReducerRootCombined, TSaga, TAction } from './types';
+import { TInitState, TReducer, TReducerRootCombined, TSaga, TAction } from './_types';
 
 const createNestedReducer = (
   name: string,
