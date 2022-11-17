@@ -14,7 +14,7 @@ import {
   TOnQueryArgs,
   TQueryExtendParams,
   TSortDirect,
-} from './types';
+} from './_types';
 
 const useListState = <T extends { [x: string]: any }>(args?: IUseListStateParams<T>): IUseListStateReturns<T> => {
   const {

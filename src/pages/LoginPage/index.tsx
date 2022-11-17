@@ -12,9 +12,11 @@ import Typography from '@mui/material/Typography';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { TLoginFormData } from './types';
+import { TLoginFormData, ILoginPageProps } from './_types';
 
-const LoginPage: React.FC<any> = (props) => {
+const LoginPage: React.FC<ILoginPageProps> = (props) => {
+  const { onSubmitLoginForm } = props;
+
   const theme = useTheme();
 
   const { t } = useTranslation();
@@ -28,7 +30,7 @@ const LoginPage: React.FC<any> = (props) => {
   });
 
   const onSubmit = (formData: TLoginFormData) => {
-    console.log(formData);
+    onSubmitLoginForm?.(formData);
   };
 
   return (

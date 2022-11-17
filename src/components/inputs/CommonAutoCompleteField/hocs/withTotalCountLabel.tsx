@@ -4,7 +4,7 @@ import Divider from '@mui/material/Divider';
 import Popper, { PopperProps } from '@mui/material/Popper';
 import Typography from '@mui/material/Typography';
 import React from 'react';
-import { TCommonAutoCompleteFieldProps } from '../types';
+import { TCommonAutoCompleteFieldProps } from '../_types';
 
 const PopperStyled = styled(Popper)<PopperProps>((args: { theme: Theme }) => {
   const { theme } = args;

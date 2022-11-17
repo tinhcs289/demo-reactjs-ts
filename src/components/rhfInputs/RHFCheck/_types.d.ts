@@ -1,4 +1,4 @@
-import { TRHFRules } from '@/components/rhfInputs/types';
+import { TRHFRules } from '@/components/rhfInputs/_types';
 import { TCommonCheckFieldProps } from '@/components/inputs/CommonCheckField';
 import { Control } from 'react-hook-form';
 export type TRHFCheckProps = {

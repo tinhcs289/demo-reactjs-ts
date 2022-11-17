@@ -1,4 +1,4 @@
-import { TRHFRules } from '@/components/rhfInputs/types';
+import { TRHFRules } from '@/components/rhfInputs/_types';
 import { TCommonSwitchFieldProps } from '@/components/inputs/CommonSwitchField';
 import { Control } from 'react-hook-form';
 export type TRHFSwitchProps = {
