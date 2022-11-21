@@ -1,8 +1,7 @@
-import { TRadioGroupOption } from '@/components/inputs/CommonRadioGroupField/_types';
+import RHFRadioGroup from '@/components/rhfInputs/RHFRadioGroup';
 import RHFSelect from '@/components/rhfInputs/RHFSelect';
 import RHFSwitch from '@/components/rhfInputs/RHFSwitch';
 import RHFSwitchGroup from '@/components/rhfInputs/RHFSwitchGroup';
-import RHFRadioGroup from '@/components/rhfInputs/RHFRadioGroup';
 import RHFText from '@/components/rhfInputs/RHFText';
 import { required } from '@/constants/rhfRules';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -13,9 +12,11 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
+import moment from 'moment';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import RHFDate from '../../components/rhfInputs/RHFDate';
 import { checkboxesOptions, FEMALE, LGBT, MALE } from './constants';
 import type { ILoginPageProps, TLoginFormData } from './_types';
 
@@ -26,8 +27,6 @@ const LoginPage: React.FC<ILoginPageProps> = (props) => {
 
   const { t } = useTranslation();
 
-  const [check, setCheck] = React.useState<TRadioGroupOption | undefined>(undefined);
-
   const { handleSubmit, control } = useForm<TLoginFormData>({
     defaultValues: {
       Account: '',
@@ -36,6 +35,7 @@ const LoginPage: React.FC<ILoginPageProps> = (props) => {
       Gender: [MALE],
       CheckGroup: [],
       RadioGroup: undefined,
+      Date: moment(),
     },
   });
 
@@ -88,6 +88,7 @@ const LoginPage: React.FC<ILoginPageProps> = (props) => {
           control={control}
           rules={required(t('common:pleaseSelect'))}
           options={checkboxesOptions}
+          row
         />
         <RHFRadioGroup
           name="RadioGroup"
@@ -95,7 +96,9 @@ const LoginPage: React.FC<ILoginPageProps> = (props) => {
           control={control}
           options={checkboxesOptions as any}
           rules={required(t('common:pleaseSelect'))}
+          groupProps={{ row: true }}
         />
+        <RHFDate name="Date" label="Date" control={control} rules={required(t('common:pleaseEnter'))} />
 
         <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
           {t('login:login')}

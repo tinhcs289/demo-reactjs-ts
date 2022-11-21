@@ -72,4 +72,7 @@ const CommonAutoCompleteField: React.FC<TCommonAutoCompleteFieldProps> = (props)
     />
   );
 };
+/**
+ * @deprecated
+ */
 export default CommonAutoCompleteField;

@@ -19,7 +19,7 @@ const CommonSelectField: React.FC<TCommonSelectFieldProps> = (props) => {
     label,
     required,
     error,
-    helperText,
+    errorText,
     onInputChange,
     getOptionLabel,
     renderOption,
@@ -91,7 +91,7 @@ const CommonSelectField: React.FC<TCommonSelectFieldProps> = (props) => {
           {...(!!label ? { label } : {})}
           {...(!!required ? { required } : {})}
           {...(!!error ? { error } : {})}
-          {...(!!helperText ? { helperText } : {})}
+          {...(!!errorText ? { errorText } : {})}
           InputLabelProps={{
             ...params?.InputLabelProps,
             ...(!label ? { shrink: false } : {}),

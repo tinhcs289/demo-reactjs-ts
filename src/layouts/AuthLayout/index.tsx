@@ -5,7 +5,7 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import React, { useMemo } from 'react';
 import { SIDE_LAYOUT_BG } from './constants';
-import { IAuthLayoutProps } from './types';
+import type { IAuthLayoutProps } from './_types';
 
 const AuthLayout: React.FC<IAuthLayoutProps> = (props) => {
   const { children, variant } = props;

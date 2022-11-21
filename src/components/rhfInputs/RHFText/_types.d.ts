@@ -1,7 +1,7 @@
 import type { TRHFInputProps } from '@/components/rhfInputs/_types';
-import type { TextFieldProps } from '@mui/material/TextField';
+import type { TCommonTextFieldProps } from '@/components/inputs/CommonTextField/_types';
 
 export type TRHFTextProps = {
   defaultValue?: string;
 } & TRHFInputProps &
-  Omit<TextFieldProps, 'name' | 'defaultValue'>;
+  Omit<TCommonTextFieldProps, 'name' | 'defaultValue' | 'value' | 'error' | 'errorText'>;

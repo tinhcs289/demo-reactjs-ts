@@ -37,7 +37,7 @@ const RHFText: React.FC<TRHFTextProps> = (props) => {
             : {})}
           {...(!!error?.message
             ? {
-                helperText: error?.message,
+                errorText: error?.message,
               }
             : {})}
           {...inputProps}

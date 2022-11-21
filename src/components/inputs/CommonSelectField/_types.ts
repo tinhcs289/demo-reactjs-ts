@@ -1,6 +1,6 @@
 import type { AutocompleteProps } from '@mui/material/Autocomplete';
 import type { ChipTypeMap } from '@mui/material/Chip';
-import type { TextFieldProps } from '@mui/material/TextField';
+import type { TCommonTextFieldProps } from '@/components/inputs/CommonTextField/_types';
 
 export type TAutoCompleteOption = {
   label: string;
@@ -9,7 +9,7 @@ export type TAutoCompleteOption = {
   [x: string]: any;
 };
 
-export type TCommonSelectFieldProps = Pick<TextFieldProps, 'label' | 'error' | 'required' | 'helperText'> &
+export type TCommonSelectFieldProps = Pick<TCommonTextFieldProps, 'label' | 'error' | 'required' | 'errorText'> &
   Omit<
     AutocompleteProps<
       TAutoCompleteOption,
@@ -21,5 +21,5 @@ export type TCommonSelectFieldProps = Pick<TextFieldProps, 'label' | 'error' | '
     'renderInput' | 'options'
   > & {
     options?: TAutoCompleteOption[];
-    TextFieldProps?: TextFieldProps;
+    TextFieldProps?: TCommonTextFieldProps;
   };
