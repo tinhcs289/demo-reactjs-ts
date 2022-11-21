@@ -1,6 +1,7 @@
 {
   "pleaseEnter": "Please enter",
   "pleaseCheck": "Please check",
+  "pleaseSelect": "Please select",
   "invalidFormat": "Invalid format",
   "invalidPhone": "Invalid phone number",
   "invalidEmail": "Invalid email address"

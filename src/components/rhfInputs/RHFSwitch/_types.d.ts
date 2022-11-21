@@ -1,10 +1,7 @@
-import { TRHFRules } from '@/components/rhfInputs/_types';
-import { TCommonSwitchFieldProps } from '@/components/inputs/CommonSwitchField';
-import { Control } from 'react-hook-form';
+import type { TCommonSwitchFieldProps } from '@/components/inputs/CommonSwitchField';
+import type { TRHFInputProps } from '@/components/rhfInputs/_types';
+
 export type TRHFSwitchProps = {
-  name: string;
-  control: Control<any, any>;
   defaultValue?: string;
-  shouldUnregister?: boolean;
-  rules?: TRHFRules;
-} & Omit<TCommonSwitchFieldProps, 'checked' | 'error' | 'onChange' | 'value' | 'name'>;
+} & TRHFInputProps &
+  Omit<TCommonSwitchFieldProps, 'checked' | 'error' | 'onChange' | 'value' | 'name'>;

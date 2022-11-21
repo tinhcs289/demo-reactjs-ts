@@ -1,10 +1,10 @@
-import { TextFieldProps } from '@mui/material/TextField';
-import { ChipTypeMap } from '@mui/material/Chip';
-import {
-  AutocompleteProps,
+import type {
   AutocompleteInputChangeReason,
+  AutocompleteProps,
   AutocompleteRenderOptionState,
 } from '@mui/material/Autocomplete';
+import type { ChipTypeMap } from '@mui/material/Chip';
+import type { TextFieldProps } from '@mui/material/TextField';
 import React from 'react';
 
 export type TAutoCompleteOption = {

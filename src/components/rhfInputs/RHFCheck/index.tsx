@@ -1,7 +1,7 @@
 import CommonCheckField from '@/components/inputs/CommonCheckField';
 import React from 'react';
 import { Controller } from 'react-hook-form';
-import { TRHFCheckProps } from './_types';
+import type { TRHFCheckProps } from './_types';
 
 const RHFCheck: React.FC<TRHFCheckProps> = (props) => {
   const { name, control, rules, defaultValue, shouldUnregister, label, ...inputProps } = props;
@@ -17,7 +17,7 @@ const RHFCheck: React.FC<TRHFCheckProps> = (props) => {
         field: { onBlur, onChange, value, name, ref },
         fieldState: {
           invalid,
-          isTouched,
+          // isTouched,
           // isDirty,
           error,
         },
@@ -30,7 +30,7 @@ const RHFCheck: React.FC<TRHFCheckProps> = (props) => {
           {...(!!defaultValue ? { defaultValue } : {})}
           onChange={onChange}
           inputProps={{ inputRef: ref, onBlur, ...inputProps }}
-          error={invalid && isTouched}
+          error={invalid}
           {...(!!rules?.required
             ? {
                 required: true,

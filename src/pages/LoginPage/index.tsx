@@ -1,4 +1,8 @@
-import RHFCheck from '@/components/rhfInputs/RHFCheck';
+import { TRadioGroupOption } from '@/components/inputs/CommonRadioGroupField/_types';
+import RHFSelect from '@/components/rhfInputs/RHFSelect';
+import RHFSwitch from '@/components/rhfInputs/RHFSwitch';
+import RHFSwitchGroup from '@/components/rhfInputs/RHFSwitchGroup';
+import RHFRadioGroup from '@/components/rhfInputs/RHFRadioGroup';
 import RHFText from '@/components/rhfInputs/RHFText';
 import { required } from '@/constants/rhfRules';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -12,7 +16,8 @@ import Typography from '@mui/material/Typography';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { TLoginFormData, ILoginPageProps } from './_types';
+import { checkboxesOptions, FEMALE, LGBT, MALE } from './constants';
+import type { ILoginPageProps, TLoginFormData } from './_types';
 
 const LoginPage: React.FC<ILoginPageProps> = (props) => {
   const { onSubmitLoginForm } = props;
@@ -21,15 +26,21 @@ const LoginPage: React.FC<ILoginPageProps> = (props) => {
 
   const { t } = useTranslation();
 
+  const [check, setCheck] = React.useState<TRadioGroupOption | undefined>(undefined);
+
   const { handleSubmit, control } = useForm<TLoginFormData>({
     defaultValues: {
       Account: '',
       Password: '',
       RememberMe: false,
+      Gender: [MALE],
+      CheckGroup: [],
+      RadioGroup: undefined,
     },
   });
 
   const onSubmit = (formData: TLoginFormData) => {
+    console.log(formData);
     onSubmitLoginForm?.(formData);
   };
 
@@ -61,7 +72,31 @@ const LoginPage: React.FC<ILoginPageProps> = (props) => {
             mb: theme.spacing(3),
           }}
         />
-        <RHFCheck control={control} name="RememberMe" label={t('login:rememberMe')} />
+        <RHFSelect
+          multiple
+          control={control}
+          name="Gender"
+          label="Giới tính"
+          options={[MALE, FEMALE, LGBT]}
+          rules={required(t('common:pleaseSelect'))}
+        />
+        <RHFSwitch control={control} name="RememberMe" label={t('login:rememberMe')} />
+
+        <RHFSwitchGroup
+          name="CheckGroup"
+          label="Common checkboxes"
+          control={control}
+          rules={required(t('common:pleaseSelect'))}
+          options={checkboxesOptions}
+        />
+        <RHFRadioGroup
+          name="RadioGroup"
+          label="Common radio group"
+          control={control}
+          options={checkboxesOptions as any}
+          rules={required(t('common:pleaseSelect'))}
+        />
+
         <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
           {t('login:login')}
         </Button>

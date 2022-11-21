@@ -1,9 +1,9 @@
-import { TableProps } from '@mui/material/Table';
-import { TableBodyProps } from '@mui/material/TableBody';
-import { TableCellProps } from '@mui/material/TableCell';
-import { TableContainerProps } from '@mui/material/TableContainer';
-import { TableHeadProps } from '@mui/material/TableHead';
-import { TableRowProps } from '@mui/material/TableRow';
+import type { TableProps } from '@mui/material/Table';
+import type { TableBodyProps } from '@mui/material/TableBody';
+import type { TableCellProps } from '@mui/material/TableCell';
+import type { TableContainerProps } from '@mui/material/TableContainer';
+import type { TableHeadProps } from '@mui/material/TableHead';
+import type { TableRowProps } from '@mui/material/TableRow';
 import React from 'react';
 
 export type TSortDirect = 'ASC' | 'DESC';
