@@ -1,7 +1,10 @@
 import ErrorIcon from '@mui/icons-material/Error';
-import { styled, Theme } from '@mui/material';
-import Typography, { TypographyProps } from '@mui/material/Typography';
+import type { Theme } from '@mui/material';
+import { styled } from '@mui/material';
+import type { TypographyProps } from '@mui/material/Typography';
+import Typography from '@mui/material/Typography';
 import React from 'react';
+import { InputErrorTextWithIconProps } from './_types';
 
 const TypographyError = styled(Typography)<TypographyProps>((args: { theme: Theme }) => {
   const { theme } = args;
@@ -31,11 +34,6 @@ const TypographyError = styled(Typography)<TypographyProps>((args: { theme: Them
     userSelect: 'none',
   };
 });
-
-export type InputErrorTextWithIconProps = {
-  children?: React.ReactNode;
-  textProps?: TypographyProps;
-} & React.HTMLAttributes<HTMLDivElement>;
 
 const InputErrorTextWithIcon = styled((props: InputErrorTextWithIconProps) => {
   const { children, textProps, ...divElementProps } = props;

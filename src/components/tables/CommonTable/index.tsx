@@ -7,7 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { cloneElement, createElement, Fragment, isValidElement, useCallback, useMemo } from 'react';
-import { ICommonTableConfig, ICommonTableProps } from './_types';
+import type { ICommonTableConfig, ICommonTableProps } from './_types';
 
 /**
  * @example

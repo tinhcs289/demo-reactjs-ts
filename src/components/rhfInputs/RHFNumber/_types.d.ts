@@ -1,11 +1,7 @@
-import { TCommonNumberFieldProps } from '@/components/inputs/CommonNumberField/_types';
-import { TRHFRules } from '@/components/rhfInputs/_types';
-import { Control } from 'react-hook-form';
+import type { TCommonNumberFieldProps } from '@/components/inputs/CommonNumberField/_types';
+import type { TRHFInputProps } from '@/components/rhfInputs/_types';
 
 export type TRHFNumberProps = {
-  name: string;
-  control: Control<any, any>;
   defaultValue?: string;
-  shouldUnregister?: boolean;
-  rules?: TRHFRules;
-} & Omit<TCommonNumberFieldProps, 'error' | 'onChange' | 'value' | 'name'>;
+} & TRHFInputProps &
+  Omit<TCommonNumberFieldProps, 'error' | 'onChange' | 'value' | 'name'>;

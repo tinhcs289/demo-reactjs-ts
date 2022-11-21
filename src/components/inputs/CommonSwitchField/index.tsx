@@ -1,9 +1,9 @@
 import InputErrorTextWithIcon from '@/components/inputs/InputErrorTextWithIcon';
 import { useTheme } from '@mui/material';
-import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import Switch from '@mui/material/Switch';
 import React from 'react';
-import { TCommonSwitchFieldProps } from './_types';
+import type { TCommonSwitchFieldProps } from './_types';
 
 const CommonSwitchField: React.FC<TCommonSwitchFieldProps> = (props) => {
   const { name, label, error, checked, value, onChange, errorText, required, inputProps, ...formControlProps } = props;

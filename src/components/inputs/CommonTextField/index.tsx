@@ -1,6 +1,7 @@
 import InputErrorTextWithIcon from '@/components/inputs/InputErrorTextWithIcon';
 import InputAdornment from '@mui/material/InputAdornment';
-import TextField, { TextFieldProps } from '@mui/material/TextField';
+import type { TextFieldProps } from '@mui/material/TextField';
+import TextField from '@mui/material/TextField';
 import debounce from 'lodash/debounce';
 import React from 'react';
 

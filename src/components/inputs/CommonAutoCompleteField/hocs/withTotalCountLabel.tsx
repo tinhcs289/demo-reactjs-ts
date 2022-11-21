@@ -1,10 +1,12 @@
 import arrayOrEmpty from '@/helpers/formatHelpers/arrayOrEmpty';
-import { styled, Theme } from '@mui/material';
+import type { Theme } from '@mui/material';
+import { styled } from '@mui/material';
 import Divider from '@mui/material/Divider';
-import Popper, { PopperProps } from '@mui/material/Popper';
+import type { PopperProps } from '@mui/material/Popper';
+import Popper from '@mui/material/Popper';
 import Typography from '@mui/material/Typography';
 import React from 'react';
-import { TCommonAutoCompleteFieldProps } from '../_types';
+import type { TCommonAutoCompleteFieldProps } from '../_types';
 
 const PopperStyled = styled(Popper)<PopperProps>((args: { theme: Theme }) => {
   const { theme } = args;

@@ -1,7 +1,7 @@
 import { CommonTextNumericFieldDebounced } from '@/components/inputs/CommonTextNumericField';
 import React from 'react';
 import { Controller } from 'react-hook-form';
-import { RHFTextNumericProps } from './_types';
+import type { RHFTextNumericProps } from './_types';
 
 const RHFNumber: React.FC<RHFTextNumericProps> = (props) => {
   const { name, control, rules, defaultValue, shouldUnregister, ...inputProps } = props;
@@ -17,7 +17,7 @@ const RHFNumber: React.FC<RHFTextNumericProps> = (props) => {
         field: { onBlur, onChange, value, name, ref },
         fieldState: {
           invalid,
-          isTouched,
+          // isTouched,
           // isDirty,
           error,
         },
@@ -31,7 +31,7 @@ const RHFNumber: React.FC<RHFTextNumericProps> = (props) => {
           }}
           onBlur={onBlur}
           inputRef={ref}
-          error={invalid && isTouched}
+          error={invalid}
           {...(!!rules?.required
             ? {
                 required: true,

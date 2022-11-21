@@ -1,5 +1,5 @@
-import { FormControlLabelProps } from '@mui/material/FormControlLabelProps';
-import { Switch } from '@mui/material/Switch';
+import type { FormControlLabelProps } from '@mui/material/FormControlLabelProps';
+import type { SwitchProps } from '@mui/material/Switch';
 import React from 'react';
 
 export type TCommonSwitchFieldProps = {
@@ -10,5 +10,5 @@ export type TCommonSwitchFieldProps = {
   checked?: boolean;
   value?: unknown;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => void;
-  inputProps?: Omit<Switch, 'checked' | 'error' | 'onChange' | 'value' | 'name'>;
+  inputProps?: Omit<SwitchProps, 'checked' | 'error' | 'onChange' | 'value' | 'name'>;
 } & Omit<FormControlLabelProps, 'control'>;

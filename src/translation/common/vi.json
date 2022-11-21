@@ -1,6 +1,7 @@
 {
   "pleaseEnter": "Vui lòng nhập",
   "pleaseCheck": "Vui lòng chọn",
+  "pleaseSelect": "Vui lòng chọn",
   "invalidFormat": "Sai định dạng",
   "invalidPhone": "Số điện thoại không đúng",
   "invalidEmail": "Email không đúng"
