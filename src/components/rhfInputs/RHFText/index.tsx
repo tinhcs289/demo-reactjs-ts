@@ -1,7 +1,7 @@
 import CommonTextField from '@/components/inputs/CommonTextField';
-import { TRHFTextProps } from './_types';
 import React from 'react';
 import { Controller } from 'react-hook-form';
+import type { TRHFTextProps } from './_types';
 
 const RHFText: React.FC<TRHFTextProps> = (props) => {
   const { name, control, rules, defaultValue, shouldUnregister, ...inputProps } = props;
@@ -17,7 +17,7 @@ const RHFText: React.FC<TRHFTextProps> = (props) => {
         field: { onBlur, onChange, value, name, ref },
         fieldState: {
           invalid,
-          isTouched,
+          // isTouched,
           // isDirty,
           error,
         },
@@ -29,7 +29,7 @@ const RHFText: React.FC<TRHFTextProps> = (props) => {
           onChange={onChange}
           onBlur={onBlur}
           inputRef={ref}
-          error={invalid && isTouched}
+          error={invalid}
           {...(!!rules?.required
             ? {
                 required: true,
@@ -37,7 +37,7 @@ const RHFText: React.FC<TRHFTextProps> = (props) => {
             : {})}
           {...(!!error?.message
             ? {
-                helperText: error?.message,
+                errorText: error?.message,
               }
             : {})}
           {...inputProps}

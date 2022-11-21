@@ -1,11 +1,12 @@
 import CommonTextField from '@/components/inputs/CommonTextField';
 import arrayOrEmpty from '@/helpers/formatHelpers/arrayOrEmpty';
-import Autocomplete, { AutocompleteInputChangeReason } from '@mui/material/Autocomplete';
+import type { AutocompleteInputChangeReason } from '@mui/material/Autocomplete';
+import Autocomplete from '@mui/material/Autocomplete';
 import CircularProgress from '@mui/material/CircularProgress';
 import debounce from 'lodash/debounce';
 import React from 'react';
 import defaultRenderOption from './defaultRenderOption';
-import { TCommonAutoCompleteFieldProps } from './_types';
+import type { TCommonAutoCompleteFieldProps } from './_types';
 
 const CommonAutoCompleteField: React.FC<TCommonAutoCompleteFieldProps> = (props) => {
   const {
@@ -71,4 +72,7 @@ const CommonAutoCompleteField: React.FC<TCommonAutoCompleteFieldProps> = (props)
     />
   );
 };
+/**
+ * @deprecated
+ */
 export default CommonAutoCompleteField;

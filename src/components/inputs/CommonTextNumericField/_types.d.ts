@@ -1,4 +1,4 @@
-import { TextFieldProps } from '@mui/material/TextField';
-import { PatternFormatProps } from 'react-number-format';
+import type { TCommonTextFieldProps } from '@/components/inputs/CommonTextField/_types';
+import type { PatternFormatProps } from 'react-number-format';
 
-export type TCommonTextNumericFieldProps = TextFieldProps & PatternFormatProps;
+export type TCommonTextNumericFieldProps = TCommonTextFieldProps & PatternFormatProps;

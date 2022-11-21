@@ -1,11 +1,7 @@
-import { TRHFRules } from '@/components/rhfInputs/_types';
-import { TextFieldProps } from '@mui/material/TextField';
-import { Control } from 'react-hook-form';
+import type { TRHFInputProps } from '@/components/rhfInputs/_types';
+import type { TCommonTextFieldProps } from '@/components/inputs/CommonTextField/_types';
 
 export type TRHFTextProps = {
-  name: string;
-  control: Control<any, any>;
   defaultValue?: string;
-  shouldUnregister?: boolean;
-  rules?: TRHFRules;
-} & Omit<TextFieldProps, 'name' | 'defaultValue'>;
+} & TRHFInputProps &
+  Omit<TCommonTextFieldProps, 'name' | 'defaultValue' | 'value' | 'error' | 'errorText'>;

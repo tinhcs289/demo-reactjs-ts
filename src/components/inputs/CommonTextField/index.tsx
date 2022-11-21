@@ -1,11 +1,12 @@
 import InputErrorTextWithIcon from '@/components/inputs/InputErrorTextWithIcon';
 import InputAdornment from '@mui/material/InputAdornment';
-import TextField, { TextFieldProps } from '@mui/material/TextField';
+import TextField from '@mui/material/TextField';
 import debounce from 'lodash/debounce';
 import React from 'react';
+import type { TCommonTextFieldProps } from './_types';
 
-const CommonTextField: React.FC<TextFieldProps> = (props) => {
-  const { helperText, error, InputProps, ...otherProps } = props;
+const CommonTextField: React.FC<TCommonTextFieldProps> = (props) => {
+  const { errorText, error, InputProps, ...otherProps } = props;
   return (
     <TextField
       size="small"
@@ -17,11 +18,11 @@ const CommonTextField: React.FC<TextFieldProps> = (props) => {
       {...otherProps}
       InputProps={{
         ...InputProps,
-        ...(error === true && !!helperText
+        ...(error === true && !!errorText
           ? {
               endAdornment: (
                 <InputAdornment position="end">
-                  <InputErrorTextWithIcon>{helperText}</InputErrorTextWithIcon>
+                  <InputErrorTextWithIcon>{errorText}</InputErrorTextWithIcon>
                 </InputAdornment>
               ),
             }
@@ -33,7 +34,7 @@ const CommonTextField: React.FC<TextFieldProps> = (props) => {
 export default CommonTextField;
 
 const withDebounceChangeHandler =
-  (ms: number) => (WrappedComponent: React.FC<TextFieldProps>) => (props: TextFieldProps) => {
+  (ms: number) => (WrappedComponent: React.FC<TCommonTextFieldProps>) => (props: TCommonTextFieldProps) => {
     const { value, defaultValue, ...otherProps } = props;
 
     const handleChangeDelay = React.useMemo(() => {

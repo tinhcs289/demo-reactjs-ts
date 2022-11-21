@@ -1,4 +1,4 @@
-import { ValidationRule } from 'react-hook-form';
+import type { ValidationRule } from 'react-hook-form';
 
 export const required = (message: string): { required: string | ValidationRule<boolean> } => ({
   required: { value: true, message },

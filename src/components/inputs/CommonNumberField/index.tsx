@@ -1,8 +1,9 @@
 import CommonTextField from '@/components/inputs/CommonTextField';
 import debounce from 'lodash/debounce';
 import React from 'react';
-import { InputAttributes, NumberFormatValues, NumericFormat, SourceInfo } from 'react-number-format';
-import { TCommonNumberFieldProps } from './_types';
+import type { InputAttributes, NumberFormatValues, SourceInfo } from 'react-number-format';
+import { NumericFormat } from 'react-number-format';
+import type { TCommonNumberFieldProps } from './_types';
 
 const CommonNumberField: React.FC<TCommonNumberFieldProps> = (props) => {
   const { isAllowed, ...otherProps } = props;

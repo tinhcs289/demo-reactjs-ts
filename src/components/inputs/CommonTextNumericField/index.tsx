@@ -1,8 +1,9 @@
 import CommonTextField from '@/components/inputs/CommonTextField';
 import debounce from 'lodash/debounce';
 import React from 'react';
-import { InputAttributes, NumberFormatValues, PatternFormat, SourceInfo } from 'react-number-format';
-import { TCommonTextNumericFieldProps } from './_types';
+import type { InputAttributes, NumberFormatValues, SourceInfo } from 'react-number-format';
+import { PatternFormat } from 'react-number-format';
+import type { TCommonTextNumericFieldProps } from './_types';
 
 const CommonTextNumericField: React.FC<TCommonTextNumericFieldProps> = (props) => {
   return (

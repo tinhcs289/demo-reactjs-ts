@@ -1,4 +1,4 @@
-import { AutoCompleteOption } from './_types';
+import type { TAutoCompleteOption } from './_types';
 
 const _mergeFormater = (...fns: ((t: string) => string)[]) => {
   return fns.reduceRight((f, g) => (t) => f(g(t)));
@@ -35,8 +35,8 @@ const _execute = (fn: (...agrs: any[]) => boolean, ...agrs: any[]) => {
 };
 
 const customOptionFilter =
-  (customeFilter: (option: AutoCompleteOption) => boolean) =>
-  (options: AutoCompleteOption[], { inputValue }: any) => {
+  (customeFilter: (option: TAutoCompleteOption) => boolean) =>
+  (options: TAutoCompleteOption[], { inputValue }: any) => {
     if (!(options instanceof Array && options.length > 0)) return [];
 
     const _keyword = _removeVietnameseAccentMarks(_toLowerCaseTrim(inputValue));

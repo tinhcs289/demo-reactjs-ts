@@ -1,8 +1,10 @@
 import InfoIcon from '@mui/icons-material/Info';
-import { styled, SvgIconTypeMap, Theme } from '@mui/material';
-import Typography, { TypographyProps } from '@mui/material/Typography';
-import { OverridableComponent } from '@mui/types';
+import type { Theme } from '@mui/material';
+import { styled } from '@mui/material';
+import type { TypographyProps } from '@mui/material/Typography';
+import Typography from '@mui/material/Typography';
 import React from 'react';
+import type { InputHelperTextWithIconProps } from './_types';
 
 const TypographyStyled = styled(Typography)<TypographyProps>((args: { theme: Theme }) => {
   const { theme } = args;
@@ -33,17 +35,7 @@ const TypographyStyled = styled(Typography)<TypographyProps>((args: { theme: The
   };
 });
 
-export type InputErrorTextWithIconProps = {
-  children?: React.ReactNode;
-  textProps?: TypographyProps;
-  icon?:
-    | React.ReactNode
-    | (OverridableComponent<SvgIconTypeMap<{}, 'svg'>> & {
-        muiName: string;
-      });
-} & React.HTMLAttributes<HTMLDivElement>;
-
-const InputErrorTextWithIcon = styled((props: InputErrorTextWithIconProps) => {
+const InputHelperTextWithIcon = styled((props: InputHelperTextWithIconProps) => {
   const { children, textProps, icon, ...divElementProps } = props;
   return (
     <div {...divElementProps}>
@@ -57,5 +49,5 @@ const InputErrorTextWithIcon = styled((props: InputErrorTextWithIconProps) => {
   return {
     position: 'relative',
   };
-}) as React.FC<InputErrorTextWithIconProps>;
-export default InputErrorTextWithIcon;
+}) as React.FC<InputHelperTextWithIconProps>;
+export default InputHelperTextWithIcon;

@@ -1,13 +1,12 @@
 import arrayOrEmpty from '@/helpers/formatHelpers/arrayOrEmpty';
-import {
+import type {
   AutocompleteChangeDetails,
   AutocompleteChangeReason,
   AutocompleteInputChangeReason,
 } from '@mui/material/Autocomplete';
 import React from 'react';
-import { TAutoCompleteOption, TAutocompleteQueryFailReason, TCommonAutoCompleteFieldProps } from '../_types';
-
-import { AxiosResponse } from 'axios';
+import type { TAutoCompleteOption, TAutocompleteQueryFailReason, TCommonAutoCompleteFieldProps } from '../_types';
+import type { AxiosResponse } from 'axios';
 
 enum TRequestStatus {
   NONE = 1,

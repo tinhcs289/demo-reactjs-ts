@@ -1,7 +1,7 @@
 import CommonSwitchField from '@/components/inputs/CommonSwitchField';
 import React from 'react';
 import { Controller } from 'react-hook-form';
-import { TRHFSwitchProps } from './_types';
+import type { TRHFSwitchProps } from './_types';
 
 const RHFSwitch: React.FC<TRHFSwitchProps> = (props) => {
   const { name, control, rules, defaultValue, shouldUnregister, label, ...inputProps } = props;
@@ -17,7 +17,7 @@ const RHFSwitch: React.FC<TRHFSwitchProps> = (props) => {
         field: { onBlur, onChange, value, name, ref },
         fieldState: {
           invalid,
-          isTouched,
+          // isTouched,
           // isDirty,
           error,
         },
@@ -30,7 +30,7 @@ const RHFSwitch: React.FC<TRHFSwitchProps> = (props) => {
           {...(!!defaultValue ? { defaultValue } : {})}
           onChange={onChange}
           inputProps={{ inputRef: ref, onBlur, ...inputProps }}
-          error={invalid && isTouched}
+          error={invalid}
           {...(!!rules?.required
             ? {
                 required: true,

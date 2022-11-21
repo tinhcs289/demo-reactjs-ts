@@ -1,5 +1,5 @@
-import { FormControlLabelProps } from '@mui/material/FormControlLabelProps';
-import { CheckboxProps } from '@mui/material/Checkbox';
+import type { FormControlLabelProps } from '@mui/material/FormControlLabelProps';
+import type { CheckboxProps } from '@mui/material/Checkbox';
 import React from 'react';
 
 export type TCommonCheckFieldProps = {
