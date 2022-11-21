@@ -20,6 +20,6 @@ export type TCommonRadioGroupFieldProps = {
   errorText?: React.ReactNode;
   options?: TRadioGroupOption[];
   value?: TRadioGroupOption;
-  groupProps?: RadioGroupProps;
+  groupProps?: Omit<RadioGroupProps, 'name' | 'value' | 'onChange'>;
   onChange?: (option?: TRadioGroupOption) => void;
 } & Omit<FormGroupProps, 'onChange'>;

@@ -8,7 +8,7 @@ import React from 'react';
 import type { TCommonRadioGroupFieldProps } from './_types';
 
 const CommonRadioGroupField: React.FC<TCommonRadioGroupFieldProps> = (props) => {
-  const { name, label, required, error, onChange, errorText, color, options, value, ...otherProps } = props;
+  const { name, label, required, error, onChange, errorText, color, options, value, groupProps, ...otherProps } = props;
 
   const memoOption = React.useMemo(() => {
     return options instanceof Array && options.length > 0 ? options : [];
@@ -65,7 +65,12 @@ const CommonRadioGroupField: React.FC<TCommonRadioGroupFieldProps> = (props) => 
         {required ? <>&nbsp;{'*'}</> : null}
         {error && !!errorText ? <InputErrorTextWithIcon>{errorText}</InputErrorTextWithIcon> : null}
       </FormLabel>
-      <RadioGroup {...(!!name ? { name } : {})} value={memoValue?.value || ''} onChange={handleOnchange as any}>
+      <RadioGroup
+        {...groupProps}
+        {...(!!name ? { name } : {})}
+        value={memoValue?.value || ''}
+        onChange={handleOnchange as any}
+      >
         {memoOptionsRender}
       </RadioGroup>
     </FormGroup>

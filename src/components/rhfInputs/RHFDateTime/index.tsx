@@ -1,14 +1,14 @@
-import { CommonNumberFieldDebounced } from '@/components/inputs/CommonNumberField';
+import CommonDateTimeField from '@/components/inputs/CommonDateTimeField';
 import React from 'react';
 import { Controller } from 'react-hook-form';
-import type { TRHFNumberProps } from './_types';
+import type { TRHFDateTimeProps } from './_types';
 
-const RHFNumber: React.FC<TRHFNumberProps> = (props) => {
+const RHFDateTime: React.FC<TRHFDateTimeProps> = (props) => {
   const { name, control, rules, defaultValue, shouldUnregister, ...inputProps } = props;
 
   return (
     <Controller
-      name={name || ''}
+      name={name}
       control={control}
       rules={rules}
       {...(!!defaultValue ? { defaultValue } : {})}
@@ -22,13 +22,11 @@ const RHFNumber: React.FC<TRHFNumberProps> = (props) => {
           error,
         },
       }) => (
-        <CommonNumberFieldDebounced
+        <CommonDateTimeField
           name={name}
           value={value}
           {...(!!defaultValue ? { defaultValue } : {})}
-          onValueChange={({ floatValue }) => {
-            onChange(floatValue);
-          }}
+          onChange={onChange}
           onBlur={onBlur}
           inputRef={ref}
           error={invalid}
@@ -48,4 +46,4 @@ const RHFNumber: React.FC<TRHFNumberProps> = (props) => {
     />
   );
 };
-export default RHFNumber;
+export default RHFDateTime;

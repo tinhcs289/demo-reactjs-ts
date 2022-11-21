@@ -60,7 +60,7 @@ const RHFSelect: React.FC<TRHFSelectProps> = (props) => {
               : {})}
             {...(!!error?.message
               ? {
-                  helperText: error?.message,
+                  errorText: error?.message,
                 }
               : {})}
             {...otherProps}

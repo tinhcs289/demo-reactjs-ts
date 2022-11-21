@@ -39,7 +39,7 @@ const RHFNumber: React.FC<RHFTextNumericProps> = (props) => {
             : {})}
           {...(!!error?.message
             ? {
-                helperText: error?.message,
+                errorText: error?.message,
               }
             : {})}
           {...inputProps}
