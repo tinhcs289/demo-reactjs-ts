@@ -3,7 +3,7 @@ import LanguageProvider from '@/providers/LanguageProvider';
 import MUIThemeV5Provider from '@/providers/MUIThemeV5Provider';
 import NotiStackProvider from '@/providers/NotiStackProvider';
 import ReduxProvider from '@/providers/ReduxProvider';
-import AppRoutes from '@/routes/AppRoutes';
+import AppRouter from '@/routes/AppRouter';
 import React from 'react';
 
 const App: React.FC<any> = (props) => {
@@ -13,7 +13,7 @@ const App: React.FC<any> = (props) => {
         <ReduxProvider>
           <MUIThemeV5Provider>
             <NotiStackProvider>
-              <AppRoutes />
+              <AppRouter />
             </NotiStackProvider>
           </MUIThemeV5Provider>
         </ReduxProvider>

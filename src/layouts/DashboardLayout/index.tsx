@@ -2,7 +2,7 @@ import DashboardLayoutProvider, { useDashboardLayoutContext } from '@/providers/
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import MenuIcon from '@mui/icons-material/Menu';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import type { Theme } from '@mui/material';
+import type { SxProps, Theme } from '@mui/material';
 import { useMediaQuery, useTheme } from '@mui/material';
 import Badge from '@mui/material/Badge';
 import Box from '@mui/material/Box';
@@ -14,12 +14,12 @@ import List from '@mui/material/List';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import React, { useCallback, useEffect, useMemo } from 'react';
+import { Outlet } from 'react-router-dom';
 import AppBarStyled from './AppBarStyled';
 import DrawerStyled from './DrawerStyled';
 import { mainListItems, secondaryListItems } from './listItems';
 
 const Dashboard: React.FC<{ children?: React.ReactNode }> = (props) => {
-  const { children } = props;
   const theme = useTheme();
   const { layoutAction, layoutState } = useDashboardLayoutContext();
 
@@ -104,33 +104,27 @@ const Dashboard: React.FC<{ children?: React.ReactNode }> = (props) => {
     );
   }, [theme, toggleAside, isAsideOpen]);
 
-  const pageContent = useMemo(() => {
-    console.log('render: Page Content');
-    return (
-      <Box
-        component="main"
-        sx={{
-          backgroundColor: theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900],
-          flexGrow: 1,
-          height: '100vh',
-          overflow: 'auto',
-        }}
-      >
-        <Toolbar />
-        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-          <Grid container spacing={3}>
-            {children}
-          </Grid>
-        </Container>
-      </Box>
-    );
-  }, [theme, children]);
+  const memoBoxSx: SxProps<Theme> = React.useMemo(() => {
+    return {
+      backgroundColor: theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900],
+      flexGrow: 1,
+      height: '100vh',
+      overflow: 'auto',
+    };
+  }, [theme]);
 
   return (
     <Box sx={{ display: 'flex' }}>
       {appBar}
       {asideMenu}
-      {pageContent}
+      <Box component="main" sx={memoBoxSx}>
+        <Toolbar />
+        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+          <Grid container spacing={3}>
+            <Outlet />
+          </Grid>
+        </Container>
+      </Box>
     </Box>
   );
 };

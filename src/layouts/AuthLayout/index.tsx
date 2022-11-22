@@ -7,9 +7,10 @@ import Paper from '@mui/material/Paper';
 import React from 'react';
 import { SIDE_LAYOUT_BG } from './constants';
 import type { IAuthLayoutProps } from './_types';
+import { Outlet } from 'react-router-dom';
 
 const AuthLayout: React.FC<IAuthLayoutProps> = (props) => {
-  const { children, variant } = props;
+  const { variant } = props;
 
   const theme = useTheme();
 
@@ -35,17 +36,15 @@ const AuthLayout: React.FC<IAuthLayoutProps> = (props) => {
     };
   }, [theme]);
 
-  const memoChilren = React.useMemo(() => {
-    return <>{children}</>;
-  }, [children]);
-
   return (
     <>
       {React.useMemo(() => {
         if (variant === 'fullWidth')
           return (
             <Container component="main" maxWidth="xs">
-              <Box sx={boxSx}>{memoChilren}</Box>
+              <Box sx={boxSx}>
+                <Outlet />
+              </Box>
             </Container>
           );
 
@@ -54,13 +53,15 @@ const AuthLayout: React.FC<IAuthLayoutProps> = (props) => {
             <Grid container component="main" sx={{ height: '100vh' }}>
               <Grid item xs={false} sm={4} md={7} sx={backgroundSx} />
               <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-                <Box sx={boxSx}>{memoChilren}</Box>
+                <Box sx={boxSx}>
+                  <Outlet />
+                </Box>
               </Grid>
             </Grid>
           );
 
         return null;
-      }, [memoChilren, variant, boxSx, backgroundSx])}
+      }, [variant, boxSx, backgroundSx])}
     </>
   );
 };
