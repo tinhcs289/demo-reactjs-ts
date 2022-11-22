@@ -1,12 +1,11 @@
 import React from 'react';
+import { Outlet } from 'react-router-dom';
 
 const LandingLayout: React.FC<{ children?: React.ReactNode }> = (props) => {
-  const { children } = props;
-
-  const content = React.useMemo(() => {
-    return <>{children}</>;
-  }, [children]);
-
-  return <>{content}</>;
+  return (
+    <>
+      <Outlet />
+    </>
+  );
 };
 export default LandingLayout;
