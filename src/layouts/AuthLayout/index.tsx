@@ -35,13 +35,17 @@ const AuthLayout: React.FC<IAuthLayoutProps> = (props) => {
     };
   }, [theme]);
 
+  const memoChilren = React.useMemo(() => {
+    return <>{children}</>;
+  }, [children]);
+
   return (
     <>
       {React.useMemo(() => {
         if (variant === 'fullWidth')
           return (
             <Container component="main" maxWidth="xs">
-              <Box sx={boxSx}>{children}</Box>
+              <Box sx={boxSx}>{memoChilren}</Box>
             </Container>
           );
 
@@ -50,13 +54,13 @@ const AuthLayout: React.FC<IAuthLayoutProps> = (props) => {
             <Grid container component="main" sx={{ height: '100vh' }}>
               <Grid item xs={false} sm={4} md={7} sx={backgroundSx} />
               <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-                <Box sx={boxSx}>{children}</Box>
+                <Box sx={boxSx}>{memoChilren}</Box>
               </Grid>
             </Grid>
           );
 
         return null;
-      }, [children, variant, boxSx, backgroundSx])}
+      }, [memoChilren, variant, boxSx, backgroundSx])}
     </>
   );
 };

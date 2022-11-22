@@ -1,0 +1,11 @@
+{
+  "register": "Register",
+  "firstName": "First Name",
+  "lastName": "Last Name",
+  "email": "Email address",
+  "password": "Password",
+  "passwordReEnter": "Re-enter password for confirmation",
+  "iAcceptWithTermAndCondition": "I accept with the term and condition",
+  "alreadyHaveAccount_login": "Already have an account? Sign in",
+  "passwordDoesntMatch": "Password doesn't match with Re-enter Password"
+}
