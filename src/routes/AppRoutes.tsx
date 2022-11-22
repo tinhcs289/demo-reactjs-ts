@@ -1,3 +1,4 @@
+import PageLoadingFallback from '@/components/loading/PageLoadingFallback';
 import AuthLayout from '@/layouts/AuthLayout';
 import DashboardLayout from '@/layouts/DashboardLayout';
 import LandingLayout from '@/layouts/LandingLayout';
@@ -5,9 +6,9 @@ import PATHS from '@/routes/paths';
 import authRoutes from '@/routes/_auth/_routes';
 import privateRoutes from '@/routes/_private/_routes';
 import publicRoutes from '@/routes/_public/_routes';
-import PageLoadingFallback from '@/components/loading/PageLoadingFallback';
 import React from 'react';
-import { BrowserRouter, BrowserRouterProps, Redirect, Route, Switch } from 'react-router-dom';
+import type { BrowserRouterProps } from 'react-router-dom';
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 
 const AppRoutes: React.FC<BrowserRouterProps> = (props) => {
   console.log('render');

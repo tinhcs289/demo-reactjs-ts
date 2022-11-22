@@ -7,7 +7,7 @@ import intOrDefault from '@/helpers/formatHelpers/intOrDefault';
 import cloneDeep from 'lodash/cloneDeep';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ACTION, DESC, ERequestStatus, PAGE_INDEX, PAGE_SIZE } from './constants';
-import {
+import type {
   IUseListStateParams,
   IUseListStateReturns,
   TListState,

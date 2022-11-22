@@ -1,5 +1,6 @@
 import { ASIDE_MENU_WIDTH } from '@/layouts/DashboardLayout/constants';
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
+import type { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
+import MuiAppBar from '@mui/material/AppBar';
 import { styled } from '@mui/material/styles';
 
 interface AppBarProps extends MuiAppBarProps {

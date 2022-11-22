@@ -1,6 +1,6 @@
-import { lazy } from 'react';
 import paths from '@/routes/paths';
-import { TRouteConfig } from '@/routes/_types';
+import type { TRouteConfig } from '@/routes/_types';
+import { lazy } from 'react';
 
 const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'));
 

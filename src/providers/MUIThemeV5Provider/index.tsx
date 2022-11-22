@@ -1,5 +1,5 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { ThemeProviderProps } from '@mui/system';
+import type { ThemeProviderProps } from '@mui/system';
 import lightThemeOptions from './lightThemeOptions';
 // import darkThemeOptions from './darkThemeOptions';
 import CssBaseline from '@mui/material/CssBaseline';

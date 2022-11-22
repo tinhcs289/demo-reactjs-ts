@@ -4,7 +4,8 @@ import useSnackbarNotify from '@/hooks/useSnackbarNotify';
 import newMessageSelector from '@/redux/snackbar/selectors/_rootState';
 import Slide from '@mui/material/Slide';
 import isEqual from 'lodash/isEqual';
-import { SnackbarProvider, SnackbarProviderProps } from 'notistack';
+import type { SnackbarProviderProps } from 'notistack';
+import { SnackbarProvider } from 'notistack';
 import React from 'react';
 import { useSelector } from 'react-redux';
 

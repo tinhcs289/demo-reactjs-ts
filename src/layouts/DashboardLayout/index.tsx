@@ -2,7 +2,8 @@ import DashboardLayoutProvider, { useDashboardLayoutContext } from '@/providers/
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import MenuIcon from '@mui/icons-material/Menu';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { Theme, useMediaQuery, useTheme } from '@mui/material';
+import type { Theme } from '@mui/material';
+import { useMediaQuery, useTheme } from '@mui/material';
 import Badge from '@mui/material/Badge';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
