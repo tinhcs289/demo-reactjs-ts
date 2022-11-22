@@ -1,0 +1,55 @@
+export enum EConjunction {
+  AND = 'AND',
+  OR = 'OR',
+}
+
+export enum ECondition {
+  EQUAL = 'EQUAL',
+  NOT_EQUAL = 'NOT_EQUAL',
+  GREATER = 'GREATER',
+  GREATER_AND_EQUAL = 'GREATER_AND_EQUAL',
+  SMALLER = 'SMALLER',
+  SMALLER_AND_EQUAL = 'SMALLER_AND_EQUAL',
+  IN = 'IN',
+  NOT_IN = 'NOT_IN',
+  LIKE = 'LIKE',
+}
+
+export enum EConditionOperator {
+  EQUAL = '=',
+  NOT_EQUAL = '!=',
+  GREATER = '>',
+  GREATER_AND_EQUAL = '>=',
+  SMALLER = '<',
+  SMALLER_AND_EQUAL = '<',
+  IN = 'in',
+  NOT_IN = 'not',
+  LIKE = 'like',
+}
+
+export enum EValueType {
+  STRING = 'STRING',
+  GUID = 'GUID',
+  INT = 'INT',
+  DECIMAL = 'DECIMAL',
+  BIT = 'BIT',
+  DATE = 'DATE',
+  TIME = 'TIME',
+  DATETIME = 'DATETIME',
+}
+
+export enum EInputType {
+  TEXT = 'TEXT',
+  TEXT_NUMBER = 'TEXT_NUMBER',
+  SELECT_NUMBER = 'SELECT_NUMBER',
+  RANGE_NUMBER = 'RANGE_NUMBER',
+  CHECKBOX = 'CHECKBOX',
+  SELECT_SINGLE = 'SELECT_SINGLE',
+  SELECT_MULTI = 'SELECT_MULTI',
+  AUTOCOMPLETE_SINGLE = 'AUTOCOMPLETE_SINGLE',
+  AUTOCOMPLETE_MULTI = 'AUTOCOMPLETE_MULTI',
+  DATE_PICKER = 'DATE_PICKER',
+  TIME_PICKER = 'TIME_PICKER',
+  DATETIME_PICKER = 'DATETIME_PICKER',
+  CALENDAR = 'CALENDAR',
+}

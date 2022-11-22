@@ -8,6 +8,7 @@ const PATHS = {
   public: '/public',
   //
   dashboard: '/dashboard',
+  inDevelop: '/module-in-development',
   notfound: '/not-found',
 };
 export default PATHS;

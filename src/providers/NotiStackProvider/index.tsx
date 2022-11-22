@@ -33,7 +33,6 @@ const SnackbarConnect: React.FC<{ children?: React.ReactNode }> = (props) => {
 
 const NotiStackProvider: React.FC<SnackbarProviderProps> = (props) => {
   const { children, ...otherProps } = props;
-
   return (
     <SnackbarProvider
       dense
