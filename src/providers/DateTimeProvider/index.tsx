@@ -1,5 +1,6 @@
 import { LANGUAGE_VIETNAMESE } from '@/constants/language';
-import { LocalizationProvider, LocalizationProviderProps } from '@mui/x-date-pickers';
+import type { LocalizationProviderProps } from '@mui/x-date-pickers';
+import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import moment from 'moment';
 import 'moment/locale/vi';
