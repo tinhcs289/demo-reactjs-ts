@@ -1,4 +1,4 @@
-import { ThemeOptions } from '@mui/material/styles';
+import type { ThemeOptions } from '@mui/material/styles';
 
 /**
  * @see https://mui.com/material-ui/customization/default-theme/#main-content

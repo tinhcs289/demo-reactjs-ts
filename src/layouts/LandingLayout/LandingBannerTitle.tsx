@@ -1,4 +1,5 @@
-import Typography, { TypographyProps } from '@mui/material/Typography';
+import Typography from '@mui/material/Typography';
+import type { TypographyProps } from '@mui/material/Typography';
 import React from 'react';
 
 const LandingBannerTitle: React.FC<Omit<TypographyProps, 'ref'>> = (props) => {

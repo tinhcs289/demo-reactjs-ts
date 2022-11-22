@@ -1,9 +1,10 @@
-import { useTheme, SxProps, Theme } from '@mui/material';
+import type { SxProps, Theme } from '@mui/material';
+import { useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import React, { useMemo } from 'react';
+import React from 'react';
 import { SIDE_LAYOUT_BG } from './constants';
 import type { IAuthLayoutProps } from './_types';
 
@@ -12,7 +13,7 @@ const AuthLayout: React.FC<IAuthLayoutProps> = (props) => {
 
   const theme = useTheme();
 
-  const backgroundSx: SxProps<Theme> = useMemo(() => {
+  const backgroundSx: SxProps<Theme> = React.useMemo(() => {
     return {
       backgroundImage: `url(${SIDE_LAYOUT_BG})`,
       backgroundRepeat: 'no-repeat',
@@ -22,7 +23,7 @@ const AuthLayout: React.FC<IAuthLayoutProps> = (props) => {
     };
   }, [theme]);
 
-  const boxSx: SxProps<Theme> = useMemo(() => {
+  const boxSx: SxProps<Theme> = React.useMemo(() => {
     return {
       my: theme.spacing(2),
       mx: theme.spacing(1),
@@ -36,7 +37,7 @@ const AuthLayout: React.FC<IAuthLayoutProps> = (props) => {
 
   return (
     <>
-      {useMemo(() => {
+      {React.useMemo(() => {
         if (variant === 'fullWidth')
           return (
             <Container component="main" maxWidth="xs">

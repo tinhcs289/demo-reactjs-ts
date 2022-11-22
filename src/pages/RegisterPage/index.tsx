@@ -8,7 +8,7 @@ import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import * as React from 'react';
+import React from 'react';
 
 const RegisterPage: React.FC<any> = (props) => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {

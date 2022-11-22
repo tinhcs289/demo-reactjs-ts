@@ -1,6 +1,6 @@
 import useToggle from '@/hooks/useToggle';
 import React, { createContext, useContext } from 'react';
-import { IDashboardLayoutContextValues } from './_types';
+import type { IDashboardLayoutContextValues } from './_types';
 
 const DashboardLayoutContext = createContext({} as IDashboardLayoutContextValues);
 
