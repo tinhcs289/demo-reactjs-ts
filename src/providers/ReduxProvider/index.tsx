@@ -7,7 +7,6 @@ import { Provider } from 'react-redux';
 
 const ReduxProvider: React.FC<{ children?: React.ReactNode }> = (props) => {
   const { children } = props;
-
   return (
     <>
       <Provider store={store}>{children}</Provider>

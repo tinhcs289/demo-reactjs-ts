@@ -1,10 +1,10 @@
-import PATHS from '@/routes/paths';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import PATHS from '@/routes/paths';
 
-const DashboardPage: React.FC<any> = (props) => {
+const InDevelopPage: React.FC<any> = (props) => {
   return (
     <Box
       sx={{
@@ -17,10 +17,10 @@ const DashboardPage: React.FC<any> = (props) => {
         alignItems: 'center',
       }}
     >
-      <RouterLink to={PATHS.inDevelop}>
-        <Button color="primary" variant="contained">{`aaaaaa`}</Button>
+      <RouterLink to={PATHS.dashboard}>
+        <Button color="primary" variant="contained">{`Quay về trang chủ`}</Button>
       </RouterLink>
     </Box>
   );
 };
-export default DashboardPage;
+export default InDevelopPage;

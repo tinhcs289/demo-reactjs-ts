@@ -1,0 +1,11 @@
+{
+  "register": "Đăng ký",
+  "firstName": "Họ",
+  "lastName": "Đệm và Tên",
+  "email": "Địa chỉ Email",
+  "password": "Mật khẩu",
+  "passwordReEnter": "Nhập lại mật khẩu",
+  "iAcceptWithTermAndCondition": "Tôi đã đọc và đồng ý với điều khoản sử dụng dịch vụ",
+  "alreadyHaveAccount_login": "Đã có tài khoản? Đăng nhập",
+  "passwordDoesntMatch": "Mật khẩu không khớp"
+}
