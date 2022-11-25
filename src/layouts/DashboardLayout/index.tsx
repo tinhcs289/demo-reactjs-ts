@@ -49,7 +49,6 @@ const Dashboard: React.FC<{ children?: React.ReactNode }> = (props) => {
   }, [isMediumScreenOrLower]);
 
   const asideMenu = useMemo(() => {
-    console.log('render: Aside Menu');
     return (
       <DrawerStyled variant="permanent" open={isAsideOpen}>
         <Toolbar
@@ -75,7 +74,6 @@ const Dashboard: React.FC<{ children?: React.ReactNode }> = (props) => {
   }, [toggleAside, isAsideOpen]);
 
   const appBar = useMemo(() => {
-    console.log('render: App Bar');
     return (
       <AppBarStyled position="absolute" open={isAsideOpen}>
         <Toolbar sx={{ pr: theme.spacing(3) }}>
