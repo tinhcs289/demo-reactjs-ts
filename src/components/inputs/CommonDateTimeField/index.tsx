@@ -13,7 +13,7 @@ const CommonDateTimeField: React.FC<TCommonDateTimeFieldProps> = (props) => {
       mask={mask || DEFAULT_MASK}
       {...(!!error ? { error } : {})}
       renderInput={(inputProps) => {
-        return <CommonTextField {...inputProps} error={error} helperText={errorText} />;
+        return <CommonTextField {...inputProps} error={error} errorText={errorText} />;
       }}
     />
   );

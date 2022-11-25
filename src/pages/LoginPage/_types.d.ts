@@ -6,4 +6,6 @@ export type TLoginFormData = {
 
 export interface ILoginPageProps {
   onSubmitLoginForm?: (data: TLoginFormData) => void;
+  onRequestLoginViaSSO?: (data: TLoginFormData) => void;
+  loading?: boolean;
 }

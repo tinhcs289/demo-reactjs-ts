@@ -1,21 +1,23 @@
 import RHFCheck from '@/components/rhfInputs/RHFCheck';
 import RHFText from '@/components/rhfInputs/RHFText';
 import { email, required } from '@/constants/rhfRules';
+import withHOCs from '@/hocs/withHocs';
 import PATHS from '@/routes/paths';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
+import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import Link from '@mui/material/Link';
 import { Link as RouterLink } from 'react-router-dom';
+import withRegisterViaInternalApi from './withRegisterViaInternalApi';
 import type { IRegisterPageProps, TRegisterFormData } from './_types';
 
-const RegisterPage: React.FC<IRegisterPageProps> = (props) => {
+const RegisterPage: React.FC<IRegisterPageProps> = withHOCs(withRegisterViaInternalApi)((props) => {
   const { onSubmitRegisterForm } = props;
 
   const { t } = useTranslation();
@@ -117,5 +119,5 @@ const RegisterPage: React.FC<IRegisterPageProps> = (props) => {
       </Box>
     </>
   );
-};
+});
 export default RegisterPage;
