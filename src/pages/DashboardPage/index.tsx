@@ -1,10 +1,14 @@
-import PATHS from '@/routes/paths';
+import CommonDateMultiField from '@/components/inputs/CommonDateMultiField';
+import withSelectedDateTags from '@/components/inputs/CommonDateMultiField/hocs/withSelectedDateTags';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import type { Moment } from 'moment';
+import React, { useState } from 'react';
+
+const CommonDateMultiWithTagsField = withSelectedDateTags(CommonDateMultiField);
 
 const DashboardPage: React.FC<any> = (props) => {
+  const [dates, setDates] = useState<Moment[]>([]);
+
   return (
     <Box
       sx={{
@@ -17,9 +21,12 @@ const DashboardPage: React.FC<any> = (props) => {
         alignItems: 'center',
       }}
     >
-      <RouterLink to={PATHS.inDevelop}>
-        <Button color="primary" variant="contained">{`aaaaaa`}</Button>
-      </RouterLink>
+      <CommonDateMultiWithTagsField
+        value={dates}
+        onChange={(val) => {
+          setDates(val || []);
+        }}
+      />
     </Box>
   );
 };
