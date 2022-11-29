@@ -1,4 +1,5 @@
 import arrayOrEmpty from '@/helpers/formatHelpers/arrayOrEmpty';
+import render from '@/helpers/reactHelpers/render';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -6,7 +7,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import { cloneElement, createElement, Fragment, isValidElement, useCallback, useMemo } from 'react';
+import { Fragment, useCallback, useMemo } from 'react';
 import type { ICommonTableConfig, ICommonTableProps } from './_types';
 
 /**
@@ -86,15 +87,7 @@ function CommonTable<T extends Record<string, any>>(props: ICommonTableProps<T>)
       return <TableCell {...head.headCellProps}>{head.headCell}</TableCell>;
     }
 
-    if (isValidElement(head.headCell)) {
-      return cloneElement(head.headCell, head.headCellProps);
-    }
-
-    if (typeof head.headCell === 'function') {
-      return createElement(head.headCell, head.headCellProps);
-    }
-
-    return null;
+    return render(head.headCell, head.headCellProps);
   };
 
   const renderBodyCell = (cell: ICommonTableConfig<T>, row: T) => {
@@ -106,15 +99,7 @@ function CommonTable<T extends Record<string, any>>(props: ICommonTableProps<T>)
         : cell.bodyCellProps
       : undefined;
 
-    if (!!cell.bodyCell) {
-      if (isValidElement(cell.bodyCell)) {
-        return cloneElement(cell.bodyCell, { ..._cellProps, row } as Partial<unknown> & React.Attributes);
-      }
-    }
-
-    if (typeof cell.bodyCell === 'function') {
-      return createElement(cell.bodyCell, { ..._cellProps, row });
-    }
+    if (!!cell.bodyCell) return render(cell.bodyCell, { ..._cellProps, row });
 
     if (typeof cell.field === 'string') return <TableCell {..._cellProps}>{row[cell.field] || ''}</TableCell>;
 

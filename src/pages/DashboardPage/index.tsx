@@ -8,7 +8,7 @@ const CommonDateMultiWithTagsField = withSelectedDateTags(CommonDateMultiField);
 
 const DashboardPage: React.FC<any> = (props) => {
   const [dates, setDates] = useState<Moment[]>([]);
-
+  
   return (
     <Box
       sx={{
