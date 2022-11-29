@@ -17,5 +17,6 @@
     "**/src/reportWebVitals.ts": true,
     "**/src/setupTests.ts": true,
     "**/README.md": true
-  }
+  },
+  "typescript.preferences.importModuleSpecifier": "non-relative"
 }
