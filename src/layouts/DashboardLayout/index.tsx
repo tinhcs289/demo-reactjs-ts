@@ -39,11 +39,11 @@ const Dashboard: React.FC<{ children?: React.ReactNode }> = (props) => {
 };
 
 const DashboardLayout: React.FC<{ children?: React.ReactNode }> = (props) => {
-  const { children } = props;
-
   return (
     <DashboardLayoutProvider>
-      <Dashboard>{children}</Dashboard>
+      <Dashboard>
+        <Outlet />
+      </Dashboard>
     </DashboardLayoutProvider>
   );
 };
