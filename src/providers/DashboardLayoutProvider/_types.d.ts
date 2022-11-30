@@ -4,7 +4,6 @@ export interface IDashboardLayoutContextValues {
   layoutState: {
     isAsideOpen: boolean;
     urlOfInteractMenuItem: string | null;
-    isMatchPath: (url?: string, isExact?: boolean) => boolean;
     menuItems: TAsideMenuItem[];
     getPageTitle: () => ReactNode | null;
   };
