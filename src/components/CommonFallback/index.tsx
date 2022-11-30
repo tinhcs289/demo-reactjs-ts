@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import React from 'react';
 
-const PageLoadingFallback: React.FC<any> = (props) => {
+const CommonFallback: React.FC<any> = (props) => {
   const theme = useTheme();
   return (
     <Box
@@ -26,4 +26,4 @@ const PageLoadingFallback: React.FC<any> = (props) => {
     </Box>
   );
 };
-export default PageLoadingFallback;
+export default CommonFallback;
