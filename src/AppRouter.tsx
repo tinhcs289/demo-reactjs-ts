@@ -1,4 +1,4 @@
-import PageLoadingFallback from '@/components/loading/PageLoadingFallback';
+import CommonFallback from '@/components/CommonFallback';
 import AuthLayout from '@/layouts/AuthLayout';
 import DashboardLayout from '@/layouts/DashboardLayout';
 import LandingLayout from '@/layouts/LandingLayout';
@@ -12,10 +12,12 @@ import type { BrowserRouterProps } from 'react-router-dom';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 const AppRouter: React.FC<BrowserRouterProps> = (props) => {
-  //TODO add more handle to switch route group by folowing bussiness
+  //TODO: render groups of routes by authentication state:
+  // on page load of `AppRouter`, query `access token` from browser cookie
+  // if token exsists, render private routes, if not, render public and auth routes.
   return (
     <BrowserRouter {...props}>
-      <React.Suspense fallback={<PageLoadingFallback />}>
+      <React.Suspense fallback={<CommonFallback />}>
         <Routes>
           <Route element={<LandingLayout />}>
             {publicRoutes.map((route: TRouteConfig) => {

@@ -1,6 +1,5 @@
 import CommonTooltip from '@/components/CommonTooltip';
 import arrayOrEmpty from '@/helpers/formatHelpers/arrayOrEmpty';
-import stringOrEmpty from '@/helpers/formatHelpers/stringOrEmpty';
 import AsideDrawer from '@/layouts/DashboardLayout/AsideMenu/AsideDrawer';
 import { TAsideMenuItem } from '@/layouts/DashboardLayout/_types';
 import { useDashboardLayoutContext } from '@/providers/DashboardLayoutProvider';
