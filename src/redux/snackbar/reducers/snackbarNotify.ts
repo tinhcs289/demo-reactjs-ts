@@ -1,8 +1,7 @@
 import { TGenericAction } from '@/helpers/reduxSagaHelpers/_types';
 import newGuid from '@/helpers/stringHelpers/newGuid';
 import { ImmutableObject } from 'seamless-immutable';
-import { TActionPushMessagePayload } from '../actions/_types';
-import { TReduxStateSnackbar } from '../_types';
+import { TReduxStateSnackbar, TActionPushMessagePayload } from '../_types';
 
 const snackbarNotify = (
   action: TGenericAction<TActionPushMessagePayload>,
