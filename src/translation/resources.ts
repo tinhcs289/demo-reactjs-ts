@@ -1,21 +1,23 @@
+import { EAcceptLanguage } from '@/constants/EAcceptLanguage';
 import common from './common';
 import login from './login';
 import notFound from './notFound';
 import register from './register';
+import type { TTranslation } from './_types';
 
 const resources = {
-  en: {} as { [x: string]: { [x: string]: string } },
-  vi: {} as { [x: string]: { [x: string]: string } },
+  [EAcceptLanguage['en-US']]: {} as { [x: string]: { [x: string]: string } },
+  [EAcceptLanguage['vi-VN']]: {} as { [x: string]: { [x: string]: string } },
 };
 
-const addTranslation = (name: string, translation: { vi: { [x: string]: string }; en: { [x: string]: string } }) => {
-  resources.en[name] = translation.en;
-  resources.vi[name] = translation.vi;
+const addTranslation = (name: string, translation: TTranslation) => {
+  resources[EAcceptLanguage['en-US']][name] = translation[EAcceptLanguage['en-US']];
+  resources[EAcceptLanguage['vi-VN']][name] = translation[EAcceptLanguage['vi-VN']];
 };
 
-addTranslation('common', { en: common.en, vi: common.vi });
-addTranslation('login', { en: login.en, vi: login.vi });
-addTranslation('register', { en: register.en, vi: register.vi });
-addTranslation('notFound', { en: notFound.en, vi: notFound.vi });
+addTranslation('common', common);
+addTranslation('login', login);
+addTranslation('register', register);
+addTranslation('notFound', notFound);
 
 export default resources;

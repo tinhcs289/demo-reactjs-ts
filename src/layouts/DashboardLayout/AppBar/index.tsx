@@ -1,16 +1,17 @@
 import { ASIDE_MENU_WIDTH } from '@/layouts/DashboardLayout/constants';
 import { useDashboardLayoutContext } from '@/providers/DashboardLayoutProvider';
+import PATHS from '@/routes/paths';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import MenuIcon from '@mui/icons-material/Menu';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import type { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import MuiAppBar from '@mui/material/AppBar';
-import Badge from '@mui/material/Badge';
 import IconButton from '@mui/material/IconButton';
 import { styled, useTheme } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import type { FC } from 'react';
-import { useMemo, useCallback } from 'react';
+import type { FC, MouseEventHandler } from 'react';
+import { useCallback, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -42,6 +43,8 @@ const AppBar: FC<any> = (props) => {
     layoutState: { isAsideOpen, getPageTitle },
   } = useDashboardLayoutContext();
 
+  const navigate = useNavigate();
+
   const memoOpen = useMemo(() => {
     return !!isAsideOpen;
   }, [isAsideOpen]);
@@ -49,6 +52,15 @@ const AppBar: FC<any> = (props) => {
   const toggle = useCallback(() => {
     toggleAside?.();
   }, [toggleAside]);
+
+  const handleClickLogout: MouseEventHandler<HTMLButtonElement> = useCallback(
+    (event) => {
+      event?.stopPropagation?.();
+      event?.preventDefault?.();
+      navigate(PATHS.logout);
+    },
+    [navigate],
+  );
 
   const bar = useMemo(() => {
     return (
@@ -70,15 +82,13 @@ const AppBar: FC<any> = (props) => {
           <Typography component="h1" variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
             {getPageTitle()}
           </Typography>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
-            </Badge>
+          <IconButton color="inherit" onClick={handleClickLogout}>
+            <ExitToAppIcon />
           </IconButton>
         </Toolbar>
       </AppBarStyled>
     );
-  }, [theme, getPageTitle, memoOpen, toggle]);
+  }, [theme, getPageTitle, memoOpen, toggle, handleClickLogout]);
 
   return bar;
 };

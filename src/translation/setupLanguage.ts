@@ -1,4 +1,5 @@
 import language from '@/appLocalStorages/language';
+import { EAcceptLanguage } from '@/constants/EAcceptLanguage';
 import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
@@ -9,8 +10,8 @@ i18n
   .use(initReactI18next)
   .init({
     resources: resources,
-    lng: language.get() || 'vi',
-    fallbackLng: language.get() || 'vi',
+    lng: language.get() || EAcceptLanguage['vi-VN'],
+    fallbackLng: language.get() || EAcceptLanguage['vi-VN'],
     ns: ['common'],
     defaultNS: 'common',
     interpolation: {
