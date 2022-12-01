@@ -1,4 +1,7 @@
-import en from './en.json';
-import vi from './vi.json';
-const notFound = { en, vi };
+import en from './en-US.json';
+import vi from './vi-VN.json';
+import type { TTranslation } from '@/translation/_types';
+import { EAcceptLanguage } from '@/constants/EAcceptLanguage';
+
+const notFound: TTranslation = { [EAcceptLanguage['en-US']]: en, [EAcceptLanguage['vi-VN']]: vi };
 export default notFound;

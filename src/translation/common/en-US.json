@@ -4,5 +4,7 @@
   "pleaseSelect": "Please select",
   "invalidFormat": "Invalid format",
   "invalidPhone": "Invalid phone number",
-  "invalidEmail": "Invalid email address"
+  "invalidEmail": "Invalid email address",
+  "somethingWentWrong_pleaseTryAgainLater": "Something went wrong, please try again later",
+  "or": "or"
 }

@@ -4,5 +4,7 @@
   "pleaseSelect": "Vui lòng chọn",
   "invalidFormat": "Sai định dạng",
   "invalidPhone": "Số điện thoại không đúng",
-  "invalidEmail": "Email không đúng"
+  "invalidEmail": "Email không đúng",
+  "somethingWentWrong_pleaseTryAgainLater": "Đã xảy ra sự cố, vui lòng thử lại sau",
+  "or": "hoặc"
 }

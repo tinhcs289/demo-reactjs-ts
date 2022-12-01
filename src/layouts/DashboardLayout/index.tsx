@@ -3,7 +3,6 @@ import type { SxProps, Theme } from '@mui/material';
 import { useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
 import Toolbar from '@mui/material/Toolbar';
 import React from 'react';
 import { Outlet } from 'react-router-dom';
@@ -28,10 +27,8 @@ const Dashboard: React.FC<{ children?: React.ReactNode }> = (props) => {
       <AsideMenu />
       <Box component="main" sx={memoBoxSx}>
         <Toolbar />
-        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-          <Grid container spacing={3}>
-            <Outlet />
-          </Grid>
+        <Container maxWidth="lg" sx={{ my: theme.spacing(2) }}>
+          <Outlet />
         </Container>
       </Box>
     </Box>

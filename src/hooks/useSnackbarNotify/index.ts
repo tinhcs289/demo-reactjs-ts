@@ -22,6 +22,14 @@ const useSnackbarNotify = () => {
     });
   };
 
+  const showErrorNotify = (message: string, options?: Omit<OptionsObject, 'variant'>) => {
+    enqueueSnackbar(stringOrEmpty(message), {
+      autoHideDuration: 2000,
+      variant: SNACKBAR_VARIANT.ERROR,
+      ...options,
+    });
+  };
+
   const showWaringNotify = (message: string, options?: Omit<OptionsObject, 'variant'>) => {
     enqueueSnackbar(stringOrEmpty(message), {
       autoHideDuration: 2000,
@@ -38,6 +46,6 @@ const useSnackbarNotify = () => {
     });
   };
 
-  return { showNotify, showSuccessNotify, showWaringNotify, showInfoNotify };
+  return { showNotify, showSuccessNotify, showWaringNotify, showInfoNotify, showErrorNotify };
 };
 export default useSnackbarNotify;

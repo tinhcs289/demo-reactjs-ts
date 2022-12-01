@@ -1,27 +1,54 @@
+import loginApi from '@/api/authentication/loginApi';
+import authentication from '@/appCookies/authentication';
+import intOrDefault from '@/helpers/formatHelpers/intOrDefault';
+import useSnackbarNotify from '@/hooks/useSnackbarNotify';
 import PATHS from '@/routes/paths';
-import React from 'react';
+import type { AxiosResponse } from 'axios';
+import type { FC } from 'react';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { ILoginPageProps, TLoginFormData } from './_types';
 
-//TODO: need more work to do here:
-// call request api to login,
-// if request success, store `access token` to browser cookie.
-// reload login page
-// on page load of `AppRouter`, query `access token` from browser cookie
-// if token exsists, render private routes, if not, render public and auth routes.
 const redirectToNextPage = () => {
   if (!(!!window && !!window?.location && typeof window.location.replace === 'function')) return;
-
   window.location.replace(PATHS.dashboard);
 };
 
-const withLoginViaInternalApi = (WrappedComponent: React.FC<ILoginPageProps>) => (props: ILoginPageProps) => {
-  const { onRequestLoginViaSSO: _, ...otherProps } = props;
+const withLoginViaInternalApi = (WrappedComponent: FC<ILoginPageProps>) => (props: ILoginPageProps) => {
+  const { onRequestLoginViaSSO: _, loading: loadingProp, ...otherProps } = props;
 
-  const handleRequestLoginViaApi = (formData: TLoginFormData) => {
-    //TODO: logic submit to api here
-    redirectToNextPage();
+  const { t } = useTranslation();
+
+  const [loading, setLoading] = useState<boolean>(!!loadingProp);
+
+  const { showErrorNotify } = useSnackbarNotify();
+
+  const handleRequestLoginViaApi = async (fd: TLoginFormData): Promise<void> => {
+    if (!fd?.Account || !fd?.Password) return;
+    try {
+      const res = await loginApi({
+        username: fd?.Account,
+        password: fd?.Password,
+      });
+
+      if (res?.status !== 200 || !res?.data?.jwt?.accessToken || !res?.data?.jwt?.refreshToken) throw res;
+
+      authentication.set(res.data.jwt);
+      redirectToNextPage();
+    } catch (error) {
+      console.log(error);
+      const httpCode = (error as AxiosResponse<any, any>)?.status;
+
+      showErrorNotify(
+        `code: ${intOrDefault(httpCode)}, ${t('login:invalidAccountOrPassword')} ${t('or')} ${t(
+          'somethingWentWrong_pleaseTryAgainLater',
+        )}`,
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
-  return <WrappedComponent {...otherProps} onSubmitLoginForm={handleRequestLoginViaApi} />;
+  return <WrappedComponent {...otherProps} loading={loading} onSubmitLoginForm={handleRequestLoginViaApi} />;
 };
 export default withLoginViaInternalApi;
