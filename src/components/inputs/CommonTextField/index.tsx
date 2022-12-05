@@ -2,10 +2,11 @@ import InputErrorTextWithIcon from '@/components/inputs/InputErrorTextWithIcon';
 import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 import debounce from 'lodash/debounce';
-import React from 'react';
+import type { FC, Ref } from 'react';
+import { forwardRef, useMemo } from 'react';
 import type { TCommonTextFieldProps } from './_types';
 
-const CommonTextField: React.FC<TCommonTextFieldProps> = (props) => {
+const CommonTextField: FC<TCommonTextFieldProps> = forwardRef((props, ref?: Ref<any>) => {
   const { errorText, error, InputProps, ...otherProps } = props;
   return (
     <TextField
@@ -13,8 +14,10 @@ const CommonTextField: React.FC<TCommonTextFieldProps> = (props) => {
       margin="none"
       variant="outlined"
       color="primary"
+      ref={ref}
       fullWidth
       error={error}
+      // InputLabelProps={{ shrink: true }}
       {...otherProps}
       InputProps={{
         ...InputProps,
@@ -30,14 +33,14 @@ const CommonTextField: React.FC<TCommonTextFieldProps> = (props) => {
       }}
     />
   );
-};
+});
 export default CommonTextField;
 
 const withDebounceChangeHandler =
-  (ms: number) => (WrappedComponent: React.FC<TCommonTextFieldProps>) => (props: TCommonTextFieldProps) => {
+  (ms: number) => (WrappedComponent: FC<TCommonTextFieldProps>) => (props: TCommonTextFieldProps) => {
     const { value, defaultValue, ...otherProps } = props;
 
-    const handleChangeDelay = React.useMemo(() => {
+    const handleChangeDelay = useMemo(() => {
       return debounce((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         props?.onChange?.(e);
       }, ms);

@@ -8,6 +8,7 @@ import type { FC } from 'react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { ILoginPageProps, TLoginFormData } from './_types';
+import { default as authenticationInLocalStorage } from '@/appLocalStorages/authentication';
 
 const redirectToNextPage = () => {
   if (!(!!window && !!window?.location && typeof window.location.replace === 'function')) return;
@@ -34,6 +35,7 @@ const withLoginViaInternalApi = (WrappedComponent: FC<ILoginPageProps>) => (prop
       if (res?.status !== 200 || !res?.data?.jwt?.accessToken || !res?.data?.jwt?.refreshToken) throw res;
 
       authentication.set(res.data.jwt);
+      authenticationInLocalStorage.set(res.data.jwt);
       redirectToNextPage();
     } catch (error) {
       console.log(error);

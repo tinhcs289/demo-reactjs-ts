@@ -1,29 +1,14 @@
-import { useTheme } from '@mui/material';
-import Box from '@mui/material/Box';
+import type { BackdropProps } from '@mui/material/Backdrop';
+import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import React from 'react';
 
-const CommonFallback: React.FC<any> = (props) => {
-  const theme = useTheme();
+const CommonFallback: React.FC<Omit<BackdropProps, 'open'> & { icon?: JSX.Element }> = (props) => {
+  const { icon, sx, ...otherProps } = props;
   return (
-    <Box
-      sx={{
-        height: '100vh',
-        width: '100vw',
-        background: theme.palette.background.paper,
-        position: 'relative',
-      }}
-    >
-      <CircularProgress
-        color="primary"
-        sx={{
-          position: 'absolute',
-          left: '50%',
-          top: '50%',
-          transform: 'translateX(-50%) translateY(-50%)',
-        }}
-      />
-    </Box>
+    <Backdrop open {...otherProps} sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1, ...sx }}>
+      {icon || <CircularProgress color="inherit" />}
+    </Backdrop>
   );
 };
 export default CommonFallback;

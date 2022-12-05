@@ -1,20 +1,22 @@
+import withHOCs from '@/hocs/withHocs';
+import withAuthChangeWarning from '@/layouts/AuthLayout/withAuthChangeWarning';
 import type { SxProps, Theme } from '@mui/material';
 import { useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import React from 'react';
+import { FC, useMemo } from 'react';
+import { Outlet } from 'react-router-dom';
 import { SIDE_LAYOUT_BG } from './constants';
 import type { IAuthLayoutProps } from './_types';
-import { Outlet } from 'react-router-dom';
 
-const AuthLayout: React.FC<IAuthLayoutProps> = (props) => {
+const AuthLayout: FC<IAuthLayoutProps> = withHOCs(withAuthChangeWarning)((props) => {
   const { variant } = props;
 
   const theme = useTheme();
 
-  const backgroundSx: SxProps<Theme> = React.useMemo(() => {
+  const backgroundSx: SxProps<Theme> = useMemo(() => {
     return {
       backgroundImage: `url(${SIDE_LAYOUT_BG})`,
       backgroundRepeat: 'no-repeat',
@@ -24,7 +26,7 @@ const AuthLayout: React.FC<IAuthLayoutProps> = (props) => {
     };
   }, [theme]);
 
-  const boxSx: SxProps<Theme> = React.useMemo(() => {
+  const boxSx: SxProps<Theme> = useMemo(() => {
     return {
       my: theme.spacing(2),
       mx: theme.spacing(1),
@@ -38,7 +40,7 @@ const AuthLayout: React.FC<IAuthLayoutProps> = (props) => {
 
   return (
     <>
-      {React.useMemo(() => {
+      {useMemo(() => {
         if (variant === 'fullWidth')
           return (
             <Container component="main" maxWidth="xs">
@@ -64,5 +66,5 @@ const AuthLayout: React.FC<IAuthLayoutProps> = (props) => {
       }, [variant, boxSx, backgroundSx])}
     </>
   );
-};
+});
 export default AuthLayout;
