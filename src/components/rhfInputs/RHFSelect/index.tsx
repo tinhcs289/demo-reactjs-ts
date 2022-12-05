@@ -1,11 +1,11 @@
 import CommonSelectField from '@/components/inputs/CommonSelectField';
 import type { TAutoCompleteOption } from '@/components/inputs/CommonSelectField/_types';
 import arrayOrEmpty from '@/helpers/formatHelpers/arrayOrEmpty';
-import React from 'react';
+import type { FC } from 'react';
 import { Controller } from 'react-hook-form';
 import type { TRHFSelectProps } from './_types';
 
-const RHFSelect: React.FC<TRHFSelectProps> = (props) => {
+const RHFSelect: FC<TRHFSelectProps> = (props) => {
   const {
     name,
     multiple,
@@ -25,7 +25,7 @@ const RHFSelect: React.FC<TRHFSelectProps> = (props) => {
           onBlur,
           value,
           // name,
-          // ref,
+          ref,
         },
         fieldState: {
           invalid,
@@ -36,6 +36,7 @@ const RHFSelect: React.FC<TRHFSelectProps> = (props) => {
       }) => {
         return (
           <CommonSelectField
+            ref={ref}
             multiple={multiple}
             value={value}
             defaultValue={

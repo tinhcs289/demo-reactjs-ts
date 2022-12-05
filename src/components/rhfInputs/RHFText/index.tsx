@@ -24,11 +24,11 @@ const RHFText: React.FC<TRHFTextProps> = (props) => {
       }) => (
         <CommonTextField
           name={name}
-          value={value}
+          value={value || ''}
           {...(!!defaultValue ? { defaultValue } : {})}
           onChange={onChange}
           onBlur={onBlur}
-          inputRef={ref}
+          ref={ref}
           error={invalid}
           {...(!!rules?.required
             ? {

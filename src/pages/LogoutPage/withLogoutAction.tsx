@@ -1,13 +1,13 @@
-import PATHS from '@/routes/paths';
-import { useState } from 'react';
-import type { FC } from 'react';
-import type { ILogoutPage } from './_types';
-import authentication from '@/appCookies/authentication';
 import logoutApi from '@/api/authentication/logoutApi';
+import authentication from '@/appCookies/authentication';
+import PATHS from '@/routes/paths';
+import type { FC } from 'react';
+import { useState } from 'react';
+import type { ILogoutPage } from './_types';
+import { default as authenticationInLocalStorage } from '@/appLocalStorages/authentication';
 
 const redirectToNextPage = () => {
   if (!(!!window && !!window?.location && typeof window.location.replace === 'function')) return;
-
   window.location.replace(PATHS.login);
 };
 
@@ -24,7 +24,8 @@ const withLogoutAction = (WrappedComponent: FC<ILogoutPage>) => (props: ILogoutP
       console.log(error);
     } finally {
       setLoading(false);
-      authentication.set(null);
+      authentication.clear();
+      authenticationInLocalStorage.set(null);
       redirectToNextPage();
     }
   };
