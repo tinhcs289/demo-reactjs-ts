@@ -9,11 +9,12 @@ import type {
 import Autocomplete from '@mui/material/Autocomplete';
 import CircularProgress from '@mui/material/CircularProgress';
 import debounce from 'lodash/debounce';
-import React from 'react';
+import type { FC, SyntheticEvent, Ref } from 'react';
+import { useMemo, forwardRef } from 'react';
 import defaultRenderOption from './defaultRenderOption';
 import type { TAutoCompleteOption, TCommonSelectFieldProps } from './_types';
 
-const CommonSelectField: React.FC<TCommonSelectFieldProps> = (props) => {
+const CommonSelectField: FC<TCommonSelectFieldProps> = forwardRef((props, ref?: Ref<unknown>) => {
   const {
     multiple,
     label,
@@ -32,21 +33,21 @@ const CommonSelectField: React.FC<TCommonSelectFieldProps> = (props) => {
     ...otherProps
   } = props;
 
-  const memoOptions = React.useMemo(() => {
+  const memoOptions = useMemo(() => {
     return arrayOrEmpty(propOptions);
   }, [propOptions]);
 
-  const memoRenderOption = React.useMemo(() => {
+  const memoRenderOption = useMemo(() => {
     if (typeof renderOption === 'function') return renderOption;
     return defaultRenderOption;
   }, [renderOption]);
 
-  const memoGetOptionLabel = React.useMemo(() => {
+  const memoGetOptionLabel = useMemo(() => {
     if (typeof getOptionLabel === 'function') return getOptionLabel;
     return (option: string | TAutoCompleteOption) => (typeof option === 'string' ? option : option?.label || '');
   }, [getOptionLabel]);
 
-  const memoRenderTags = React.useMemo(() => {
+  const memoRenderTags = useMemo(() => {
     if (typeof renderTags === 'function') return renderTags;
     return (
       v: TAutoCompleteOption[],
@@ -63,8 +64,8 @@ const CommonSelectField: React.FC<TCommonSelectFieldProps> = (props) => {
     };
   }, [renderTags, memoGetOptionLabel, color]);
 
-  const handleChangeTextDelay = React.useMemo(() => {
-    return debounce((e: React.SyntheticEvent<Element, Event>, v: string, r: AutocompleteInputChangeReason) => {
+  const handleChangeTextDelay = useMemo(() => {
+    return debounce((e: SyntheticEvent<Element, Event>, v: string, r: AutocompleteInputChangeReason) => {
       onInputChange?.(e, v, r);
     }, 400);
   }, [onInputChange]);
@@ -83,6 +84,7 @@ const CommonSelectField: React.FC<TCommonSelectFieldProps> = (props) => {
       onInputChange={handleChangeTextDelay}
       renderOption={memoRenderOption}
       disableCloseOnSelect={!!multiple}
+      ref={ref}
       renderInput={(params) => (
         <CommonTextField
           {...params}
@@ -113,5 +115,5 @@ const CommonSelectField: React.FC<TCommonSelectFieldProps> = (props) => {
       )}
     />
   );
-};
+});
 export default CommonSelectField;

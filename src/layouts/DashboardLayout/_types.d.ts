@@ -43,3 +43,5 @@ export type TMenuItemProps = {
   open?: boolean;
   depth: number;
 };
+
+export type TDashboardProps = { children?: ReactNode };
