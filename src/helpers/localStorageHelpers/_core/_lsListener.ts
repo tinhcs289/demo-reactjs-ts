@@ -1,13 +1,36 @@
 import localStorageUpdateItem from './localStorageUpdateItem';
 import localStorageGetItem from './localStorageGetItem';
 import isEqual from 'lodash/isEqual';
-import type { TLsSyncKey, TLsChangeEvent, TLsSyncItem, TLsChangeEventValue } from './_types';
+import type { TLsSyncKey, TLsChangeEvent, TLsSyncItem, TLsChangeEventValue } from '../_types';
 
+let isInitialized = false;
 const prefix = 'lsSync:';
 const prefixEventName = 'ls:changes';
 const defaultSyncValue = 'lsSync:default';
+
+/**
+ * Array of items which used to compare with values in LS
+ */
 const initializedKeys: TLsSyncKey[] = [];
-let isInitialized = false;
+
+/**
+ * Array of item keys which is marked as stop event-listener in current tab
+ */
+let stopList: string[] = [];
+
+const __markStopListen = (key: string) => {
+  if (!key || stopList.includes(key)) return;
+  stopList.push(key);
+};
+
+const __unmarkStopListen = (key: string) => {
+  if (!key || !stopList.includes(key)) return;
+  stopList = stopList.filter((k) => k !== key);
+};
+
+const __isMarkStopListen = (key: string) => {
+  return !!key && stopList.includes(key);
+};
 
 const __setSyncItem = (key: string, value: string) => {
   if (!key) return;
@@ -145,8 +168,16 @@ export const newLocalStorageListenableItem = <T>(args: { key: string }): TLsSync
       if (!value || value === defaultSyncValue) return null;
       return __extractJsonValue<T>(value);
     },
-    set: (value: T | null | undefined) => __setSyncItem(syncKey, JSON.stringify(value || defaultSyncValue)),
+    set: (value: T | null | undefined, stopListenerInThisTab?: boolean) => {
+      if (stopListenerInThisTab) __markStopListen(syncKey);
+      __setSyncItem(syncKey, JSON.stringify(value || defaultSyncValue));
+    },
     onChange: (handler: (event: TLsChangeEvent, value: TLsChangeEventValue<T>) => void) => {
+      if (__isMarkStopListen(syncKey)) {
+        __unmarkStopListen(syncKey);
+        return;
+      }
+
       if (!handler) return;
 
       __addLocalStorageListener(syncKey, (event: TLsChangeEvent) => {
