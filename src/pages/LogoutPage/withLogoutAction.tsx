@@ -23,10 +23,10 @@ const withLogoutAction = (WrappedComponent: FC<ILogoutPage>) => (props: ILogoutP
     } catch (error) {
       console.log(error);
     } finally {
-      setLoading(false);
       authentication.clear();
-      authenticationInLocalStorage.set(null);
+      authenticationInLocalStorage.set(null, true);
       redirectToNextPage();
+      setLoading(false);
     }
   };
 

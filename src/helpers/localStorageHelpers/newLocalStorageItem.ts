@@ -1,6 +1,6 @@
-import localStorageGetItem from '@/helpers/localStorageHelpers/localStorageGetItem';
-import localStorageUpdateItem from '@/helpers/localStorageHelpers/localStorageUpdateItem';
-import localStorageRemoveItem from '@/helpers/localStorageHelpers/localStorageRemoveItem';
+import localStorageGetItem from '@/helpers/localStorageHelpers/_core/localStorageGetItem';
+import localStorageUpdateItem from '@/helpers/localStorageHelpers/_core/localStorageUpdateItem';
+import localStorageRemoveItem from '@/helpers/localStorageHelpers/_core/localStorageRemoveItem';
 import type { TLsItem } from '@/helpers/localStorageHelpers/_types';
 
 const newLocalStorageItem = <T>(args: { key: string } & Partial<Omit<TLsItem<T>, 'key'>>): TLsItem<T> => {

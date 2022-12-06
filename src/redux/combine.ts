@@ -1,5 +1,5 @@
 import snackbar from '@/redux/snackbar';
-import sessionTimeout from '@/redux/sessionTimeout';
+import session from '@/redux/session';
 
-const combine = [snackbar, sessionTimeout];
+const combine = [snackbar, session];
 export default combine;

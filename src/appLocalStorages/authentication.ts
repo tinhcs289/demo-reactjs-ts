@@ -1,4 +1,4 @@
-import { newLocalStorageListenableItem } from '@/helpers/localStorageHelpers/localStorageSync';
+import newLocalStorageListenableItem from '@/helpers/localStorageHelpers/newLocalStorageListenableItem';
 import { TAuthenticationJWT } from '@/_types/TAuthentication';
 
 /**
