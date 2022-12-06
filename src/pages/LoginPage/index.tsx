@@ -25,7 +25,7 @@ const LoginPage: React.FC<ILoginPageProps> = withHOCs(
   withLoginViaInternalApi,
   withLoginViaSSO,
 )((props) => {
-  const { onSubmitLoginForm } = props;
+  const { onSubmitLoginForm, loading } = props;
 
   const theme = useTheme();
 
@@ -57,6 +57,7 @@ const LoginPage: React.FC<ILoginPageProps> = withHOCs(
           label={t('login:account')}
           control={control}
           rules={required(t('common:pleaseEnter'))}
+          disabled={!!loading}
           sx={{
             mb: theme.spacing(3),
           }}
@@ -67,12 +68,13 @@ const LoginPage: React.FC<ILoginPageProps> = withHOCs(
           type="password"
           control={control}
           rules={required(t('common:pleaseEnter'))}
+          disabled={!!loading}
           sx={{
             mb: theme.spacing(3),
           }}
         />
-        <RHFCheck control={control} name="RememberMe" label={t('login:rememberMe')} />
-        <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+        <RHFCheck control={control} name="RememberMe" label={t('login:rememberMe')} disabled={!!loading} />
+        <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} disabled={!!loading}>
           {t('login:login')}
         </Button>
         <Grid container>

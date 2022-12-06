@@ -1,6 +1,6 @@
 import refreshAuthenticateTokenApi from '@/api/authentication/refreshAuthenticateTokenApi';
 import authentication from '@/appCookies/authentication';
-import showSessionTimeoutWarning from '@/redux/sessionTimeout/actions/showSessionTimeoutWarning';
+import showSessionTimeoutWarning from '@/redux/session/actions/showSessionTimeoutWarning';
 import store from '@/redux/store';
 import type { AxiosError, AxiosResponse } from 'axios';
 import Axios from 'axios';

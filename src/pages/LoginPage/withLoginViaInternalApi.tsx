@@ -35,7 +35,7 @@ const withLoginViaInternalApi = (WrappedComponent: FC<ILoginPageProps>) => (prop
       if (res?.status !== 200 || !res?.data?.jwt?.accessToken || !res?.data?.jwt?.refreshToken) throw res;
 
       authentication.set(res.data.jwt);
-      authenticationInLocalStorage.set(res.data.jwt);
+      authenticationInLocalStorage.set(res.data.jwt, true);
       redirectToNextPage();
     } catch (error) {
       console.log(error);

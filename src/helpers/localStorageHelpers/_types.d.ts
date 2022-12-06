@@ -19,6 +19,20 @@ export type TLsItem<T> = {
   clear: () => void;
 };
 
-export type TLsSyncItem<T> = Omit<TLsItem<T>, 'clear'> & {
-  onChange: (handler: (event: TLsChangeEvent, detail: TLsChangeEventValue<T>) => void) => void;
+export type TLsChangeHandler<DetailType> = (event: TLsChangeEvent, detail: TLsChangeEventValue<DetailType>) => void;
+
+export type TLsSyncItem<DetailType> = {
+  key: string;
+  get: () => DetailType | null | undefined;
+  /**
+   * @example 
+      auth.set(jwt)
+      // used for normal cases the change event will affect all tabs which subscribe to changes of `auth`
+   * @example 
+      auth.set(jwt, true) 
+      // the listener for `auth` in the current tab will be stopped till the next change happen.
+      // used in case the change event will affect other tabs not the current
+   */
+  set: (value: DetailType | null | undefined, stopListenerInThisTab?: boolean) => void;
+  onChange: (handler: TLsChangeHandler<DetailType>) => void;
 };

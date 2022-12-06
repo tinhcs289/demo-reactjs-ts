@@ -4,7 +4,7 @@ import createSagaMiddleware from 'redux-saga';
 import { all, fork } from 'redux-saga/effects';
 import { combineReducers } from 'redux';
 import { default as reducers } from './combine';
-import getEnviromentName from '@/enviroments/getEnviromentName';
+import getEnviromentName from '@/environments/getEnvironmentName';
 
 const combine = {} as { [x: string]: any };
 reducers.forEach((c) => {

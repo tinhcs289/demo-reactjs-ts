@@ -1,4 +1,4 @@
-import getEnviromentName from '@/enviroments/getEnviromentName';
+import getEnviromentName from '@/environments/getEnvironmentName';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
@@ -10,7 +10,7 @@ import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
-console.log(`---- env: ${getEnviromentName()} ----`);
+console.log(`---- environment: ${getEnviromentName()} ----`);
 
 root.render(<App />);
 reportWebVitals();
