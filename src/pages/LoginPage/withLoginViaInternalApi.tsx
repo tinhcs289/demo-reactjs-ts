@@ -1,6 +1,8 @@
 import loginApi from '@/api/authentication/loginApi';
 import authentication from '@/appCookies/authentication';
+import { default as authenticationInLocalStorage } from '@/appLocalStorages/authentication';
 import intOrDefault from '@/helpers/formatHelpers/intOrDefault';
+import useReturnUrlHash from '@/hooks/useReturnUrlHash';
 import useSnackbarNotify from '@/hooks/useSnackbarNotify';
 import PATHS from '@/routes/paths';
 import type { AxiosResponse } from 'axios';
@@ -8,15 +10,16 @@ import type { FC } from 'react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { ILoginPageProps, TLoginFormData } from './_types';
-import { default as authenticationInLocalStorage } from '@/appLocalStorages/authentication';
 
-const redirectToNextPage = () => {
+const redirectToNextPage = (returnUri?: string) => {
   if (!(!!window && !!window?.location && typeof window.location.replace === 'function')) return;
-  window.location.replace(PATHS.dashboard);
+  window.location.replace(returnUri || PATHS.dashboard);
 };
 
 const withLoginViaInternalApi = (WrappedComponent: FC<ILoginPageProps>) => (props: ILoginPageProps) => {
-  const { onRequestLoginViaSSO: _, loading: loadingProp, ...otherProps } = props;
+  const { onRequestLoginViaSSO: _, loading: loadingProp, returnUri: returnUriProp, ...otherProps } = props;
+
+  const returnUri = useReturnUrlHash();
 
   const { t } = useTranslation();
 
@@ -36,7 +39,7 @@ const withLoginViaInternalApi = (WrappedComponent: FC<ILoginPageProps>) => (prop
 
       authentication.set(res.data.jwt);
       authenticationInLocalStorage.set(res.data.jwt, true);
-      redirectToNextPage();
+      redirectToNextPage(returnUri || returnUriProp);
     } catch (error) {
       console.log(error);
       const httpCode = (error as AxiosResponse<any, any>)?.status;

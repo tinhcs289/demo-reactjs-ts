@@ -1,5 +1,7 @@
 import authentication from '@/appCookies/authentication';
 import CommonFallback from '@/components/CommonFallback';
+import toEncodeUri from '@/helpers/stringHelpers/toEncodeUri';
+import useReturnUrlHashBuilder from '@/hooks/useReturnUrlHashBuilder';
 import AuthLayout from '@/layouts/AuthLayout';
 import DashboardLayout from '@/layouts/DashboardLayout';
 import LandingLayout from '@/layouts/LandingLayout';
@@ -15,6 +17,8 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 const AppRouter: FC<BrowserRouterProps> = (props) => {
   const accessToken = authentication.get()?.accessToken;
+
+  const { buildReturnHash } = useReturnUrlHashBuilder();
 
   if (!accessToken)
     return (
@@ -43,6 +47,16 @@ const AppRouter: FC<BrowserRouterProps> = (props) => {
                 );
               })}
             </Route>
+            {privateRoutes.map((route: TRouteConfig) => {
+              const returnHash = buildReturnHash(route);
+              return (
+                <Route
+                  key={route.name}
+                  path={route.path}
+                  element={<Navigate to={toEncodeUri(PATHS.login, returnHash)} replace />}
+                />
+              );
+            })}
             <Route path="*" element={<Navigate to={PATHS.notfound} replace />} />
           </Routes>
         </Suspense>
