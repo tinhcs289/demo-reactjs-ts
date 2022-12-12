@@ -1,13 +1,14 @@
-import arrayOrEmpty from '@/helpers/formatHelpers/arrayOrEmpty';
-import render from '@/helpers/reactHelpers/render';
+import CheckCell from '@/components/CommonTable/components/CheckCell';
+import newGuid from '@/helpers/stringHelpers/newGuid';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import { Fragment, useCallback, useMemo } from 'react';
+import type { Ref } from 'react';
+import { forwardRef, Fragment, useCallback, useMemo } from 'react';
+import { renderBodyCell, renderHeadCell } from './_functions';
 import type { ICommonTableConfig, ICommonTableProps } from './_types';
 
 /**
@@ -15,52 +16,53 @@ import type { ICommonTableConfig, ICommonTableProps } from './_types';
     <CommonTable
         rows={rows}
         config={[
-        {
-            field: 'name',
-            headCell: '1',
-            headCellProps: {
-            align: 'left',
-            },
-            bodyCellProps: {
-            align: 'left',
-            },
-        },
-        {
-            field: 'calories',
-            headCell: <TableCell>2</TableCell>,
-            headCellProps: {
-            align: 'right',
-            },
-            bodyCell: CustomCell2,
-            bodyCellProps: {
-            align: 'right',
-            },
-        },
-        {
-            field: 'carbs',
-            headCell: CustomCell,
-            headCellProps: {
-            align: 'right',
-            },
-            bodyCellProps: {
-            align: 'right',
-            },
-        },
-        {
-            field: 'fat',
-            headCell: CustomCell2,
-            headCellProps: {
-            align: 'right',
-            },
-            bodyCellProps: {
-            align: 'right',
-            },
-        },
+          {
+              field: 'name',
+              headCell: '1',
+              headCellProps: {
+              align: 'left',
+              },
+              bodyCellProps: {
+              align: 'left',
+              },
+          },
+          {
+              field: 'calories',
+              headCell: <TableCell>2</TableCell>,
+              headCellProps: {
+              align: 'right',
+              },
+              bodyCell: CustomCell2,
+              bodyCellProps: {
+              align: 'right',
+              },
+          },
+          {
+              field: 'carbs',
+              headCell: CustomCell,
+              headCellProps: {
+              align: 'right',
+              },
+              bodyCellProps: {
+              align: 'right',
+              },
+          },
+          {
+              field: 'fat',
+              headCell: CustomCell2,
+              headCellProps: {
+              align: 'right',
+              },
+              bodyCellProps: {
+              align: 'right',
+              },
+          },
         ]}
     />
  */
-function CommonTable<T extends Record<string, any>>(props: ICommonTableProps<T>) {
+function CommonTableFC<T extends Record<string, any>>(props: ICommonTableProps<T>, ref?: Ref<HTMLDivElement>) {
   const {
+    rows,
     containerProps,
     tableProps,
     tableHeadProps,
@@ -68,93 +70,159 @@ function CommonTable<T extends Record<string, any>>(props: ICommonTableProps<T>)
     tableBodyProps,
     tableBodyRowProps,
     config,
-    rows,
     children,
+    selectable,
   } = props;
 
+  //#region memo props
+  const memoContainerProps = useMemo(() => {
+    return containerProps;
+  }, [containerProps]);
+
+  const memoTableProps = useMemo(() => {
+    return tableProps;
+  }, [tableProps]);
+
+  const memoTableHeadProps = useMemo(() => {
+    return tableHeadProps;
+  }, [tableHeadProps]);
+
+  const memoTableHeadRowProps = useMemo(() => {
+    return tableHeadRowProps;
+  }, [tableHeadRowProps]);
+
+  const isCheckAll = useMemo(() => {
+    return selectable?.isCheckAll;
+  }, [selectable?.isCheckAll]);
+
   const memoConfig = useMemo(() => {
-    return arrayOrEmpty(config);
+    return config || [];
   }, [config]);
 
   const memoRows = useMemo(() => {
-    return arrayOrEmpty(rows);
+    return rows || [];
   }, [rows]);
+  //#endregion
 
-  const renderHeadCell = (head: ICommonTableConfig<T>) => {
-    if (!head || head?.isHide || !head?.headCell) return null;
+  //#region action
+  const checkAll = useCallback(
+    (checked: boolean) => {
+      selectable?.onCheckAll?.(checked);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [selectable?.onCheckAll],
+  );
 
-    if (typeof head.headCell === 'string' || typeof head.headCell === 'number' || typeof head.headCell === 'boolean') {
-      return <TableCell {...head.headCellProps}>{head.headCell}</TableCell>;
-    }
+  const checkRow = useCallback(
+    (row: T) => {
+      return (checked: boolean) => {
+        selectable?.onCheckRow?.(row);
+      };
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [selectable?.onCheckRow],
+  );
 
-    return render(head.headCell, head.headCellProps);
-  };
+  const isSelected = useCallback(
+    (row: T) => {
+      return selectable?.isRowSelected?.(row) === true;
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [selectable?.isRowSelected],
+  );
+  //#endregion
 
-  const renderBodyCell = (cell: ICommonTableConfig<T>, row: T) => {
-    if (!row || !cell || cell?.isHide) return null;
+  //#region Render body
+  const renderRowSelectBox = useCallback(
+    (row: T) => {
+      if (typeof isCheckAll !== 'boolean') return null;
 
-    const _cellProps = !!cell.bodyCellProps
-      ? typeof cell.bodyCellProps === 'function'
-        ? cell.bodyCellProps(row)
-        : cell.bodyCellProps
-      : undefined;
+      if (isCheckAll) return <CheckCell checked onChange={checkRow(row)} />;
 
-    if (!!cell.bodyCell) return render(cell.bodyCell, { ..._cellProps, row });
+      let checked = isSelected(row);
+      return <CheckCell checked={checked} onChange={checkRow(row)} />;
+    },
+    [isCheckAll, checkRow, isSelected],
+  );
 
-    if (typeof cell.field === 'string') return <TableCell {..._cellProps}>{row[cell.field] || ''}</TableCell>;
-
-    return null;
-  };
+  const renderRowCellList = useCallback(
+    (row: T) => {
+      console.log(`-> render row ${row?.id} cells`);
+      return memoConfig.map((cell) => {
+        console.log(` ------- render cell ${cell._key}`);
+        return <Fragment key={cell._key}>{renderBodyCell(cell, row)}</Fragment>;
+      });
+    },
+    [memoConfig],
+  );
 
   const renderRow = useCallback(
-    (row: T) => {
+    (row: T, index: number, rows: T[]) => {
       if (!row) return null;
       const _rowProps = typeof tableBodyRowProps === 'function' ? tableBodyRowProps(row) : tableBodyRowProps;
+      const key = row?.id || index;
 
       return (
-        <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }} {..._rowProps}>
-          {memoConfig.map((cell, cellIndex) => {
-            return <Fragment key={cellIndex}>{renderBodyCell(cell, row)}</Fragment>;
-          })}
+        <TableRow
+          key={key}
+          id={`common-table-row--${key}`}
+          sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+          {..._rowProps}
+        >
+          {renderRowSelectBox(row)}
+          {renderRowCellList(row)}
         </TableRow>
       );
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [memoConfig, tableBodyRowProps],
+    [memoConfig, tableBodyRowProps, renderRowSelectBox],
   );
 
+  const memoRowsRender = useMemo(() => {
+    return <>{memoRows.map(renderRow)}</>;
+  }, [memoRows, renderRow]);
+
+  const memoBodyRender = useMemo(() => {
+    return <TableBody {...tableBodyProps}>{!children ? memoRowsRender : children}</TableBody>;
+  }, [tableBodyProps, children, memoRowsRender]);
+  //#endregion
+
+  //#region Header render
+  const checkAllRender = useMemo(() => {
+    if (typeof isCheckAll !== 'boolean') return null;
+    return <CheckCell checked={isCheckAll} onChange={checkAll} />;
+  }, [isCheckAll, checkAll]);
+
+  const headerCellListRender = useMemo(() => {
+    return memoConfig.map((config) => {
+      console.log('render head item');
+      return <Fragment key={config._key}>{renderHeadCell(config)}</Fragment>;
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  //#endregion
+
   return (
-    <TableContainer component={Paper} {...containerProps}>
-      <Table {...tableProps}>
-        {useMemo(() => {
-          return (
-            <TableHead {...tableHeadProps}>
-              <TableRow {...tableHeadRowProps}>
-                {memoConfig.map((c, i) => {
-                  return <Fragment key={i}>{renderHeadCell(c)}</Fragment>;
-                })}
-              </TableRow>
-            </TableHead>
-          );
-          // eslint-disable-next-line react-hooks/exhaustive-deps
-        }, [tableHeadProps, memoConfig, tableHeadRowProps])}
-        {useMemo(() => {
-          return (
-            <TableBody {...tableBodyProps}>
-              {!!children ? (
-                <>{children}</>
-              ) : (
-                <>
-                  {memoRows.map((row, rowIndex) => {
-                    return <Fragment key={rowIndex}>{renderRow(row)}</Fragment>;
-                  })}
-                </>
-              )}
-            </TableBody>
-          );
-        }, [tableBodyProps, memoRows, children, renderRow])}
+    <TableContainer ref={ref} component={Paper} {...memoContainerProps}>
+      <Table {...memoTableProps}>
+        <TableHead {...memoTableHeadProps}>
+          <TableRow {...memoTableHeadRowProps}>
+            {checkAllRender}
+            {headerCellListRender}
+          </TableRow>
+        </TableHead>
+        {memoBodyRender}
       </Table>
     </TableContainer>
   );
 }
+const CommonTable = forwardRef(CommonTableFC) as <T extends Record<string, any>>(
+  props: ICommonTableProps<T>,
+  ref?: Ref<HTMLDivElement>,
+) => JSX.Element;
 export default CommonTable;
+export const tableConfig = <T extends Record<string, any>>(
+  ...headers: Array<Omit<ICommonTableConfig<T>, '_key'>>
+): Array<ICommonTableConfig<T>> => {
+  return headers.map((head) => ({ ...head, _key: newGuid() }));
+};

@@ -19,3 +19,22 @@ export enum ERequestStatus {
   REQUESTSUCCESS = 3,
   REQUESTFAIL = 4,
 }
+
+export const DEFAULT_DATA = {
+  data: [],
+  listState: {
+    totalCount: 0,
+    pageIndex: 1,
+    pageSize: 10,
+    sortBy: undefined,
+    sortDirection: undefined,
+    moreFilter: {},
+  },
+  fetchState: ERequestStatus.NONE,
+  interactItem: null,
+  anchorEl: null,
+  itemAction: ACTION.NONE,
+  selectable: false,
+  selectedItems: [],
+  checkAll: false,
+};

@@ -1,4 +1,5 @@
-import React, { createContext, useCallback, useContext, useRef, useSyncExternalStore } from 'react';
+import type { ReactNode } from 'react';
+import { createContext, useCallback, useContext, useRef, useSyncExternalStore } from 'react';
 
 /**
  * @example
@@ -20,6 +21,9 @@ import React, { createContext, useCallback, useContext, useRef, useSyncExternalS
     };
  */
 export default function createFastContext<Store>(initialState: Store) {
+  /**
+   * @note there is a hook in `@/hooks` do the same thing, `usePubSubDataStore`
+   */
   function useStoreData(): {
     get: () => Store;
     set: (value: Partial<Store>) => void;
@@ -52,7 +56,7 @@ export default function createFastContext<Store>(initialState: Store) {
 
   const StoreContext = createContext<UseStoreDataReturnType | null>(null);
 
-  function Provider({ children }: { children: React.ReactNode }) {
+  function Provider({ children }: { children: ReactNode }) {
     return <StoreContext.Provider value={useStoreData()}>{children}</StoreContext.Provider>;
   }
 
@@ -63,6 +67,13 @@ export default function createFastContext<Store>(initialState: Store) {
     if (!store) {
       throw new Error('Store not found');
     }
+
+    // this is exactly what `useSyncExternalStore` do.
+    // =>
+    // const [state, setState] = useState(store.get());
+    // useEffect(() => {
+    //  return store.subscribe(() => setState(store.get()));
+    // }, []);
 
     const state = useSyncExternalStore(
       store.subscribe,

@@ -1,17 +1,14 @@
 import { ASIDE_MENU_WIDTH } from '@/layouts/DashboardLayout/constants';
 import { useDashboardLayoutContext } from '@/providers/DashboardLayoutProvider';
-import PATHS from '@/routes/paths';
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import MenuIcon from '@mui/icons-material/Menu';
 import type { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import MuiAppBar from '@mui/material/AppBar';
-import IconButton from '@mui/material/IconButton';
-import { styled, useTheme } from '@mui/material/styles';
+import { styled, SxProps, useTheme } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import type { FC, MouseEventHandler } from 'react';
-import { useCallback, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import type { FC } from 'react';
+import { memo, useMemo } from 'react';
+import ButtonLogout from './ButtonLogout';
+import ButtonMenu from './ButtonMenu';
+import PageTitle from './PageTitle';
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -39,57 +36,38 @@ const AppBar: FC<any> = (props) => {
   const theme = useTheme();
 
   const {
-    layoutAction: { toggleAside },
-    layoutState: { isAsideOpen, getPageTitle },
+    layoutState: { isAsideOpen },
   } = useDashboardLayoutContext();
-
-  const navigate = useNavigate();
 
   const memoOpen = useMemo(() => {
     return !!isAsideOpen;
   }, [isAsideOpen]);
 
-  const toggle = useCallback(() => {
-    toggleAside?.();
-  }, [toggleAside]);
+  const style: SxProps = useMemo(() => {
+    return { pr: theme.spacing(3) };
+  }, [theme]);
 
-  const handleClickLogout: MouseEventHandler<HTMLButtonElement> = useCallback(
-    (event) => {
-      event?.stopPropagation?.();
-      event?.preventDefault?.();
-      navigate(PATHS.logout);
-    },
-    [navigate],
+  // const bar = useMemo(() => {
+  //   return (
+  //     <AppBarStyled position="absolute" open={memoOpen}>
+  //       <Toolbar sx={{ pr: theme.spacing(3) }}>
+  //         <ButtonMenu />
+  //         <PageTitle />
+  //         <ButtonLogout />
+  //       </Toolbar>
+  //     </AppBarStyled>
+  //   );
+  // }, [theme, memoOpen]);
+  // return bar;
+
+  return (
+    <AppBarStyled position="absolute" open={memoOpen}>
+      <Toolbar sx={style}>
+        <ButtonMenu />
+        <PageTitle />
+        <ButtonLogout />
+      </Toolbar>
+    </AppBarStyled>
   );
-
-  const bar = useMemo(() => {
-    return (
-      <AppBarStyled position="absolute" open={memoOpen}>
-        <Toolbar sx={{ pr: theme.spacing(3) }}>
-          <IconButton
-            edge="start"
-            color="inherit"
-            onClick={() => {
-              toggle();
-            }}
-            sx={{
-              mr: theme.spacing(4.5),
-              ...(memoOpen ? { display: 'none' } : {}),
-            }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography component="h1" variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
-            {getPageTitle()}
-          </Typography>
-          <IconButton color="inherit" onClick={handleClickLogout}>
-            <ExitToAppIcon />
-          </IconButton>
-        </Toolbar>
-      </AppBarStyled>
-    );
-  }, [theme, getPageTitle, memoOpen, toggle, handleClickLogout]);
-
-  return bar;
 };
-export default AppBar;
+export default memo(AppBar) as FC<AppBarProps>;

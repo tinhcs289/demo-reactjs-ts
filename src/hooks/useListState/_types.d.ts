@@ -1,14 +1,8 @@
-import type { AxiosResponse } from 'axios';
 import { ERequestStatus } from './constants';
 
 export type TPagingState = {
   pageIndex: number;
   pageSize: number;
-};
-
-export type TPaginStateNullable = {
-  pageIndex?: number;
-  pageSize?: number;
 };
 
 export type TSortDirect = 'ASC' | 'DESC';
@@ -18,16 +12,11 @@ export type TSortState = {
   sortDirection: TSortDirect;
 };
 
-export type TSortStateNullable = {
-  sortBy?: string;
-  sortDirection?: TSortDirect;
-};
-
 export type TQueryExtendParams = {
   [x: string]: any;
 };
 
-export type TListState = { totalCount: number; moreFilter: TQueryExtendParams } & TPagingState & TSortStateNullable;
+export type TListState = { totalCount: number; moreFilter: TQueryExtendParams } & TPagingState & Partial<TSortState>;
 
 export type TOnQueryArgs = {
   pagination: TPagingState;
@@ -47,14 +36,14 @@ export type TOnQueryRetuns<T> = {
 
 export interface IUseListStateParams<T extends { [x: string]: any }> {
   source?: T[];
-  onQuery?: (args: TOnQueryArgs) => Promise<AxiosResponse<TOnQueryRetuns<T>>>;
+  onQuery?: (args: TOnQueryArgs) => Promise<TOnQueryRetuns<T>>;
   onQueryLocaly?: (args: TOnQueryLocalyArgs) => T[];
   localy?: boolean;
   infinite?: boolean;
   idField?: string;
   defaultSelectable?: boolean;
-  defaultPagination?: TPaginStateNullable & { totalCount?: number };
-  defaultSort?: TSortStateNullable;
+  defaultPagination?: Partial<TPagingState> & { totalCount?: number };
+  defaultSort?: Partial<TSortState>;
   defaultExtendQueryParams?: TQueryExtendParams;
   fixedExtendQueryParams?: TQueryExtendParams;
   queryOnFirstLoad?: boolean;
@@ -70,7 +59,7 @@ export interface IUseListStateReturnsState<T extends { [x: string]: any }> {
   anchorEl: any;
   selectable: boolean;
   isShowMultiAction: () => boolean;
-  isSelected: (itemId: any) => boolean;
+  isSelected: (item: T) => boolean;
 }
 
 export interface IUseListStateReturnsControl<T extends { [x: string]: any }> {
@@ -118,5 +107,17 @@ export interface IUseListStateReturns<T extends { [x: string]: any }> {
   state: IUseListStateReturnsState<T>;
   control: IUseListStateReturnsControl<T>;
   action: IUseListStateReturnsAction<T>;
-  common: IUseListStateReturnsCommon<T>;
+  common?: IUseListStateReturnsCommon<T>;
 }
+
+export type TListStore<T extends { [x: string]: any }> = {
+  data: T[];
+  listState: TListState;
+  fetchState: ERequestStatus;
+  interactItem: T | null;
+  anchorEl: any;
+  itemAction: string | null;
+  selectable: boolean;
+  selectedItems: T[];
+  checkAll: boolean;
+};

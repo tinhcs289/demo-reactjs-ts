@@ -24,13 +24,17 @@ const Dashboard: FC<TDashboardProps> = withHOCs(withAuthChangeWarning)((props) =
     };
   }, [theme]);
 
+  const memoContainerSx: SxProps<Theme> = useMemo(() => {
+    return { my: theme.spacing(2) };
+  }, [theme]);
+
   return (
     <Box sx={{ display: 'flex' }}>
       <AppBar />
       <AsideMenu />
       <Box component="main" sx={memoBoxSx}>
         <Toolbar />
-        <Container maxWidth="lg" sx={{ my: theme.spacing(2) }}>
+        <Container maxWidth="lg" sx={memoContainerSx}>
           <Outlet />
         </Container>
       </Box>

@@ -1,3 +1,4 @@
+import isEqual from 'lodash/isEqual';
 import { useRef, useEffect } from 'react';
 
 /**
@@ -27,22 +28,22 @@ import { useRef, useEffect } from 'react';
         return <div> ... </div>;
     }
  */
-const useMemoCompare = <T>(next: T, compare: (p: T, n: T) => boolean) => {
+const useMemoCompare = <T>(next: T, compare?: (p: T, n: T) => boolean) => {
   // Ref for storing previous value
   const previousRef = useRef();
   const previous = previousRef.current;
   // Pass previous and next value to compare function
   // to determine whether to consider them equal.
-  const isEqual = compare(previous as T, next);
+  const _isEqual = !compare ? isEqual(previous as T, next) : compare(previous as T, next);
   // If not equal update previousRef to next value.
   // We only update if not equal so that this hook continues to return
   // the same old value if compare keeps returning true.
   useEffect(() => {
-    if (!isEqual) {
+    if (!_isEqual) {
       previousRef.current = next as any;
     }
   });
   // Finally, if equal then return the previous value
-  return (isEqual ? previous : next) as T;
+  return (_isEqual ? previous : next) as T;
 };
 export default useMemoCompare;
