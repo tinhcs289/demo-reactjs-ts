@@ -19,7 +19,7 @@ const HtmlTooltip = styled(({ className, ...props }: TooltipProps) => (
   },
 }));
 
-const BoxWrap = forwardRef((props: BoxProps, ref: any) => {
+const BoxWrap = forwardRef((props: BoxProps, ref?: any) => {
   const { children, ...others } = props;
   return (
     <Box {...others} ref={ref}>
