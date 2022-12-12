@@ -3,6 +3,7 @@ import common from './common';
 import login from './login';
 import notFound from './notFound';
 import register from './register';
+import theme from './theme';
 import type { TTranslation } from './_types';
 
 const resources = {
@@ -19,5 +20,6 @@ addTranslation('common', common);
 addTranslation('login', login);
 addTranslation('register', register);
 addTranslation('notFound', notFound);
+addTranslation('theme', theme);
 
 export default resources;

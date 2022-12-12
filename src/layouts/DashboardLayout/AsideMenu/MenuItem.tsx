@@ -10,7 +10,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import type { FC, MouseEvent } from 'react';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, memo } from 'react';
 import { NavLink } from 'react-router-dom';
 import type { TMenuItemProps } from '../_types';
 
@@ -131,4 +131,4 @@ const MenuItem: FC<TMenuItemProps> = (props) => {
     </>
   );
 };
-export default MenuItem;
+export default memo(MenuItem) as FC<TMenuItemProps>;

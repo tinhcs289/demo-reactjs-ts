@@ -7,19 +7,23 @@ import Collapse from '@mui/material/Collapse';
 import List from '@mui/material/List';
 import ListSubheader from '@mui/material/ListSubheader';
 import type { FC } from 'react';
-import { useMemo } from 'react';
+import { useMemo, memo, useCallback } from 'react';
 import MenuItem from './MenuItem';
 
 const AsideMenu: FC<any> = (props) => {
   const {
-    layoutState: { isAsideOpen, menuItems },
+    layoutState: { isAsideOpen: _isAsideOpen, menuItems },
   } = useDashboardLayoutContext();
+
+  const isAsideOpen = useMemo(() => {
+    return !!_isAsideOpen;
+  }, [_isAsideOpen]);
 
   const asideMenuItems: TAsideMenuItem[] = useMemo(() => {
     return arrayOrEmpty(menuItems);
   }, [menuItems]);
 
-  const isChildActive = (item?: TAsideMenuItem) => {
+  const isChildActive = useCallback((item?: TAsideMenuItem) => {
     if (!item || !item?.url) return false;
 
     if (!(Array.isArray(item.childs) && item.childs.length > 0)) return false;
@@ -27,7 +31,7 @@ const AsideMenu: FC<any> = (props) => {
     if (item.childs.findIndex((c) => !!c.active) >= 0) return true;
 
     return false;
-  };
+  }, []);
 
   const menu = useMemo(() => {
     return (
@@ -71,8 +75,9 @@ const AsideMenu: FC<any> = (props) => {
         })}
       </AsideDrawer>
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [asideMenuItems, isAsideOpen]);
 
   return menu;
 };
-export default AsideMenu;
+export default memo(AsideMenu) as FC<any>;

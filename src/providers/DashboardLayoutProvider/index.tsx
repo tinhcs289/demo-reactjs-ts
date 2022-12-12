@@ -4,7 +4,6 @@ import useAsideControl from './useAsideControl';
 import type { IDashboardLayoutContextValues } from './_types';
 
 const DashboardLayoutContext = createContext({} as IDashboardLayoutContextValues);
-
 export const useDashboardLayoutContext = () => {
   return useContext(DashboardLayoutContext);
 };

@@ -127,10 +127,16 @@ const __extractJsonValue = <T>(value: string | null | undefined): T | null => {
   if (!value) return null;
   let returns = null;
   try {
+    // Object
     returns = JSON.parse(JSON.parse(value)) as T;
-  } catch (error) {
-    console.log(error);
-    returns = null;
+  } catch (e1) {
+    // number | boolean
+    try {
+      returns = JSON.parse(value) as T;
+    } catch (e2) {
+      // plain text
+      returns = value as T;
+    }
   } finally {
     return returns;
   }
