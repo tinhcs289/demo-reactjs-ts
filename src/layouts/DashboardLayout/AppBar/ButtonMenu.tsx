@@ -1,4 +1,4 @@
-import { useDashboardLayoutContext } from '@/providers/DashboardLayoutProvider';
+import { useDashboardLayout } from '@/providers/DashboardLayoutProvider';
 import MenuIcon from '@mui/icons-material/Menu';
 import IconButton from '@mui/material/IconButton';
 import { SxProps, useTheme } from '@mui/material/styles';
@@ -8,18 +8,15 @@ import { memo, useCallback, useMemo } from 'react';
 const ButtonMenu: FC<any> = (props) => {
   const theme = useTheme();
 
-  const {
-    layoutAction: { toggleAside },
-    layoutState: { isAsideOpen },
-  } = useDashboardLayoutContext();
+  const [isAsideOpen, toggleAside] = useDashboardLayout((s) => s.isAsideOpen);
 
   const memoOpen = useMemo(() => {
     return !!isAsideOpen;
   }, [isAsideOpen]);
 
   const toggle = useCallback(() => {
-    toggleAside?.();
-  }, [toggleAside]);
+    toggleAside({ isAsideOpen: !isAsideOpen });
+  }, [toggleAside, isAsideOpen]);
 
   const style: SxProps = useMemo(() => {
     return {

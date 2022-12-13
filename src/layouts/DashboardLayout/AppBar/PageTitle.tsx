@@ -1,23 +1,18 @@
-import { useDashboardLayoutContext } from '@/providers/DashboardLayoutProvider';
+import { useDashboardLayout } from '@/providers/DashboardLayoutProvider';
 import Typography from '@mui/material/Typography';
 import type { FC } from 'react';
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useMemo } from 'react';
 
 const PageTitle: FC<any> = (props) => {
-  const { layoutState } = useDashboardLayoutContext();
-
-  const getPageTitle = useCallback(() => {
-    return layoutState?.getPageTitle?.();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [layoutState?.getPageTitle]);
+  const [pageTitle] = useDashboardLayout((s) => s.pageTitle);
 
   const title = useMemo(() => {
     return (
       <Typography component="h1" variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
-        {getPageTitle()}
+        {pageTitle}
       </Typography>
     );
-  }, [getPageTitle]);
+  }, [pageTitle]);
 
   return title;
 };
