@@ -42,6 +42,9 @@ const __setSyncItem = (key: string, value: string) => {
     if (i !== -1) {
       initializedKeys[i].value = value;
       initializedKeys[i].previousValue = previousValue;
+
+      if (__isMarkStopListen(key)) return;
+      __pushEvent(initializedKeys[i].name, initializedKeys[i]);
     }
   } else {
     initializedKeys.push({
@@ -93,6 +96,19 @@ const __detectChangeAndSync = () => {
   return changes;
 };
 
+const __pushEvent = (key: string, detail: TLsSyncKey) => {
+  if (
+    typeof window === 'undefined' ||
+    typeof window.document === 'undefined' ||
+    typeof window.document.dispatchEvent !== 'function'
+  ) {
+    return;
+  }
+
+  let event = new CustomEvent(`${prefixEventName}${key}`, { detail });
+  document.dispatchEvent(event);
+};
+
 const __triggerListeners = (changes: TLsSyncKey[] = []) => {
   if (
     typeof document === 'undefined' ||
@@ -102,14 +118,11 @@ const __triggerListeners = (changes: TLsSyncKey[] = []) => {
     return;
 
   for (let i = 0; i < changes.length; i++) {
-    let event = new CustomEvent(`${prefixEventName}${changes[i].name}`, {
-      detail: {
-        ...changes[i],
-        value: changes[i].value !== defaultSyncValue ? changes[i].value : undefined,
-        previousValue: changes[i].previousValue !== defaultSyncValue ? changes[i].previousValue : undefined,
-      } as TLsSyncKey,
-    });
-    document.dispatchEvent(event);
+    __pushEvent(changes[i].name, {
+      ...changes[i],
+      value: changes[i].value !== defaultSyncValue ? changes[i].value : undefined,
+      previousValue: changes[i].previousValue !== defaultSyncValue ? changes[i].previousValue : undefined,
+    } as TLsSyncKey);
   }
 };
 
