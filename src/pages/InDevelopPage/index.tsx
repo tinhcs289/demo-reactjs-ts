@@ -6,18 +6,8 @@ import PATHS from '@/routes/paths';
 
 const InDevelopPage: React.FC<any> = (props) => {
   return (
-    <Box
-      sx={{
-        margin: 0,
-        padding: 0,
-        width: '100vw',
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
-      <RouterLink to={PATHS.dashboard}>
+    <Box sx={{ m: 0, p: 0, display: 'flex', height: '100%', alignItems: 'center', justifyContent: 'center' }}>
+      <RouterLink to={PATHS.dashboard} style={{ textDecoration: 'none' }}>
         <Button color="primary" variant="contained">{`Quay về trang chủ`}</Button>
       </RouterLink>
     </Box>

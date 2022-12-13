@@ -59,7 +59,10 @@ const __getSyncItem = (key: string) => {
   if (!key) return null;
 
   const value = localStorageGetItem<string>(key);
-  if (value === defaultSyncValue) return undefined;
+  if (!value) return null;
+  try {
+    if (JSON.parse(value) === defaultSyncValue) return null;
+  } catch (error) {}
   return value;
 };
 
