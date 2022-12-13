@@ -37,7 +37,7 @@ const MUIThemeV5Provider: FC<MUIThemeV5ProviderProps<any>> = (props) => {
   }, [mode]);
 
   return (
-    <ThemeProvider {...otherProps} theme={memoTheme}>
+    <ThemeProvider {...otherProps} theme={memoTheme as any}>
       <CssBaseline />
       {children}
       {switchThemeButton}

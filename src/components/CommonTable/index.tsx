@@ -147,9 +147,7 @@ function CommonTableFC<T extends Record<string, any>>(props: ICommonTableProps<T
 
   const renderRowCellList = useCallback(
     (row: T) => {
-      console.log(`-> render row ${row?.id} cells`);
       return memoConfig.map((cell) => {
-        console.log(` ------- render cell ${cell._key}`);
         return <Fragment key={cell._key}>{renderBodyCell(cell, row)}</Fragment>;
       });
     },
@@ -195,7 +193,6 @@ function CommonTableFC<T extends Record<string, any>>(props: ICommonTableProps<T
 
   const headerCellListRender = useMemo(() => {
     return memoConfig.map((config) => {
-      console.log('render head item');
       return <Fragment key={config._key}>{renderHeadCell(config)}</Fragment>;
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps

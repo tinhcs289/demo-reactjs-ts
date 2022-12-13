@@ -6,11 +6,23 @@ import isEqual from 'lodash/isEqual';
 import type { FC, ReactNode } from 'react';
 import { memo, useCallback, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import contentMaxWidth from '@/appLocalStorages/contentMaxWidth';
+import { DEFAULT_WIDTH } from './constants';
 
 const LayoutInit: FC<any> = (props) => {
   const location = useLocation();
 
   const prePathname = usePrevious((location?.pathname || '').split(/[?#]/)[0]);
+
+  const [pageMaxWidth, setPageMaxWidth] = useDashboardLayout((s) => s.pageMaxWidth);
+
+  useEffect(() => {
+    contentMaxWidth.onChange((event, detail) => {
+      if (isEqual(detail.value, pageMaxWidth)) return;
+      setPageMaxWidth({ pageMaxWidth: detail.value || DEFAULT_WIDTH });
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const isMatchPath = useCallback(
     (url?: string, isExact?: boolean) => {
