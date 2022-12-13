@@ -11,6 +11,7 @@ import { FC, ReactNode, useMemo } from 'react';
 import { Outlet } from 'react-router-dom';
 import AppBar from './AppBar';
 import AsideMenu from './AsideMenu';
+import LayoutInit from './LayoutInit';
 
 const Dashboard: FC<TDashboardProps> = withHOCs(withAuthChangeWarning)((props) => {
   const theme = useTheme();
@@ -48,6 +49,7 @@ const DashboardLayout: FC<{ children?: ReactNode }> = (props) => {
       <Dashboard>
         <Outlet />
       </Dashboard>
+      <LayoutInit />
     </DashboardLayoutProvider>
   );
 };

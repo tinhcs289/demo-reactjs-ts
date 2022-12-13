@@ -1,5 +1,5 @@
 import { ASIDE_MENU_WIDTH } from '@/layouts/DashboardLayout/constants';
-import { useDashboardLayoutContext } from '@/providers/DashboardLayoutProvider';
+import { useDashboardLayout } from '@/providers/DashboardLayoutProvider';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import type { Theme } from '@mui/material';
 import { useMediaQuery } from '@mui/material';
@@ -9,7 +9,8 @@ import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import { styled } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
-import React, { useCallback, useEffect, useMemo } from 'react';
+import type { FC, ReactNode } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 
 const DrawerStyled = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }) => ({
   '& .MuiDrawer-paper': {
@@ -35,17 +36,13 @@ const DrawerStyled = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== '
   },
 }));
 
-const AsideDrawer: React.FC<{ children?: React.ReactNode }> = (props) => {
+const AsideDrawer: FC<{ children?: ReactNode }> = (props) => {
   const { children } = props;
-  const { layoutAction, layoutState } = useDashboardLayoutContext();
-
-  const isAsideOpen = useMemo(() => {
-    return !!layoutState?.isAsideOpen;
-  }, [layoutState?.isAsideOpen]);
+  const [isAsideOpen, setIsAsideOpen] = useDashboardLayout((s) => s.isAsideOpen);
 
   const toggleAside = useCallback(() => {
-    layoutAction?.toggleAside?.();
-  }, [layoutAction]);
+    setIsAsideOpen({ isAsideOpen: !isAsideOpen });
+  }, [setIsAsideOpen, isAsideOpen]);
 
   const isMediumScreenOrLower = useMediaQuery((t: Theme) => t?.breakpoints?.down?.('md'));
 
@@ -57,8 +54,8 @@ const AsideDrawer: React.FC<{ children?: React.ReactNode }> = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMediumScreenOrLower]);
 
-  return (
-    <DrawerStyled variant="permanent" open={isAsideOpen}>
+  const memoToggleButton = useMemo(() => {
+    return (
       <Toolbar
         sx={{
           display: 'flex',
@@ -67,16 +64,22 @@ const AsideDrawer: React.FC<{ children?: React.ReactNode }> = (props) => {
           px: [1],
         }}
       >
-        <IconButton
-          onClick={() => {
-            toggleAside();
-          }}
-        >
+        <IconButton onClick={toggleAside}>
           <ChevronLeftIcon />
         </IconButton>
       </Toolbar>
+    );
+  }, [toggleAside]);
+
+  const menu = useMemo(() => {
+    return <List component="nav">{children}</List>;
+  }, [children]);
+
+  return (
+    <DrawerStyled variant="permanent" open={isAsideOpen}>
+      {memoToggleButton}
       <Divider />
-      <List component="nav">{children}</List>
+      {menu}
     </DrawerStyled>
   );
 };

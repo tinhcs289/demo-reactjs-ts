@@ -1,13 +1,13 @@
 import usePrevious from '@/hooks/usePrevious';
-import useToggle from '@/hooks/useToggle';
-import asideMenuItems from '@/layouts/DashboardLayout/asideMenuItems';
+import asideMenuItems from '@/constants/asideMenuItems';
 import { TAsideMenuItem } from '@/layouts/DashboardLayout/_types';
+import { useDashboardLayout } from '@/providers/DashboardLayoutProvider';
 import isEqual from 'lodash/isEqual';
-import type { ReactNode } from 'react';
-import { useCallback, useEffect, useState } from 'react';
+import type { FC, ReactNode } from 'react';
+import { memo, useCallback, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
-const useAsideControl = () => {
+const LayoutInit: FC<any> = (props) => {
   const location = useLocation();
 
   const prePathname = usePrevious((location?.pathname || '').split(/[?#]/)[0]);
@@ -25,14 +25,17 @@ const useAsideControl = () => {
     [location?.pathname],
   );
 
-  const [isAsideOpen, toggleAside] = useToggle(true);
+  const [urlOfInteractMenuItem, setUrlOfInteractMenuItem] = useDashboardLayout((s) => s.urlOfInteractMenuItem);
 
-  const [urlOfInteractMenuItem, setUrlOfInteractMenuItem] = useState<string | null>(
-    (() => {
-      if (!location?.pathname) return null;
-      return location?.pathname.split(/[?#]/)[0];
-    })(),
-  );
+  useEffect(() => {
+    setUrlOfInteractMenuItem({
+      urlOfInteractMenuItem: (() => {
+        if (!location?.pathname) return null;
+        return location?.pathname.split(/[?#]/)[0];
+      })(),
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const initMenuItems = useCallback(
     (args: {
@@ -70,15 +73,28 @@ const useAsideControl = () => {
     [isMatchPath],
   );
 
-  const [menuItems, setAsideMenuItems] = useState<TAsideMenuItem[]>(initMenuItems({ items: asideMenuItems }).items);
+  const [menuItems, setAsideMenuItems] = useDashboardLayout((s) => s.menuItems);
 
-  const setInteractMenuItem = (interactUrl?: string) => {
-    const items = initMenuItems({ items: asideMenuItems, interactUrl }).items;
-    setAsideMenuItems(items);
-    setUrlOfInteractMenuItem(interactUrl || null);
-  };
+  useEffect(() => {
+    const items = initMenuItems({ items: menuItems }).items;
+    setAsideMenuItems({ menuItems: items });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  const getPageTitle = useCallback(() => {
+  const [pageTitle, setTitle] = useDashboardLayout((s) => s.pageTitle);
+
+  useEffect(() => {
+    if (!urlOfInteractMenuItem) {
+      const items = initMenuItems({ items: asideMenuItems }).items;
+      setAsideMenuItems({ menuItems: items });
+    } else {
+      const items = initMenuItems({ items: menuItems, interactUrl: urlOfInteractMenuItem }).items;
+      setAsideMenuItems({ menuItems: items });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [urlOfInteractMenuItem]);
+
+  useEffect(() => {
     let title: ReactNode | null = null;
     try {
       menuItems.forEach((item) => {
@@ -98,7 +114,9 @@ const useAsideControl = () => {
       });
     } catch (error) {}
 
-    return title;
+    if (isEqual(title, pageTitle)) return;
+    setTitle({ pageTitle: title });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [menuItems]);
 
   useEffect(() => {
@@ -112,27 +130,13 @@ const useAsideControl = () => {
         isFirstLoad: true,
       });
 
-      if (!isEqual(_state.items, menuItems)) setAsideMenuItems(_state.items);
-      if (_state.interactUrl !== urlOfInteractMenuItem) setInteractMenuItem(_state.interactUrl);
+      if (!isEqual(_state.items, menuItems)) setAsideMenuItems({ menuItems: _state.items });
+      if (_state.interactUrl !== urlOfInteractMenuItem)
+        setUrlOfInteractMenuItem({ urlOfInteractMenuItem: _state.interactUrl });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location?.pathname]);
 
-  return {
-    //#region open/hide
-    isAsideOpen,
-    toggleAside,
-    //#endregion
-    //#region pageTitle
-    getPageTitle,
-    //#endregion
-    //#region menu items
-    menuItems,
-    //#endregion
-    //#region toggle sub menu
-    urlOfInteractMenuItem,
-    setInteractMenuItem,
-    //#endregion
-  };
+  return <></>;
 };
-export default useAsideControl;
+export default memo(LayoutInit) as FC<any>;

@@ -1,11 +1,11 @@
 import newGuid from '@/helpers/stringHelpers/newGuid';
+import { TAsideMenuItem } from '@/layouts/DashboardLayout/_types';
 import PATHS from '@/routes/paths';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRightOutlined';
 import PeopleIcon from '@mui/icons-material/People';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { TAsideMenuItem } from './_types';
 
 const asideMenuItems: TAsideMenuItem[] = [
   {
