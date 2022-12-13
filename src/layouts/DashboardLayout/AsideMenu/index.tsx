@@ -2,7 +2,7 @@ import CommonTooltip from '@/components/CommonTooltip';
 import arrayOrEmpty from '@/helpers/formatHelpers/arrayOrEmpty';
 import AsideDrawer from '@/layouts/DashboardLayout/AsideMenu/AsideDrawer';
 import { TAsideMenuItem } from '@/layouts/DashboardLayout/_types';
-import { useDashboardLayoutContext } from '@/providers/DashboardLayoutProvider';
+import { useDashboardLayout } from '@/providers/DashboardLayoutProvider';
 import Collapse from '@mui/material/Collapse';
 import List from '@mui/material/List';
 import ListSubheader from '@mui/material/ListSubheader';
@@ -11,9 +11,8 @@ import { useMemo, memo, useCallback } from 'react';
 import MenuItem from './MenuItem';
 
 const AsideMenu: FC<any> = (props) => {
-  const {
-    layoutState: { isAsideOpen: _isAsideOpen, menuItems },
-  } = useDashboardLayoutContext();
+  const [_isAsideOpen] = useDashboardLayout((s) => s.isAsideOpen);
+  const [menuItems] = useDashboardLayout((s) => s.menuItems);
 
   const isAsideOpen = useMemo(() => {
     return !!_isAsideOpen;

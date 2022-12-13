@@ -1,6 +1,6 @@
 import stringOrEmpty from '@/helpers/formatHelpers/stringOrEmpty';
 import render from '@/helpers/reactHelpers/render';
-import { useDashboardLayoutContext } from '@/providers/DashboardLayoutProvider';
+import { useDashboardLayout } from '@/providers/DashboardLayoutProvider';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useTheme } from '@mui/material';
@@ -10,7 +10,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import type { FC, MouseEvent } from 'react';
-import { useCallback, useMemo, memo } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import { NavLink } from 'react-router-dom';
 import type { TMenuItemProps } from '../_types';
 
@@ -44,10 +44,8 @@ const MenuItem: FC<TMenuItemProps> = (props) => {
     return typeof props?.depth === 'number' && !Number.isNaN(props?.depth) ? props.depth : 0;
   }, [props?.depth]);
 
-  const {
-    layoutState: { urlOfInteractMenuItem, isAsideOpen },
-    layoutAction: { setInteractMenuItem },
-  } = useDashboardLayoutContext();
+  const [isAsideOpen] = useDashboardLayout((s) => s.isAsideOpen);
+  const [urlOfInteractMenuItem, setInteractMenuItem] = useDashboardLayout((s) => s.urlOfInteractMenuItem);
 
   const memoUrl = useMemo(() => {
     return stringOrEmpty(urlOfInteractMenuItem);
@@ -67,11 +65,11 @@ const MenuItem: FC<TMenuItemProps> = (props) => {
       if (!item?.url) return;
 
       if (item.url === memoUrl) {
-        setInteractMenuItem(undefined);
+        setInteractMenuItem({ urlOfInteractMenuItem: null });
         return;
       }
 
-      setInteractMenuItem(item.url);
+      setInteractMenuItem({ urlOfInteractMenuItem: item.url });
       return;
     },
     [item, memoUrl, setInteractMenuItem],

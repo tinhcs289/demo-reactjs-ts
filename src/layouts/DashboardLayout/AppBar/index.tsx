@@ -1,5 +1,6 @@
+import useWhyDidYouUpdate from '@/hooks/useWhyDidYouUpdate';
 import { ASIDE_MENU_WIDTH } from '@/layouts/DashboardLayout/constants';
-import { useDashboardLayoutContext } from '@/providers/DashboardLayoutProvider';
+import { useDashboardLayout } from '@/providers/DashboardLayoutProvider';
 import type { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import MuiAppBar from '@mui/material/AppBar';
 import { styled, SxProps, useTheme } from '@mui/material/styles';
@@ -35,9 +36,7 @@ const AppBarStyled = styled(MuiAppBar, {
 const AppBar: FC<any> = (props) => {
   const theme = useTheme();
 
-  const {
-    layoutState: { isAsideOpen },
-  } = useDashboardLayoutContext();
+  const [isAsideOpen] = useDashboardLayout((s) => s.isAsideOpen);
 
   const memoOpen = useMemo(() => {
     return !!isAsideOpen;
@@ -47,18 +46,7 @@ const AppBar: FC<any> = (props) => {
     return { pr: theme.spacing(3) };
   }, [theme]);
 
-  // const bar = useMemo(() => {
-  //   return (
-  //     <AppBarStyled position="absolute" open={memoOpen}>
-  //       <Toolbar sx={{ pr: theme.spacing(3) }}>
-  //         <ButtonMenu />
-  //         <PageTitle />
-  //         <ButtonLogout />
-  //       </Toolbar>
-  //     </AppBarStyled>
-  //   );
-  // }, [theme, memoOpen]);
-  // return bar;
+  useWhyDidYouUpdate('AppBar', { isAsideOpen });
 
   return (
     <AppBarStyled position="absolute" open={memoOpen}>
