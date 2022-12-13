@@ -1,25 +1,15 @@
 import themeVariant from '@/appLocalStorages/themeVariant';
 import FabChangeTheme from '@/providers/MUIThemeV5Provider/FabChangeTheme';
-import type { PaletteMode, Theme } from '@mui/material';
+import type { PaletteMode } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import type { ThemeProviderProps } from '@mui/system';
+import { ThemeProvider } from '@mui/material/styles';
 import isEqual from 'lodash/isEqual';
+import type { FC } from 'react';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import darkThemeOptions from './darkThemeOptions';
-import lightThemeOptions from './lightThemeOptions';
+import THEMES from './themes';
+import type { MUIThemeV5ProviderProps } from './_types';
 
-const lightTheme = createTheme(lightThemeOptions);
-const darkTheme = createTheme(darkThemeOptions);
-
-const VARIANTS: Record<PaletteMode, Theme> = {
-  light: lightTheme,
-  dark: darkTheme,
-};
-
-export type MUIThemeV5ProviderProps<T> = Omit<ThemeProviderProps<T>, 'theme'>;
-
-const MUIThemeV5Provider: React.FC<MUIThemeV5ProviderProps<any>> = (props) => {
+const MUIThemeV5Provider: FC<MUIThemeV5ProviderProps<any>> = (props) => {
   const { children, ...otherProps } = props;
 
   const [mode, setMode] = useState<PaletteMode>(themeVariant.get() || 'light');
@@ -43,7 +33,7 @@ const MUIThemeV5Provider: React.FC<MUIThemeV5ProviderProps<any>> = (props) => {
   }, [mode]);
 
   const memoTheme = useMemo(() => {
-    return VARIANTS[mode];
+    return THEMES[mode];
   }, [mode]);
 
   return (
