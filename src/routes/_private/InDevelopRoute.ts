@@ -1,8 +1,9 @@
 import paths from '@/routes/paths';
+import wait from '@/routes/wait';
 import type { TRouteConfig } from '@/routes/_types';
 import { lazy } from 'react';
 
-const InDevelopPage = lazy(() => import('@/pages/InDevelopPage'));
+const InDevelopPage = lazy(() => wait().then(() => import('@/pages/InDevelopPage')));
 
 const InDevelopRoute: TRouteConfig[] = [
   {
