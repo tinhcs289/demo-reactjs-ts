@@ -71,7 +71,7 @@ export interface ICommonTableProps<T extends Record<string, any>> {
   tableHeadRowProps?: TableRowProps;
   tableBodyProps?: TableBodyProps;
   tableBodyRowProps?: TableRowProps | ((row: T) => TableRowProps);
-  config: ICommonTableConfig<T>[];
+  columns: ICommonTableConfig<T>[];
   rows?: T[];
   children?: ReactNode;
   selectable?: TSelectTable<T>;

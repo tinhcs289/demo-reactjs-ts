@@ -15,7 +15,7 @@ import type { ICommonTableConfig, ICommonTableProps } from './_types';
  * @example
     <CommonTable
         rows={rows}
-        config={[
+        columns={[
           {
               field: 'name',
               headCell: '1',
@@ -69,7 +69,7 @@ function CommonTableFC<T extends Record<string, any>>(props: ICommonTableProps<T
     tableHeadRowProps,
     tableBodyProps,
     tableBodyRowProps,
-    config,
+    columns,
     children,
     selectable,
   } = props;
@@ -96,8 +96,8 @@ function CommonTableFC<T extends Record<string, any>>(props: ICommonTableProps<T
   }, [selectable?.isCheckAll]);
 
   const memoConfig = useMemo(() => {
-    return config || [];
-  }, [config]);
+    return columns || [];
+  }, [columns]);
 
   const memoRows = useMemo(() => {
     return rows || [];
@@ -192,8 +192,8 @@ function CommonTableFC<T extends Record<string, any>>(props: ICommonTableProps<T
   }, [isCheckAll, checkAll]);
 
   const headerCellListRender = useMemo(() => {
-    return memoConfig.map((config) => {
-      return <Fragment key={config._key}>{renderHeadCell(config)}</Fragment>;
+    return memoConfig.map((column) => {
+      return <Fragment key={column._key}>{renderHeadCell(column)}</Fragment>;
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
