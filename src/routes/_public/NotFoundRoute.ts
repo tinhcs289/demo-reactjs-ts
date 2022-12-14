@@ -1,8 +1,9 @@
 import paths from '@/routes/paths';
+import wait from '@/routes/wait';
 import type { TRouteConfig } from '@/routes/_types';
 import { lazy } from 'react';
 
-const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'));
+const NotFoundPage = lazy(() => wait().then(() => import('@/pages/NotFoundPage')));
 
 const NotFoundRoute: TRouteConfig[] = [
   {
