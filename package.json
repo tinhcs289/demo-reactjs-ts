@@ -1,7 +1,8 @@
 {
-  "name": "temp-reactts",
+  "name": "demo-reactjs-ts",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://tinhcs289.github.io",
   "dependencies": {
     "@date-io/moment": "2.16.1",
     "@emotion/react": "11.10.5",
@@ -56,6 +57,7 @@
     "@types/react-router-dom": "5.3.3",
     "@types/seamless-immutable": "7.1.16",
     "customize-cra": "1.0.0",
+    "gh-pages": "4.0.0",
     "react-scripts": "5.0.1",
     "web-vitals": "3.1.0"
   },
@@ -67,7 +69,9 @@
     "build:dev": "env-cmd -f .env.dev react-app-rewired build",
     "build:prod": "env-cmd -f .env.prod react-app-rewired build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build:prod",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
