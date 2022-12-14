@@ -1,44 +1,20 @@
 import type { TBookingSellListItem } from '@/api/booking/_types';
-import CommonTable, { tableConfig } from '@/components/CommonTable';
+import CommonTable from '@/components/CommonTable';
 import CommonPagination from '@/components/CommonTable/components/CommonPagination';
-import type { TBodyCellInnerRenderFunction } from '@/components/CommonTable/_types';
-import toCurrencyFormat from '@/helpers/stringHelpers/toCurrencyFormat';
-import useListState from '@/hooks/useListState';
+import createListContext from '@/functions/createListContext';
 import Box from '@mui/material/Box';
 import { FC, useCallback, useMemo } from 'react';
+import columns from './columns';
 import getList from './getList';
 
-const bookingCodeRender: TBodyCellInnerRenderFunction<TBookingSellListItem> = ({ row }) => (
-  <b>{row?.bookingCode || ''}</b>
-);
+const { ListProvider, useList } = createListContext<TBookingSellListItem>();
 
-const totalPriceRender: TBodyCellInnerRenderFunction<TBookingSellListItem> = ({ row }) =>
-  toCurrencyFormat(row?.totalPrice);
-
-const config = tableConfig<TBookingSellListItem>(
-  { field: 'bookingCode', headCell: 'Mã', bodyCellInner: bookingCodeRender },
-  { field: 'name', headCell: 'Đơn hàng' },
-  { field: 'totalPassenger', headCell: 'Hành khách' },
-  { field: 'totalPrice', headCell: 'Thành tiền', bodyCellInner: totalPriceRender },
-);
-
-const DashboardPage: FC<any> = (props) => {
-  const {
-    state: {
-      data,
-      listState: { pageIndex, pageSize, totalCount },
-      isCheckAll,
-      isSelected,
-    },
-    control: { updatePaging, checkAllItems, checkOneItem },
-  } = useListState({ onQuery: getList, queryOnFirstLoad: true });
-
-  const handleChangePage = useCallback(
-    (page: number) => {
-      updatePaging(page, 10);
-    },
-    [updatePaging],
-  );
+const ListTable: FC<any> = () => {
+  const [data] = useList((s) => s.data);
+  const [isCheckAll] = useList((s) => s.isCheckAll);
+  const [isSelected] = useList((s) => s.isSelected);
+  const [checkAllItems] = useList((s) => s.control?.checkAllItems);
+  const [checkOneItem] = useList((s) => s.control?.checkOneItem);
 
   const selectable = useMemo(() => {
     return {
@@ -49,11 +25,35 @@ const DashboardPage: FC<any> = (props) => {
     };
   }, [isCheckAll, checkAllItems, checkOneItem, isSelected]);
 
+  return <CommonTable rows={data} columns={columns} selectable={selectable} />;
+};
+
+const ListPaging: FC<any> = () => {
+  const [pageIndex] = useList((s) => s.listState.pageIndex);
+  const [pageSize] = useList((s) => s.listState.pageSize);
+  const [totalCount] = useList((s) => s.listState.totalCount);
+  const [updatePaging] = useList((s) => s.control?.updatePaging);
+
+  const handleChangePage = useCallback(
+    (page: number) => {
+      updatePaging?.(page, 10);
+    },
+    [updatePaging],
+  );
+
+  return (
+    <CommonPagination pageIndex={pageIndex} pageSize={pageSize} totalCount={totalCount} onChange={handleChangePage} />
+  );
+};
+
+const DashboardPage: FC<any> = () => {
   return (
     <Box sx={{ m: 0, p: 0 }}>
-      <CommonPagination pageIndex={pageIndex} pageSize={pageSize} totalCount={totalCount} onChange={handleChangePage} />
-      <br />
-      <CommonTable rows={data} config={config} selectable={selectable} />
+      <ListProvider onQuery={getList} queryOnFirstLoad>
+        <ListPaging />
+        <br />
+        <ListTable />
+      </ListProvider>
     </Box>
   );
 };
