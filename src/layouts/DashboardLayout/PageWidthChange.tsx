@@ -33,7 +33,7 @@ const PageWidthChange: FC<any> = (props) => {
       exclusive
       onChange={handleChangeWidth}
       sx={{
-        position: 'absolute',
+        position: 'fixed',
         bottom: 16,
         left: '50%',
         transform: 'translateX(-50%)',

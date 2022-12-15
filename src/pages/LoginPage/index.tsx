@@ -2,6 +2,7 @@ import RHFCheck from '@/components/rhfInputs/RHFCheck';
 import RHFText from '@/components/rhfInputs/RHFText';
 import { required } from '@/constants/rhfRules';
 import withHOCs from '@/hocs/withHocs';
+import ButtonLanguage from '@/layouts/DashboardLayout/AppBar/ButtonLanguage';
 import PATHS from '@/routes/paths';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useTheme } from '@mui/material';
@@ -51,6 +52,7 @@ const LoginPage: React.FC<ILoginPageProps> = withHOCs(
       <Typography component="h1" variant="h5">
         {t('login:login')}
       </Typography>
+      <ButtonLanguage />
       <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate sx={{ mt: 1 }}>
         <RHFText
           name="Account"
