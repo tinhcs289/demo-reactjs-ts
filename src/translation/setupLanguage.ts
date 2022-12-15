@@ -1,5 +1,5 @@
 import language from '@/appLocalStorages/language';
-import { EAcceptLanguage } from '@/constants/EAcceptLanguage';
+import { EAcceptLanguage } from '@/constants/language';
 import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
@@ -25,5 +25,4 @@ i18n
       enabled: true,
     },
   });
-
 export default i18n;

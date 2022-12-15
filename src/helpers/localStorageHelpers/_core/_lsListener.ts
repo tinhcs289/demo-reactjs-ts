@@ -84,7 +84,9 @@ const __detectChangeAndSync = () => {
     });
 
   for (let i = 0; i < initializedKeys.length; i++) {
-    if (!isEqual(initializedKeys[i].value, state[initializedKeys[i].name])) {
+    const currentValue = __extractJsonValue<any>(initializedKeys[i].value);
+    const incomingValue = __extractJsonValue<any>(state[initializedKeys[i].name]);
+    if (!isEqual(currentValue, incomingValue)) {
       let change = {
         name: initializedKeys[i].name,
         value: state[initializedKeys[i].name],
@@ -145,13 +147,16 @@ const __extractJsonValue = <T>(value: string | null | undefined): T | null => {
   try {
     // Object
     returns = JSON.parse(JSON.parse(value)) as T;
+    if (returns === defaultSyncValue) return null;
   } catch (e1) {
     // number | boolean
     try {
       returns = JSON.parse(value) as T;
+      if (returns === defaultSyncValue) return null;
     } catch (e2) {
       // plain text
       returns = value as T;
+      if (returns === defaultSyncValue) return null;
     }
   } finally {
     return returns;
@@ -164,7 +169,7 @@ const __addLocalStorageListener = (key: string, handler: (event: TLsChangeEvent)
   }
 };
 
-export const newLocalStorageListenableItem = <T>(args: { key: string }): TLsSyncItem<T> => {
+export const newLocalStorageListenableItem = <T>(args: { key: string; defaultValue?: T }): TLsSyncItem<T> => {
   const syncKey = `${prefix}${args.key}`;
   const previousValue = localStorageGetItem<string>(syncKey);
   if (previousValue) {
@@ -177,7 +182,7 @@ export const newLocalStorageListenableItem = <T>(args: { key: string }): TLsSync
     localStorageUpdateItem(syncKey, defaultSyncValue);
     initializedKeys.push({
       name: syncKey,
-      value: defaultSyncValue,
+      value: !!args?.defaultValue ? JSON.stringify(args.defaultValue) : defaultSyncValue,
       previousValue: undefined,
     });
   }
