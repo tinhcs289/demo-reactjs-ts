@@ -1,4 +1,5 @@
 import useWhyDidYouUpdate from '@/hooks/useWhyDidYouUpdate';
+import ButtonLanguage from '@/layouts/DashboardLayout/AppBar/ButtonLanguage';
 import { ASIDE_MENU_WIDTH } from '@/layouts/DashboardLayout/constants';
 import { useDashboardLayout } from '@/providers/DashboardLayoutProvider';
 import type { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
@@ -53,6 +54,7 @@ const AppBar: FC<any> = (props) => {
       <Toolbar sx={style}>
         <ButtonMenu />
         <PageTitle />
+        <ButtonLanguage />
         <ButtonLogout />
       </Toolbar>
     </AppBarStyled>

@@ -1,3 +1,3 @@
-import { EAcceptLanguage } from '@/constants/EAcceptLanguage';
+import { EAcceptLanguage } from '@/constants/language';
 
 export type TAcceptLanguage = `${EAcceptLanguage}`;

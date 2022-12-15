@@ -1,3 +1,4 @@
-import { EAcceptLanguage } from '@/constants/EAcceptLanguage';
+import { EAcceptLanguage } from '@/constants/language';
 
-export type TTranslation = Record<EAcceptLanguage, { [x: string]: string }>;
+export type TSubTranslation = { [x: string]: string | TSubTranslation };
+export type TTranslation = Record<EAcceptLanguage, TSubTranslation>;

@@ -18,8 +18,8 @@ const localStorageGetItem = <T>(key: string): T | null => {
   try {
     returns = JSON.parse(value) as T;
   } catch (error) {
-    console.log(error);
-    returns = null;
+    //console.log(error);
+    returns = value as T;
   } finally {
     return returns;
   }

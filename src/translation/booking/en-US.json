@@ -1,0 +1,8 @@
+{
+  "table": {
+    "bookingCode": "Code",
+    "name": "Order",
+    "totalPassenger": "Passenger",
+    "totalPrice": "Amount"
+  }
+}
