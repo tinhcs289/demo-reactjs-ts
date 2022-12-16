@@ -1,11 +1,10 @@
 import { ACTION } from './constants';
-import useListState from './useListState';
-import type { IUseListStateParams, IUseListStateReturns } from './_types';
+import useListState from './useStaticListState';
+import type { IUseStaticListStateParams, IUseStaticListStateReturns } from './_types';
 
-/**
- * @deprecated
- */
-const useCommonListState = <T extends { [x: string]: any }>(args?: IUseListStateParams<T>): IUseListStateReturns<T> => {
+const useCommonStaticListState = <T extends { [x: string]: any }>(
+  args?: IUseStaticListStateParams<T>,
+): IUseStaticListStateReturns<T> => {
   const returns = useListState(args);
 
   return {
@@ -43,4 +42,4 @@ const useCommonListState = <T extends { [x: string]: any }>(args?: IUseListState
     },
   };
 };
-export default useCommonListState;
+export default useCommonStaticListState;

@@ -1,4 +1,5 @@
-import { LANGUAGE_VIETNAMESE } from '@/constants/language';
+import language from '@/appLocalStorages/language';
+import { LANGUAGE_DEFAULT, DATETIME_LOCALE } from '@/constants/language';
 import type { LocalizationProviderProps } from '@mui/x-date-pickers';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
@@ -16,7 +17,7 @@ const DateTimeProvider: React.FC<DateTimeProviderProps> = (props) => {
       {...otherProps}
       dateAdapter={AdapterMoment}
       moment={moment}
-      adapterLocale={moment.locale(LANGUAGE_VIETNAMESE)}
+      adapterLocale={moment.locale(DATETIME_LOCALE[language.get() || LANGUAGE_DEFAULT])}
     >
       {children}
     </LocalizationProvider>

@@ -7,7 +7,6 @@ const withCustomStyles = (WrappedComponent: React.FC<TCommonAutoCompleteFieldPro
   return styled(WrappedComponent)<TCommonAutoCompleteFieldProps>((args: { theme: Theme }) => {
     const { theme } = args;
     return {
-      //TODO: jss here
       '& .MuiFormControl-root': {
         '& .MuiInputBase-root.MuiInputBase-formControl.MuiAutocomplete-inputRoot': {
           borderTopLeftRadius: theme.shape.borderRadius,

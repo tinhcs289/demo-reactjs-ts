@@ -1,4 +1,3 @@
-import useWhyDidYouUpdate from '@/hooks/useWhyDidYouUpdate';
 import ButtonLanguage from '@/layouts/DashboardLayout/AppBar/ButtonLanguage';
 import { ASIDE_MENU_WIDTH } from '@/layouts/DashboardLayout/constants';
 import { useDashboardLayout } from '@/providers/DashboardLayoutProvider';
@@ -47,15 +46,33 @@ const AppBar: FC<any> = (props) => {
     return { pr: theme.spacing(3) };
   }, [theme]);
 
-  useWhyDidYouUpdate('AppBar', { isAsideOpen });
-
   return (
     <AppBarStyled position="absolute" open={memoOpen}>
       <Toolbar sx={style}>
-        <ButtonMenu />
-        <PageTitle />
-        <ButtonLanguage />
-        <ButtonLogout />
+        {useMemo(
+          () => (
+            <ButtonMenu />
+          ),
+          [],
+        )}
+        {useMemo(
+          () => (
+            <PageTitle />
+          ),
+          [],
+        )}
+        {useMemo(
+          () => (
+            <ButtonLanguage />
+          ),
+          [],
+        )}
+        {useMemo(
+          () => (
+            <ButtonLogout />
+          ),
+          [],
+        )}
       </Toolbar>
     </AppBarStyled>
   );

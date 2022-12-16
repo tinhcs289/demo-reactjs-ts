@@ -5,7 +5,7 @@ const withLoginViaSSO = (WrappedComponent: React.FC<ILoginPageProps>) => (props:
   const { onRequestLoginViaSSO: _, ...otherProps } = props;
 
   const handleRequestLoginViaSSO = (formData: TLoginFormData) => {
-    //TODO: logic sso here
+    //TODO [Login] logic sso here
   };
 
   return <WrappedComponent {...otherProps} onRequestLoginViaSSO={handleRequestLoginViaSSO} />;
