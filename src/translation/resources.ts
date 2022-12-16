@@ -1,4 +1,5 @@
 import { EAcceptLanguage } from '@/constants/language';
+import aside from '@/translation/aside';
 import booking from './booking';
 import common from './common';
 import login from './login';
@@ -7,23 +8,33 @@ import register from './register';
 import theme from './theme';
 import type { TSubTranslation, TTranslation } from './_types';
 
-const resources = {
-  [EAcceptLanguage['en-US']]: {} as TSubTranslation,
-  [EAcceptLanguage['vi-VN']]: {} as TSubTranslation,
-};
+//#region functions
+type TLanguageKey = `${EAcceptLanguage}`;
+
+const allKeys = Object.values(EAcceptLanguage);
+
+const resources = allKeys.reduce((resrc, languageCode) => {
+  resrc[languageCode] = {} as TSubTranslation;
+  return resrc;
+}, {} as TTranslation);
 
 const addTranslation = (name: string, translation: TTranslation) => {
-  Object.keys(EAcceptLanguage).forEach((languageCode) => {
-    resources[EAcceptLanguage[languageCode as `${EAcceptLanguage}`]][name] =
-      translation[EAcceptLanguage[languageCode as `${EAcceptLanguage}`]];
+  allKeys.forEach((languageCode) => {
+    resources[EAcceptLanguage[languageCode as TLanguageKey]][name] =
+      translation[EAcceptLanguage[languageCode as TLanguageKey]];
   });
 };
+//#endregion
 
+//#region Add translations
+addTranslation('aside', aside);
 addTranslation('common', common);
 addTranslation('login', login);
 addTranslation('register', register);
 addTranslation('notFound', notFound);
 addTranslation('theme', theme);
 addTranslation('booking', booking);
+//TODO [Multi-language] register more translations here
+//#endregion
 
 export default resources;

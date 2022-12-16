@@ -6,11 +6,18 @@ import TranslateIcon from '@mui/icons-material/Translate';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import US from 'country-flag-icons/react/3x2/US';
+import VN from 'country-flag-icons/react/3x2/VN';
 import type { FC, MouseEvent, MouseEventHandler } from 'react';
-import { memo, useCallback, useMemo, useState } from 'react';
+import { createElement, memo, useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const languageCodes = Object.keys(EAcceptLanguage) as Array<`${EAcceptLanguage}`>;
+
+const flagDict = {
+  [EAcceptLanguage['vi-VN']]: VN,
+  [EAcceptLanguage['en-US']]: US,
+};
 
 const ButtonLanguage: FC<any> = (props) => {
   const {
@@ -51,11 +58,14 @@ const ButtonLanguage: FC<any> = (props) => {
       const selected = currentLanguage === code;
       return (
         <MenuItem
+          dense
           key={code}
           onClick={handleChangeLanguage(code)}
           selected={selected}
           {...(selected ? { style: { fontWeight: 700 } } : {})}
         >
+          {createElement(flagDict[code], { style: { width: 16, height: 16 } })}
+          &nbsp;&nbsp;
           {code}
         </MenuItem>
       );

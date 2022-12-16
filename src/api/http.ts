@@ -1,5 +1,6 @@
 import refreshAuthenticateTokenApi from '@/api/authentication/refreshAuthenticateTokenApi';
 import authentication from '@/appCookies/authentication';
+import language from '@/appLocalStorages/language';
 import showSessionTimeoutWarning from '@/redux/session/actions/showSessionTimeoutWarning';
 import store from '@/redux/store';
 import type { AxiosError, AxiosResponse } from 'axios';
@@ -10,7 +11,7 @@ const showWarning = () => {
 };
 
 const doLogout = () => {
-  //TODO: logout immediately or show waring then logout by user click
+  //TODO [logout] logout immediately or show waring then logout by user click
   store.dispatch(showSessionTimeoutWarning({}));
 };
 
@@ -34,6 +35,12 @@ http.interceptors.request.use(
       config.headers['Access-Control-Allow-Origin'] = '*';
       config.headers['Accept'] = 'application/json';
       config.headers['Content-Type'] = 'application/json';
+
+      const lang = language.get();
+
+      if (!!lang) {
+        config.headers['Accept-Language'] = lang;
+      }
 
       const token = authentication.get()?.accessToken;
       if (token) config.headers.Authorization = `Bearer ${token}`;
@@ -92,6 +99,16 @@ http.interceptors.response.use(
                 authentication.set(data.jwt);
                 Axios.defaults.headers.common['Authorization'] = `Bearer ${data.jwt.accessToken}`;
                 if (!!error?.config?.headers) error.config.headers.Authorization = `Bearer ${data.jwt.accessToken}`;
+
+                //TODO [Refresh token] More handle for refreshing access token flow
+                // incase token includes `Accept-Language` and it changes header key should be update to
+                // use this code 
+                //
+                // const lang = language.get();
+                // if (lang !== langInToken) {
+                //   Axios.defaults.headers.common['Accept-Language'] = langInToken;
+                //   if (!!error?.config?.headers) error.config.headers.['Accept-Language'] = langInToken;
+                // }
 
                 processQueue(null, data.jwt.accessToken);
                 resolve(http(error.config as any));

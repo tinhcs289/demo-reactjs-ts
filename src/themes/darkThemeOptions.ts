@@ -4,7 +4,7 @@ import type { ThemeOptions } from '@mui/material/styles';
  * @see https://mui.com/material-ui/customization/default-theme/#main-content
  */
 const darkThemeOptions: ThemeOptions = {
-  // TODO custom theme here
+  // TODO [MUI] custom dark theme here
   palette: {
     mode: 'dark',
   },

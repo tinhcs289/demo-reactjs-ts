@@ -1,18 +1,22 @@
+import CommonTable from '@/components/CommonTable';
+import CommonPagination from '@/components/CommonTable/components/CommonPagination';
+import type { ICommonPaginationProps, ICommonTableProps } from '@/components/CommonTable/_types';
 import createFastContext from '@/functions/createFastContext';
-import useListState from '@/hooks/useListState';
-import { DEFAULT_DATA } from '@/hooks/useListState/constants';
+import useStaticListState from '@/hooks/useStaticListState';
+import { DEFAULT_DATA } from '@/hooks/useStaticListState/constants';
 import type {
-  IUseListStateParams,
+  IUseStaticListStateParams,
   IUseListStateReturnsAction,
   IUseListStateReturnsControl,
-  IUseListStateReturnsState,
-} from '@/hooks/useListState/_types';
+  IUseStaticListStateReturnsState,
+} from '@/hooks/useStaticListState/_types';
 import isEqual from 'lodash/isEqual';
-import { FC, ReactNode, useEffect, useMemo } from 'react';
+import type { FC, ReactNode } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 
-export function createListContext<T extends { [x: string]: any }>() {
+export function createStaticListContext<T extends { [x: string]: any }>() {
   const { Provider, useStore } = createFastContext<
-    Omit<IUseListStateReturnsState<T>, ' isShowMultiAction' | 'isSelected'> & {
+    Omit<IUseStaticListStateReturnsState<T>, ' isShowMultiAction' | 'isSelected'> & {
       isSelected?: (item: T) => boolean;
       isShowMultiAction?: () => boolean;
       control?: IUseListStateReturnsControl<T>;
@@ -116,12 +120,11 @@ export function createListContext<T extends { [x: string]: any }>() {
     };
   };
 
-  const ListInit: FC<IUseListStateParams<T>> = (props) => {
+  const ListInit: FC<IUseStaticListStateParams<T>> = (props) => {
     const {
       state: {
         data: _data,
         listState: _listState,
-        fetchState: _fetchState,
         selectedItems: _selectedItems,
         isCheckAll: _isCheckAll,
         interactItem: _interactItem,
@@ -132,11 +135,10 @@ export function createListContext<T extends { [x: string]: any }>() {
       },
       control: _control,
       action: _action,
-    } = useListState(props);
+    } = useStaticListState(props);
 
     const [data, _set] = useStore((s) => s.data);
     const [listState] = useStore((s) => s.listState);
-    const [fetchState] = useStore((s) => s.fetchState);
     const [selectedItems] = useStore((s) => s.selectedItems);
     const [isCheckAll] = useStore((s) => s.isCheckAll);
     const [interactItem] = useStore((s) => s.interactItem);
@@ -176,12 +178,6 @@ export function createListContext<T extends { [x: string]: any }>() {
     }, [_listState]);
 
     useEffect(() => {
-      if (isEqual(_fetchState, fetchState)) return;
-      _set({ fetchState: _fetchState });
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [_fetchState]);
-
-    useEffect(() => {
       if (isEqual(_selectedItems, selectedItems)) return;
       _set({ selectedItems: _selectedItems });
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -214,7 +210,54 @@ export function createListContext<T extends { [x: string]: any }>() {
     return <></>;
   };
 
-  const ListProvider: FC<IUseListStateParams<T> & { children?: ReactNode }> = (props) => {
+  const ListTable: FC<Omit<ICommonTableProps<T>, 'rows' | 'selectable'>> = (props) => {
+    const { columns, ...otherProps } = props;
+
+    const [data] = useStore((s) => s.data);
+    const [isCheckAll] = useStore((s) => s.isCheckAll);
+    const [isSelected] = useStore((s) => s.isSelected);
+    const [checkAllItems] = useStore((s) => s.control?.checkAllItems);
+    const [checkOneItem] = useStore((s) => s.control?.checkOneItem);
+
+    const selectable = useMemo(() => {
+      return {
+        isCheckAll,
+        onCheckAll: checkAllItems,
+        onCheckRow: checkOneItem,
+        isRowSelected: isSelected,
+      };
+    }, [isCheckAll, checkAllItems, checkOneItem, isSelected]);
+
+    return <CommonTable {...otherProps} rows={data} columns={columns} selectable={selectable} />;
+  };
+
+  const ListPaging: FC<Omit<ICommonPaginationProps, 'pageIndex' | 'pageSize' | 'totalCount' | 'onChange'>> = (
+    props,
+  ) => {
+    const [pageIndex] = useStore((s) => s.listState.pageIndex);
+    const [pageSize] = useStore((s) => s.listState.pageSize);
+    const [totalCount] = useStore((s) => s.listState.totalCount);
+    const [updatePaging] = useStore((s) => s.control?.updatePaging);
+
+    const handleChangePage = useCallback(
+      (page: number) => {
+        updatePaging?.(page, 10);
+      },
+      [updatePaging],
+    );
+
+    return (
+      <CommonPagination
+        {...props}
+        pageIndex={pageIndex}
+        pageSize={pageSize}
+        totalCount={totalCount}
+        onChange={handleChangePage}
+      />
+    );
+  };
+
+  const ListProvider: FC<IUseStaticListStateParams<T> & { children?: ReactNode }> = (props) => {
     const { children, ...useListStateParams } = props;
     return (
       <Provider>
@@ -224,6 +267,13 @@ export function createListContext<T extends { [x: string]: any }>() {
     );
   };
 
-  return { ListProvider, useList: useStore, useListControl, useListAction };
+  return {
+    StaticListProvider: ListProvider,
+    useStaticList: useStore,
+    useStaticListControl: useListControl,
+    useStaticListAction: useListAction,
+    StaticListTable: ListTable,
+    StaticListPaging: ListPaging,
+  };
 }
-export default createListContext;
+export default createStaticListContext;

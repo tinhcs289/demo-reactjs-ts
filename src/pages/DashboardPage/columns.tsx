@@ -1,15 +1,16 @@
 import type { TBookingSellListItem } from '@/api/booking/_types';
 import { tableConfig } from '@/components/CommonTable';
 import type { TBodyCellInnerRenderFunction } from '@/components/CommonTable/_types';
-import toCurrencyFormat from '@/helpers/stringHelpers/toCurrencyFormat';
+import { CURRENCY_FORMAT } from '@/constants/language';
 import { i18n } from '@/translation';
+import numeral from 'numeral';
 
 const bookingCodeRender: TBodyCellInnerRenderFunction<TBookingSellListItem> = ({ row }) => (
   <b>{row?.bookingCode || ''}</b>
 );
 
 const totalPriceRender: TBodyCellInnerRenderFunction<TBookingSellListItem> = ({ row }) =>
-  toCurrencyFormat(row?.totalPrice);
+  numeral(row?.totalPrice || 0).format(CURRENCY_FORMAT);
 
 const columns = tableConfig<TBookingSellListItem>(
   { field: 'bookingCode', headCell: i18n.t('booking:table.bookingCode'), bodyCellInner: bookingCodeRender },

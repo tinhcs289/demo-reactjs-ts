@@ -12,28 +12,16 @@ import type {
   TSortDirect,
 } from './_types';
 
-/**
- * @deprecated this function had been seperated info 2 hooks `useAsyncListState` and `useStaticListState`
- * - `useStaticListState` is an equivalent usage with `useListState({ localy: true, source: users })`
- * - `useAsyncListState` is an equivalent usage with `useListState({ onQuery: getUsersApiCall })`
- */
-function useListState<T extends { [x: string]: any }>(args?: IUseListStateParams<T>): IUseListStateReturns<T> {
+function useAsyncListState<T extends { [x: string]: any }>(args?: IUseListStateParams<T>): IUseListStateReturns<T> {
   const {
-    source,
     defaultSelectable,
     defaultPagination,
     defaultSort,
     defaultExtendQueryParams,
     fixedExtendQueryParams,
-    localy,
     onQuery,
-    onQueryLocaly,
     queryOnFirstLoad,
   } = args || {};
-
-  const memoSource = useMemo(() => {
-    return Array.isArray(source) && source.length > 0 ? source : [];
-  }, [source]);
 
   const __getid = useCallback(
     (item?: T) => (!item ? null : typeof args?.idField !== 'string' ? item['id'] : item[args.idField]),
@@ -46,11 +34,11 @@ function useListState<T extends { [x: string]: any }>(args?: IUseListStateParams
 
   const dfPaging = useMemo(() => {
     return {
-      totalCount: defaultPagination?.totalCount || memoSource.length,
+      totalCount: defaultPagination?.totalCount || 0,
       pageIndex: defaultPagination?.pageIndex || PAGE_INDEX,
       pageSize: defaultPagination?.pageIndex || PAGE_SIZE,
     };
-  }, [defaultPagination, memoSource.length]);
+  }, [defaultPagination]);
 
   const dfSort = useMemo(() => {
     return {
@@ -107,7 +95,7 @@ function useListState<T extends { [x: string]: any }>(args?: IUseListStateParams
     [defaultExtendQueryParams, fixedExtendQueryParams, dfPaging, __appendFilter],
   );
 
-  const [data, setData] = useState(paginate(memoSource, dfState.pageIndex, dfState.pageSize));
+  const [data, setData] = useState<T[]>([]);
   const [selectedItems, setSelectedItems] = useState<T[]>([]);
   const [listState, setListState] = useState<TListState>(dfState);
   const [fetchState, setFetchState] = useState<ERequestStatus>(ERequestStatus.NONE);
@@ -145,52 +133,6 @@ function useListState<T extends { [x: string]: any }>(args?: IUseListStateParams
       return is;
     },
     [__getid],
-  );
-
-  const queryLocaly = useCallback(
-    (page: number, size: number, sortBy?: string, sortDirection?: TSortDirect) => {
-      if (!!localy) {
-        if (typeof onQueryLocaly !== 'function') {
-          let result = paginate(memoSource, page, size);
-          setListState((state) => ({
-            ...state,
-            pageIndex: page,
-            pageSize: size,
-            totalCount: memoSource.length,
-          }));
-          setData(result);
-        } else {
-          const queryArgs = getQueryArgs(listState);
-
-          if (typeof sortBy === 'string')
-            queryArgs.sort = {
-              ...queryArgs.sort,
-              sortBy,
-              sortDirection: sortDirection || queryArgs.sort?.sortDirection || DESC,
-            };
-
-          let result: T[] = [];
-
-          try {
-            result = onQueryLocaly(queryArgs);
-          } catch (error) {
-            console.log(error);
-          }
-
-          setListState((state) => ({
-            ...state,
-            ...queryArgs.sort,
-            ...queryArgs.moreFilter,
-            totalCount: Array.isArray(result) ? result.length : 0,
-            pageIndex: page,
-            pageSize: size,
-          }));
-
-          setData(Array.isArray(result) ? paginate(result, page, size) : []);
-        }
-      }
-    },
-    [localy, onQueryLocaly, getQueryArgs, listState, memoSource],
   );
 
   const queryWithAxios = useCallback(
@@ -233,77 +175,39 @@ function useListState<T extends { [x: string]: any }>(args?: IUseListStateParams
 
   const updateFilter = useCallback(
     (filter: TQueryExtendParams) => {
-      if (!!localy) {
-        const queryArgs = getQueryArgs(listState, filter);
-        queryLocaly(
-          queryArgs.pagination.pageIndex,
-          queryArgs.pagination.pageSize,
-          queryArgs.sort?.sortBy,
-          queryArgs.sort?.sortDirection,
-        );
-        return;
-      }
-
-      if (typeof onQuery === 'function') {
-        queryWithAxios(cloneDeep(listState));
-        return;
-      }
+      if (typeof onQuery !== 'function') return;
+      queryWithAxios(cloneDeep(listState));
+      return;
     },
-    [listState, localy, onQuery, getQueryArgs, queryLocaly, queryWithAxios],
+    [listState, onQuery, queryWithAxios],
   );
 
   const reload = useCallback(() => {
-    if (!!localy) {
-      const queryArgs = getQueryArgs(listState);
-      queryLocaly(
-        queryArgs.pagination.pageIndex,
-        queryArgs.pagination.pageSize,
-        queryArgs.sort?.sortBy,
-        queryArgs.sort?.sortDirection,
-      );
-      return;
-    }
-
-    if (typeof onQuery === 'function') {
-      queryWithAxios(cloneDeep(listState));
-      return;
-    }
-  }, [listState, localy, onQuery, getQueryArgs, queryLocaly, queryWithAxios]);
+    if (typeof onQuery !== 'function') return;
+    queryWithAxios(cloneDeep(listState));
+    return;
+  }, [listState, onQuery, queryWithAxios]);
 
   const updatePaging = useCallback(
     async (page: number, size: number) => {
-      if (!!localy) {
-        queryLocaly(page, size);
-        return;
-      }
-
-      if (!!onQuery) {
-        const state = cloneDeep(listState);
-        queryWithAxios({ ...state, pageIndex: page, pageSize: size });
-        return;
-      }
+      if (typeof onQuery !== 'function') return;
+      const state = cloneDeep(listState);
+      queryWithAxios({ ...state, pageIndex: page, pageSize: size });
+      return;
     },
-    [onQuery, listState, localy, queryLocaly, queryWithAxios],
+    [onQuery, listState, queryWithAxios],
   );
 
   const updateSort = useCallback(
     (sortBy: string, sortDirection: TSortDirect) => {
+      if (typeof onQuery !== 'function') return;
       const queryArgs = cloneDeep(listState);
-
       queryArgs.sortBy = sortBy;
       queryArgs.sortDirection = sortDirection;
-
-      if (!!localy) {
-        queryLocaly(queryArgs.pageIndex, queryArgs.pageSize, queryArgs.sortBy, queryArgs.sortDirection);
-        return;
-      }
-
-      if (!!onQuery) {
-        queryWithAxios({ ...queryArgs, pageIndex: 1 });
-        return;
-      }
+      queryWithAxios({ ...queryArgs, pageIndex: 1 });
+      return;
     },
-    [listState, localy, onQuery, queryLocaly, queryWithAxios],
+    [listState, onQuery, queryWithAxios],
   );
 
   const checkOneItem = useCallback(
@@ -469,4 +373,4 @@ function useListState<T extends { [x: string]: any }>(args?: IUseListStateParams
     },
   };
 }
-export default useListState;
+export default useAsyncListState;
