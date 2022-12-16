@@ -5,7 +5,7 @@ const withRegisterViaInternalApi = (WrappedComponent: React.FC<IRegisterPageProp
   const { onSubmitRegisterForm: _, ...otherProps } = props;
 
   const handleRequestRegisterViaApi = (formData: TRegisterFormData) => {
-    //TODO: logic submit to api here
+    //TODO [Login] logic submit to api here
   };
 
   return <WrappedComponent {...otherProps} onSubmitRegisterForm={handleRequestRegisterViaApi} />;

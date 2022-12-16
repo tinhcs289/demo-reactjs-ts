@@ -1,23 +1,19 @@
-import concatArray from '@/helpers/arrayHelpers/concatArray';
 import paginate from '@/helpers/arrayHelpers/paginate';
 import cloneDeep from 'lodash/cloneDeep';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ACTION, DESC, ERequestStatus, PAGE_INDEX, PAGE_SIZE } from './constants';
+import { ACTION, DESC, PAGE_INDEX, PAGE_SIZE } from './constants';
 import type {
-  IUseListStateParams,
-  IUseListStateReturns,
+  IUseStaticListStateParams,
+  IUseStaticListStateReturns,
   TListState,
   TOnQueryArgs,
   TQueryExtendParams,
   TSortDirect,
 } from './_types';
 
-/**
- * @deprecated this function had been seperated info 2 hooks `useAsyncListState` and `useStaticListState`
- * - `useStaticListState` is an equivalent usage with `useListState({ localy: true, source: users })`
- * - `useAsyncListState` is an equivalent usage with `useListState({ onQuery: getUsersApiCall })`
- */
-function useListState<T extends { [x: string]: any }>(args?: IUseListStateParams<T>): IUseListStateReturns<T> {
+function useStaticListState<T extends { [x: string]: any }>(
+  args?: IUseStaticListStateParams<T>,
+): IUseStaticListStateReturns<T> {
   const {
     source,
     defaultSelectable,
@@ -25,10 +21,7 @@ function useListState<T extends { [x: string]: any }>(args?: IUseListStateParams
     defaultSort,
     defaultExtendQueryParams,
     fixedExtendQueryParams,
-    localy,
-    onQuery,
     onQueryLocaly,
-    queryOnFirstLoad,
   } = args || {};
 
   const memoSource = useMemo(() => {
@@ -39,10 +32,6 @@ function useListState<T extends { [x: string]: any }>(args?: IUseListStateParams
     (item?: T) => (!item ? null : typeof args?.idField !== 'string' ? item['id'] : item[args.idField]),
     [args?.idField],
   );
-
-  const infinite = useMemo(() => {
-    return !!args?.infinite;
-  }, [args?.infinite]);
 
   const dfPaging = useMemo(() => {
     return {
@@ -110,7 +99,6 @@ function useListState<T extends { [x: string]: any }>(args?: IUseListStateParams
   const [data, setData] = useState(paginate(memoSource, dfState.pageIndex, dfState.pageSize));
   const [selectedItems, setSelectedItems] = useState<T[]>([]);
   const [listState, setListState] = useState<TListState>(dfState);
-  const [fetchState, setFetchState] = useState<ERequestStatus>(ERequestStatus.NONE);
   const [selectable, setSelectable] = useState<boolean>(defaultSelectable === true ? true : false);
   const [checkAll, setCheckAll] = useState<boolean>(false);
   const [interactItem, setInteractItem] = useState<T | null>(null);
@@ -149,112 +137,52 @@ function useListState<T extends { [x: string]: any }>(args?: IUseListStateParams
 
   const queryLocaly = useCallback(
     (page: number, size: number, sortBy?: string, sortDirection?: TSortDirect) => {
-      if (!!localy) {
-        if (typeof onQueryLocaly !== 'function') {
-          let result = paginate(memoSource, page, size);
-          setListState((state) => ({
-            ...state,
-            pageIndex: page,
-            pageSize: size,
-            totalCount: memoSource.length,
-          }));
-          setData(result);
-        } else {
-          const queryArgs = getQueryArgs(listState);
+      if (typeof onQueryLocaly !== 'function') {
+        let result = paginate(memoSource, page, size);
+        setListState((state) => ({
+          ...state,
+          pageIndex: page,
+          pageSize: size,
+          totalCount: memoSource.length,
+        }));
+        setData(result);
+      } else {
+        const queryArgs = getQueryArgs(listState);
 
-          if (typeof sortBy === 'string')
-            queryArgs.sort = {
-              ...queryArgs.sort,
-              sortBy,
-              sortDirection: sortDirection || queryArgs.sort?.sortDirection || DESC,
-            };
-
-          let result: T[] = [];
-
-          try {
-            result = onQueryLocaly(queryArgs);
-          } catch (error) {
-            console.log(error);
-          }
-
-          setListState((state) => ({
-            ...state,
+        if (typeof sortBy === 'string')
+          queryArgs.sort = {
             ...queryArgs.sort,
-            ...queryArgs.moreFilter,
-            totalCount: Array.isArray(result) ? result.length : 0,
-            pageIndex: page,
-            pageSize: size,
-          }));
+            sortBy,
+            sortDirection: sortDirection || queryArgs.sort?.sortDirection || DESC,
+          };
 
-          setData(Array.isArray(result) ? paginate(result, page, size) : []);
-        }
-      }
-    },
-    [localy, onQueryLocaly, getQueryArgs, listState, memoSource],
-  );
+        let result: T[] = [];
 
-  const queryWithAxios = useCallback(
-    async (state: TListState) => {
-      if (!!onQuery) {
-        let [result, totalCount]: [T[], number] = [[], 0];
-        setFetchState(ERequestStatus.REQUESTING);
-        const queryArgs = getQueryArgs(state);
         try {
-          const response = await onQuery(queryArgs);
-          result = Array.isArray(response?.result) ? response.result : [];
-          totalCount = Number.isInteger(response?.totalCount) ? response.totalCount : 0;
-
-          if (!infinite) {
-            setData(result);
-          } else {
-            const _data = concatArray(cloneDeep(data || []), result);
-            setData(_data);
-          }
-
-          setListState((state) => ({
-            ...state,
-            ...queryArgs.pagination,
-            ...queryArgs.sort,
-            ...queryArgs.moreFilter,
-            totalCount,
-          }));
-
-          setFetchState(ERequestStatus.REQUESTSUCCESS);
+          result = onQueryLocaly(queryArgs);
         } catch (error) {
           console.log(error);
-          setFetchState(ERequestStatus.REQUESTFAIL);
-        } finally {
-          setFetchState(ERequestStatus.NONE);
         }
+
+        setListState((state) => ({
+          ...state,
+          ...queryArgs.sort,
+          ...queryArgs.moreFilter,
+          totalCount: Array.isArray(result) ? result.length : 0,
+          pageIndex: page,
+          pageSize: size,
+        }));
+
+        setData(Array.isArray(result) ? paginate(result, page, size) : []);
       }
     },
-    [onQuery, getQueryArgs, infinite, data],
+    [onQueryLocaly, getQueryArgs, listState, memoSource],
   );
 
   const updateFilter = useCallback(
     (filter: TQueryExtendParams) => {
-      if (!!localy) {
-        const queryArgs = getQueryArgs(listState, filter);
-        queryLocaly(
-          queryArgs.pagination.pageIndex,
-          queryArgs.pagination.pageSize,
-          queryArgs.sort?.sortBy,
-          queryArgs.sort?.sortDirection,
-        );
-        return;
-      }
-
-      if (typeof onQuery === 'function') {
-        queryWithAxios(cloneDeep(listState));
-        return;
-      }
-    },
-    [listState, localy, onQuery, getQueryArgs, queryLocaly, queryWithAxios],
-  );
-
-  const reload = useCallback(() => {
-    if (!!localy) {
-      const queryArgs = getQueryArgs(listState);
+      if (typeof queryLocaly !== 'function') return;
+      const queryArgs = getQueryArgs(listState, filter);
       queryLocaly(
         queryArgs.pagination.pageIndex,
         queryArgs.pagination.pageSize,
@@ -262,48 +190,41 @@ function useListState<T extends { [x: string]: any }>(args?: IUseListStateParams
         queryArgs.sort?.sortDirection,
       );
       return;
-    }
+    },
+    [listState, getQueryArgs, queryLocaly],
+  );
 
-    if (typeof onQuery === 'function') {
-      queryWithAxios(cloneDeep(listState));
-      return;
-    }
-  }, [listState, localy, onQuery, getQueryArgs, queryLocaly, queryWithAxios]);
+  const reload = useCallback(() => {
+    if (typeof queryLocaly !== 'function') return;
+    const queryArgs = getQueryArgs(listState);
+    queryLocaly(
+      queryArgs.pagination.pageIndex,
+      queryArgs.pagination.pageSize,
+      queryArgs.sort?.sortBy,
+      queryArgs.sort?.sortDirection,
+    );
+    return;
+  }, [listState, getQueryArgs, queryLocaly]);
 
   const updatePaging = useCallback(
     async (page: number, size: number) => {
-      if (!!localy) {
-        queryLocaly(page, size);
-        return;
-      }
-
-      if (!!onQuery) {
-        const state = cloneDeep(listState);
-        queryWithAxios({ ...state, pageIndex: page, pageSize: size });
-        return;
-      }
+      if (typeof queryLocaly !== 'function') return;
+      queryLocaly(page, size);
+      return;
     },
-    [onQuery, listState, localy, queryLocaly, queryWithAxios],
+    [queryLocaly],
   );
 
   const updateSort = useCallback(
     (sortBy: string, sortDirection: TSortDirect) => {
+      if (typeof queryLocaly !== 'function') return;
       const queryArgs = cloneDeep(listState);
-
       queryArgs.sortBy = sortBy;
       queryArgs.sortDirection = sortDirection;
-
-      if (!!localy) {
-        queryLocaly(queryArgs.pageIndex, queryArgs.pageSize, queryArgs.sortBy, queryArgs.sortDirection);
-        return;
-      }
-
-      if (!!onQuery) {
-        queryWithAxios({ ...queryArgs, pageIndex: 1 });
-        return;
-      }
+      queryLocaly(queryArgs.pageIndex, queryArgs.pageSize, queryArgs.sortBy, queryArgs.sortDirection);
+      return;
     },
-    [listState, localy, onQuery, queryLocaly, queryWithAxios],
+    [listState, queryLocaly],
   );
 
   const checkOneItem = useCallback(
@@ -392,14 +313,6 @@ function useListState<T extends { [x: string]: any }>(args?: IUseListStateParams
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
-  useEffect(() => {
-    if (!queryOnFirstLoad) return;
-    if (typeof onQuery !== 'function') return;
-    const state = cloneDeep(listState);
-    queryWithAxios({ ...state, pageIndex: 1 });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const toggleSelectable = useCallback((isOn: boolean) => {
     setSelectable(isOn);
 
@@ -440,7 +353,6 @@ function useListState<T extends { [x: string]: any }>(args?: IUseListStateParams
     state: {
       data,
       listState,
-      fetchState,
       selectedItems,
       isCheckAll: checkAll,
       interactItem,
@@ -469,4 +381,4 @@ function useListState<T extends { [x: string]: any }>(args?: IUseListStateParams
     },
   };
 }
-export default useListState;
+export default useStaticListState;

@@ -52,7 +52,6 @@ const LoginPage: React.FC<ILoginPageProps> = withHOCs(
       <Typography component="h1" variant="h5">
         {t('login:login')}
       </Typography>
-      <ButtonLanguage />
       <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate sx={{ mt: 1 }}>
         <RHFText
           name="Account"
