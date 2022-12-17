@@ -1,8 +1,6 @@
 import concatArray from '@/helpers/arrayHelpers/concatArray';
-import paginate from '@/helpers/arrayHelpers/paginate';
 import cloneDeep from 'lodash/cloneDeep';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ACTION, DESC, ERequestStatus, PAGE_INDEX, PAGE_SIZE } from './constants';
 import type {
   IUseListStateParams,
   IUseListStateReturns,
@@ -11,6 +9,7 @@ import type {
   TQueryExtendParams,
   TSortDirect,
 } from './_types';
+import { ACTION, DESC, ERequestStatus, PAGE_INDEX, PAGE_SIZE } from './constants';
 
 function useAsyncListState<T extends { [x: string]: any }>(args?: IUseListStateParams<T>): IUseListStateReturns<T> {
   const {
