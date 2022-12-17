@@ -2,7 +2,6 @@ import RHFCheck from '@/components/rhfInputs/RHFCheck';
 import RHFText from '@/components/rhfInputs/RHFText';
 import { required } from '@/constants/rhfRules';
 import withHOCs from '@/hocs/withHocs';
-import ButtonLanguage from '@/layouts/DashboardLayout/AppBar/ButtonLanguage';
 import PATHS from '@/routes/paths';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useTheme } from '@mui/material';
@@ -16,10 +15,10 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
+import type { ILoginPageProps, TLoginFormData } from './_types';
 import withLoginViaInternalApi from './withLoginViaInternalApi';
 import withLoginViaSSO from './withLoginViaSSO';
 import withRedirectAfterLoginWithExternalQueryString from './withRedirectAfterLoginWithExternalQueryString';
-import type { ILoginPageProps, TLoginFormData } from './_types';
 
 const LoginPage: React.FC<ILoginPageProps> = withHOCs(
   withRedirectAfterLoginWithExternalQueryString,

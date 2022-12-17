@@ -16,7 +16,8 @@
     "**/src/react-app-env.d.ts": true,
     "**/src/reportWebVitals.ts": true,
     "**/src/setupTests.ts": true,
-    "**/README.md": true
+    "**/README.md": true,
+    "**/LICENSE.md": true
   },
   "typescript.preferences.importModuleSpecifier": "non-relative"
 }
