@@ -1,6 +1,6 @@
 export type TBuyOrSell = 1 | 2;
 export type TPaymentMethod = 1 | 2 | 3;
-export type TBookingSellListItem = {
+export type T__module__ListItem = {
   id?: string;
   workGroupId?: string;
   quotationId?: string;

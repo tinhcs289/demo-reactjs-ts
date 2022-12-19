@@ -1,11 +1,10 @@
 import loginApi from '@/api/authentication/loginApi';
+import tryCall from '@/api/tryCall';
 import authentication from '@/appCookies/authentication';
 import { default as authenticationInLocalStorage } from '@/appLocalStorages/authentication';
-import intOrDefault from '@/helpers/formatHelpers/intOrDefault';
 import useReturnUrlHash from '@/hooks/useReturnUrlHash';
 import useSnackbarNotify from '@/hooks/useSnackbarNotify';
 import PATHS from '@/routes/paths';
-import type { AxiosResponse } from 'axios';
 import type { FC } from 'react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -29,29 +28,30 @@ const withLoginViaInternalApi = (WrappedComponent: FC<ILoginPageProps>) => (prop
 
   const handleRequestLoginViaApi = async (fd: TLoginFormData): Promise<void> => {
     if (!fd?.Account || !fd?.Password) return;
-    try {
-      const res = await loginApi({
-        username: fd?.Account,
-        password: fd?.Password,
-      });
 
-      if (res?.status !== 200 || !res?.data?.jwt?.accessToken || !res?.data?.jwt?.refreshToken) throw res;
+    const payload = {
+      username: fd?.Account,
+      password: fd?.Password,
+    };
 
-      authentication.set(res.data.jwt);
-      authenticationInLocalStorage.set(res.data.jwt, true);
-      redirectToNextPage(returnUri || returnUriProp);
-    } catch (error) {
-      console.log(error);
-      const httpCode = (error as AxiosResponse<any, any>)?.status;
+    setLoading(true);
+    
+    const [data, error] = await tryCall(loginApi, payload).desireSuccessWith(
+      (r) => !!r?.data?.jwt?.accessToken && !!r?.data?.jwt?.refreshToken,
+    );
 
-      showErrorNotify(
-        `code: ${intOrDefault(httpCode)}, ${t('login:invalidAccountOrPassword')} ${t('or')} ${t(
-          'somethingWentWrong_pleaseTryAgainLater',
-        )}`,
-      );
-    } finally {
-      setLoading(false);
+    setLoading(false);
+
+    if (error) {
+      if (error === 'REQUEST_ERROR') showErrorNotify(t('somethingWentWrong_pleaseTryAgainLater'));
+      showErrorNotify(t('login:invalidAccountOrPassword'));
+      return;
     }
+
+    authentication.set(data.jwt);
+    authenticationInLocalStorage.set(data.jwt, true);
+    redirectToNextPage(returnUri || returnUriProp);
+    return;
   };
 
   return <WrappedComponent {...otherProps} loading={loading} onSubmitLoginForm={handleRequestLoginViaApi} />;
