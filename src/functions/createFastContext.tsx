@@ -1,5 +1,4 @@
-import type { ReactNode } from 'react';
-import { createContext, useCallback, useContext, useRef, useSyncExternalStore } from 'react';
+import { createContext, ReactNode, useCallback, useContext, useRef, useSyncExternalStore } from 'react';
 
 /**
  * @example
@@ -67,13 +66,6 @@ export default function createFastContext<Store>(initialState: Store) {
     if (!store) {
       throw new Error('Store not found');
     }
-
-    // this is exactly what `useSyncExternalStore` do.
-    // =>
-    // const [state, setState] = useState(store.get());
-    // useEffect(() => {
-    //  return store.subscribe(() => setState(store.get()));
-    // }, []);
 
     const state = useSyncExternalStore(
       store.subscribe,

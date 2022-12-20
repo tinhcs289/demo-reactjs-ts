@@ -75,6 +75,9 @@ export interface ICommonTableProps<T extends Record<string, any>> {
   rows?: T[];
   children?: ReactNode;
   selectable?: TSelectTable<T>;
+  loading?: boolean;
+  loadingText?: ReactNode;
+  notFoundText?: ReactNode;
 }
 
 export interface ICommonPaginationProps extends Omit<PaginationProps, 'onChange' | 'count' | 'size'> {

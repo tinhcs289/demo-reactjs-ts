@@ -1,10 +1,11 @@
 import logoutApi from '@/api/authentication/logoutApi';
+import tryCall from '@/api/tryCall';
 import authentication from '@/appCookies/authentication';
+import { default as authenticationInLocalStorage } from '@/appLocalStorages/authentication';
 import PATHS from '@/routes/paths';
 import type { FC } from 'react';
 import { useState } from 'react';
 import type { ILogoutPage } from './_types';
-import { default as authenticationInLocalStorage } from '@/appLocalStorages/authentication';
 
 const redirectToNextPage = () => {
   if (!(!!window && !!window?.location && typeof window.location.replace === 'function')) return;
@@ -18,16 +19,12 @@ const withLogoutAction = (WrappedComponent: FC<ILogoutPage>) => (props: ILogoutP
 
   const handleLogout = async () => {
     setLoading(true);
-    try {
-      await logoutApi();
-    } catch (error) {
-      console.log(error);
-    } finally {
-      authentication.clear();
-      authenticationInLocalStorage.set(null, true);
-      redirectToNextPage();
-      setLoading(false);
-    }
+    await tryCall(logoutApi).withNoDesire();
+    authentication.clear();
+    authenticationInLocalStorage.set(null, true);
+    redirectToNextPage();
+    setLoading(false);
+    return;
   };
 
   return <WrappedComponent {...otherProps} loading={loading} onLogout={handleLogout} />;

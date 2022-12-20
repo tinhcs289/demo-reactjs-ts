@@ -3,6 +3,7 @@
     "bookingCode": "Mã",
     "name": "Đơn hàng",
     "totalPassenger": "hàng khách",
-    "totalPrice": "thành tiền"
+    "totalPrice": "thành tiền",
+    "action": "Tác vụ"
   }
 }
