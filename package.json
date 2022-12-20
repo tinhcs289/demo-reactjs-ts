@@ -18,6 +18,7 @@
     "country-flag-icons": "1.5.5",
     "crypto-js": "4.1.1",
     "env-cmd": "10.1.0",
+    "generate-template-files": "3.2.1",
     "i18next": "22.4.5",
     "i18next-browser-languagedetector": "7.0.1",
     "js-cookie": "3.0.1",
@@ -80,7 +81,8 @@
     "eject": "react-scripts eject",
     "predeploy": "npm run build:prod",
     "deploy": "gh-pages -d build",
-    "env": "sync-dotenv --env .env.example --samples \".env.*\""
+    "env": "sync-dotenv --env .env.example --samples \".env.*\"",
+    "gen": "node ./generate.js"
   },
   "eslintConfig": {
     "extends": [

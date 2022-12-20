@@ -1,18 +1,23 @@
 import CommonTable from '@/components/CommonTable';
 import CommonPagination from '@/components/CommonTable/components/CommonPagination';
-import type { ICommonPaginationProps, ICommonTableProps } from '@/components/CommonTable/_types';
+import type { ICommonPaginationProps, ICommonTableProps, TBodyCellComponent } from '@/components/CommonTable/_types';
 import createFastContext from '@/functions/createFastContext';
 import useAsyncListState from '@/hooks/useAsyncListState';
-import { DEFAULT_DATA } from '@/hooks/useAsyncListState/constants';
+import { ACTION, DEFAULT_DATA, ERequestStatus } from '@/hooks/useAsyncListState/constants';
 import type {
   IUseListStateParams,
   IUseListStateReturnsAction,
   IUseListStateReturnsControl,
   IUseListStateReturnsState,
 } from '@/hooks/useAsyncListState/_types';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import IconButton from '@mui/material/IconButton';
+import Menu from '@mui/material/Menu';
+import TableCell from '@mui/material/TableCell';
 import isEqual from 'lodash/isEqual';
-import type { FC, ReactNode } from 'react';
+import type { FC, MouseEventHandler, ReactNode } from 'react';
 import { useCallback, useEffect, useMemo } from 'react';
+import type { MenuProps } from '@mui/material/Menu';
 
 export function createAsyncListContext<T extends { [x: string]: any }>() {
   const { Provider, useStore } = createFastContext<
@@ -218,7 +223,7 @@ export function createAsyncListContext<T extends { [x: string]: any }>() {
     return <></>;
   };
 
-  const ListTable: FC<Omit<ICommonTableProps<T>, 'rows' | 'selectable'>> = (props) => {
+  const ListTable: FC<Omit<ICommonTableProps<T>, 'rows' | 'selectable' | 'loading'>> = (props) => {
     const { columns, ...otherProps } = props;
 
     const [data] = useStore((s) => s.data);
@@ -226,6 +231,7 @@ export function createAsyncListContext<T extends { [x: string]: any }>() {
     const [isSelected] = useStore((s) => s.isSelected);
     const [checkAllItems] = useStore((s) => s.control?.checkAllItems);
     const [checkOneItem] = useStore((s) => s.control?.checkOneItem);
+    const [fetchState] = useStore((s) => s.fetchState);
 
     const selectable = useMemo(() => {
       return {
@@ -236,7 +242,11 @@ export function createAsyncListContext<T extends { [x: string]: any }>() {
       };
     }, [isCheckAll, checkAllItems, checkOneItem, isSelected]);
 
-    return <CommonTable {...otherProps} rows={data} columns={columns} selectable={selectable} />;
+    const loading = useMemo(() => {
+      return fetchState === ERequestStatus.REQUESTING;
+    }, [fetchState]);
+
+    return <CommonTable {...otherProps} rows={data} columns={columns} loading={loading} selectable={selectable} />;
   };
 
   const ListPaging: FC<Omit<ICommonPaginationProps, 'pageIndex' | 'pageSize' | 'totalCount' | 'onChange'>> = (
@@ -275,6 +285,88 @@ export function createAsyncListContext<T extends { [x: string]: any }>() {
     );
   };
 
+  const ActionCell: TBodyCellComponent<T> = (props) => {
+    const { row, ...otherProps } = props;
+    const [set] = useStore((s) => s.action?.set);
+
+    const item = useMemo(() => {
+      return row;
+    }, [row]);
+
+    const setAction = useCallback(
+      (actionDetail: {
+        action: string;
+        item?: T | undefined;
+        element?: any;
+        keepAnchor?: boolean | undefined;
+        keepInteract?: boolean | undefined;
+      }) => {
+        set?.(actionDetail);
+      },
+      [set],
+    );
+
+    const toggleAction: MouseEventHandler<HTMLButtonElement> = useCallback(
+      (event) => {
+        event?.stopPropagation?.();
+        event?.preventDefault?.();
+        if (!event?.target) return;
+        if (!item) return;
+        setAction({
+          item,
+          action: ACTION.MORE_ACTION,
+          element: event.target,
+        });
+        return;
+      },
+      [item, setAction],
+    );
+
+    return (
+      <TableCell {...otherProps}>
+        {useMemo(() => {
+          return (
+            <IconButton onClick={toggleAction}>
+              <MoreVertIcon />
+            </IconButton>
+          );
+        }, [toggleAction])}
+      </TableCell>
+    );
+  };
+
+  const ItemAction: FC<Omit<MenuProps, 'anchorEl' | 'open' | 'onClose'>> = (props) => {
+    const { children, ...otherProps } = props;
+    const [anchorEl] = useStore((s) => s.anchorEl);
+    const [interactItem] = useStore((s) => s.interactItem);
+    const [clear] = useStore((s) => s.action?.clear);
+
+    const anchor = useMemo(() => {
+      return anchorEl;
+    }, [anchorEl]);
+
+    const open = useMemo(() => {
+      return !!anchorEl && !!interactItem;
+    }, [anchorEl, interactItem]);
+
+    const clearAction = useCallback(() => {
+      clear?.();
+    }, [clear]);
+
+    return (
+      <Menu
+        anchorEl={anchor}
+        open={open}
+        onClose={clearAction}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+        {...otherProps}
+      >
+        {children}
+      </Menu>
+    );
+  };
+
   return {
     AsyncListProvider: ListProvider,
     useAsyncList: useStore,
@@ -282,6 +374,8 @@ export function createAsyncListContext<T extends { [x: string]: any }>() {
     useAsyncListAction: useListAction,
     AsyncListTable: ListTable,
     AsyncListPaging: ListPaging,
+    ActionCell,
+    ItemAction,
   };
 }
 export default createAsyncListContext;
