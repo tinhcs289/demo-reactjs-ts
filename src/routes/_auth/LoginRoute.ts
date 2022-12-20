@@ -1,5 +1,5 @@
 import paths from '@/routes/paths';
-import wait from '@/routes/wait';
+import wait from '@/functions/wait';
 import type { TRouteConfig } from '@/routes/_types';
 import { lazy } from 'react';
 

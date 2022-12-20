@@ -3,6 +3,7 @@
     "bookingCode": "Code",
     "name": "Order",
     "totalPassenger": "Passenger",
-    "totalPrice": "Amount"
+    "totalPrice": "Amount",
+    "action": "Action"
   }
 }

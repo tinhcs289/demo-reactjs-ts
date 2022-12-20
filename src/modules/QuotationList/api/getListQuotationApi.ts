@@ -1,7 +1,7 @@
 import http from '@/api/http';
 import httpMock from '@/api/httpMock';
 import mockAdapter from '@/api/mockAdapter';
-import { TBookingSellListItem } from '@/api/booking/_types';
+import { TQuotationListItem } from '../_types';
 import type { TListDataModel, TListDataQueryModel } from '@/_types/TListDataModel';
 import type { AxiosResponse } from 'axios';
 
@@ -23,9 +23,9 @@ const mockSetup = () => {
 
 if (isMock) mockSetup();
 
-const getListBookingSell = (
+const getListQuotationApi = (
   payload: TListDataQueryModel,
-): Promise<AxiosResponse<TListDataModel<TBookingSellListItem>>> => {
+): Promise<AxiosResponse<TListDataModel<TQuotationListItem>>> => {
   return !isMock ? http.get(LINK, { params: payload }) : httpMock.get(LINK, { params: payload });
 };
-export default getListBookingSell;
+export default getListQuotationApi;

@@ -1,11 +1,17 @@
 import CheckCell from '@/components/CommonTable/components/CheckCell';
 import newGuid from '@/helpers/stringHelpers/newGuid';
+import FindInPageIcon from '@mui/icons-material/FindInPage';
+import SearchOffIcon from '@mui/icons-material/SearchOff';
+import type { SxProps, Theme } from '@mui/material';
+import LinearProgress from '@mui/material/LinearProgress';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import Typography from '@mui/material/Typography';
 import type { Ref } from 'react';
 import { forwardRef, Fragment, useCallback, useMemo } from 'react';
 import { renderBodyCell, renderHeadCell } from './_functions';
@@ -71,6 +77,8 @@ function CommonTableFC<T extends Record<string, any>>(props: ICommonTableProps<T
     tableBodyRowProps,
     columns,
     children,
+    loadingText,
+    notFoundText,
     selectable,
   } = props;
 
@@ -84,7 +92,21 @@ function CommonTableFC<T extends Record<string, any>>(props: ICommonTableProps<T
   }, [tableProps]);
 
   const memoTableHeadProps = useMemo(() => {
-    return tableHeadProps;
+    if (!tableHeadProps)
+      return {
+        sx: {
+          position: 'relative',
+        } as SxProps<Theme>,
+      } as any;
+
+    const { sx, ...otherTableHeadProps } = tableHeadProps;
+    return {
+      ...otherTableHeadProps,
+      sx: {
+        ...sx,
+        position: 'relative',
+      },
+    } as any;
   }, [tableHeadProps]);
 
   const memoTableHeadRowProps = useMemo(() => {
@@ -94,6 +116,10 @@ function CommonTableFC<T extends Record<string, any>>(props: ICommonTableProps<T
   const isCheckAll = useMemo(() => {
     return selectable?.isCheckAll;
   }, [selectable?.isCheckAll]);
+
+  const loading = useMemo(() => {
+    return !!props?.loading;
+  }, [props?.loading]);
 
   const memoConfig = useMemo(() => {
     return columns || [];
@@ -176,13 +202,45 @@ function CommonTableFC<T extends Record<string, any>>(props: ICommonTableProps<T
     [memoConfig, tableBodyRowProps, renderRowSelectBox],
   );
 
+  const emptyRowRender = useMemo(() => {
+    if (Number.isInteger(memoRows?.length) && memoRows.length > 0) return null;
+
+    const hasCheckCell = typeof isCheckAll === 'boolean';
+    const colspan = (hasCheckCell ? 1 : 0) + (Number.isInteger(memoConfig?.length) ? memoConfig?.length : 0);
+
+    return (
+      <TableRow>
+        <TableCell colSpan={colspan}>
+          <Typography sx={{ display: 'flex', justifyContent: 'center' }}>
+            {loading ? (
+              <>
+                <FindInPageIcon />
+                &nbsp;{loadingText || `loading...`}
+              </>
+            ) : (
+              <>
+                <SearchOffIcon />
+                &nbsp;{notFoundText || `No data!`}
+              </>
+            )}
+          </Typography>
+        </TableCell>
+      </TableRow>
+    );
+  }, [memoRows?.length, memoConfig?.length, isCheckAll, loading, loadingText, notFoundText]);
+
   const memoRowsRender = useMemo(() => {
     return <>{memoRows.map(renderRow)}</>;
   }, [memoRows, renderRow]);
 
   const memoBodyRender = useMemo(() => {
-    return <TableBody {...tableBodyProps}>{!children ? memoRowsRender : children}</TableBody>;
-  }, [tableBodyProps, children, memoRowsRender]);
+    return (
+      <TableBody {...tableBodyProps}>
+        {emptyRowRender}
+        {!children ? memoRowsRender : children}
+      </TableBody>
+    );
+  }, [tableBodyProps, children, memoRowsRender, emptyRowRender]);
   //#endregion
 
   //#region Header render
@@ -197,6 +255,17 @@ function CommonTableFC<T extends Record<string, any>>(props: ICommonTableProps<T
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const loadingRender = useMemo(() => {
+    if (!loading) return null;
+
+    return (
+      <LinearProgress
+        color="primary"
+        sx={{ position: 'absolute', bottom: 0, left: 0, width: '100%', zIndex: (theme) => theme.zIndex.modal }}
+      />
+    );
+  }, [loading]);
   //#endregion
 
   return (
@@ -207,6 +276,7 @@ function CommonTableFC<T extends Record<string, any>>(props: ICommonTableProps<T
             {checkAllRender}
             {headerCellListRender}
           </TableRow>
+          {loadingRender}
         </TableHead>
         {memoBodyRender}
       </Table>

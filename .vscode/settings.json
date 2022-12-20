@@ -17,7 +17,9 @@
     "**/src/reportWebVitals.ts": true,
     "**/src/setupTests.ts": true,
     "**/README.md": true,
-    "**/LICENSE.md": true
+    "**/LICENSE.md": true,
+    "**/generate.js": true,
+    "**/src/modules/__module__List/": true
   },
   "typescript.preferences.importModuleSpecifier": "non-relative"
 }
