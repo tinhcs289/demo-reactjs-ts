@@ -188,11 +188,8 @@ const CommonTable = forwardRef(function CommonTable<T extends Record<string, any
   );
 
   const $loadingOrNoDataText = useMemo(() => {
-    return (
-      <Typography sx={{ display: 'flex', justifyContent: 'center' }}>
-        {loading ? <LoadingText>{loadingText}</LoadingText> : <NoDataText>{notFoundText}</NoDataText>}
-      </Typography>
-    );
+    if (!!loading) return <LoadingText>{loadingText}</LoadingText>;
+    return <NoDataText>{notFoundText}</NoDataText>;
   }, [loading, loadingText, notFoundText]);
 
   const $noDataOrLoading = useMemo(() => {
