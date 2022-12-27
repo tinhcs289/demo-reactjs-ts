@@ -1,12 +1,10 @@
 import CheckCell from '@/components/CommonTable/components/CheckCell';
-import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Typography from '@mui/material/Typography';
 import type { Ref } from 'react';
 import { forwardRef, Fragment, useCallback, useMemo } from 'react';
 import {
@@ -15,6 +13,7 @@ import {
   defaultContainerProps,
   defaultTableHeadProps,
   defaultTableProps,
+  PaperStyled,
   renderBodyCell,
   renderHeadCell,
 } from '../_functions';
@@ -238,7 +237,7 @@ const CommonTable = forwardRef(function CommonTable<T extends Record<string, any
   //#endregion
 
   return (
-    <TableContainer ref={ref} component={Paper} {...memoContainerProps}>
+    <TableContainer ref={ref} component={PaperStyled} {...memoContainerProps}>
       {$loading}
       <Table stickyHeader {...memoTableProps}>
         <TableHead {...memoTableHeadProps}>
