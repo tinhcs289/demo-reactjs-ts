@@ -6,5 +6,30 @@
   "invalidPhone": "Invalid phone number",
   "invalidEmail": "Invalid email address",
   "somethingWentWrong_pleaseTryAgainLater": "Something went wrong, please try again later",
-  "or": "or"
+  "or": "or",
+  "edit": "Edit",
+  "delete": "Delete",
+  "create": "Create",
+  "add": "Add",
+  "save": "Save",
+  "submit": "Submit",
+  "cancel": "Cancel",
+  "discard": "Discard",
+  "close": "Close",
+  "back": "Back",
+  "yes": "Yes",
+  "no": "No",
+  "confirm": "Confirm",
+  "pleaseConfirmForPerformThisAction": "Please confirm for perform this action",
+  "deleted": "Deleted",
+  "table": {
+    "loading": "loading...",
+    "noDataFound": "No data found",
+    "rowsPerPage": "Rows per page",
+    "displayedRows": "{{from}} to {{to}} of {{count}}",
+    "goToFirstPage": "go to first page",
+    "goToLastPage": "go to last page",
+    "goToNextPage": "go to next page",
+    "goToPreviousPage": "go to previous page"
+  }
 }
