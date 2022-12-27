@@ -1,12 +1,15 @@
 import type { CheckboxProps } from '@mui/material/Checkbox';
 import CheckBox from '@mui/material/Checkbox';
 import TableCell from '@mui/material/TableCell';
+import type { TableCellProps } from '@mui/material/TableCell';
 import type { FC } from 'react';
 
-const CheckCell: FC<Omit<CheckboxProps, 'onChange'> & { onChange?: (checked: boolean) => void }> = (props) => {
-  const { checked, onChange, ...otherProps } = props;
+const CheckCell: FC<
+  Omit<CheckboxProps, 'onChange'> & { onChange?: (checked: boolean) => void; cellProps?: TableCellProps }
+> = (props) => {
+  const { checked, onChange, cellProps, ...otherProps } = props;
   return (
-    <TableCell align="center" padding="checkbox">
+    <TableCell align="center" padding="checkbox" {...cellProps}>
       <CheckBox
         disableRipple
         disableTouchRipple

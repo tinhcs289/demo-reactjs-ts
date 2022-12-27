@@ -4,6 +4,11 @@
     "name": "Order",
     "totalPassenger": "Passenger",
     "totalPrice": "Amount",
-    "action": "Action"
+    "createdBy": "Created by",
+    "processUserName": "Assignee",
+    "action": "Action",
+    "loading": "loading...",
+    "noDataFound": "No data found",
+    "areYouSureToDelete": "Are you sure to delete"
   }
 }

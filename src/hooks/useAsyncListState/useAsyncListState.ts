@@ -1,6 +1,7 @@
 import concatArray from '@/helpers/arrayHelpers/concatArray';
 import cloneDeep from 'lodash/cloneDeep';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { ACTION, DESC, ERequestStatus, PAGE_INDEX, PAGE_SIZE } from './constants';
 import type {
   IUseListStateParams,
   IUseListStateReturns,
@@ -9,7 +10,6 @@ import type {
   TQueryExtendParams,
   TSortDirect,
 } from './_types';
-import { ACTION, DESC, ERequestStatus, PAGE_INDEX, PAGE_SIZE } from './constants';
 
 function useAsyncListState<T extends { [x: string]: any }>(args?: IUseListStateParams<T>): IUseListStateReturns<T> {
   const {
@@ -35,7 +35,7 @@ function useAsyncListState<T extends { [x: string]: any }>(args?: IUseListStateP
     return {
       totalCount: defaultPagination?.totalCount || 0,
       pageIndex: defaultPagination?.pageIndex || PAGE_INDEX,
-      pageSize: defaultPagination?.pageIndex || PAGE_SIZE,
+      pageSize: defaultPagination?.pageSize || PAGE_SIZE,
     };
   }, [defaultPagination]);
 
@@ -269,11 +269,21 @@ function useAsyncListState<T extends { [x: string]: any }>(args?: IUseListStateP
   const setItemActionDetail = useCallback(
     (detail: { action: string; item?: T; element?: any; keepAnchor?: boolean; keepInteract?: boolean }) => {
       const { action, item, element, keepAnchor, keepInteract } = detail;
-      if (!!action) {
-        setItemAction(action);
-        if (!keepInteract) setInteractItem(!!item ? item : null);
-        if (!keepAnchor) setAnchorEl(!!element ? element : null);
+      if (!action) return;
+
+      setItemAction(action);
+
+      if (!!item) setInteractItem(item);
+      else {
+        if (!keepInteract) setInteractItem(null);
       }
+
+      if (!!element) setAnchorEl(element);
+      else {
+        if (!keepAnchor) setAnchorEl(null);
+      }
+
+      return;
     },
     [],
   );
@@ -312,32 +322,26 @@ function useAsyncListState<T extends { [x: string]: any }>(args?: IUseListStateP
     }
   }, []);
 
-  const actionRef = useRef(itemAction);
-  useEffect(() => {
-    actionRef.current = itemAction || ACTION.NONE;
-  }, [itemAction]);
+  const isAction = useCallback(
+    (action: string) => {
+      return itemAction === action;
+    },
+    [itemAction],
+  );
 
-  const interactRef = useRef(interactItem);
-  useEffect(() => {
-    interactRef.current = interactItem;
-  }, [interactItem]);
+  const isItemInteractAction = useCallback(
+    (action: string) => {
+      return itemAction === action && !!interactItem;
+    },
+    [itemAction, interactItem],
+  );
 
-  const anchorElRef = useRef(anchorEl);
-  useEffect(() => {
-    anchorElRef.current = anchorEl;
-  }, [anchorEl]);
-
-  const isAction = useCallback((action: string) => {
-    return actionRef.current === action;
-  }, []);
-
-  const isItemInteractAction = useCallback((action: string) => {
-    return actionRef.current === action && !!interactRef?.current;
-  }, []);
-
-  const isItemInteractWithAnchorAction = useCallback((action: string) => {
-    return actionRef.current === action && !!interactRef?.current && !!anchorElRef?.current;
-  }, []);
+  const isItemInteractWithAnchorAction = useCallback(
+    (action: string) => {
+      return itemAction === action && !!interactItem && !!anchorEl;
+    },
+    [itemAction, interactItem, anchorEl],
+  );
 
   return {
     state: {

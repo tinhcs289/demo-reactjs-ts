@@ -1,124 +1,28 @@
-import CommonTable from '@/components/CommonTable';
-import CommonPagination from '@/components/CommonTable/components/CommonPagination';
-import type { ICommonPaginationProps, ICommonTableProps } from '@/components/CommonTable/_types';
 import createFastContext from '@/functions/createFastContext';
 import useStaticListState from '@/hooks/useStaticListState';
 import { DEFAULT_DATA } from '@/hooks/useStaticListState/constants';
 import type {
-  IUseStaticListStateParams,
   IUseListStateReturnsAction,
   IUseListStateReturnsControl,
+  IUseStaticListStateParams,
   IUseStaticListStateReturnsState,
 } from '@/hooks/useStaticListState/_types';
+import type { TAny } from '@/_types/TAny';
 import isEqual from 'lodash/isEqual';
 import type { FC, ReactNode } from 'react';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 
-export function createStaticListContext<T extends { [x: string]: any }>() {
-  const { Provider, useStore } = createFastContext<
-    Omit<IUseStaticListStateReturnsState<T>, ' isShowMultiAction' | 'isSelected'> & {
-      isSelected?: (item: T) => boolean;
-      isShowMultiAction?: () => boolean;
-      control?: IUseListStateReturnsControl<T>;
-      action?: IUseListStateReturnsAction<T>;
-    }
-  >(DEFAULT_DATA as any);
-
-  const useListControl = () => {
-    const [control] = useStore((s) => s.control);
-
-    const updatePaging = useMemo(() => {
-      return control?.updatePaging;
-    }, [control?.updatePaging]);
-
-    const updateSort = useMemo(() => {
-      return control?.updateSort;
-    }, [control?.updateSort]);
-
-    const updateFilter = useMemo(() => {
-      return control?.updateFilter;
-    }, [control?.updateFilter]);
-
-    const reload = useMemo(() => {
-      return control?.reload;
-    }, [control?.reload]);
-
-    const toggleSelectable = useMemo(() => {
-      return control?.toggleSelectable;
-    }, [control?.toggleSelectable]);
-
-    const setSelectedItems = useMemo(() => {
-      return control?.setSelectedItems;
-    }, [control?.setSelectedItems]);
-
-    const clearSelectItems = useMemo(() => {
-      return control?.clearSelectItems;
-    }, [control?.clearSelectItems]);
-
-    const checkOneItem = useMemo(() => {
-      return control?.checkOneItem;
-    }, [control?.checkOneItem]);
-
-    const checkAllItems = useMemo(() => {
-      return control?.checkAllItems;
-    }, [control?.checkAllItems]);
-
-    return {
-      updatePaging,
-      updateSort,
-      updateFilter,
-      reload,
-      toggleSelectable,
-      setSelectedItems,
-      clearSelectItems,
-      checkOneItem,
-      checkAllItems,
-    };
-  };
-
-  const useListAction = () => {
-    const [action] = useStore((s) => s.action);
-    const [_isSelected] = useStore((s) => s.isSelected);
-    const [_isShowMultiAction] = useStore((s) => s.isShowMultiAction);
-
-    const isSelected = useMemo(() => {
-      return _isSelected;
-    }, [_isSelected]);
-
-    const isShowMultiAction = useMemo(() => {
-      return _isShowMultiAction;
-    }, [_isShowMultiAction]);
-
-    const is = useMemo(() => {
-      return action?.is;
-    }, [action?.is]);
-
-    const isItemInteractAction = useMemo(() => {
-      return action?.isItemInteractAction;
-    }, [action?.isItemInteractAction]);
-
-    const isItemInteractWithAnchorAction = useMemo(() => {
-      return action?.isItemInteractWithAnchorAction;
-    }, [action?.isItemInteractWithAnchorAction]);
-
-    const set = useMemo(() => {
-      return action?.set;
-    }, [action?.set]);
-
-    const clear = useMemo(() => {
-      return action?.clear;
-    }, [action?.clear]);
-
-    return {
-      is,
-      isItemInteractAction,
-      isItemInteractWithAnchorAction,
-      set,
-      clear,
-      isSelected,
-      isShowMultiAction,
-    };
-  };
+export type TStaticList<T extends TAny> = Omit<
+  IUseStaticListStateReturnsState<T>,
+  ' isShowMultiAction' | 'isSelected'
+> & {
+  isSelected?: (item: T) => boolean;
+  isShowMultiAction?: () => boolean;
+  control?: IUseListStateReturnsControl<T>;
+  action?: IUseListStateReturnsAction<T>;
+};
+export function createStaticListContext<T extends TAny>() {
+  const { Provider, useStore: useStaticList } = createFastContext<TStaticList<T>>(DEFAULT_DATA as any);
 
   const ListInit: FC<IUseStaticListStateParams<T>> = (props) => {
     const {
@@ -137,13 +41,13 @@ export function createStaticListContext<T extends { [x: string]: any }>() {
       action: _action,
     } = useStaticListState(props);
 
-    const [data, _set] = useStore((s) => s.data);
-    const [listState] = useStore((s) => s.listState);
-    const [selectedItems] = useStore((s) => s.selectedItems);
-    const [isCheckAll] = useStore((s) => s.isCheckAll);
-    const [interactItem] = useStore((s) => s.interactItem);
-    const [anchorEl] = useStore((s) => s.anchorEl);
-    const [selectable] = useStore((s) => s.selectable);
+    const [data, _set] = useStaticList((s) => s.data);
+    const [listState] = useStaticList((s) => s.listState);
+    const [selectedItems] = useStaticList((s) => s.selectedItems);
+    const [isCheckAll] = useStaticList((s) => s.isCheckAll);
+    const [interactItem] = useStaticList((s) => s.interactItem);
+    const [anchorEl] = useStaticList((s) => s.anchorEl);
+    const [selectable] = useStaticList((s) => s.selectable);
 
     useEffect(() => {
       _set({ isShowMultiAction: _isShowMultiAction });
@@ -210,54 +114,7 @@ export function createStaticListContext<T extends { [x: string]: any }>() {
     return <></>;
   };
 
-  const ListTable: FC<Omit<ICommonTableProps<T>, 'rows' | 'selectable'>> = (props) => {
-    const { columns, ...otherProps } = props;
-
-    const [data] = useStore((s) => s.data);
-    const [isCheckAll] = useStore((s) => s.isCheckAll);
-    const [isSelected] = useStore((s) => s.isSelected);
-    const [checkAllItems] = useStore((s) => s.control?.checkAllItems);
-    const [checkOneItem] = useStore((s) => s.control?.checkOneItem);
-
-    const selectable = useMemo(() => {
-      return {
-        isCheckAll,
-        onCheckAll: checkAllItems,
-        onCheckRow: checkOneItem,
-        isRowSelected: isSelected,
-      };
-    }, [isCheckAll, checkAllItems, checkOneItem, isSelected]);
-
-    return <CommonTable {...otherProps} rows={data} columns={columns} selectable={selectable} />;
-  };
-
-  const ListPaging: FC<Omit<ICommonPaginationProps, 'pageIndex' | 'pageSize' | 'totalCount' | 'onChange'>> = (
-    props,
-  ) => {
-    const [pageIndex] = useStore((s) => s.listState.pageIndex);
-    const [pageSize] = useStore((s) => s.listState.pageSize);
-    const [totalCount] = useStore((s) => s.listState.totalCount);
-    const [updatePaging] = useStore((s) => s.control?.updatePaging);
-
-    const handleChangePage = useCallback(
-      (page: number) => {
-        updatePaging?.(page, 10);
-      },
-      [updatePaging],
-    );
-
-    return (
-      <CommonPagination
-        {...props}
-        pageIndex={pageIndex}
-        pageSize={pageSize}
-        totalCount={totalCount}
-        onChange={handleChangePage}
-      />
-    );
-  };
-
-  const ListProvider: FC<IUseStaticListStateParams<T> & { children?: ReactNode }> = (props) => {
+  const StaticListProvider: FC<IUseStaticListStateParams<T> & { children?: ReactNode }> = (props) => {
     const { children, ...useListStateParams } = props;
     return (
       <Provider>
@@ -268,12 +125,8 @@ export function createStaticListContext<T extends { [x: string]: any }>() {
   };
 
   return {
-    StaticListProvider: ListProvider,
-    useStaticList: useStore,
-    useStaticListControl: useListControl,
-    useStaticListAction: useListAction,
-    StaticListTable: ListTable,
-    StaticListPaging: ListPaging,
+    StaticListProvider,
+    useStaticList,
   };
 }
 export default createStaticListContext;
