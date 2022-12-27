@@ -4,7 +4,7 @@ const LoadingBar = () => {
   return (
     <LinearProgress
       color="primary"
-      sx={{ position: 'absolute', top: 0, left: 0, width: '100%', zIndex: (theme) => theme.zIndex.modal + 2 }}
+      sx={{ position: 'sticky', top: 0, left: 0, width: '100%', zIndex: (theme) => theme.zIndex.modal + 2 }}
     />
   );
 };
