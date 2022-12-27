@@ -9,7 +9,6 @@
     "**/tsconfig.paths.json": true,
     "**/config-overrides.js": true,
     "**/package-lock.json": true,
-    "**/package.json": true,
     "**/.prettierrc": true,
     "**/src/App.test.tsx": true,
     "**/src/logo.svg": true,

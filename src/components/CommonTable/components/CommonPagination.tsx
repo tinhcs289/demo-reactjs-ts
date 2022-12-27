@@ -1,9 +1,9 @@
 import Pagination from '@mui/material/Pagination';
-import type { ChangeEvent, FC, Ref } from 'react';
-import { forwardRef, memo, useCallback, useMemo } from 'react';
+import type { ChangeEvent, FC } from 'react';
+import { useCallback, useMemo } from 'react';
 import type { ICommonPaginationProps } from '../_types';
 
-const CommonPagination = forwardRef((props: ICommonPaginationProps, ref?: Ref<unknown>) => {
+const CommonPagination: FC<ICommonPaginationProps> = (props) => {
   const { pageIndex, pageSize, totalCount, onChange, sx, ...otherProps } = props;
 
   const memoStyle = useMemo(() => {
@@ -30,7 +30,6 @@ const CommonPagination = forwardRef((props: ICommonPaginationProps, ref?: Ref<un
   const pagination = useMemo(() => {
     return (
       <Pagination
-        ref={ref}
         showFirstButton
         showLastButton
         color="primary"
@@ -41,8 +40,8 @@ const CommonPagination = forwardRef((props: ICommonPaginationProps, ref?: Ref<un
         page={pageIndex}
       />
     );
-  }, [pageIndex, totalPages, handleChange, memoProps, memoStyle, ref]);
+  }, [pageIndex, totalPages, handleChange, memoProps, memoStyle]);
 
   return pagination;
-});
-export default memo(CommonPagination) as FC<ICommonPaginationProps>;
+};
+export default CommonPagination;

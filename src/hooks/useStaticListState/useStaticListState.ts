@@ -1,6 +1,6 @@
 import paginate from '@/helpers/arrayHelpers/paginate';
 import cloneDeep from 'lodash/cloneDeep';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ACTION, DESC, PAGE_INDEX, PAGE_SIZE } from './constants';
 import type {
   IUseStaticListStateParams,
@@ -322,32 +322,26 @@ function useStaticListState<T extends { [x: string]: any }>(
     }
   }, []);
 
-  const actionRef = useRef(itemAction);
-  useEffect(() => {
-    actionRef.current = itemAction || ACTION.NONE;
-  }, [itemAction]);
+  const isAction = useCallback(
+    (action: string) => {
+      return itemAction === action;
+    },
+    [itemAction],
+  );
 
-  const interactRef = useRef(interactItem);
-  useEffect(() => {
-    interactRef.current = interactItem;
-  }, [interactItem]);
+  const isItemInteractAction = useCallback(
+    (action: string) => {
+      return itemAction === action && !!interactItem;
+    },
+    [itemAction, interactItem],
+  );
 
-  const anchorElRef = useRef(anchorEl);
-  useEffect(() => {
-    anchorElRef.current = anchorEl;
-  }, [anchorEl]);
-
-  const isAction = useCallback((action: string) => {
-    return actionRef.current === action;
-  }, []);
-
-  const isItemInteractAction = useCallback((action: string) => {
-    return actionRef.current === action && !!interactRef?.current;
-  }, []);
-
-  const isItemInteractWithAnchorAction = useCallback((action: string) => {
-    return actionRef.current === action && !!interactRef?.current && !!anchorElRef?.current;
-  }, []);
+  const isItemInteractWithAnchorAction = useCallback(
+    (action: string) => {
+      return itemAction === action && !!interactItem && !!anchorEl;
+    },
+    [itemAction, interactItem, anchorEl],
+  );
 
   return {
     state: {

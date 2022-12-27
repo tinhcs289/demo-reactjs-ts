@@ -13,7 +13,7 @@ const render = (component: any, props: any) => {
   }
 
   if (typeof component === 'function') {
-    return <>{component(props as Partial<unknown> & Attributes)}</>;
+    return component(props as Partial<unknown> & Attributes);
   }
 
   return null;

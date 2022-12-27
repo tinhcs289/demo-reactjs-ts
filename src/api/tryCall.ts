@@ -42,6 +42,18 @@ function tryCall<ResponseDataType>(
         return [null, error as AxiosResponse<ResponseDataType, any>];
       }
     },
+    desireSuccess: async (): Promise<
+      [ResponseDataType, null] | [null, AxiosResponse<ResponseDataType, any> | InvalidResponseError]
+    > => {
+      try {
+        const res = await requestCall(...args);
+        if (!(Number.isInteger(res?.status) && 200 <= res.status && res.status <= 206)) throw res;
+        return [res.data, null];
+      } catch (error) {
+        if (!error || !(error as AxiosResponse<ResponseDataType, any>)?.status) return [null, RES_ERROR.REQUEST_ERROR];
+        return [null, error as AxiosResponse<ResponseDataType, any>];
+      }
+    },
     desireSuccessWith: async (
       isResponseOk: (response: AxiosResponse<ResponseDataType, any>) => boolean,
     ): Promise<[ResponseDataType, null] | [null, AxiosResponse<ResponseDataType, any> | InvalidResponseError]> => {

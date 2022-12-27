@@ -1,11 +1,11 @@
-import QuotationList from '@/modules/QuotationList';
+import OrderList from '@/modules/OrderList';
 import Box from '@mui/material/Box';
 import type { FC } from 'react';
 
 const DashboardPage: FC<any> = () => {
   return (
     <Box sx={{ m: 0, p: 0 }}>
-      <QuotationList />
+      <OrderList />
     </Box>
   );
 };

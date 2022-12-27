@@ -6,5 +6,30 @@
   "invalidPhone": "Số điện thoại không đúng",
   "invalidEmail": "Email không đúng",
   "somethingWentWrong_pleaseTryAgainLater": "Đã xảy ra sự cố, vui lòng thử lại sau",
-  "or": "hoặc"
+  "or": "hoặc",
+  "edit": "Chỉnh sửa",
+  "delete": "Xoá",
+  "create": "Tạo mới",
+  "add": "Thêm",
+  "save": "Lưu",
+  "submit": "Gửi",
+  "cancel": "Huỷ",
+  "discard": "Bỏ",
+  "close": "Đóng",
+  "back": "Quay lại",
+  "yes": "Có",
+  "no": "Không",
+  "confirm": "Xác nhận",
+  "pleaseConfirmForPerformThisAction": "Xác nhận thực hiện tác vụ",
+  "deleted": "Đã xoá",
+  "table": {
+    "loading": "Đang tải dữ liệu...",
+    "noDataFound": "Không có dữ liệu",
+    "rowsPerPage": "Phân trang",
+    "displayedRows": "{{from}} đến {{to}} / {{count}}",
+    "goToFirstPage": "Về trang đầu",
+    "goToLastPage": "Đến trang cuối",
+    "goToNextPage": "Sang trang sau",
+    "goToPreviousPage": "Về trang trước"
+  }
 }

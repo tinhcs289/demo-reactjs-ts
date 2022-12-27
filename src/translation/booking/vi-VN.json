@@ -2,8 +2,13 @@
   "table": {
     "bookingCode": "Mã",
     "name": "Đơn hàng",
-    "totalPassenger": "hàng khách",
-    "totalPrice": "thành tiền",
-    "action": "Tác vụ"
+    "totalPassenger": "Hành khách",
+    "totalPrice": "Thành tiền",
+    "createdBy": "Người tạo",
+    "processUserName": "Phân công",
+    "action": "Tác vụ",
+    "loading": "Đang tải...",
+    "noDataFound": "Không có dữ liệu",
+    "areYouSureToDelete": "Bạn có chắc chắn muốn xoá"
   }
 }
