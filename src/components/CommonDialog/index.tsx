@@ -9,7 +9,7 @@ import Grid from '@mui/material/Grid';
 import type { FC } from 'react';
 import { useMemo } from 'react';
 import { slideDict } from './constants';
-import { TCommonDialogProps } from './_types';
+import type { TCommonDialogProps } from './_types';
 
 const DialogComponent: FC<TCommonDialogProps> = (props) => {
   const {
@@ -47,11 +47,13 @@ const DialogComponent: FC<TCommonDialogProps> = (props) => {
           </DialogContent>
         );
 
-      <DialogContent {...contentProps}>
-        <Grid container {...gridContent}>
-          {children}
-        </Grid>
-      </DialogContent>;
+      return (
+        <DialogContent {...contentProps}>
+          <Grid container {...gridContent}>
+            {children}
+          </Grid>
+        </DialogContent>
+      );
     }
     return children;
   }, [gridContent, contentProps, children]);
