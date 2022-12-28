@@ -46,6 +46,7 @@ const columns = tableConfig<TOrderListItem>(
     headCellProps: { align: 'left' },
     bodyCellInner: renderCellInnerAs(CreateBy),
     bodyCellProps: { align: 'left', sx: { padding: '4px' } },
+    stickyLast: true,
   },
   {
     field: 'action',
