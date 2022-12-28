@@ -1,21 +1,25 @@
 import CheckCell from '@/components/CommonTable/components/CheckCell';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
+import type { TableCellProps } from '@mui/material/TableCell';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import type { TableRowProps } from '@mui/material/TableRow';
 import type { Ref } from 'react';
-import { forwardRef, Fragment, useCallback, useMemo } from 'react';
+import { forwardRef, Fragment, useCallback, useMemo, createRef, useEffect } from 'react';
 import {
   CheckSellBodySx,
   CheckSellHeadSx,
   defaultContainerProps,
   defaultTableHeadProps,
   defaultTableProps,
+  initStickyColumn,
   PaperStyled,
   renderBodyCell,
   renderHeadCell,
+  stickyFirstClass,
 } from '../_functions';
 import type { ICommonTableProps } from '../_types';
 import LoadingBar from './LoadingBar';
@@ -89,6 +93,8 @@ const CommonTable = forwardRef(function CommonTable<T extends Record<string, any
     selectable,
   } = props;
 
+  const tableRef = createRef();
+
   //#region memo props
   const memoContainerProps = useMemo(() => {
     const { sx, ..._props } = containerProps || {};
@@ -141,51 +147,6 @@ const CommonTable = forwardRef(function CommonTable<T extends Record<string, any
   //#endregion
 
   //#region Render body
-  const renderRowSelectBox = useCallback(
-    (row: T, rowIndex?: number) => {
-      if (typeof isCheckAll !== 'boolean') return null;
-
-      if (isCheckAll) return <CheckCell checked onChange={checkRow(row)} cellProps={{ sx: CheckSellBodySx }} />;
-
-      let checked = isSelected(row);
-      return <CheckCell checked={checked} onChange={checkRow(row)} cellProps={{ sx: CheckSellBodySx }} />;
-    },
-    [isCheckAll, checkRow, isSelected],
-  );
-
-  const renderRowCellList = useCallback(
-    (row: T, rowIndex?: number) => {
-      return memoConfig.map((cell) => {
-        return <Fragment key={cell._key}>{renderBodyCell(cell, row, rowIndex)}</Fragment>;
-      });
-    },
-    [memoConfig],
-  );
-
-  const renderRow = useCallback(
-    (row: T, index: number, rows: T[]) => {
-      if (!row) return null;
-      const _rowProps = typeof tableBodyRowProps === 'function' ? tableBodyRowProps(row) : tableBodyRowProps;
-      const key = row?.id || index;
-
-      return (
-        <TableRow
-          key={key}
-          id={`common-table-row--${key}`}
-          sx={{ '&:last-child td, &:last-child th': { border: 0 }, ':hover': { cursor: 'pointer' } }}
-          hover
-          role="checkbox"
-          tabIndex={-1}
-          {..._rowProps}
-        >
-          {renderRowSelectBox(row, index)}
-          {renderRowCellList(row, index)}
-        </TableRow>
-      );
-    },
-    [tableBodyRowProps, renderRowSelectBox, renderRowCellList],
-  );
-
   const $loadingOrNoDataText = useMemo(() => {
     if (!!loading) return <LoadingText>{loadingText}</LoadingText>;
     return <NoDataText>{notFoundText}</NoDataText>;
@@ -204,6 +165,54 @@ const CommonTable = forwardRef(function CommonTable<T extends Record<string, any
     );
   }, [memoRows?.length, memoConfig?.length, isCheckAll, $loadingOrNoDataText]);
 
+  const renderRowSelectBox = useCallback(
+    (row: T, rowIndex?: number) => {
+      if (typeof isCheckAll !== 'boolean') return null;
+
+      const cellProps: TableCellProps = {
+        className: stickyFirstClass,
+        sx: CheckSellBodySx,
+      };
+
+      if (isCheckAll) return <CheckCell checked onChange={checkRow(row)} cellProps={cellProps} />;
+
+      let checked = isSelected(row);
+      return <CheckCell checked={checked} onChange={checkRow(row)} cellProps={cellProps} />;
+    },
+    [isCheckAll, checkRow, isSelected],
+  );
+
+  const renderRowCellList = useCallback(
+    (row: T, rowIndex?: number) => {
+      return memoConfig.map((cell) => {
+        return <Fragment key={cell._key}>{renderBodyCell(cell, row, rowIndex)}</Fragment>;
+      });
+    },
+    [memoConfig],
+  );
+
+  const renderRow = useCallback(
+    (row: T, index: number, rows: T[]) => {
+      if (!row) return null;
+      //TODO should provider new prop as a selector callback to detect identity of a row
+      const key = row?.id || index;
+      const _props: TableRowProps<'tr', {}> =
+        (typeof tableBodyRowProps === 'function' ? tableBodyRowProps(row) : tableBodyRowProps) || {};
+      _props.sx = {
+        '&:last-child td, &:last-child th': { border: 0 },
+        ':hover': { cursor: 'pointer' },
+        ..._props.sx,
+      };
+      return (
+        <TableRow id={`common-table-row--${key}`} key={key} tabIndex={-1} {..._props} hover role="checkbox">
+          {renderRowSelectBox(row, index)}
+          {renderRowCellList(row, index)}
+        </TableRow>
+      );
+    },
+    [tableBodyRowProps, renderRowSelectBox, renderRowCellList],
+  );
+
   const $rows = useMemo(() => {
     return <>{memoRows.map(renderRow)}</>;
   }, [memoRows, renderRow]);
@@ -221,7 +230,13 @@ const CommonTable = forwardRef(function CommonTable<T extends Record<string, any
   //#region Header render
   const $checkboxAll = useMemo(() => {
     if (typeof isCheckAll !== 'boolean') return null;
-    return <CheckCell checked={isCheckAll} onChange={checkAll} cellProps={{ sx: CheckSellHeadSx }} />;
+    return (
+      <CheckCell
+        checked={isCheckAll}
+        onChange={checkAll}
+        cellProps={{ className: stickyFirstClass, sx: CheckSellHeadSx }}
+      />
+    );
   }, [isCheckAll, checkAll]);
 
   const $headCells = useMemo(() => {
@@ -229,17 +244,22 @@ const CommonTable = forwardRef(function CommonTable<T extends Record<string, any
       return <Fragment key={column._key}>{renderHeadCell(column)}</Fragment>;
     });
   }, [memoConfig]);
+  //#endregion
 
   const $loading = useMemo(() => {
     if (!loading) return null;
     return <LoadingBar />;
   }, [loading]);
-  //#endregion
+
+  useEffect(() => {
+    if (!(tableRef?.current instanceof Element)) return;
+    initStickyColumn(tableRef?.current as any);
+  }, [$body, tableRef]);
 
   return (
     <TableContainer ref={ref} component={PaperStyled} {...memoContainerProps}>
       {$loading}
-      <Table stickyHeader {...memoTableProps}>
+      <Table stickyHeader {...memoTableProps} ref={tableRef as any}>
         <TableHead {...memoTableHeadProps}>
           <TableRow {...memoTableHeadRowProps}>
             {$checkboxAll}
