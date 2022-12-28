@@ -6,7 +6,10 @@ import Paper from '@mui/material/Paper';
 import TableCell from '@mui/material/TableCell';
 import type { ICommonTableConfig } from './_types';
 
+export const stickyFirstClass = 'sticky-first';
+export const stickyLastClass = 'sticky-last';
 export const PaperStyled = styled(Paper)<PaperProps>(({ theme }) => ({
+  scrollBehavior: 'smooth',
   //#region scroll bar
   '::-webkit-scrollbar': {
     width: theme.spacing(1.2),
@@ -81,8 +84,15 @@ export const CheckSellBodySx: SxProps<Theme> = { ...stickyBodyCellSx, ...stickyF
 export const renderHeadCell = <T extends Record<string, any>>(head: ICommonTableConfig<T>) => {
   if (!head || !!head?.isHide || !head?.headCell) return null;
   const _cellProps = head?.headCellProps || {};
-  if (!!head?.stickyFirst) _cellProps.sx = { ..._cellProps.sx, ...stickyHeadCellSx, ...stickyFirstSx } as any;
-  if (!!head?.stickyLast) _cellProps.sx = { ..._cellProps.sx, ...stickyHeadCellSx, ...stickyLastSx } as any;
+  if (!!head?.stickyFirst) {
+    _cellProps.sx = { ..._cellProps.sx, ...stickyHeadCellSx, ...stickyFirstSx } as any;
+    if (!`${_cellProps.className || ''}`.includes(stickyFirstClass))
+      _cellProps.className = `${_cellProps.className || ''} ${stickyFirstClass}`;
+  } else if (!!head?.stickyLast) {
+    _cellProps.sx = { ..._cellProps.sx, ...stickyHeadCellSx, ...stickyLastSx } as any;
+    if (!`${_cellProps.className || ''}`.includes(stickyLastClass))
+      _cellProps.className = `${_cellProps.className || ''} ${stickyLastClass}`;
+  }
   if (typeof head.headCell === 'string' || typeof head.headCell === 'number' || typeof head.headCell === 'boolean')
     return <TableCell {..._cellProps}>{head.headCell}</TableCell>;
   return render(head.headCell, _cellProps);
@@ -98,8 +108,15 @@ export const renderBodyCell = <T extends Record<string, any>>(
       ? cell.bodyCellProps(row, rowIndex)
       : cell.bodyCellProps
     : {};
-  if (!!cell?.stickyFirst) _cellProps.sx = { ..._cellProps.sx, ...stickyBodyCellSx, ...stickyFirstSx } as any;
-  if (!!cell?.stickyLast) _cellProps.sx = { ..._cellProps.sx, ...stickyBodyCellSx, ...stickyLastSx } as any;
+  if (!!cell?.stickyFirst) {
+    _cellProps.sx = { ..._cellProps.sx, ...stickyBodyCellSx, ...stickyFirstSx } as any;
+    if (!`${_cellProps.className || ''}`.includes(stickyFirstClass))
+      _cellProps.className = `${_cellProps.className || ''} ${stickyFirstClass}`;
+  } else if (!!cell?.stickyLast) {
+    _cellProps.sx = { ..._cellProps.sx, ...stickyBodyCellSx, ...stickyLastSx } as any;
+    if (!`${_cellProps.className || ''}`.includes(stickyLastClass))
+      _cellProps.className = `${_cellProps.className || ''} ${stickyLastClass}`;
+  }
   if (!!cell.bodyCellInner)
     return <TableCell {..._cellProps}>{render(cell.bodyCellInner, { row, rowIndex })}</TableCell>;
   if (!!cell.bodyCell) return render(cell.bodyCell, { ..._cellProps, row, rowIndex });
@@ -121,3 +138,58 @@ export const defaultTableHeadProps = (sx?: SxProps<Theme>): SxProps<Theme> => ({
   ...sx,
   position: 'relative',
 });
+//#region Init Sticky column
+function sumWidth(elements?: HTMLElement[]) {
+  if (!Array.isArray(elements) || elements.length === 0) return 0;
+  return elements.reduce((width, el) => {
+    width = width + el.offsetWidth;
+    return width;
+  }, 0);
+}
+function reCalculateLeftOfElements(elements?: HTMLElement[], isScrollbarDisplayed?: boolean) {
+  if (!Array.isArray(elements) || elements.length === 0) return;
+  elements.forEach((e, i, es) => {
+    // if (!isScrollbarDisplayed) e.style.boxShadow = 'none';
+    // else e.style.boxShadow = boxShadowCellFirst;
+    if (i === 0) return;
+    e.style.left = sumWidth(es.filter((_, j) => j < i)) + 'px';
+  });
+}
+function reCalculateRightOfElements(elements?: HTMLElement[], isScrollbarDisplayed?: boolean) {
+  if (!Array.isArray(elements) || elements.length === 0) return;
+  elements.reverse().forEach((e, i, es) => {
+    // if (!isScrollbarDisplayed) e.style.boxShadow = 'none';
+    // else e.style.boxShadow = boxShadowCellLast;
+    if (i !== es.length - 1) e.style.boxShadow = 'none';
+    if (i === 0) return;
+    e.style.right = sumWidth(es.filter((_, j) => j < i)) + 'px';
+  });
+}
+function querySelectorAll(root: Element, selector: string) {
+  return Array.from(root.querySelectorAll<HTMLElement>(selector));
+}
+export function initStickyColumn(tableEl?: Element) {
+  if (!(tableEl instanceof Element)) return;
+
+  // TODO: only display box-shadow if the scroll-bar is visible
+
+  let isScrollbarDisplayed = true;
+  if (tableEl.parentElement instanceof Element) {
+    isScrollbarDisplayed = tableEl.parentElement.scrollWidth > tableEl.parentElement.offsetWidth;
+  }
+
+  const stickeyFirstHeads = querySelectorAll(tableEl, `thead > tr > th.${stickyFirstClass}`);
+  reCalculateLeftOfElements(stickeyFirstHeads, isScrollbarDisplayed);
+
+  const stickyLastHeads = querySelectorAll(tableEl, `thead > tr > th.${stickyLastClass}`);
+  reCalculateRightOfElements(stickyLastHeads, isScrollbarDisplayed);
+
+  querySelectorAll(tableEl, 'tbody > tr').forEach((tr) => {
+    const stickyFirstCells = querySelectorAll(tr, `td.${stickyFirstClass}`);
+    reCalculateLeftOfElements(stickyFirstCells, isScrollbarDisplayed);
+
+    const stickyLastCells = querySelectorAll(tr, `td.${stickyLastClass}`);
+    reCalculateRightOfElements(stickyLastCells, isScrollbarDisplayed);
+  });
+}
+//#endregion
