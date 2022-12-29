@@ -1,13 +1,11 @@
 import { RETURN_URI_HASH } from '@/constants/queryString';
 import aesCrypt from '@/helpers/cryptHelpers/aesCrypt';
-import useQueryString from '@/hooks/useQueryString';
 
 const useReturnUrlHash = () => {
-  const query = useQueryString();
+  const query = new URLSearchParams(window?.location?.search);
   const returnUriHash = query.get(RETURN_URI_HASH);
-
   if (!returnUriHash) return null;
-
-  return aesCrypt.decrypt(returnUriHash);
+  const returnUri = aesCrypt.decrypt(returnUriHash.replaceAll(/\s/g, '+'));
+  return returnUri;
 };
 export default useReturnUrlHash;
