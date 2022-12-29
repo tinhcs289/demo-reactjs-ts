@@ -14,6 +14,7 @@ const HtmlTooltip = styled(({ className, ...props }: TooltipProps) => (
     backgroundColor: theme.palette.background.paper,
     color: theme.palette.text.primary,
     width: 'max-content',
+    minWidth: 'fit-content',
     fontSize: theme.typography.pxToRem(12),
     border: `1px solid ${theme.palette.divider}`,
   },

@@ -28,8 +28,20 @@ const BookingCode: TBodyCellInnerComponent<TOrderListItem, TAny> = ({ row }) => 
         icon={<OpenInNewIcon />}
         label={row?.bookingCode || ''}
         size="small"
-        color="info"
-        sx={{ borderRadius: (t) => t?.spacing?.(0.5) }}
+        sx={{
+          fontWeight: (t) => t?.typography?.fontWeightBold,
+          borderRadius: (t) => t?.spacing?.(0.5),
+          transform: 'all ease .3s',
+          ':hover': {
+            boxShadow: (t) => t?.shadows?.['4'],
+            cursor: 'pointer',
+            background: (t) => t?.palette?.primary?.main,
+            color: (t) => t?.palette?.primary?.contrastText,
+            '& svg': {
+              color: (t) => t?.palette?.primary?.contrastText,
+            },
+          },
+        }}
         deleteIcon={<FileCopyIcon />}
         onDelete={copyBookingCode as any}
       />

@@ -14,3 +14,10 @@ console.log(`---- environment: ${getEnviromentName()} ----`);
 
 root.render(<App />);
 reportWebVitals();
+
+// DO NOT REMOVE THIS CODE
+// window.breakHoverUI = function (ms?: number) {
+//   setTimeout(() => {
+//     debugger;
+//   }, ms || 2000);
+// };

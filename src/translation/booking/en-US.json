@@ -9,6 +9,10 @@
     "action": "Action",
     "loading": "loading...",
     "noDataFound": "No data found",
-    "areYouSureToDelete": "Are you sure to delete"
+    "areYouSureToDelete": "Are you sure to delete",
+    "customGroupName": "Group",
+    "customerName": "Customer",
+    "startDate": "Date used",
+    "bookingServices": "Services"
   }
 }

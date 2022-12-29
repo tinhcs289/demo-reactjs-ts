@@ -30,6 +30,7 @@ const CreatedBy: TBodyCellInnerComponent<TOrderListItem, TAny> = ({ row }) => {
           </Avatar>
         </ListItemAvatar>
         <ListItemText
+          sx={{ mt: 0, mb: 0 }}
           primary="thuynt@digiticket.vn"
           primaryTypographyProps={{ noWrap: true, sx: { fontWeight: 500 } }}
           secondary={createdDate}
