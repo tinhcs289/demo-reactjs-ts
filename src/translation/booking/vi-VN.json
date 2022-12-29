@@ -2,13 +2,17 @@
   "table": {
     "bookingCode": "Mã",
     "name": "Đơn hàng",
-    "totalPassenger": "Hành khách",
+    "totalPassenger": "Đoàn",
     "totalPrice": "Thành tiền",
     "createdBy": "Người tạo",
     "processUserName": "Phân công",
     "action": "Tác vụ",
     "loading": "Đang tải...",
     "noDataFound": "Không có dữ liệu",
-    "areYouSureToDelete": "Bạn có chắc chắn muốn xoá"
+    "areYouSureToDelete": "Bạn có chắc chắn muốn xoá",
+    "customGroupName": "Nhóm",
+    "customerName": "Khách",
+    "startDate": "Ngày sử dụng",
+    "bookingServices": "Dịch vụ"
   }
 }
