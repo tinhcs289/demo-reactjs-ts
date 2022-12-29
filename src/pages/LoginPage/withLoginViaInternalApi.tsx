@@ -2,7 +2,6 @@ import loginApi from '@/api/authentication/loginApi';
 import tryCall from '@/api/tryCall';
 import authentication from '@/appCookies/authentication';
 import { default as authenticationInLocalStorage } from '@/appLocalStorages/authentication';
-import useReturnUrlHash from '@/hooks/useReturnUrlHash';
 import useSnackbarNotify from '@/hooks/useSnackbarNotify';
 import PATHS from '@/routes/paths';
 import type { FC } from 'react';
@@ -16,9 +15,7 @@ const redirectToNextPage = (returnUri?: string) => {
 };
 
 const withLoginViaInternalApi = (WrappedComponent: FC<ILoginPageProps>) => (props: ILoginPageProps) => {
-  const { onRequestLoginViaSSO: _, loading: loadingProp, returnUri: returnUriProp, ...otherProps } = props;
-
-  const returnUri = useReturnUrlHash();
+  const { onRequestLoginViaSSO: _, loading: loadingProp, returnUri, ...otherProps } = props;
 
   const { t } = useTranslation();
 
@@ -35,7 +32,7 @@ const withLoginViaInternalApi = (WrappedComponent: FC<ILoginPageProps>) => (prop
     };
 
     setLoading(true);
-    
+
     const [data, error] = await tryCall(loginApi, payload).desireSuccessWith(
       (r) => !!r?.data?.jwt?.accessToken && !!r?.data?.jwt?.refreshToken,
     );
@@ -50,7 +47,7 @@ const withLoginViaInternalApi = (WrappedComponent: FC<ILoginPageProps>) => (prop
 
     authentication.set(data.jwt);
     authenticationInLocalStorage.set(data.jwt, true);
-    redirectToNextPage(returnUri || returnUriProp);
+    redirectToNextPage(returnUri);
     return;
   };
 

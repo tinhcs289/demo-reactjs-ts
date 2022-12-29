@@ -19,8 +19,10 @@ import type { ILoginPageProps, TLoginFormData } from './_types';
 import withLoginViaInternalApi from './withLoginViaInternalApi';
 import withLoginViaSSO from './withLoginViaSSO';
 import withRedirectAfterLoginWithExternalQueryString from './withRedirectAfterLoginWithExternalQueryString';
+import withReturnUri from './withReturnUri';
 
 const LoginPage: React.FC<ILoginPageProps> = withHOCs(
+  withReturnUri,
   withRedirectAfterLoginWithExternalQueryString,
   withLoginViaInternalApi,
   withLoginViaSSO,
