@@ -159,6 +159,10 @@ export interface ICommonTableProps<T extends TAny> {
    * the select box configuration
    */
   selectable?: TSelectTable<T>;
+  /**
+   * display the detail panel toggle by specified condition
+   */
+  visibilityDetailPanelToggle?: (row: T, RowIndex: number) => boolean;
 }
 export interface ICommonPaginationProps extends Omit<PaginationProps, 'onChange' | 'count' | 'size'> {
   pageIndex: number;
@@ -243,4 +247,15 @@ export type TItemMenuAction<T extends TAny> = {
    */
   render?: TItemMenuActionRenderFunction<T, TAny> | TItemMenuActionComponent<T, TAny>;
 };
+//#endregion
+
+//#region Table extensions
+export type TDetailPanelComponent<T extends TAny> = TBodyCellInnerComponent<T, { closePanel?: () => void }>;
+export type TDetailPanelToggle<T extends TAny> = React.ComponentType<{
+  open: boolean;
+  toggle: (event: any, position?: 'top' | 'bottom') => void;
+  row: T;
+  rowIndex?: number;
+}>;
+
 //#endregion

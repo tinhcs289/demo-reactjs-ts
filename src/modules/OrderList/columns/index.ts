@@ -7,8 +7,17 @@ import CreateBy from './CreatedBy';
 import DateUsed from './DateUsed';
 import TotalPrice from './TotalPrice';
 import Services from './Services';
+import DetailPanelToggle from './DetailPanelToggle';
 
 const columns = tableConfig<TOrderListItem>(
+  {
+    field: 'id',
+    headCell: ' ',
+    headCellProps: { align: 'center', sx: { width: '0%' } },
+    bodyCellInner: renderCellInnerAs(DetailPanelToggle),
+    bodyCellProps: { align: 'center', sx: { p: '4px' } },
+    stickyFirst: true,
+  },
   {
     field: 'bookingCode',
     headCell: i18n.t('booking:table.bookingCode'),
@@ -59,7 +68,11 @@ const columns = tableConfig<TOrderListItem>(
     bodyCellInner: renderCellInnerAs(TotalPrice),
     bodyCellProps: {
       align: 'right',
-      sx: { p: '8px', color: (t) => t?.palette?.primary?.dark, fontWeight: (t) => t?.typography?.fontWeightBold },
+      sx: {
+        p: '8px',
+        color: (t) => t?.palette?.primary?.dark,
+        fontWeight: (t) => t?.typography?.fontWeightBold,
+      },
     },
   },
   {
