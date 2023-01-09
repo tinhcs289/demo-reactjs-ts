@@ -5,10 +5,10 @@ import type { TableCellProps } from '@mui/material/TableCell';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
 import type { TableRowProps } from '@mui/material/TableRow';
+import TableRow from '@mui/material/TableRow';
 import type { Ref } from 'react';
-import { forwardRef, Fragment, useCallback, useMemo, createRef, useEffect } from 'react';
+import { createRef, forwardRef, Fragment, useCallback, useEffect, useMemo } from 'react';
 import {
   CheckSellBodySx,
   CheckSellHeadSx,
@@ -91,6 +91,7 @@ const CommonTable = forwardRef(function CommonTable<T extends Record<string, any
     loadingText,
     notFoundText,
     selectable,
+    columnStickyAsStack,
   } = props;
 
   const tableRef = createRef();
@@ -100,22 +101,28 @@ const CommonTable = forwardRef(function CommonTable<T extends Record<string, any
     const { sx, ..._props } = containerProps || {};
     return { ..._props, sx: defaultContainerProps(sx) };
   }, [containerProps]);
-
   const memoTableProps = useMemo(() => {
     const { sx, ..._props } = tableProps || {};
     return { ..._props, sx: defaultTableProps(sx) };
   }, [tableProps]);
-
   const memoTableHeadProps = useMemo(() => {
     const { sx, ..._props } = tableHeadProps || {};
     return { ..._props, sx: defaultTableHeadProps(sx) };
   }, [tableHeadProps]);
-
   const memoTableHeadRowProps = useMemo(() => tableHeadRowProps, [tableHeadRowProps]);
   const isCheckAll = useMemo(() => selectable?.isCheckAll, [selectable?.isCheckAll]);
   const loading = useMemo(() => !!props?.loading, [props?.loading]);
   const memoConfig = useMemo(() => columns || [], [columns]);
   const memoRows = useMemo(() => rows || [], [rows]);
+  const memoRowsLength = useMemo(
+    () => (Number.isInteger(memoRows?.length) && memoRows.length > 0 ? memoRows.length : 0),
+    [memoRows],
+  );
+  const memoTotalOfCell = useMemo(() => {
+    const hasCheckCell = typeof isCheckAll === 'boolean';
+    const colspan = (hasCheckCell ? 1 : 0) + (Number.isInteger(memoConfig?.length) ? memoConfig?.length : 0);
+    return colspan;
+  }, [memoConfig, isCheckAll]);
   //#endregion
 
   //#region select action
@@ -153,17 +160,13 @@ const CommonTable = forwardRef(function CommonTable<T extends Record<string, any
   }, [loading, loadingText, notFoundText]);
 
   const $noDataOrLoading = useMemo(() => {
-    if (Number.isInteger(memoRows?.length) && memoRows.length > 0) return null;
-
-    const hasCheckCell = typeof isCheckAll === 'boolean';
-    const colspan = (hasCheckCell ? 1 : 0) + (Number.isInteger(memoConfig?.length) ? memoConfig?.length : 0);
-
+    if (memoRowsLength > 0) return null;
     return (
       <TableRow>
-        <TableCell colSpan={colspan}>{$loadingOrNoDataText}</TableCell>
+        <TableCell colSpan={memoTotalOfCell}>{$loadingOrNoDataText}</TableCell>
       </TableRow>
     );
-  }, [memoRows?.length, memoConfig?.length, isCheckAll, $loadingOrNoDataText]);
+  }, [memoRowsLength, memoTotalOfCell, $loadingOrNoDataText]);
 
   const renderRowSelectBox = useCallback(
     (row: T, rowIndex?: number) => {
@@ -191,6 +194,25 @@ const CommonTable = forwardRef(function CommonTable<T extends Record<string, any
     [memoConfig],
   );
 
+  const renderDetailPanelRow = useCallback(
+    (pos: 'top' | 'bottom', row: T, index: number) => {
+      if (!row || !pos) return null;
+      const key = row?.id || index;
+      return (
+        <TableRow
+          id={`common-table-detail-panel-${pos}--${key}`}
+          tabIndex={-1}
+          hover
+          role="checkbox"
+          sx={{ p: 0, m: 0, 'td': { p: 0, m: 0 } }}
+        >
+          <TableCell colSpan={memoTotalOfCell} sx={{ display: 'none' }}></TableCell>
+        </TableRow>
+      );
+    },
+    [memoTotalOfCell],
+  );
+
   const renderRow = useCallback(
     (row: T, index: number, rows: T[]) => {
       if (!row) return null;
@@ -204,13 +226,17 @@ const CommonTable = forwardRef(function CommonTable<T extends Record<string, any
         ..._props.sx,
       };
       return (
-        <TableRow id={`common-table-row--${key}`} key={key} tabIndex={-1} {..._props} hover role="checkbox">
-          {renderRowSelectBox(row, index)}
-          {renderRowCellList(row, index)}
-        </TableRow>
+        <Fragment key={key}>
+          {renderDetailPanelRow('top', row, index)}
+          <TableRow id={`common-table-row--${key}`} tabIndex={-1} {..._props} hover role="checkbox">
+            {renderRowSelectBox(row, index)}
+            {renderRowCellList(row, index)}
+          </TableRow>
+          {renderDetailPanelRow('bottom', row, index)}
+        </Fragment>
       );
     },
-    [tableBodyRowProps, renderRowSelectBox, renderRowCellList],
+    [tableBodyRowProps, renderRowSelectBox, renderRowCellList, renderDetailPanelRow],
   );
 
   const $rows = useMemo(() => {
@@ -252,9 +278,22 @@ const CommonTable = forwardRef(function CommonTable<T extends Record<string, any
   }, [loading]);
 
   useEffect(() => {
-    if (!(tableRef?.current instanceof Element)) return;
-    initStickyColumn(tableRef?.current as any);
-  }, [$body, tableRef]);
+    if (!!columnStickyAsStack || !(tableRef?.current instanceof Element)) return;
+    const tableEl = tableRef.current;
+    initStickyColumn(tableEl as any);
+  }, [$body, tableRef, columnStickyAsStack]);
+
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     if (!(tableRef?.current instanceof Element)) return;
+  //     const tableEl = tableRef.current as HTMLElement;
+  //     new ResizeObserver(function reInitSticky() {
+  //       console.log('initStickyColumn');
+  //       initStickyColumn(tableEl);
+  //     }).observe(tableEl.parentElement as any);
+  //   }, 0);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   return (
     <TableContainer ref={ref} component={PaperStyled} {...memoContainerProps}>

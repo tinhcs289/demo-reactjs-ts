@@ -8,12 +8,13 @@ import type { ICommonTableConfig } from './_types';
 
 export const stickyFirstClass = 'sticky-first';
 export const stickyLastClass = 'sticky-last';
+export const scrollWidth = 1.2;
 export const PaperStyled = styled(Paper)<PaperProps>(({ theme }) => ({
   scrollBehavior: 'smooth',
   //#region scroll bar
   '::-webkit-scrollbar': {
-    width: theme.spacing(1.2),
-    height: theme.spacing(1.2),
+    width: theme.spacing(scrollWidth),
+    height: theme.spacing(scrollWidth),
   },
   '::-webkit-scrollbar-track': {
     background: theme.palette.action.hover,
@@ -168,7 +169,7 @@ function reCalculateRightOfElements(elements?: HTMLElement[], isScrollbarDisplay
 function querySelectorAll(root: Element, selector: string) {
   return Array.from(root.querySelectorAll<HTMLElement>(selector));
 }
-export function initStickyColumn(tableEl?: Element) {
+export function initStickyColumn(tableEl?: Element | HTMLElement) {
   if (!(tableEl instanceof Element)) return;
 
   // TODO: only display box-shadow if the scroll-bar is visible
