@@ -38,6 +38,7 @@ function tryCall<ResponseDataType>(
         if (!isResponseOk(res)) throw res;
         return [res.data, null];
       } catch (error) {
+        console.log(error);
         if (!error || !(error as AxiosResponse<ResponseDataType, any>)?.status) return [null, RES_ERROR.REQUEST_ERROR];
         return [null, error as AxiosResponse<ResponseDataType, any>];
       }
@@ -50,6 +51,7 @@ function tryCall<ResponseDataType>(
         if (!(Number.isInteger(res?.status) && 200 <= res.status && res.status <= 206)) throw res;
         return [res.data, null];
       } catch (error) {
+        console.log(error);
         if (!error || !(error as AxiosResponse<ResponseDataType, any>)?.status) return [null, RES_ERROR.REQUEST_ERROR];
         return [null, error as AxiosResponse<ResponseDataType, any>];
       }
@@ -63,6 +65,7 @@ function tryCall<ResponseDataType>(
         if (!isResponseOk(res)) throw res;
         return [res.data, null];
       } catch (error) {
+        console.log(error);
         if (!error || !(error as AxiosResponse<ResponseDataType, any>)?.status) return [null, RES_ERROR.REQUEST_ERROR];
         return [null, error as AxiosResponse<ResponseDataType, any>];
       }
@@ -72,6 +75,7 @@ function tryCall<ResponseDataType>(
         await requestCall(...args);
         return;
       } catch (error) {
+        console.log(error);
         return;
       }
     },

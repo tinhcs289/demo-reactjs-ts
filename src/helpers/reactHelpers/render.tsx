@@ -1,7 +1,7 @@
 import { createElement, cloneElement, isValidElement } from 'react';
 import type { Attributes } from 'react';
 
-const render = (component: any, props: any) => {
+const render = (component: any, props?: any) => {
   if (!component) return null;
 
   if (isValidElement(component)) {
