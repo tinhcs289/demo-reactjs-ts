@@ -37,7 +37,7 @@ export type TOnQueryRetuns<T> = {
 export interface IUseListStateParams<T extends { [x: string]: any }> {
   onQuery?: (args: TOnQueryArgs) => Promise<TOnQueryRetuns<T>>;
   infinite?: boolean;
-  idField?: string;
+  idField?: keyof typeof T;
   defaultSelectable?: boolean;
   defaultPagination?: Partial<TPagingState> & { totalCount?: number };
   defaultSort?: Partial<TSortState>;

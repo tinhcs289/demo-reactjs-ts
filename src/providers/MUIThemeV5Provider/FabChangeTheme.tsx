@@ -10,7 +10,7 @@ import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const fabStyle: SxProps = {
-  position: 'absolute',
+  position: 'fixed',
   bottom: 16,
   right: 16,
 };

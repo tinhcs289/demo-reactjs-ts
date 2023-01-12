@@ -18,6 +18,7 @@ const PATHS = {
   inDevelop3: '/module-in-development-3',
   //#endregion
   //#region Public
+  shopee: '/shopee',
   notfound: '/not-found',
   //#endregion
 };
