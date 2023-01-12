@@ -6,6 +6,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRightOutlined';
 import PeopleIcon from '@mui/icons-material/People';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import StorefrontIcon from '@mui/icons-material/Storefront';
 import { i18n } from '@/translation';
 
 const asideMenuItems: TAsideMenuItem[] = [
@@ -53,5 +54,6 @@ const asideMenuItems: TAsideMenuItem[] = [
   },
   { id: newGuid(), type: 'link', label: i18n.t('aside:customers'), icon: PeopleIcon, url: PATHS.ramdom1 },
   { id: newGuid(), type: 'link', label: i18n.t('aside:reports'), icon: BarChartIcon, url: PATHS.ramdom2 },
+  { id: newGuid(), type: 'link', label: 'Shopee', icon: StorefrontIcon, url: PATHS.shopee },
 ];
 export default asideMenuItems;
