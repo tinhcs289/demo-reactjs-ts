@@ -18,6 +18,7 @@ const CommonTablePagination: FC<ICommonTablePaginationProps> = (props) => {
     labelDisplayedRows,
     getItemAriaLabel,
     labelRowsPerPage,
+    loading,
     ...otherProps
   } = props;
 

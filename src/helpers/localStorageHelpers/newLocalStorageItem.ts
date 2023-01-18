@@ -3,10 +3,10 @@ import localStorageUpdateItem from '@/helpers/localStorageHelpers/_core/localSto
 import localStorageRemoveItem from '@/helpers/localStorageHelpers/_core/localStorageRemoveItem';
 import type { TLsItem } from '@/helpers/localStorageHelpers/_types';
 
-const newLocalStorageItem = <T>(args: { key: string } & Partial<Omit<TLsItem<T>, 'key'>>): TLsItem<T> => {
+const newLocalStorageItem = <T>(args: { key: string, validate?: (value: T | null) => boolean } & Partial<Omit<TLsItem<T>, 'key'>>): TLsItem<T> => {
   return {
     key: args.key,
-    get: args?.get || (() => localStorageGetItem(args.key)),
+    get: args?.get || (() => localStorageGetItem(args.key, args?.validate)),
     set: args?.set || ((value: T | null | undefined) => localStorageUpdateItem(args.key, value)),
     clear: args?.clear || (() => localStorageRemoveItem(args.key)),
   };

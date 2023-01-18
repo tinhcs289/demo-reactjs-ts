@@ -19,6 +19,7 @@ const PATHS = {
   //#endregion
   //#region Public
   shopee: '/shopee',
+  shopeeProductDetail: '/shopee/san-pham/:productName/:productId',
   notfound: '/not-found',
   //#endregion
 };

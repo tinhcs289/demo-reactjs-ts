@@ -62,7 +62,7 @@ const __getSyncItem = (key: string) => {
   if (!value) return null;
   try {
     if (JSON.parse(value) === defaultSyncValue) return null;
-  } catch (error) {}
+  } catch (error) { }
   return value;
 };
 
@@ -141,7 +141,7 @@ const __initListener = () => {
   isInitialized = true;
 };
 
-const __extractJsonValue = <T>(value: string | null | undefined): T | null => {
+const __extractJsonValue = <T>(value: string | null | undefined, validate?: (value: T | null) => boolean): T | null => {
   if (!value) return null;
   let returns = null;
   try {
@@ -159,6 +159,10 @@ const __extractJsonValue = <T>(value: string | null | undefined): T | null => {
       if (returns === defaultSyncValue) return null;
     }
   } finally {
+    if (typeof validate === 'function') {
+      return validate(returns) === true ? returns : null
+    }
+
     return returns;
   }
 };
@@ -169,7 +173,7 @@ const __addLocalStorageListener = (key: string, handler: (event: TLsChangeEvent)
   }
 };
 
-export const newLocalStorageListenableItem = <T>(args: { key: string; defaultValue?: T }): TLsSyncItem<T> => {
+export const newLocalStorageListenableItem = <T>(args: { key: string; defaultValue?: T, validate?: (value: T | null) => boolean }): TLsSyncItem<T> => {
   const syncKey = `${prefix}${args.key}`;
   const previousValue = localStorageGetItem<string>(syncKey);
   if (previousValue) {
@@ -193,7 +197,7 @@ export const newLocalStorageListenableItem = <T>(args: { key: string; defaultVal
     get: () => {
       const value = __getSyncItem(syncKey);
       if (!value || value === defaultSyncValue) return null;
-      return __extractJsonValue<T>(value);
+      return __extractJsonValue<T>(value, args?.validate);
     },
     set: (value: T | null | undefined, stopListenerInThisTab?: boolean) => {
       if (stopListenerInThisTab) __markStopListen(syncKey);
@@ -211,8 +215,8 @@ export const newLocalStorageListenableItem = <T>(args: { key: string; defaultVal
         const { detail } = event;
         const value: TLsChangeEventValue<T> = {
           name: detail.name,
-          value: __extractJsonValue(detail.value),
-          previousValue: __extractJsonValue(detail.previousValue),
+          value: __extractJsonValue(detail.value, args?.validate),
+          previousValue: __extractJsonValue(detail.previousValue, args?.validate),
         };
 
         handler(event, value);

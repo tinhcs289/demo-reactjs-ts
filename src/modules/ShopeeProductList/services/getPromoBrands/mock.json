@@ -1,0 +1,116 @@
+{
+  "shops": [
+    {
+      "recommendation_info": "REQID:1f8a1b84f21fa44c1a1ffdf9223f1200,BND:officialshop,BNDOPT:officialshop,QUE:SHOPPOP,QUES:SHOPPOP,SECKEY:officialshop_sec,USR:default,LC:1|1,FS:0",
+      "url": "https://shopee.vn/manyo",
+      "image": "49b1feb0686efc81b70cbc018de6e12e",
+      "shopid": 405719966,
+      "promo_text": "Giảm đến 50%",
+      "recommendation_algorithm": null
+    },
+    {
+      "recommendation_info": null,
+      "url": "https://shopee.vn/Sabinasale",
+      "image": "0b7528892f34b1ceb5e7e3883c34adb1",
+      "shopid": 58542133,
+      "promo_text": "Nội y Sabina 9k",
+      "recommendation_algorithm": null
+    },
+    {
+      "recommendation_info": null,
+      "url": "https://shopee.vn/merries",
+      "image": "c7b843e477e90f2a0ead5675b457f71a",
+      "shopid": 156716198,
+      "promo_text": "Mua là có quà",
+      "recommendation_algorithm": null
+    },
+    {
+      "recommendation_info": null,
+      "url": "https://shopee.vn/lghealthcare",
+      "image": "6074cc75484d535e4de665bce62fe879",
+      "shopid": 241091245,
+      "promo_text": "Da xinh quà xịn",
+      "recommendation_algorithm": null
+    },
+    {
+      "recommendation_info": null,
+      "url": "https://shopee.vn/zerosports-chinh-hang",
+      "image": "be691f1a5b5a715c933e55f7fd2d7f0b",
+      "shopid": 277746668,
+      "promo_text": "Sale chào hè 50%",
+      "recommendation_algorithm": null
+    },
+    {
+      "recommendation_info": null,
+      "url": "https://shopee.vn/ariul",
+      "image": "c2091ad7aa1f207aabbab9d112f6cfa4",
+      "shopid": 540180615,
+      "promo_text": "Mua là có quà",
+      "recommendation_algorithm": null
+    },
+    {
+      "recommendation_info": null,
+      "url": "https://shopee.vn/caudalie_vn",
+      "image": "ee98c39797a226f6528a154a36303104",
+      "shopid": 514870935,
+      "promo_text": "Siêu ưu đãi độc quyền",
+      "recommendation_algorithm": null
+    },
+    {
+      "recommendation_info": null,
+      "url": "https://shopee.vn/dearjose-brand-day",
+      "image": "00413fcf230d45da42838f70129559e5",
+      "shopid": 325726480,
+      "promo_text": "Ưu đãi đến 40%",
+      "recommendation_algorithm": null
+    },
+    {
+      "recommendation_info": null,
+      "url": "https://shopee.vn/uu-dai-longhungmobile",
+      "image": "db78ab48abff07be730ed437fe629499",
+      "shopid": 331695868,
+      "promo_text": "Điện thoại sale khủng",
+      "recommendation_algorithm": null
+    },
+    {
+      "recommendation_info": null,
+      "url": "https://shopee.vn/rohto",
+      "image": "fbc36e59ad705a69422e5a6a047fa870",
+      "shopid": 138781248,
+      "promo_text": "Mua 2 tặng 1",
+      "recommendation_algorithm": null
+    },
+    {
+      "recommendation_info": null,
+      "url": "https://shopee.vn/shopdunk-day",
+      "image": "ec8dc30ba0c5ba95f90021fe74ef076b",
+      "shopid": 288286284,
+      "promo_text": "Voucher đến 1 triệu",
+      "recommendation_algorithm": null
+    },
+    {
+      "recommendation_info": null,
+      "url": "https://shopee.vn/sexylook",
+      "image": "00c6797ae61187c23dd246f809a2d32a",
+      "shopid": 139624690,
+      "promo_text": "Ưu đãi đến 50%",
+      "recommendation_algorithm": null
+    },
+    {
+      "recommendation_info": null,
+      "url": "https://shopee.vn/happy-phone-day",
+      "image": "3973edd5867e12d83a6fd42cacadd4e7",
+      "shopid": 68527388,
+      "promo_text": "Giảm đến 30%",
+      "recommendation_algorithm": null
+    },
+    {
+      "recommendation_info": null,
+      "url": "https://shopee.vn/82x_official_store",
+      "image": "731f27522228f5f7c6356d7d75e3ed2a",
+      "shopid": 382291312,
+      "promo_text": "Collagen da khỏe từ trong",
+      "recommendation_algorithm": null
+    }
+  ]
+}
