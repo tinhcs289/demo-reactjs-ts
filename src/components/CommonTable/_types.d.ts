@@ -169,6 +169,7 @@ export interface ICommonPaginationProps extends Omit<PaginationProps, 'onChange'
   pageSize: number;
   totalCount: number;
   onChange?: (page: number) => void;
+  loading?: boolean,
 }
 
 export interface ICommonTablePaginationProps
@@ -180,6 +181,7 @@ export interface ICommonTablePaginationProps
   pageSize: number;
   totalCount: number;
   onChange?: (page: number, size: number) => void;
+  loading?: boolean,
 }
 //#endregion
 

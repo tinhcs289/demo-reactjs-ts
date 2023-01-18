@@ -1,0 +1,521 @@
+{
+  "icon_in_price": [],
+  "feature_element": [],
+  "image_flag": [
+    {
+      "id": 508,
+      "is_predefined": true,
+      "name": "S_MART",
+      "product_label_ids": null,
+      "displayed_image": "f56f51d9f6649aba32d2781c06f06fef",
+      "displayed_image_width": 62,
+      "displayed_image_height": 18
+    },
+    {
+      "id": 2790,
+      "is_predefined": true,
+      "name": "MALL_FBS",
+      "product_label_ids": null,
+      "displayed_image": "",
+      "displayed_image_width": 0,
+      "displayed_image_height": 0
+    },
+    {
+      "id": 21,
+      "is_predefined": true,
+      "name": "SBS",
+      "product_label_ids": null,
+      "displayed_image": "db89dfecef669d7a42af1a6be6783789",
+      "displayed_image_width": 62,
+      "displayed_image_height": 24
+    },
+    {
+      "id": 426,
+      "is_predefined": true,
+      "name": "PREMIUM",
+      "product_label_ids": null,
+      "displayed_image": "0a80b04bf5fed72a704172ec8a667101",
+      "displayed_image_width": 52,
+      "displayed_image_height": 18
+    },
+    {
+      "id": 22,
+      "is_predefined": true,
+      "name": "OFFICIAL_SHOP",
+      "product_label_ids": null,
+      "displayed_image": "56a4f5097228286786f83f8036c313bc",
+      "displayed_image_width": 24,
+      "displayed_image_height": 18
+    },
+    {
+      "id": 364,
+      "is_predefined": true,
+      "name": "PREFERRED_PLUS",
+      "product_label_ids": null,
+      "displayed_image": "847a7c7b8f9a78882268a0d824c86d1a",
+      "displayed_image_width": 54,
+      "displayed_image_height": 18
+    },
+    {
+      "id": 23,
+      "is_predefined": true,
+      "name": "PREFERRED",
+      "product_label_ids": null,
+      "displayed_image": "76c36bd87ff2eb5887d9ad3516111869",
+      "displayed_image_width": 46,
+      "displayed_image_height": 18
+    }
+  ],
+  "overlay_image": [
+    {
+      "id": 4802,
+      "is_predefined": false,
+      "name": "FSSPlus+CCB(16.01-26.01)",
+      "product_label_ids": [1015925],
+      "displayed_image": "302fc42b2725c4208a04b64e8e5a62a1",
+      "displayed_image_width": 320,
+      "displayed_image_height": 320,
+      "campaign_image": "",
+      "campaign_image_width": 0,
+      "campaign_image_height": 0
+    },
+    {
+      "id": 4809,
+      "is_predefined": false,
+      "name": "FSSPLUSxCCB_Auto_2022(16.01-26.01)",
+      "product_label_ids": [1133892],
+      "displayed_image": "302fc42b2725c4208a04b64e8e5a62a1",
+      "displayed_image_width": 320,
+      "displayed_image_height": 320,
+      "campaign_image": "",
+      "campaign_image_width": 0,
+      "campaign_image_height": 0
+    },
+    {
+      "id": 4816,
+      "is_predefined": false,
+      "name": "FSS+CCB(16.01-26.01)",
+      "product_label_ids": [1000512],
+      "displayed_image": "4790b5bf240feb8ac42fbb22ed9d6cf0",
+      "displayed_image_width": 320,
+      "displayed_image_height": 320,
+      "campaign_image": "",
+      "campaign_image_width": 0,
+      "campaign_image_height": 0
+    },
+    {
+      "id": 4823,
+      "is_predefined": false,
+      "name": "FSSxCCB_Auto_2022(16.01-26.01)",
+      "product_label_ids": [1400066309],
+      "displayed_image": "4790b5bf240feb8ac42fbb22ed9d6cf0",
+      "displayed_image_width": 320,
+      "displayed_image_height": 320,
+      "campaign_image": "",
+      "campaign_image_width": 0,
+      "campaign_image_height": 0
+    },
+    {
+      "id": 4830,
+      "is_predefined": false,
+      "name": "FSSPlus+ML(16.01-26.01)",
+      "product_label_ids": [1015926],
+      "displayed_image": "06c7231964d728ae99909a53d91c6ad3",
+      "displayed_image_width": 320,
+      "displayed_image_height": 320,
+      "campaign_image": "",
+      "campaign_image_width": 0,
+      "campaign_image_height": 0
+    },
+    {
+      "id": 4837,
+      "is_predefined": false,
+      "name": "FSS+ML(16.01-26.01)",
+      "product_label_ids": [1013751],
+      "displayed_image": "b191fdae3228f95c949d29950c8e7735",
+      "displayed_image_width": 320,
+      "displayed_image_height": 320,
+      "campaign_image": "",
+      "campaign_image_width": 0,
+      "campaign_image_height": 0
+    },
+    {
+      "id": 4844,
+      "is_predefined": false,
+      "name": "CCB+ML(16.01-26.01)",
+      "product_label_ids": [1013752],
+      "displayed_image": "2ece06a7685fe072f1d42dfaa05a4d5d",
+      "displayed_image_width": 320,
+      "displayed_image_height": 320,
+      "campaign_image": "",
+      "campaign_image_width": 0,
+      "campaign_image_height": 0
+    },
+    {
+      "id": 4851,
+      "is_predefined": false,
+      "name": "FSSPlus+MDD(16.01-26.01)",
+      "product_label_ids": [1015927],
+      "displayed_image": "7b1353c5910fb54cd9464d3d1ee708c5",
+      "displayed_image_width": 320,
+      "displayed_image_height": 320,
+      "campaign_image": "",
+      "campaign_image_width": 0,
+      "campaign_image_height": 0
+    },
+    {
+      "id": 4858,
+      "is_predefined": false,
+      "name": "BrandDiscount+FSS(16.01-26.01)",
+      "product_label_ids": [1000990],
+      "displayed_image": "988be3f61628ea0f690418a3d7a7bb4e",
+      "displayed_image_width": 320,
+      "displayed_image_height": 320,
+      "campaign_image": "",
+      "campaign_image_width": 0,
+      "campaign_image_height": 0
+    },
+    {
+      "id": 4865,
+      "is_predefined": false,
+      "name": "BrandDiscount+CCB(16.01-26.01)",
+      "product_label_ids": [1001241],
+      "displayed_image": "13e4cde48ce7e6fcdb2df57139b5a2d2",
+      "displayed_image_width": 320,
+      "displayed_image_height": 320,
+      "campaign_image": "",
+      "campaign_image_width": 0,
+      "campaign_image_height": 0
+    },
+    {
+      "id": 4872,
+      "is_predefined": false,
+      "name": "FSSPlus(16.01-26.01)",
+      "product_label_ids": [1015924],
+      "displayed_image": "3effba86cbad2ab3740942ff0f82bddc",
+      "displayed_image_width": 320,
+      "displayed_image_height": 320,
+      "campaign_image": "",
+      "campaign_image_width": 0,
+      "campaign_image_height": 0
+    },
+    {
+      "id": 4879,
+      "is_predefined": false,
+      "name": "FSS_PLUS_Auto_2022(16.01-26.01)",
+      "product_label_ids": [1400085302],
+      "displayed_image": "3effba86cbad2ab3740942ff0f82bddc",
+      "displayed_image_width": 320,
+      "displayed_image_height": 320,
+      "campaign_image": "",
+      "campaign_image_width": 0,
+      "campaign_image_height": 0
+    },
+    {
+      "id": 4886,
+      "is_predefined": false,
+      "name": "FSS(16.01-26.01)",
+      "product_label_ids": [44],
+      "displayed_image": "ff358a1994dd5f3e643ebde68c6dc73e",
+      "displayed_image_width": 320,
+      "displayed_image_height": 320,
+      "campaign_image": "",
+      "campaign_image_width": 0,
+      "campaign_image_height": 0
+    },
+    {
+      "id": 4893,
+      "is_predefined": false,
+      "name": "FSS_Auto_2022(16.01-26.01)",
+      "product_label_ids": [1400066308],
+      "displayed_image": "ff358a1994dd5f3e643ebde68c6dc73e",
+      "displayed_image_width": 320,
+      "displayed_image_height": 320,
+      "campaign_image": "",
+      "campaign_image_width": 0,
+      "campaign_image_height": 0
+    },
+    {
+      "id": 4900,
+      "is_predefined": false,
+      "name": "CCB(16.01-26.01)",
+      "product_label_ids": [1002603],
+      "displayed_image": "f50d3de19fd4d435d3a76abc49441967",
+      "displayed_image_width": 320,
+      "displayed_image_height": 320,
+      "campaign_image": "",
+      "campaign_image_width": 0,
+      "campaign_image_height": 0
+    },
+    {
+      "id": 4907,
+      "is_predefined": false,
+      "name": "CCB_Auto_2022(16.01-26.01)",
+      "product_label_ids": [1133695],
+      "displayed_image": "f50d3de19fd4d435d3a76abc49441967",
+      "displayed_image_width": 320,
+      "displayed_image_height": 320,
+      "campaign_image": "",
+      "campaign_image_width": 0,
+      "campaign_image_height": 0
+    },
+    {
+      "id": 4914,
+      "is_predefined": false,
+      "name": "GìCũngRẻ(16.01-26.01)",
+      "product_label_ids": [1009370],
+      "displayed_image": "d7187e4913a6b2a5e1b48599b5bebcf7",
+      "displayed_image_width": 320,
+      "displayed_image_height": 320,
+      "campaign_image": "",
+      "campaign_image_width": 0,
+      "campaign_image_height": 0
+    },
+    {
+      "id": 4921,
+      "is_predefined": false,
+      "name": "BrandDiscount(16.01-26.01)",
+      "product_label_ids": [1011387],
+      "displayed_image": "f6c5c86d7703bd0a9278b6ea714e3263",
+      "displayed_image_width": 320,
+      "displayed_image_height": 320,
+      "campaign_image": "",
+      "campaign_image_width": 0,
+      "campaign_image_height": 0
+    }
+  ],
+  "promotion_label": [
+    {
+      "id": 3281,
+      "is_predefined": true,
+      "name": "GOOD_ITEM_RATING",
+      "product_label_ids": null,
+      "color": "#EE4D2D",
+      "displayed_texts": [
+        {
+          "lang": "vi",
+          "text": "Rated item highly"
+        }
+      ],
+      "displayed_image": null,
+      "displayed_image_width": null,
+      "displayed_image_height": null
+    },
+    {
+      "id": 3282,
+      "is_predefined": true,
+      "name": "PURCHASED_BEFORE",
+      "product_label_ids": null,
+      "color": "#EE4D2D",
+      "displayed_texts": [
+        {
+          "lang": "vi",
+          "text": "Bought before"
+        }
+      ],
+      "displayed_image": null,
+      "displayed_image_width": null,
+      "displayed_image_height": null
+    },
+    {
+      "id": 3283,
+      "is_predefined": true,
+      "name": "GOOD_SHOP_RATING",
+      "product_label_ids": null,
+      "color": "#EE4D2D",
+      "displayed_texts": [
+        {
+          "lang": "vi",
+          "text": "Rated shop highly"
+        }
+      ],
+      "displayed_image": null,
+      "displayed_image_width": null,
+      "displayed_image_height": null
+    },
+    {
+      "id": 3284,
+      "is_predefined": true,
+      "name": "PURCHASED_FROM_SAME_SHOP",
+      "product_label_ids": null,
+      "color": "#EE4D2D",
+      "displayed_texts": [
+        {
+          "lang": "vi",
+          "text": "Purchased shop"
+        }
+      ],
+      "displayed_image": null,
+      "displayed_image_width": null,
+      "displayed_image_height": null
+    },
+    {
+      "id": 3285,
+      "is_predefined": true,
+      "name": "LIKED_ITEM",
+      "product_label_ids": null,
+      "color": "#EE4D2D",
+      "displayed_texts": [
+        {
+          "lang": "vi",
+          "text": "Liked"
+        }
+      ],
+      "displayed_image": null,
+      "displayed_image_width": null,
+      "displayed_image_height": null
+    },
+    {
+      "id": 3286,
+      "is_predefined": true,
+      "name": "FOLLOWING_SHOP",
+      "product_label_ids": null,
+      "color": "#EE4D2D",
+      "displayed_texts": [
+        {
+          "lang": "vi",
+          "text": "Followed shop"
+        }
+      ],
+      "displayed_image": null,
+      "displayed_image_width": null,
+      "displayed_image_height": null
+    },
+    {
+      "id": 586,
+      "is_predefined": true,
+      "name": "DEEP_DISCOUNT",
+      "product_label_ids": null,
+      "color": "#EE4D2D",
+      "displayed_texts": [],
+      "displayed_image": null,
+      "displayed_image_width": null,
+      "displayed_image_height": null
+    },
+    {
+      "id": 322,
+      "is_predefined": true,
+      "name": "EXCLUSIVE_PRICE",
+      "product_label_ids": null,
+      "color": "#EE4D2D",
+      "displayed_texts": [],
+      "displayed_image": null,
+      "displayed_image_width": null,
+      "displayed_image_height": null
+    },
+    {
+      "id": 440,
+      "is_predefined": true,
+      "name": "VOUCHER",
+      "product_label_ids": null,
+      "color": "",
+      "displayed_texts": [],
+      "displayed_image": null,
+      "displayed_image_width": null,
+      "displayed_image_height": null
+    },
+    {
+      "id": 617,
+      "is_predefined": true,
+      "name": "FLASH_SALE",
+      "product_label_ids": null,
+      "color": "#EE4D2D",
+      "displayed_texts": [
+        {
+          "lang": "vi",
+          "text": "Flash Sale"
+        }
+      ],
+      "displayed_image": null,
+      "displayed_image_width": null,
+      "displayed_image_height": null
+    },
+    {
+      "id": 3278,
+      "is_predefined": false,
+      "name": "#ShopDacBiet_Nov",
+      "product_label_ids": [1115199, 1400095093],
+      "color": "#FF0020",
+      "displayed_texts": [
+        {
+          "lang": "en",
+          "text": "#Shopdacbiet"
+        },
+        {
+          "lang": "vi",
+          "text": "#Shopdacbiet"
+        }
+      ],
+      "displayed_image": null,
+      "displayed_image_width": null,
+      "displayed_image_height": null
+    },
+    {
+      "id": 4946,
+      "is_predefined": false,
+      "name": "ShopXuHuong_Jan_2023",
+      "product_label_ids": [1208654],
+      "color": "#FF0020",
+      "displayed_texts": [
+        {
+          "lang": "en",
+          "text": "#ShopXuHuong"
+        },
+        {
+          "lang": "vi",
+          "text": "#ShopXuHuong"
+        }
+      ],
+      "displayed_image": null,
+      "displayed_image_width": null,
+      "displayed_image_height": null
+    },
+    {
+      "id": 4950,
+      "is_predefined": false,
+      "name": "Hangmoive_Jan_2023",
+      "product_label_ids": [1208655],
+      "color": "#FF0020",
+      "displayed_texts": [
+        {
+          "lang": "en",
+          "text": "#HàngMớiVề"
+        },
+        {
+          "lang": "vi",
+          "text": "#HàngMớiVề"
+        }
+      ],
+      "displayed_image": null,
+      "displayed_image_width": null,
+      "displayed_image_height": null
+    },
+    {
+      "id": 487,
+      "is_predefined": true,
+      "name": "LIVE_STREAMING_PRICE",
+      "product_label_ids": null,
+      "color": "#EE4D2D",
+      "displayed_texts": [
+        {
+          "lang": "vi",
+          "text": "Giá phát trực tiếp"
+        }
+      ],
+      "displayed_image": null,
+      "displayed_image_width": null,
+      "displayed_image_height": null
+    },
+    {
+      "id": 516,
+      "is_predefined": true,
+      "name": "PURCHASE_WITH_PURCHASE",
+      "product_label_ids": null,
+      "color": "#EE4D2D",
+      "displayed_texts": [],
+      "displayed_image": null,
+      "displayed_image_width": null,
+      "displayed_image_height": null
+    }
+  ]
+}
