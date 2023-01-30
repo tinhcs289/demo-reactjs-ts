@@ -17,7 +17,7 @@ function* rootSaga() {
     reducers
       .filter((r) => r.sagas)
       .map((r) => r.sagas)
-      .map((saga) => fork(saga as any)),
+      .map((saga) => fork(saga as any))
   );
 }
 

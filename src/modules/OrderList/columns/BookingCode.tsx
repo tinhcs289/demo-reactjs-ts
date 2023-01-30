@@ -19,7 +19,7 @@ const BookingCode: TBodyCellInnerComponent<TOrderListItem, TAny> = ({ row }) => 
       navigator.clipboard.writeText(row.bookingCode);
       showSuccessNotify(`đã sao chép mã đơn hàng ${row.bookingCode}`);
     },
-    [row, showSuccessNotify],
+    [row, showSuccessNotify]
   );
 
   return (

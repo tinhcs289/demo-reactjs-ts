@@ -6,7 +6,12 @@ import getList from './services/getList';
 
 export default function ShopeeProductList() {
   return (
-    <AsyncListProvider onQuery={getList} queryOnFirstLoad idField="itemid" defaultPagination={{ pageSize: PAGE_SIZE }}>
+    <AsyncListProvider
+      onQuery={getList}
+      queryOnFirstLoad
+      idField="itemid"
+      defaultPagination={{ pageSize: PAGE_SIZE }}
+    >
       <ProductListPaging />
       <ProductList />
       <ProductListPaging />

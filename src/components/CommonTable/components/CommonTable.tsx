@@ -77,7 +77,7 @@ import NoDataText from './NoDataText';
  */
 const CommonTable = forwardRef(function CommonTable<T extends Record<string, any>>(
   props: ICommonTableProps<T>,
-  ref?: Ref<HTMLDivElement>,
+  ref?: Ref<HTMLDivElement>
 ) {
   const {
     rows,
@@ -116,7 +116,7 @@ const CommonTable = forwardRef(function CommonTable<T extends Record<string, any
   const memoRows = useMemo(() => rows || [], [rows]);
   const memoRowsLength = useMemo(
     () => (Number.isInteger(memoRows?.length) && memoRows.length > 0 ? memoRows.length : 0),
-    [memoRows],
+    [memoRows]
   );
   const memoTotalOfCell = useMemo(() => {
     const hasCheckCell = typeof isCheckAll === 'boolean';
@@ -131,7 +131,7 @@ const CommonTable = forwardRef(function CommonTable<T extends Record<string, any
       selectable?.onCheckAll?.(checked);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [selectable?.onCheckAll],
+    [selectable?.onCheckAll]
   );
 
   const checkRow = useCallback(
@@ -141,7 +141,7 @@ const CommonTable = forwardRef(function CommonTable<T extends Record<string, any
       };
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [selectable?.onCheckRow],
+    [selectable?.onCheckRow]
   );
 
   const isSelected = useCallback(
@@ -149,7 +149,7 @@ const CommonTable = forwardRef(function CommonTable<T extends Record<string, any
       return selectable?.isRowSelected?.(row) === true;
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [selectable?.isRowSelected],
+    [selectable?.isRowSelected]
   );
   //#endregion
 
@@ -182,7 +182,7 @@ const CommonTable = forwardRef(function CommonTable<T extends Record<string, any
       let checked = isSelected(row);
       return <CheckCell checked={checked} onChange={checkRow(row)} cellProps={cellProps} />;
     },
-    [isCheckAll, checkRow, isSelected],
+    [isCheckAll, checkRow, isSelected]
   );
 
   const renderRowCellList = useCallback(
@@ -191,7 +191,7 @@ const CommonTable = forwardRef(function CommonTable<T extends Record<string, any
         return <Fragment key={cell._key}>{renderBodyCell(cell, row, rowIndex)}</Fragment>;
       });
     },
-    [memoConfig],
+    [memoConfig]
   );
 
   const renderDetailPanelRow = useCallback(
@@ -204,13 +204,13 @@ const CommonTable = forwardRef(function CommonTable<T extends Record<string, any
           tabIndex={-1}
           hover
           role="checkbox"
-          sx={{ p: 0, m: 0, 'td': { p: 0, m: 0 } }}
+          sx={{ p: 0, m: 0, td: { p: 0, m: 0 } }}
         >
           <TableCell colSpan={memoTotalOfCell} sx={{ display: 'none' }}></TableCell>
         </TableRow>
       );
     },
-    [memoTotalOfCell],
+    [memoTotalOfCell]
   );
 
   const renderRow = useCallback(
@@ -236,7 +236,7 @@ const CommonTable = forwardRef(function CommonTable<T extends Record<string, any
         </Fragment>
       );
     },
-    [tableBodyRowProps, renderRowSelectBox, renderRowCellList, renderDetailPanelRow],
+    [tableBodyRowProps, renderRowSelectBox, renderRowCellList, renderDetailPanelRow]
   );
 
   const $rows = useMemo(() => {

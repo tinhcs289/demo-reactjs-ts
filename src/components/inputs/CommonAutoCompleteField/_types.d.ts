@@ -34,6 +34,6 @@ export type TCommonAutoCompleteFieldProps = Pick<TextFieldProps, 'label'> &
     renderPinnedOption?: (
       optionProps: React.HTMLAttributes<HTMLLIElement>,
       option: TAutoCompleteOption,
-      state: AutocompleteRenderOptionState,
+      state: AutocompleteRenderOptionState
     ) => React.ReactNode;
   };

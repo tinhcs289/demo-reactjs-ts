@@ -19,7 +19,10 @@ export type TLsItem<T> = {
   clear: () => void;
 };
 
-export type TLsChangeHandler<DetailType> = (event: TLsChangeEvent, detail: TLsChangeEventValue<DetailType>) => void;
+export type TLsChangeHandler<DetailType> = (
+  event: TLsChangeEvent,
+  detail: TLsChangeEventValue<DetailType>
+) => void;
 
 export type TLsSyncItem<DetailType> = {
   key: string;

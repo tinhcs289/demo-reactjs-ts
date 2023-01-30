@@ -6,7 +6,7 @@ const createNestedReducer = (
   initialState: TInitState,
   dispatch: { [x: string]: TReducer },
   sagas?: TSaga,
-  otherCombines?: TReducerRootCombined[],
+  otherCombines?: TReducerRootCombined[]
 ) => {
   const combineSagas = otherCombines?.filter?.((c) => c.sagas).map((r) => r.sagas) || [];
   if (!!sagas) combineSagas.push(sagas as any);

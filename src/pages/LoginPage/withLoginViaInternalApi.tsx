@@ -34,7 +34,7 @@ const withLoginViaInternalApi = (WrappedComponent: FC<ILoginPageProps>) => (prop
     setLoading(true);
 
     const [data, error] = await tryCall(loginApi, payload).desireSuccessWith(
-      (r) => !!r?.data?.jwt?.accessToken && !!r?.data?.jwt?.refreshToken,
+      (r) => !!r?.data?.jwt?.accessToken && !!r?.data?.jwt?.refreshToken
     );
 
     setLoading(false);

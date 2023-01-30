@@ -21,7 +21,7 @@ const _removeVietnameseAccentMarks = (value?: string) =>
         (t) => t.replace(/Ỳ|Ý|Ỵ|Ỷ|Ỹ/g, 'Y'),
         (t) => t.replace(/đ/g, 'd'),
         (t) => t.replace(/Đ/g, 'D'),
-        (t) => t.trim(),
+        (t) => t.trim()
       )(value)
     : '';
 

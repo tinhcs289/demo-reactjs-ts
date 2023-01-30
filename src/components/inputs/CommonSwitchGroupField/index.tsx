@@ -19,9 +19,12 @@ const CommonSwitchGroupField: React.FC<TCommonSwitchGroupFieldProps> = (props) =
 
   const isChecked = React.useCallback(
     (option: TSwitchGroupOption) => {
-      return (memoValue.length > 0 && memoValue.findIndex((v) => v.value === option.value) >= 0) || !!option?.checked;
+      return (
+        (memoValue.length > 0 && memoValue.findIndex((v) => v.value === option.value) >= 0) ||
+        !!option?.checked
+      );
     },
-    [memoValue],
+    [memoValue]
   );
 
   const handleOnchange = React.useCallback(
@@ -43,7 +46,7 @@ const CommonSwitchGroupField: React.FC<TCommonSwitchGroupFieldProps> = (props) =
         onChange?.(removeAt(memoValue, j));
       }
     },
-    [memoOption, memoValue, onChange],
+    [memoOption, memoValue, onChange]
   );
 
   const memoOptionsRender = React.useMemo(() => {

@@ -50,7 +50,7 @@ const ButtonLanguage: FC<any> = (props) => {
         acceptLanguage.set(code as TAcceptLanguage);
       };
     },
-    [currentLanguage],
+    [currentLanguage]
   );
 
   const languages = useMemo(() => {

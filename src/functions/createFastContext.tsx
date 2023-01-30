@@ -60,7 +60,7 @@ export default function createFastContext<Store>(initialState: Store) {
   }
 
   function useStore<SelectorOutput>(
-    selector: (store: Store) => SelectorOutput,
+    selector: (store: Store) => SelectorOutput
   ): [SelectorOutput, (value: Partial<Store>) => void] {
     const store = useContext(StoreContext);
     if (!store) {
@@ -70,7 +70,7 @@ export default function createFastContext<Store>(initialState: Store) {
     const state = useSyncExternalStore(
       store.subscribe,
       () => selector(store.get()),
-      () => selector(initialState),
+      () => selector(initialState)
     );
 
     return [state, store.set];

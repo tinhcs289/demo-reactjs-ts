@@ -8,7 +8,8 @@ const momentOrDefault = (value?: string | moment.Moment | Date, defaultValue?: m
   if (typeof value === 'string') {
     //#region YYYY-MM-DD
     // eslint-disable-next-line no-useless-escape
-    if (/^[1-9][0-9]{3}\-[0-9]{2}\-[0-9]{2}$/.test(value)) return moment(`${value} 00:01`, 'YYYY-MM-DD HH:mm');
+    if (/^[1-9][0-9]{3}\-[0-9]{2}\-[0-9]{2}$/.test(value))
+      return moment(`${value} 00:01`, 'YYYY-MM-DD HH:mm');
     //#endregion
 
     //#region YYYY-MM-DD HH:mm:ss

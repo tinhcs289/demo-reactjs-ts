@@ -7,16 +7,15 @@ const ShopeePage = lazy(() => wait().then(() => import('@/pages/ShopeePage')));
 const ShopeeProductDetailPage = lazy(() => wait().then(() => import('@/pages/ShopeeProductDetailPage')));
 
 const ShopeeRoute: TRouteConfig[] = [
-    {
-        name: 'ShopeeRoute',
-        path: paths.shopee,
-        component: ShopeePage,
-    },
-    {
-        name: 'shopeeProductDetailRoute',
-        path: paths.shopeeProductDetail,
-        component: ShopeeProductDetailPage,
-    },
-
+  {
+    name: 'ShopeeRoute',
+    path: paths.shopee,
+    component: ShopeePage,
+  },
+  {
+    name: 'shopeeProductDetailRoute',
+    path: paths.shopeeProductDetail,
+    component: ShopeeProductDetailPage,
+  },
 ];
 export default ShopeeRoute;

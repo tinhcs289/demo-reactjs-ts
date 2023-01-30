@@ -64,7 +64,11 @@ const DialogComponent: FC<TCommonDialogProps> = (props) => {
     const { sx: _sx, ..._props } = backdropProps || {};
 
     return (
-      <Backdrop {..._props} open sx={{ ..._sx, zIndex: (theme) => theme.zIndex.drawer + 1, position: 'absolute' }}>
+      <Backdrop
+        {..._props}
+        open
+        sx={{ ..._sx, zIndex: (theme) => theme.zIndex.drawer + 1, position: 'absolute' }}
+      >
         {loadingInner || <CircularProgress color="inherit" />}
       </Backdrop>
     );
@@ -87,6 +91,6 @@ const CommonDialog = styled(DialogComponent)<TCommonDialogProps>(
           position: 'relative',
         },
       },
-    } as any),
+    } as any)
 ) as FC<TCommonDialogProps>;
 export default CommonDialog;

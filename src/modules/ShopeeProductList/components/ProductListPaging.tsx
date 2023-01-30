@@ -17,7 +17,7 @@ export default function ProductListPaging() {
     (page: number) => {
       updatePaging?.(page, PAGE_SIZE);
     },
-    [updatePaging],
+    [updatePaging]
   );
 
   return (

@@ -3,7 +3,7 @@ import getElementSets from '@/modules/ShopeeProductList/services/getElementSets'
 import type {
   TShopeeProductItemImageFlag,
   TShopeeProductItemImageOverlay,
-  TShopeeProductItemPromotionLabel
+  TShopeeProductItemPromotionLabel,
 } from '@/modules/ShopeeProductList/_types';
 import { ReactNode, useEffect } from 'react';
 
@@ -13,7 +13,9 @@ export type ItemElementSetsContextValue = {
   imageOverlays: TShopeeProductItemImageOverlay[];
 };
 
-const { Provider, useStore: useItemElementSetStore } = createFastContext<ItemElementSetsContextValue>({} as any);
+const { Provider, useStore: useItemElementSetStore } = createFastContext<ItemElementSetsContextValue>(
+  {} as any
+);
 
 export { useItemElementSetStore };
 

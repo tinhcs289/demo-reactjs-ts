@@ -19,9 +19,12 @@ const CommonCheckGroupField: React.FC<TCommonCheckGroupFieldProps> = (props) => 
 
   const isChecked = React.useCallback(
     (option: TCheckGroupOption) => {
-      return (memoValue.length > 0 && memoValue.findIndex((v) => v.value === option.value) >= 0) || !!option?.checked;
+      return (
+        (memoValue.length > 0 && memoValue.findIndex((v) => v.value === option.value) >= 0) ||
+        !!option?.checked
+      );
     },
-    [memoValue],
+    [memoValue]
   );
 
   const handleOnchange = React.useCallback(
@@ -43,7 +46,7 @@ const CommonCheckGroupField: React.FC<TCommonCheckGroupFieldProps> = (props) => 
         onChange?.(removeAt(memoValue, j));
       }
     },
-    [memoOption, memoValue, onChange],
+    [memoOption, memoValue, onChange]
   );
 
   const memoOptionsRender = React.useMemo(() => {

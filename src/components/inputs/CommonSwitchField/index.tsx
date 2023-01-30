@@ -6,7 +6,18 @@ import React from 'react';
 import type { TCommonSwitchFieldProps } from './_types';
 
 const CommonSwitchField: React.FC<TCommonSwitchFieldProps> = (props) => {
-  const { name, label, error, checked, value, onChange, errorText, required, inputProps, ...formControlProps } = props;
+  const {
+    name,
+    label,
+    error,
+    checked,
+    value,
+    onChange,
+    errorText,
+    required,
+    inputProps,
+    ...formControlProps
+  } = props;
   const theme = useTheme();
   return (
     <FormControlLabel

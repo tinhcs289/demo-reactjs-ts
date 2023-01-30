@@ -32,7 +32,10 @@ const mockSetup = () => {
 
 if (isMock) mockSetup();
 
-const loginApi = (payload: { username: string; password: string }): Promise<AxiosResponse<TAuthentication>> => {
+const loginApi = (payload: {
+  username: string;
+  password: string;
+}): Promise<AxiosResponse<TAuthentication>> => {
   return !isMock ? http.post(LINK, payload) : httpMock.post(LINK, payload);
 };
 export default loginApi;

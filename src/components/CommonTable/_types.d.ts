@@ -20,16 +20,21 @@ export type TSortState = {
   sortBy: string;
   sortDirection: TSortDirect;
 };
-export type TBodyCellInnerRenderFunctionArgs<T extends TAny, U extends TAny> = { row: T; rowIndex?: number } & U;
+export type TBodyCellInnerRenderFunctionArgs<T extends TAny, U extends TAny> = {
+  row: T;
+  rowIndex?: number;
+} & U;
 export type TBodyCellRenderFunctionArgs<T extends TAny, U extends TAny> = TableCellProps &
   TBodyCellInnerRenderFunctionArgs<T, U>;
 export type TBodyCellRenderFunction<T extends TAny, U extends TAny> = (
-  args: TBodyCellRenderFunctionArgs<T, U>,
+  args: TBodyCellRenderFunctionArgs<T, U>
 ) => ReactNode;
 export type TBodyCellInnerRenderFunction<T extends TAny, U extends TAny> = (
-  args: TBodyCellInnerRenderFunctionArgs<T, U>,
+  args: TBodyCellInnerRenderFunctionArgs<T, U>
 ) => ReactNode;
-export type TBodyCellComponent<T extends TAny, U extends TAny> = ComponentType<TBodyCellRenderFunctionArgs<T, U>>;
+export type TBodyCellComponent<T extends TAny, U extends TAny> = ComponentType<
+  TBodyCellRenderFunctionArgs<T, U>
+>;
 export type TBodyCellInnerComponent<T extends TAny, U extends TAny> = ComponentType<
   TBodyCellInnerRenderFunctionArgs<T, U>
 >;
@@ -169,7 +174,7 @@ export interface ICommonPaginationProps extends Omit<PaginationProps, 'onChange'
   pageSize: number;
   totalCount: number;
   onChange?: (page: number) => void;
-  loading?: boolean,
+  loading?: boolean;
 }
 
 export interface ICommonTablePaginationProps
@@ -181,7 +186,7 @@ export interface ICommonTablePaginationProps
   pageSize: number;
   totalCount: number;
   onChange?: (page: number, size: number) => void;
-  loading?: boolean,
+  loading?: boolean;
 }
 //#endregion
 
@@ -193,9 +198,11 @@ export type TItemMenuActionRenderArgs<T extends TAny, U extends TAny> = {
   label: () => ReactNode;
   props: Omit<MenuProps, 'children'>;
 } & U;
-export type TItemMenuActionComponent<T extends TAny, U extends TAny> = ComponentType<TItemMenuActionRenderArgs<T, U>>;
+export type TItemMenuActionComponent<T extends TAny, U extends TAny> = ComponentType<
+  TItemMenuActionRenderArgs<T, U>
+>;
 export type TItemMenuActionRenderFunction<T extends TAny, U extends TAny> = (
-  args: TItemMenuActionRenderArgs<T, U>,
+  args: TItemMenuActionRenderArgs<T, U>
 ) => ReactNode;
 export type TItemMenuAction<T extends TAny> = {
   /**

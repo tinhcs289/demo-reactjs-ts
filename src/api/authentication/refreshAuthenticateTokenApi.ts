@@ -33,8 +33,10 @@ if (isMock) mockSetup();
 
 const refreshAuthenticateTokenApi = (
   payload: { refreshToken: string },
-  http: AxiosInstance,
+  http: AxiosInstance
 ): Promise<AxiosResponse<TAuthentication>> => {
-  return !isMock ? http.get(`${LINK}/${payload?.refreshToken}`) : httpMock.get(`${LINK}/${payload?.refreshToken}`);
+  return !isMock
+    ? http.get(`${LINK}/${payload?.refreshToken}`)
+    : httpMock.get(`${LINK}/${payload?.refreshToken}`);
 };
 export default refreshAuthenticateTokenApi;

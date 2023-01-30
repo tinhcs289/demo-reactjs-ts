@@ -9,7 +9,10 @@ export type TAutoCompleteOption = {
   [x: string]: any;
 };
 
-export type TCommonSelectFieldProps = Pick<TCommonTextFieldProps, 'label' | 'error' | 'required' | 'errorText'> &
+export type TCommonSelectFieldProps = Pick<
+  TCommonTextFieldProps,
+  'label' | 'error' | 'required' | 'errorText'
+> &
   Omit<
     AutocompleteProps<
       TAutoCompleteOption,

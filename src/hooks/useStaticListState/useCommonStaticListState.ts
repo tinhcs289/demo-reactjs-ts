@@ -3,7 +3,7 @@ import useListState from './useStaticListState';
 import type { IUseStaticListStateParams, IUseStaticListStateReturns } from './_types';
 
 const useCommonStaticListState = <T extends { [x: string]: any }>(
-  args?: IUseStaticListStateParams<T>,
+  args?: IUseStaticListStateParams<T>
 ): IUseStaticListStateReturns<T> => {
   const returns = useListState(args);
 
@@ -35,7 +35,12 @@ const useCommonStaticListState = <T extends { [x: string]: any }>(
       //
       isMoreAction: () =>
         returns.action.is(ACTION.MORE_ACTION) && !!returns.state.interactItem && !!returns.state.anchorEl,
-      openMoreActionMenu: (detail: { item?: T; element?: any; keepInteract?: boolean; keepAnchor?: boolean }) => {
+      openMoreActionMenu: (detail: {
+        item?: T;
+        element?: any;
+        keepInteract?: boolean;
+        keepAnchor?: boolean;
+      }) => {
         const { item, element, keepAnchor, keepInteract } = detail;
         returns.action.set({ action: ACTION.MORE_ACTION, item, element, keepAnchor, keepInteract });
       },

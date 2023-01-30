@@ -14,7 +14,8 @@ export type TQueryExtendParams = {
   [x: string]: any;
 };
 
-export type TListState = { totalCount: number; moreFilter: TQueryExtendParams } & TPagingState & Partial<TSortState>;
+export type TListState = { totalCount: number; moreFilter: TQueryExtendParams } & TPagingState &
+  Partial<TSortState>;
 
 export type TOnQueryArgs = {
   pagination: TPagingState;
@@ -93,7 +94,12 @@ export interface IUseListStateReturnsCommon<T extends { [x: string]: any }> {
   isDetail: () => boolean;
   openDetail: (detail: { item: T; keepAnchor?: boolean; keepInteract?: boolean }) => void;
   isMoreAction: () => boolean;
-  openMoreActionMenu: (detail: { item?: T; element?: any; keepInteract?: boolean; keepAnchor?: boolean }) => void;
+  openMoreActionMenu: (detail: {
+    item?: T;
+    element?: any;
+    keepInteract?: boolean;
+    keepAnchor?: boolean;
+  }) => void;
 }
 
 export interface IUseStaticListStateReturns<T extends { [x: string]: any }> {

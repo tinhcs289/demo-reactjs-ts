@@ -12,9 +12,8 @@ const cookieGetItem = <T>(key: string, validate?: (value: T | null) => boolean):
   try {
     const val = JSON.parse(value) as T;
     if (typeof validate === 'function') {
-      returns = validate(val) === true ? val : null
-    } else
-      returns = val;
+      returns = validate(val) === true ? val : null;
+    } else returns = val;
   } catch (error) {
     console.log(error);
     returns = null;

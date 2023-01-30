@@ -91,7 +91,7 @@ export default function ProductItem(props: { product: TShopeeProductItem }) {
         productName: slugify(product?.name || ''),
         productId: product?.itemid || '',
       }),
-    [product?.name, product?.itemid],
+    [product?.name, product?.itemid]
   );
 
   const {

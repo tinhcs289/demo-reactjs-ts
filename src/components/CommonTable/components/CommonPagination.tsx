@@ -28,7 +28,7 @@ const CommonPagination: FC<ICommonPaginationProps> = (props) => {
       event?.preventDefault?.();
       onChange?.(page);
     },
-    [onChange],
+    [onChange]
   );
 
   const isSmallScreenOrLower = useMediaQuery((t: Theme) => t?.breakpoints?.down?.('sm'));

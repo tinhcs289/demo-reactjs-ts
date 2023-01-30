@@ -97,6 +97,6 @@ const columns = tableConfig<TOrderListItem>(
     bodyCellInner: renderCellInnerAs(ListItemActionMenuToggle),
     bodyCellProps: { align: 'center', sx: { p: '4px' } },
     stickyLast: true,
-  },
+  }
 );
 export default columns;

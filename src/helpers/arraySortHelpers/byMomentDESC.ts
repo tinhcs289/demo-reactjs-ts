@@ -31,4 +31,3 @@ const byMomentDESC =
     return 0;
   };
 export default byMomentDESC;
-

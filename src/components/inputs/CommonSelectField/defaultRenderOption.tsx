@@ -5,7 +5,7 @@ import type { TAutoCompleteOption } from './_types';
 const defaultRenderOption = (
   props: React.HTMLAttributes<HTMLLIElement>,
   option: TAutoCompleteOption,
-  state: AutocompleteRenderOptionState,
+  state: AutocompleteRenderOptionState
 ) => {
   return (
     <li {...props} key={`${option.value}`}>
