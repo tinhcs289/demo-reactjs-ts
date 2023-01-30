@@ -1,6 +1,11 @@
 import { TAction, TInitState, TReducer, TSaga } from './_types';
 
-const createReducer = (name: string, initState: TInitState, dispatch: { [x: string]: TReducer }, sagas?: TSaga) => {
+const createReducer = (
+  name: string,
+  initState: TInitState,
+  dispatch: { [x: string]: TReducer },
+  sagas?: TSaga
+) => {
   return {
     name,
     reducer: (state: TInitState, action: TAction) => {

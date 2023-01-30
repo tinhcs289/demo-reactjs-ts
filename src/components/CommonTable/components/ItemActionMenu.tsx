@@ -15,7 +15,7 @@ function ItemActionMenu<T extends TAny>(
   props: MenuProps & {
     actions?: TItemMenuAction<T>[];
     dataItem?: T;
-  },
+  }
 ) {
   const { children, actions, dataItem, ...otherProps } = props;
 
@@ -35,7 +35,7 @@ function ItemActionMenu<T extends TAny>(
         action?.onClick?.(memoItem, event);
       };
     },
-    [memoItem],
+    [memoItem]
   );
 
   const renderAction = useCallback(
@@ -92,7 +92,7 @@ function ItemActionMenu<T extends TAny>(
         </MenuItem>
       );
     },
-    [handleActionClick, memoItem],
+    [handleActionClick, memoItem]
   );
 
   const actionsRendered = useMemo(() => {

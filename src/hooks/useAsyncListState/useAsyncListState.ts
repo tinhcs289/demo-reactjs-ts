@@ -11,7 +11,9 @@ import type {
   TSortDirect,
 } from './_types';
 
-function useAsyncListState<T extends { [x: string]: any }>(args?: IUseListStateParams<T>): IUseListStateReturns<T> {
+function useAsyncListState<T extends { [x: string]: any }>(
+  args?: IUseListStateParams<T>
+): IUseListStateReturns<T> {
   const {
     defaultSelectable,
     defaultPagination,
@@ -24,7 +26,7 @@ function useAsyncListState<T extends { [x: string]: any }>(args?: IUseListStateP
 
   const __getid = useCallback(
     (item?: T) => (!item ? null : typeof args?.idField !== 'string' ? item['id'] : item[args.idField]),
-    [args?.idField],
+    [args?.idField]
   );
 
   const infinite = useMemo(() => {
@@ -91,7 +93,7 @@ function useAsyncListState<T extends { [x: string]: any }>(args?: IUseListStateP
               } as TQueryExtendParams),
       } as TOnQueryArgs;
     },
-    [defaultExtendQueryParams, fixedExtendQueryParams, dfPaging, __appendFilter],
+    [defaultExtendQueryParams, fixedExtendQueryParams, dfPaging, __appendFilter]
   );
 
   const [data, setData] = useState<T[]>([]);
@@ -113,7 +115,7 @@ function useAsyncListState<T extends { [x: string]: any }>(args?: IUseListStateP
       if (selecteds.length === 0) return false;
       return selecteds.findIndex((select) => __getid(select) === itemId) >= 0;
     },
-    [__getid, selectedItems],
+    [__getid, selectedItems]
   );
 
   const isCheckAll = useCallback(
@@ -131,7 +133,7 @@ function useAsyncListState<T extends { [x: string]: any }>(args?: IUseListStateP
       }
       return is;
     },
-    [__getid],
+    [__getid]
   );
 
   const queryWithAxios = useCallback(
@@ -169,7 +171,7 @@ function useAsyncListState<T extends { [x: string]: any }>(args?: IUseListStateP
         }
       }
     },
-    [onQuery, getQueryArgs, infinite, data],
+    [onQuery, getQueryArgs, infinite, data]
   );
 
   const updateFilter = useCallback(
@@ -178,7 +180,7 @@ function useAsyncListState<T extends { [x: string]: any }>(args?: IUseListStateP
       queryWithAxios(cloneDeep(listState));
       return;
     },
-    [listState, onQuery, queryWithAxios],
+    [listState, onQuery, queryWithAxios]
   );
 
   const reload = useCallback(() => {
@@ -194,7 +196,7 @@ function useAsyncListState<T extends { [x: string]: any }>(args?: IUseListStateP
       queryWithAxios({ ...state, pageIndex: page, pageSize: size });
       return;
     },
-    [onQuery, listState, queryWithAxios],
+    [onQuery, listState, queryWithAxios]
   );
 
   const updateSort = useCallback(
@@ -206,7 +208,7 @@ function useAsyncListState<T extends { [x: string]: any }>(args?: IUseListStateP
       queryWithAxios({ ...queryArgs, pageIndex: 1 });
       return;
     },
-    [listState, onQuery, queryWithAxios],
+    [listState, onQuery, queryWithAxios]
   );
 
   const checkOneItem = useCallback(
@@ -228,7 +230,7 @@ function useAsyncListState<T extends { [x: string]: any }>(args?: IUseListStateP
         setCheckAll(isCheckAll(selecteds, data));
       }
     },
-    [__getid, isCheckAll, selectedItems, data],
+    [__getid, isCheckAll, selectedItems, data]
   );
 
   const checkAllItems = useCallback(
@@ -254,7 +256,7 @@ function useAsyncListState<T extends { [x: string]: any }>(args?: IUseListStateP
         setSelectedItems(newSelecteds);
       }
     },
-    [__getid, selectedItems, data],
+    [__getid, selectedItems, data]
   );
 
   const clearSelectItems = () => {
@@ -285,7 +287,7 @@ function useAsyncListState<T extends { [x: string]: any }>(args?: IUseListStateP
 
       return;
     },
-    [],
+    []
   );
 
   const clearItemAction = useCallback(() => {
@@ -326,21 +328,21 @@ function useAsyncListState<T extends { [x: string]: any }>(args?: IUseListStateP
     (action: string) => {
       return itemAction === action;
     },
-    [itemAction],
+    [itemAction]
   );
 
   const isItemInteractAction = useCallback(
     (action: string) => {
       return itemAction === action && !!interactItem;
     },
-    [itemAction, interactItem],
+    [itemAction, interactItem]
   );
 
   const isItemInteractWithAnchorAction = useCallback(
     (action: string) => {
       return itemAction === action && !!interactItem && !!anchorEl;
     },
-    [itemAction, interactItem, anchorEl],
+    [itemAction, interactItem, anchorEl]
   );
 
   return {

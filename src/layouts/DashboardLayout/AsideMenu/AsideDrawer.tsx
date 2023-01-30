@@ -12,29 +12,31 @@ import Toolbar from '@mui/material/Toolbar';
 import type { FC, ReactNode } from 'react';
 import { useCallback, useEffect, useMemo } from 'react';
 
-const DrawerStyled = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }) => ({
-  '& .MuiDrawer-paper': {
-    position: 'relative',
-    whiteSpace: 'nowrap',
-    width: ASIDE_MENU_WIDTH,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    boxSizing: 'border-box',
-    ...(!open && {
-      overflowX: 'hidden',
+const DrawerStyled = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
+  ({ theme, open }) => ({
+    '& .MuiDrawer-paper': {
+      position: 'relative',
+      whiteSpace: 'nowrap',
+      width: ASIDE_MENU_WIDTH,
       transition: theme.transitions.create('width', {
         easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
+        duration: theme.transitions.duration.enteringScreen,
       }),
-      width: theme.spacing(7),
-      [theme.breakpoints.up('sm')]: {
-        width: theme.spacing(9),
-      },
-    }),
-  },
-}));
+      boxSizing: 'border-box',
+      ...(!open && {
+        overflowX: 'hidden',
+        transition: theme.transitions.create('width', {
+          easing: theme.transitions.easing.sharp,
+          duration: theme.transitions.duration.leavingScreen,
+        }),
+        width: theme.spacing(7),
+        [theme.breakpoints.up('sm')]: {
+          width: theme.spacing(9),
+        },
+      }),
+    },
+  })
+);
 
 const AsideDrawer: FC<{ children?: ReactNode }> = (props) => {
   const { children } = props;

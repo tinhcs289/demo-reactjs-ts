@@ -12,7 +12,7 @@ import type {
 } from './_types';
 
 function useStaticListState<T extends { [x: string]: any }>(
-  args?: IUseStaticListStateParams<T>,
+  args?: IUseStaticListStateParams<T>
 ): IUseStaticListStateReturns<T> {
   const {
     source,
@@ -30,7 +30,7 @@ function useStaticListState<T extends { [x: string]: any }>(
 
   const __getid = useCallback(
     (item?: T) => (!item ? null : typeof args?.idField !== 'string' ? item['id'] : item[args.idField]),
-    [args?.idField],
+    [args?.idField]
   );
 
   const dfPaging = useMemo(() => {
@@ -93,7 +93,7 @@ function useStaticListState<T extends { [x: string]: any }>(
               } as TQueryExtendParams),
       } as TOnQueryArgs;
     },
-    [defaultExtendQueryParams, fixedExtendQueryParams, dfPaging, __appendFilter],
+    [defaultExtendQueryParams, fixedExtendQueryParams, dfPaging, __appendFilter]
   );
 
   const [data, setData] = useState(paginate(memoSource, dfState.pageIndex, dfState.pageSize));
@@ -114,7 +114,7 @@ function useStaticListState<T extends { [x: string]: any }>(
       if (selecteds.length === 0) return false;
       return selecteds.findIndex((select) => __getid(select) === itemId) >= 0;
     },
-    [__getid, selectedItems],
+    [__getid, selectedItems]
   );
 
   const isCheckAll = useCallback(
@@ -132,7 +132,7 @@ function useStaticListState<T extends { [x: string]: any }>(
       }
       return is;
     },
-    [__getid],
+    [__getid]
   );
 
   const queryLocaly = useCallback(
@@ -176,7 +176,7 @@ function useStaticListState<T extends { [x: string]: any }>(
         setData(Array.isArray(result) ? paginate(result, page, size) : []);
       }
     },
-    [onQueryLocaly, getQueryArgs, listState, memoSource],
+    [onQueryLocaly, getQueryArgs, listState, memoSource]
   );
 
   const updateFilter = useCallback(
@@ -187,11 +187,11 @@ function useStaticListState<T extends { [x: string]: any }>(
         queryArgs.pagination.pageIndex,
         queryArgs.pagination.pageSize,
         queryArgs.sort?.sortBy,
-        queryArgs.sort?.sortDirection,
+        queryArgs.sort?.sortDirection
       );
       return;
     },
-    [listState, getQueryArgs, queryLocaly],
+    [listState, getQueryArgs, queryLocaly]
   );
 
   const reload = useCallback(() => {
@@ -201,7 +201,7 @@ function useStaticListState<T extends { [x: string]: any }>(
       queryArgs.pagination.pageIndex,
       queryArgs.pagination.pageSize,
       queryArgs.sort?.sortBy,
-      queryArgs.sort?.sortDirection,
+      queryArgs.sort?.sortDirection
     );
     return;
   }, [listState, getQueryArgs, queryLocaly]);
@@ -212,7 +212,7 @@ function useStaticListState<T extends { [x: string]: any }>(
       queryLocaly(page, size);
       return;
     },
-    [queryLocaly],
+    [queryLocaly]
   );
 
   const updateSort = useCallback(
@@ -224,7 +224,7 @@ function useStaticListState<T extends { [x: string]: any }>(
       queryLocaly(queryArgs.pageIndex, queryArgs.pageSize, queryArgs.sortBy, queryArgs.sortDirection);
       return;
     },
-    [listState, queryLocaly],
+    [listState, queryLocaly]
   );
 
   const checkOneItem = useCallback(
@@ -246,7 +246,7 @@ function useStaticListState<T extends { [x: string]: any }>(
         setCheckAll(isCheckAll(selecteds, data));
       }
     },
-    [__getid, isCheckAll, selectedItems, data],
+    [__getid, isCheckAll, selectedItems, data]
   );
 
   const checkAllItems = useCallback(
@@ -272,7 +272,7 @@ function useStaticListState<T extends { [x: string]: any }>(
         setSelectedItems(newSelecteds);
       }
     },
-    [__getid, selectedItems, data],
+    [__getid, selectedItems, data]
   );
 
   const clearSelectItems = () => {
@@ -293,7 +293,7 @@ function useStaticListState<T extends { [x: string]: any }>(
         if (!keepAnchor) setAnchorEl(!!element ? element : null);
       }
     },
-    [],
+    []
   );
 
   const clearItemAction = useCallback(() => {
@@ -326,21 +326,21 @@ function useStaticListState<T extends { [x: string]: any }>(
     (action: string) => {
       return itemAction === action;
     },
-    [itemAction],
+    [itemAction]
   );
 
   const isItemInteractAction = useCallback(
     (action: string) => {
       return itemAction === action && !!interactItem;
     },
-    [itemAction, interactItem],
+    [itemAction, interactItem]
   );
 
   const isItemInteractWithAnchorAction = useCallback(
     (action: string) => {
       return itemAction === action && !!interactItem && !!anchorEl;
     },
-    [itemAction, interactItem, anchorEl],
+    [itemAction, interactItem, anchorEl]
   );
 
   return {

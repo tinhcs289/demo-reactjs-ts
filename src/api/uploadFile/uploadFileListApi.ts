@@ -8,7 +8,10 @@ type TFileResponse = {
   requestStatus?: TApiRequestStatus;
 };
 
-const uploadFileListApi = async (payload: { folder: string; files: FileList | File[] }): Promise<TFileResponse[]> => {
+const uploadFileListApi = async (payload: {
+  folder: string;
+  files: FileList | File[];
+}): Promise<TFileResponse[]> => {
   try {
     const results = await Promise.all(
       Array.from(payload.files).map((file) =>
@@ -25,8 +28,8 @@ const uploadFileListApi = async (payload: { folder: string; files: FileList | Fi
           } finally {
             return fileRes;
           }
-        })(),
-      ),
+        })()
+      )
     );
     return results.filter((rs) => rs?.requestStatus === EApiRequestStatus.REQUESTSUCCESS && !!rs?.source);
   } catch (error) {

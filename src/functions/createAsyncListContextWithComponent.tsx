@@ -1,4 +1,8 @@
-import CommonTable, { CommonPagination, ItemActionMenu, CommonTablePagination } from '@/components/CommonTable';
+import CommonTable, {
+  CommonPagination,
+  ItemActionMenu,
+  CommonTablePagination,
+} from '@/components/CommonTable';
 import type {
   ICommonPaginationProps,
   ICommonTableProps,
@@ -43,12 +47,14 @@ function createAsyncListContextWithComponent<T extends TAny>() {
       return fetchState === ERequestStatus.REQUESTING;
     }, [fetchState]);
 
-    return <CommonTable {...otherProps} rows={data} columns={columns} loading={loading} selectable={selectable} />;
+    return (
+      <CommonTable {...otherProps} rows={data} columns={columns} loading={loading} selectable={selectable} />
+    );
   };
 
-  const ListTablePaging: FC<Omit<ICommonTablePaginationProps, 'pageIndex' | 'pageSize' | 'totalCount' | 'onChange'>> = (
-    props,
-  ) => {
+  const ListTablePaging: FC<
+    Omit<ICommonTablePaginationProps, 'pageIndex' | 'pageSize' | 'totalCount' | 'onChange'>
+  > = (props) => {
     const [pageIndex] = useAsyncList((s) => s.listState.pageIndex);
     const [pageSize] = useAsyncList((s) => s.listState.pageSize);
     const [totalCount] = useAsyncList((s) => s.listState.totalCount);
@@ -58,7 +64,7 @@ function createAsyncListContextWithComponent<T extends TAny>() {
       (page: number, size: number) => {
         updatePaging?.(page, size);
       },
-      [updatePaging],
+      [updatePaging]
     );
 
     return (
@@ -73,7 +79,7 @@ function createAsyncListContextWithComponent<T extends TAny>() {
   };
 
   const ListPaging: FC<Omit<ICommonPaginationProps, 'pageIndex' | 'pageSize' | 'totalCount' | 'onChange'>> = (
-    props,
+    props
   ) => {
     const [pageIndex] = useAsyncList((s) => s.listState.pageIndex);
     const [pageSize] = useAsyncList((s) => s.listState.pageSize);
@@ -84,7 +90,7 @@ function createAsyncListContextWithComponent<T extends TAny>() {
       (page: number) => {
         updatePaging?.(page, 10);
       },
-      [updatePaging],
+      [updatePaging]
     );
 
     return (
@@ -120,7 +126,7 @@ function createAsyncListContextWithComponent<T extends TAny>() {
       }) => {
         set?.(actionDetail);
       },
-      [set],
+      [set]
     );
 
     const toggleAction: MouseEventHandler<HTMLButtonElement> = useCallback(
@@ -136,7 +142,7 @@ function createAsyncListContextWithComponent<T extends TAny>() {
         });
         return;
       },
-      [item, memoAction, setAction],
+      [item, memoAction, setAction]
     );
 
     const toggler = useMemo(() => {

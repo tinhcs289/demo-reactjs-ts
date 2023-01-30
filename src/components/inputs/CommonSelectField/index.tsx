@@ -44,7 +44,8 @@ const CommonSelectField: FC<TCommonSelectFieldProps> = forwardRef((props, ref?: 
 
   const memoGetOptionLabel = useMemo(() => {
     if (typeof getOptionLabel === 'function') return getOptionLabel;
-    return (option: string | TAutoCompleteOption) => (typeof option === 'string' ? option : option?.label || '');
+    return (option: string | TAutoCompleteOption) =>
+      typeof option === 'string' ? option : option?.label || '';
   }, [getOptionLabel]);
 
   const memoRenderTags = useMemo(() => {
@@ -52,7 +53,7 @@ const CommonSelectField: FC<TCommonSelectFieldProps> = forwardRef((props, ref?: 
     return (
       v: TAutoCompleteOption[],
       g: AutocompleteRenderGetTagProps,
-      o: AutocompleteOwnerState<TAutoCompleteOption, boolean, boolean, boolean, 'div'>,
+      o: AutocompleteOwnerState<TAutoCompleteOption, boolean, boolean, boolean, 'div'>
     ) => {
       return (
         <>

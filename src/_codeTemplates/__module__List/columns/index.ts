@@ -34,6 +34,6 @@ const columns = tableConfig<T__module__ListItem>(
     headCellProps: { align: 'center' },
     bodyCell: renderCellInnerAs(Action),
     bodyCellProps: { align: 'center' },
-  },
+  }
 );
 export default columns;

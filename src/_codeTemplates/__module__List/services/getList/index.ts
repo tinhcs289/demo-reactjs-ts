@@ -19,7 +19,7 @@ const getList = async (args: TOnQueryArgs): Promise<TOnQueryRetuns<T__module__Li
   };
 
   const [data, error] = await tryCall(api, payload).desireSuccessWith((response) =>
-    isValidResult<T__module__ListItem>(response?.data),
+    isValidResult<T__module__ListItem>(response?.data)
   );
   if (error) return defaultReturns;
 

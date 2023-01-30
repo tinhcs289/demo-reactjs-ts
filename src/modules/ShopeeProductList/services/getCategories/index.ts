@@ -5,16 +5,15 @@ import type { TShopeeCategoryItem } from '../../_types';
 import api from './api';
 
 const getCategories = async (): Promise<TShopeeCategoryItem[]> => {
-    const [data, error] = await tryCall(api).desireSuccessWith((response) =>
-        !!response?.data &&
-        Array.isArray(response.data.category_list) &&
-        response.data.category_list.length > 0
-    );
+  const [data, error] = await tryCall(api).desireSuccessWith(
+    (response) =>
+      !!response?.data && Array.isArray(response.data.category_list) && response.data.category_list.length > 0
+  );
 
-    if (error) return [];
+  if (error) return [];
 
-    await tryDo(wait, 500);
+  await tryDo(wait, 500);
 
-    return data.category_list;
+  return data.category_list;
 };
 export default getCategories;

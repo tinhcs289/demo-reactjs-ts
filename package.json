@@ -69,6 +69,7 @@
     "gh-pages": "5.0.0",
     "react-scripts": "5.0.1",
     "sync-dotenv": "2.7.0",
+    "prettier": "2.8.3",
     "web-vitals": "3.1.1"
   },
   "scripts": {
@@ -83,7 +84,8 @@
     "predeploy": "npm run build:prod",
     "deploy": "gh-pages -d build",
     "env": "sync-dotenv --env .env.example --samples \".env.*\"",
-    "gen": "node src/_codeTemplates/generate.js"
+    "gen": "node src/_codeTemplates/generate.js",
+    "pretty": "prettier --write \"./**/*.{js,jsx,ts,tsx}\"" 
   },
   "eslintConfig": {
     "extends": [

@@ -23,7 +23,7 @@ type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;
     incrementBy(3)
  */
 const useSliceReducer = <State, CaseReducers extends SliceCaseReducers<State>, Name extends string = string>(
-  options: Optional<CreateSliceOptions<State, CaseReducers, Name>, 'name'>,
+  options: Optional<CreateSliceOptions<State, CaseReducers, Name>, 'name'>
 ) => {
   const slice = createSlice({ name: '__name', ...options });
   const [state, dispatch] = useReducer(slice.reducer as any, options.initialState);

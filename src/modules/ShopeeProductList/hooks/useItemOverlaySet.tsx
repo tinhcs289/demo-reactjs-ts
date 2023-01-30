@@ -9,7 +9,9 @@ export default function useItemOverlaySet(product: TShopeeProductItem) {
   const elementSet = useMemo(() => {
     if (!imageOverlays) return null;
     if (!product?.label_ids) return null;
-    return imageOverlays.find((elSet) => product?.label_ids?.includes?.(elSet?.product_label_ids?.[0] as any) || false);
+    return imageOverlays.find(
+      (elSet) => product?.label_ids?.includes?.(elSet?.product_label_ids?.[0] as any) || false
+    );
   }, [imageOverlays, product?.label_ids]);
 
   const $overlayImage = useMemo(() => {

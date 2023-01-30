@@ -15,7 +15,10 @@ type SvgImage = FC<SvgIconProps<SvgIconTypeMap['defaultComponent'], {}>>;
 
 type TAsideMenuItemType = 'link' | 'label';
 
-export type LinkProps = Omit<ForwardRefExoticComponent<NavLinkProps & RefAttributes<HTMLAnchorElement>>, 'to' | 'href'>;
+export type LinkProps = Omit<
+  ForwardRefExoticComponent<NavLinkProps & RefAttributes<HTMLAnchorElement>>,
+  'to' | 'href'
+>;
 
 export type TAsideMenuItem = {
   // logic props

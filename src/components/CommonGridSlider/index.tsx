@@ -85,13 +85,27 @@ function useSlidesPerViewByScreen(slidesPerView?: number | 'auto' | Partial<Reco
       if (isSmallScreenOrLarger) return slidesPerView.sm || 6;
       return slidesPerView.xs || 4;
     }
-  }, [slidesPerView, isMediumScreenOrLarger, isLargeScreenOrLarger, isSmallScreenOrLarger, isExtraLargeScreenOrLarger]);
+  }, [
+    slidesPerView,
+    isMediumScreenOrLarger,
+    isLargeScreenOrLarger,
+    isSmallScreenOrLarger,
+    isExtraLargeScreenOrLarger,
+  ]);
 
   return { slidesPerView: memoSlidesPerView };
 }
 
 export default function CommonGridSlider<T extends TAny>(props: TCommonGridSliderProps<T>) {
-  const { data, boxHeight, rows, boxProps, renderItem, slidesPerView: propSlidesPerView, ...otherProps } = props;
+  const {
+    data,
+    boxHeight,
+    rows,
+    boxProps,
+    renderItem,
+    slidesPerView: propSlidesPerView,
+    ...otherProps
+  } = props;
 
   const memoHeight: string = useMemo(() => {
     let h: string = `${HEIGHT}px`;
@@ -121,13 +135,18 @@ export default function CommonGridSlider<T extends TAny>(props: TCommonGridSlide
     (item: T) => {
       return render(renderItem, { item });
     },
-    [renderItem],
+    [renderItem]
   );
 
   const $columns = useMemo(() => {
     return columns.map((column, i) => (
       <SwiperSlide key={i} virtualIndex={i}>
-        <SliderItemColumn container flexDirection="column" alignItems="flex-start" sx={{ height: memoHeight }}>
+        <SliderItemColumn
+          container
+          flexDirection="column"
+          alignItems="flex-start"
+          sx={{ height: memoHeight }}
+        >
           {column.map((item, j) => {
             return (
               <Item key={j} rows={memoRows}>

@@ -27,7 +27,8 @@ const CustomPickersDay = styled(PickersDay, {
 const toDay = moment();
 
 const CommonDateMultiField: React.FC<ICommonDateMultiFieldProps> = (props) => {
-  const { value, onChange, dayOfWeekFormatter, displayStaticWrapperAs, error, errorText, ...otherProps } = props;
+  const { value, onChange, dayOfWeekFormatter, displayStaticWrapperAs, error, errorText, ...otherProps } =
+    props;
 
   const dates = useMemo(() => {
     return value instanceof Array ? value : [];
@@ -38,7 +39,7 @@ const CommonDateMultiField: React.FC<ICommonDateMultiFieldProps> = (props) => {
       const selected = dates.length === 0 ? false : dates.findIndex((d) => d.isSame(day, 'date')) >= 0;
       return <CustomPickersDay {...pickersDayProps} selected={selected} />;
     },
-    [dates],
+    [dates]
   );
 
   const handleChange = useCallback(
@@ -66,7 +67,7 @@ const CommonDateMultiField: React.FC<ICommonDateMultiFieldProps> = (props) => {
       onChange?.(_dates);
       return;
     },
-    [dates, onChange],
+    [dates, onChange]
   );
 
   return (

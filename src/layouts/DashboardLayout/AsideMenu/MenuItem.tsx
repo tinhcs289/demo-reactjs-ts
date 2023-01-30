@@ -72,7 +72,7 @@ const MenuItem: FC<TMenuItemProps> = (props) => {
       setInteractMenuItem({ urlOfInteractMenuItem: item.url });
       return;
     },
-    [item, memoUrl, setInteractMenuItem],
+    [item, memoUrl, setInteractMenuItem]
   );
 
   const linkProps = useMemo(() => {

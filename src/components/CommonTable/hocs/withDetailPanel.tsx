@@ -49,7 +49,7 @@ function displayTableCellContent(element: HTMLElement | null | undefined) {
 const withDetailPanel =
   <T extends TAny>(
     DetailPanelComponent: TDetailPanelComponent<T>,
-    ToggleComponent?: TDetailPanelToggle<T>,
+    ToggleComponent?: TDetailPanelToggle<T>
   ): TBodyCellInnerComponent<T, TAny> =>
   ({ row, rowIndex }) => {
     const [open, toggle] = useToggle(false);
@@ -78,7 +78,7 @@ const withDetailPanel =
       root.render(
         <DetailPanelBox>
           <DetailPanelComponent row={row} rowIndex={rowIndex} closePanel={_closeBottomPanel} />
-        </DetailPanelBox>,
+        </DetailPanelBox>
       );
       displayTableCellContent(panel);
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -107,7 +107,7 @@ const withDetailPanel =
       root.render(
         <DetailPanelBox>
           <DetailPanelComponent row={row} rowIndex={rowIndex} closePanel={_closeTopPanel} />
-        </DetailPanelBox>,
+        </DetailPanelBox>
       );
       displayTableCellContent(panel);
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -130,7 +130,7 @@ const withDetailPanel =
           if (position === 'bottom') openBottomPanel();
         }
       },
-      [open, toggle, openTopPanel, openBottomPanel, closeTopPanel, closeBottomPanel],
+      [open, toggle, openTopPanel, openBottomPanel, closeTopPanel, closeBottomPanel]
     );
 
     const $toggler = useMemo(() => {

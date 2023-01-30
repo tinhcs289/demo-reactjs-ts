@@ -3,5 +3,6 @@ import withSelectedDateTags from '@/components/inputs/CommonDateMultiField/hocs/
 import type { FC } from 'react';
 import type { ICommonDateMultiWithTagsFieldProps } from './_types';
 
-const CommonDateMultiWithTagsField: FC<ICommonDateMultiWithTagsFieldProps> = withSelectedDateTags(CommonDateMultiField);
+const CommonDateMultiWithTagsField: FC<ICommonDateMultiWithTagsFieldProps> =
+  withSelectedDateTags(CommonDateMultiField);
 export default CommonDateMultiWithTagsField;

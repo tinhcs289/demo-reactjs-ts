@@ -6,7 +6,7 @@ export type UsePubSubDataStoreReturn<Store> = {
   subscribe: (callback: () => void) => () => void;
 };
 
-function usePubSubDataStore<Store> (initialState: Store): UsePubSubDataStoreReturn<Store> {
+function usePubSubDataStore<Store>(initialState: Store): UsePubSubDataStoreReturn<Store> {
   const store = useRef(initialState);
 
   const get = useCallback(() => store.current, []);

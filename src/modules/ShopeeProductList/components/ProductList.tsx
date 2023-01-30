@@ -13,7 +13,7 @@ export default function ProductList() {
 
   const $loadingBar = useMemo(
     () => (isLoading ? <LinearProgress sx={{ position: 'absolute', width: '100%' }} /> : null),
-    [isLoading],
+    [isLoading]
   );
 
   const $list = useMemo(() => {

@@ -3,7 +3,9 @@ import useAsyncListState from './useAsyncListState';
 import type { IUseListStateParams, IUseListStateReturns } from './_types';
 import { useCallback } from 'react';
 
-const useCommonListState = <T extends { [x: string]: any }>(args?: IUseListStateParams<T>): IUseListStateReturns<T> => {
+const useCommonListState = <T extends { [x: string]: any }>(
+  args?: IUseListStateParams<T>
+): IUseListStateReturns<T> => {
   const returns = useAsyncListState(args);
 
   const isCreate = useCallback(
@@ -11,7 +13,7 @@ const useCommonListState = <T extends { [x: string]: any }>(args?: IUseListState
       return returns?.action?.is?.(ACTION.CREATE) || false;
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [returns?.action?.is],
+    [returns?.action?.is]
   );
 
   const openCreation = useCallback(
@@ -20,7 +22,7 @@ const useCommonListState = <T extends { [x: string]: any }>(args?: IUseListState
       returns?.action?.set?.({ action: ACTION.CREATE, item, keepAnchor, keepInteract });
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [returns?.action?.set],
+    [returns?.action?.set]
   );
 
   const isDelete = useCallback(
@@ -28,7 +30,7 @@ const useCommonListState = <T extends { [x: string]: any }>(args?: IUseListState
       return (returns?.action?.is?.(ACTION.CREATE) || false) && !!returns?.state?.interactItem;
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [returns?.action?.is, returns?.state?.interactItem],
+    [returns?.action?.is, returns?.state?.interactItem]
   );
 
   const openDeleteConfirm = useCallback(
@@ -38,7 +40,7 @@ const useCommonListState = <T extends { [x: string]: any }>(args?: IUseListState
       returns?.action?.set?.({ action: ACTION.DELETE, item, keepAnchor });
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [returns?.action?.set],
+    [returns?.action?.set]
   );
 
   const isDetail = useCallback(
@@ -46,7 +48,7 @@ const useCommonListState = <T extends { [x: string]: any }>(args?: IUseListState
       return (returns?.action?.is?.(ACTION.OPEN_DETAIL) || false) && !!returns?.state?.interactItem;
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [returns?.action?.is, returns?.state?.interactItem],
+    [returns?.action?.is, returns?.state?.interactItem]
   );
 
   const openDetail = useCallback(
@@ -56,7 +58,7 @@ const useCommonListState = <T extends { [x: string]: any }>(args?: IUseListState
       returns?.action?.set?.({ action: ACTION.OPEN_DETAIL, item, keepAnchor, keepInteract });
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [returns?.action?.set],
+    [returns?.action?.set]
   );
 
   const isMoreAction = useCallback(
@@ -68,7 +70,7 @@ const useCommonListState = <T extends { [x: string]: any }>(args?: IUseListState
       );
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [returns?.action?.is, returns?.state?.interactItem, returns?.state?.anchorEl],
+    [returns?.action?.is, returns?.state?.interactItem, returns?.state?.anchorEl]
   );
 
   const openMoreActionMenu = useCallback(
@@ -77,7 +79,7 @@ const useCommonListState = <T extends { [x: string]: any }>(args?: IUseListState
       returns?.action?.set?.({ action: ACTION.MORE_ACTION, item, element, keepAnchor, keepInteract });
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [returns?.action?.set],
+    [returns?.action?.set]
   );
 
   return {

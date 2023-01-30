@@ -53,25 +53,25 @@ const AppBar: FC<any> = (props) => {
           () => (
             <ButtonMenu />
           ),
-          [],
+          []
         )}
         {useMemo(
           () => (
             <PageTitle />
           ),
-          [],
+          []
         )}
         {useMemo(
           () => (
             <ButtonLanguage />
           ),
-          [],
+          []
         )}
         {useMemo(
           () => (
             <ButtonLogout />
           ),
-          [],
+          []
         )}
       </Toolbar>
     </AppBarStyled>

@@ -24,7 +24,7 @@ const withSelectedDateTags =
         onChange?.(_dates);
         return;
       },
-      [value, onChange],
+      [value, onChange]
     );
 
     return (

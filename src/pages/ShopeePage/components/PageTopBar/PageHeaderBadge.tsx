@@ -17,7 +17,7 @@ export default function PageHeaderBadge(props: { icon?: TMuiIcon }) {
         border: (t) => `1px solid ${t?.palette?.primary?.contrastText}`,
       },
     }),
-    [],
+    []
   );
 
   return (

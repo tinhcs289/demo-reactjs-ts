@@ -25,8 +25,8 @@ const LoginPage: React.FC<ILoginPageProps> = withHOCs(
   withReturnUri,
   withRedirectAfterLoginWithExternalQueryString,
   withLoginViaInternalApi,
-  withLoginViaSSO,
-)((props) => {
+  withLoginViaSSO
+)(function LoginPage(props) {
   const { onSubmitLoginForm, loading } = props;
 
   const theme = useTheme();

@@ -25,9 +25,12 @@ const CommonAutoCompleteField: React.FC<TCommonAutoCompleteFieldProps> = (props)
   }, [propOptions]);
 
   const handleChangeTextDelay = React.useMemo(() => {
-    return debounce((e: React.SyntheticEvent<Element, Event>, text: string, reason: AutocompleteInputChangeReason) => {
-      onInputChange?.(e, text, reason);
-    }, 400);
+    return debounce(
+      (e: React.SyntheticEvent<Element, Event>, text: string, reason: AutocompleteInputChangeReason) => {
+        onInputChange?.(e, text, reason);
+      },
+      400
+    );
   }, [onInputChange]);
 
   return (

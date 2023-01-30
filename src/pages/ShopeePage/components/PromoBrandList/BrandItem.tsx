@@ -9,7 +9,9 @@ import BrandName from './BrandName';
 export default function BrandItem(props?: { item?: TShopeePromoBrandItem }) {
   const { item: shop } = props || {};
   return (
-    <NavLinkNoStyle to={`${PATHS.shopee}/shop-promo/${slugify(shop?.promo_text || '')}--${shop?.shopid || ''}`}>
+    <NavLinkNoStyle
+      to={`${PATHS.shopee}/shop-promo/${slugify(shop?.promo_text || '')}--${shop?.shopid || ''}`}
+    >
       <BrandButton>
         <CommonImage src={!!shop?.image ? `https://cf.shopee.vn/file/${shop.image}` : ''} height="180px" />
         <BrandName>{shop?.promo_text || ''}</BrandName>

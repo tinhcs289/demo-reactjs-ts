@@ -33,7 +33,9 @@ const withDebounceChangeHandler =
       }, ms);
     }, [props]);
 
-    return <WrappedComponent {...props} onValueChange={handleValueChangeDelay} onChange={handleChangeDelay} />;
+    return (
+      <WrappedComponent {...props} onValueChange={handleValueChangeDelay} onChange={handleChangeDelay} />
+    );
   };
 
 export const CommonTextNumericFieldDebounced = withDebounceChangeHandler(300)(CommonTextNumericField);

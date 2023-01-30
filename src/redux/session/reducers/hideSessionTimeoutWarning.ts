@@ -4,7 +4,7 @@ import { TActionHideSessionTimeoutWarningPayload, TReduxStateSessionTimeout } fr
 
 const hideSessionTimeoutWarning = (
   action: TGenericAction<TActionHideSessionTimeoutWarningPayload>,
-  state: ImmutableObject<TReduxStateSessionTimeout>,
+  state: ImmutableObject<TReduxStateSessionTimeout>
 ): TReduxStateSessionTimeout => {
   return {
     ...state,

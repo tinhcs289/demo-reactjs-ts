@@ -16,16 +16,18 @@ const mockSetup = () => {
 
 if (isMock) mockSetup();
 
-const verifyAuthenticateTokenApi = (accessToken?: string): Promise<AxiosResponse<TApiResponseWithMessageOnly>> => {
+const verifyAuthenticateTokenApi = (
+  accessToken?: string
+): Promise<AxiosResponse<TApiResponseWithMessageOnly>> => {
   return !isMock
     ? !!accessToken
       ? http.get(LINK, {
-          headers: { 'Authorization': `Bearer ${accessToken}` },
+          headers: { Authorization: `Bearer ${accessToken}` },
         })
       : http.get(LINK)
     : !!accessToken
     ? httpMock.get(LINK, {
-        headers: { 'Authorization': `Bearer ${accessToken}` },
+        headers: { Authorization: `Bearer ${accessToken}` },
       })
     : httpMock.get(LINK);
 };

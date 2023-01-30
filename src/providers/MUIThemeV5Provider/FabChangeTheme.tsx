@@ -31,7 +31,7 @@ const FabChangeTheme: FC<{ mode?: PaletteMode }> = (props) => {
         transitionDelay: `${theme.transitions.duration.leavingScreen}ms`,
       } as CSSProperties,
     }),
-    [theme],
+    [theme]
   );
 
   const handleChangeTheme = useCallback((variant: PaletteMode) => {

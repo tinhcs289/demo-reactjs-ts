@@ -1,6 +1,6 @@
 import newLocalStorageListenableItem from '@/helpers/localStorageHelpers/newLocalStorageListenableItem';
 import { TAuthenticationJWT } from '@/_types/TAuthentication';
-import { validate } from '@/appCookies/authentication'
+import { validate } from '@/appCookies/authentication';
 
 /**
  * @deprecated authentication was stored in browser cookie, for common action, use `@/appCookies/authentication`.

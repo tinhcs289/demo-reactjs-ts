@@ -123,7 +123,13 @@ export default function QuickTools() {
             title="Ví ShopeePay"
             subTitle={`Voucher giảm đến ${numeral(40000).format(CURRENCY_FORMAT)}`}
           />
-          <ToolItem item xs={5} icon={MonetizationOnIcon} title={`${76000} xu`} subTitle="Đổi xu lấy mã giảm giá" />
+          <ToolItem
+            item
+            xs={5}
+            icon={MonetizationOnIcon}
+            title={`${76000} xu`}
+            subTitle="Đổi xu lấy mã giảm giá"
+          />
         </Grid>
       </PaperStyled>
     </BoxStyled>
