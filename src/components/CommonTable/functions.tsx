@@ -37,7 +37,7 @@ export const renderItemAs =
     return <Item key={key} {...otherArgs} />;
   };
 export const menuActions = <T extends TAny>(
-  actions: Array<Omit<TItemMenuAction<T>, 'key' | 'type'> & Partial<Pick<TItemMenuAction<T>, 'type'>>>,
+  actions: Array<Omit<TItemMenuAction<T>, 'key' | 'type'> & Partial<Pick<TItemMenuAction<T>, 'type'>>>
 ): TItemMenuAction<T>[] => {
   return actions.map((a) => ({ ...a, key: newGuid(), type: a?.type || 'item' }));
 };

@@ -9,7 +9,9 @@ export default function useItemPromoLabelSet(product: TShopeeProductItem) {
   const elementSet = useMemo(() => {
     if (!promoLabels) return null;
     if (!product?.label_ids) return null;
-    return promoLabels.filter((elSet) => product?.label_ids?.includes?.(elSet?.product_label_ids?.[0] as any) || false);
+    return promoLabels.filter(
+      (elSet) => product?.label_ids?.includes?.(elSet?.product_label_ids?.[0] as any) || false
+    );
   }, [promoLabels, product?.label_ids]);
 
   const $promoLabelSet = useMemo(() => {

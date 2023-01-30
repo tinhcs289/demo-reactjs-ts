@@ -5,7 +5,7 @@ import { TReduxStateSnackbar, TActionPushMessagePayload } from '../_types';
 
 const snackbarNotify = (
   action: TGenericAction<TActionPushMessagePayload>,
-  state: ImmutableObject<TReduxStateSnackbar>,
+  state: ImmutableObject<TReduxStateSnackbar>
 ): TReduxStateSnackbar => {
   const { content, variant } = action.payload;
   return {

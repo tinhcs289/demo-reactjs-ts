@@ -67,7 +67,13 @@ const AsideMenu: FC<any> = (props) => {
                   </List>
                 }
               >
-                <MenuItem key={item.id} data={item} childActive={childActive} active={!!item.active} depth={0} />
+                <MenuItem
+                  key={item.id}
+                  data={item}
+                  childActive={childActive}
+                  active={!!item.active}
+                  depth={0}
+                />
               </CommonTooltip>
             );
           }

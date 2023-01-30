@@ -54,7 +54,7 @@ const CommonTablePagination: FC<ICommonTablePaginationProps> = (props) => {
         return;
       };
     },
-    [onChange, pageSize],
+    [onChange, pageSize]
   );
 
   const __labelRowsPerPage = useMemo(() => {
@@ -67,7 +67,7 @@ const CommonTablePagination: FC<ICommonTablePaginationProps> = (props) => {
         ? labelDisplayedRows(args as any)
         : t('common:table.displayedRows', args);
     },
-    [t, labelDisplayedRows],
+    [t, labelDisplayedRows]
   );
 
   const __getItemAriaLabel = useCallback(
@@ -76,7 +76,7 @@ const CommonTablePagination: FC<ICommonTablePaginationProps> = (props) => {
         ? getItemAriaLabel(type)
         : t(`common:table.goTo${upperFirst(type)}Page`);
     },
-    [t, getItemAriaLabel],
+    [t, getItemAriaLabel]
   );
 
   const pagination = useMemo(() => {

@@ -62,7 +62,7 @@ const __getSyncItem = (key: string) => {
   if (!value) return null;
   try {
     if (JSON.parse(value) === defaultSyncValue) return null;
-  } catch (error) { }
+  } catch (error) {}
   return value;
 };
 
@@ -141,7 +141,10 @@ const __initListener = () => {
   isInitialized = true;
 };
 
-const __extractJsonValue = <T>(value: string | null | undefined, validate?: (value: T | null) => boolean): T | null => {
+const __extractJsonValue = <T>(
+  value: string | null | undefined,
+  validate?: (value: T | null) => boolean
+): T | null => {
   if (!value) return null;
   let returns = null;
   try {
@@ -160,7 +163,7 @@ const __extractJsonValue = <T>(value: string | null | undefined, validate?: (val
     }
   } finally {
     if (typeof validate === 'function') {
-      return validate(returns) === true ? returns : null
+      return validate(returns) === true ? returns : null;
     }
 
     return returns;
@@ -173,7 +176,11 @@ const __addLocalStorageListener = (key: string, handler: (event: TLsChangeEvent)
   }
 };
 
-export const newLocalStorageListenableItem = <T>(args: { key: string; defaultValue?: T, validate?: (value: T | null) => boolean }): TLsSyncItem<T> => {
+export const newLocalStorageListenableItem = <T>(args: {
+  key: string;
+  defaultValue?: T;
+  validate?: (value: T | null) => boolean;
+}): TLsSyncItem<T> => {
   const syncKey = `${prefix}${args.key}`;
   const previousValue = localStorageGetItem<string>(syncKey);
   if (previousValue) {

@@ -56,7 +56,12 @@ const withTotalCountLabel =
     }, [memoOptions]);
 
     return (
-      <WrappedComponent {...otherProps} loading={loading} options={memoOptions} PopperComponent={PopperComponent} />
+      <WrappedComponent
+        {...otherProps}
+        loading={loading}
+        options={memoOptions}
+        PopperComponent={PopperComponent}
+      />
     );
   };
 export default withTotalCountLabel;

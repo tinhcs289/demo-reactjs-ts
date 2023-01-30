@@ -30,8 +30,10 @@ function tryCall<ResponseDataType>(
 ) {
   return {
     desire: async (
-      isResponseOk: (response: AxiosResponse<ResponseDataType, any>) => boolean,
-    ): Promise<[ResponseDataType, null] | [null, AxiosResponse<ResponseDataType, any> | InvalidResponseError]> => {
+      isResponseOk: (response: AxiosResponse<ResponseDataType, any>) => boolean
+    ): Promise<
+      [ResponseDataType, null] | [null, AxiosResponse<ResponseDataType, any> | InvalidResponseError]
+    > => {
       try {
         const res = await requestCall(...args);
         if (!res || !res?.status) throw res;
@@ -39,7 +41,8 @@ function tryCall<ResponseDataType>(
         return [res.data, null];
       } catch (error) {
         console.log(error);
-        if (!error || !(error as AxiosResponse<ResponseDataType, any>)?.status) return [null, RES_ERROR.REQUEST_ERROR];
+        if (!error || !(error as AxiosResponse<ResponseDataType, any>)?.status)
+          return [null, RES_ERROR.REQUEST_ERROR];
         return [null, error as AxiosResponse<ResponseDataType, any>];
       }
     },
@@ -52,13 +55,16 @@ function tryCall<ResponseDataType>(
         return [res.data, null];
       } catch (error) {
         console.log(error);
-        if (!error || !(error as AxiosResponse<ResponseDataType, any>)?.status) return [null, RES_ERROR.REQUEST_ERROR];
+        if (!error || !(error as AxiosResponse<ResponseDataType, any>)?.status)
+          return [null, RES_ERROR.REQUEST_ERROR];
         return [null, error as AxiosResponse<ResponseDataType, any>];
       }
     },
     desireSuccessWith: async (
-      isResponseOk: (response: AxiosResponse<ResponseDataType, any>) => boolean,
-    ): Promise<[ResponseDataType, null] | [null, AxiosResponse<ResponseDataType, any> | InvalidResponseError]> => {
+      isResponseOk: (response: AxiosResponse<ResponseDataType, any>) => boolean
+    ): Promise<
+      [ResponseDataType, null] | [null, AxiosResponse<ResponseDataType, any> | InvalidResponseError]
+    > => {
       try {
         const res = await requestCall(...args);
         if (!(Number.isInteger(res?.status) && 200 <= res.status && res.status <= 206)) throw res;
@@ -66,7 +72,8 @@ function tryCall<ResponseDataType>(
         return [res.data, null];
       } catch (error) {
         console.log(error);
-        if (!error || !(error as AxiosResponse<ResponseDataType, any>)?.status) return [null, RES_ERROR.REQUEST_ERROR];
+        if (!error || !(error as AxiosResponse<ResponseDataType, any>)?.status)
+          return [null, RES_ERROR.REQUEST_ERROR];
         return [null, error as AxiosResponse<ResponseDataType, any>];
       }
     },

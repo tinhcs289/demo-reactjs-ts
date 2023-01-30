@@ -20,7 +20,9 @@ const CommonNumberField: React.FC<TCommonNumberFieldProps> = (props) => {
 export default CommonNumberField;
 
 const withDebounceChangeHandler =
-  (ms: number) => (WrappedComponent: React.FC<TCommonNumberFieldProps>) => (props: TCommonNumberFieldProps) => {
+  (ms: number) =>
+  (WrappedComponent: React.FC<TCommonNumberFieldProps>) =>
+  (props: TCommonNumberFieldProps) => {
     const handleValueChangeDelay = React.useMemo(() => {
       return debounce((values: NumberFormatValues, sourceInfo: SourceInfo) => {
         props?.onValueChange?.(values, sourceInfo);
@@ -33,7 +35,9 @@ const withDebounceChangeHandler =
       }, ms);
     }, [props]);
 
-    return <WrappedComponent {...props} onValueChange={handleValueChangeDelay} onChange={handleChangeDelay} />;
+    return (
+      <WrappedComponent {...props} onValueChange={handleValueChangeDelay} onChange={handleChangeDelay} />
+    );
   };
 
 export const CommonNumberFieldDebounced = withDebounceChangeHandler(300)(CommonNumberField);

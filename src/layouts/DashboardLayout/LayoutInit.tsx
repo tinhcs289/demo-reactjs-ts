@@ -34,10 +34,12 @@ const LayoutInit: FC<any> = (props) => {
       if (isExact && current.indexOf(url) > -1) return true;
       return false;
     },
-    [location?.pathname],
+    [location?.pathname]
   );
 
-  const [urlOfInteractMenuItem, setUrlOfInteractMenuItem] = useDashboardLayout((s) => s.urlOfInteractMenuItem);
+  const [urlOfInteractMenuItem, setUrlOfInteractMenuItem] = useDashboardLayout(
+    (s) => s.urlOfInteractMenuItem
+  );
 
   useEffect(() => {
     setUrlOfInteractMenuItem({
@@ -82,7 +84,7 @@ const LayoutInit: FC<any> = (props) => {
         interactUrl: _url || undefined,
       };
     },
-    [isMatchPath],
+    [isMatchPath]
   );
 
   const [menuItems, setAsideMenuItems] = useDashboardLayout((s) => s.menuItems);

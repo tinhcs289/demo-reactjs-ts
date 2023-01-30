@@ -74,7 +74,8 @@ const stickySx: SxProps<Theme> = {
 };
 const boxShadowCellFirst =
   '0px 0px 0 0 rgb(0 0 0 / 0%), 4px 0px 4px 0px rgb(0 0 0 / 14%), inset 0px 0 0 0 rgb(0 0 0 / 0%)';
-const boxShadowCellLast = '0px 0 0 0 rgb(0 0 0 / 0%), -4px 0 4px 0 rgb(0 0 0 / 14%), 0px 0 0 0 rgb(0 0 0 / 0%)';
+const boxShadowCellLast =
+  '0px 0 0 0 rgb(0 0 0 / 0%), -4px 0 4px 0 rgb(0 0 0 / 14%), 0px 0 0 0 rgb(0 0 0 / 0%)';
 const stickyFirstSx: SxProps<Theme> = { left: 0, right: 'unset', boxShadow: boxShadowCellFirst };
 const stickyLastSx: SxProps<Theme> = { left: 'unset', right: 0, boxShadow: boxShadowCellLast };
 
@@ -94,14 +95,18 @@ export const renderHeadCell = <T extends Record<string, any>>(head: ICommonTable
     if (!`${_cellProps.className || ''}`.includes(stickyLastClass))
       _cellProps.className = `${_cellProps.className || ''} ${stickyLastClass}`;
   }
-  if (typeof head.headCell === 'string' || typeof head.headCell === 'number' || typeof head.headCell === 'boolean')
+  if (
+    typeof head.headCell === 'string' ||
+    typeof head.headCell === 'number' ||
+    typeof head.headCell === 'boolean'
+  )
     return <TableCell {..._cellProps}>{head.headCell}</TableCell>;
   return render(head.headCell, _cellProps);
 };
 export const renderBodyCell = <T extends Record<string, any>>(
   cell: ICommonTableConfig<T>,
   row: T,
-  rowIndex?: number,
+  rowIndex?: number
 ) => {
   if (!row || !cell || !!cell?.isHide) return null;
   const _cellProps = !!cell.bodyCellProps

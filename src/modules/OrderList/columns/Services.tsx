@@ -140,7 +140,7 @@ const Services: TBodyCellInnerComponent<TOrderListItem, TAny> = ({ row }) => {
         },
       },
     }),
-    [],
+    []
   );
 
   return (

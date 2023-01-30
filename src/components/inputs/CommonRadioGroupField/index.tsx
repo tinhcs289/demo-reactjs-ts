@@ -8,7 +8,19 @@ import React from 'react';
 import type { TCommonRadioGroupFieldProps } from './_types';
 
 const CommonRadioGroupField: React.FC<TCommonRadioGroupFieldProps> = (props) => {
-  const { name, label, required, error, onChange, errorText, color, options, value, groupProps, ...otherProps } = props;
+  const {
+    name,
+    label,
+    required,
+    error,
+    onChange,
+    errorText,
+    color,
+    options,
+    value,
+    groupProps,
+    ...otherProps
+  } = props;
 
   const memoOption = React.useMemo(() => {
     return options instanceof Array && options.length > 0 ? options : [];
@@ -35,7 +47,7 @@ const CommonRadioGroupField: React.FC<TCommonRadioGroupFieldProps> = (props) => 
       if (i < 0) return;
       onChange?.(memoOption[i]);
     },
-    [memoOption, onChange],
+    [memoOption, onChange]
   );
 
   const memoOptionsRender = React.useMemo(() => {
@@ -50,7 +62,12 @@ const CommonRadioGroupField: React.FC<TCommonRadioGroupFieldProps> = (props) => 
               label={option?.label || option?.name || ''}
               disabled={!!option?.disabled}
               {...option?.InputProps}
-              control={<Radio {...(!!color ? { color: color as any } : {})} {...(!!error ? { color: 'error' } : {})} />}
+              control={
+                <Radio
+                  {...(!!color ? { color: color as any } : {})}
+                  {...(!!error ? { color: 'error' } : {})}
+                />
+              }
             />
           );
         })}

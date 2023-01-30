@@ -1,1 +1,1 @@
-export type TMuiBreakPoint = "xs" | "sm" | "md" | "lg" | "xl"
+export type TMuiBreakPoint = 'xs' | 'sm' | 'md' | 'lg' | 'xl';

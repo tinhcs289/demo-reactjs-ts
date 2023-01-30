@@ -12,7 +12,10 @@ import isEqual from 'lodash/isEqual';
 import type { FC, ReactNode } from 'react';
 import { useEffect } from 'react';
 
-export type TAsyncList<T extends TAny> = Omit<IUseListStateReturnsState<T>, ' isShowMultiAction' | 'isSelected'> & {
+export type TAsyncList<T extends TAny> = Omit<
+  IUseListStateReturnsState<T>,
+  ' isShowMultiAction' | 'isSelected'
+> & {
   isSelected?: (item: T) => boolean;
   isShowMultiAction?: () => boolean;
   control?: IUseListStateReturnsControl<T>;

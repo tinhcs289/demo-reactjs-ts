@@ -40,7 +40,7 @@ function createStaticListContextWithComponent<T extends TAny>() {
   };
 
   const ListPaging: FC<Omit<ICommonPaginationProps, 'pageIndex' | 'pageSize' | 'totalCount' | 'onChange'>> = (
-    props,
+    props
   ) => {
     const [pageIndex] = useStaticList((s) => s.listState.pageIndex);
     const [pageSize] = useStaticList((s) => s.listState.pageSize);
@@ -51,7 +51,7 @@ function createStaticListContextWithComponent<T extends TAny>() {
       (page: number) => {
         updatePaging?.(page, 10);
       },
-      [updatePaging],
+      [updatePaging]
     );
 
     return (
@@ -87,7 +87,7 @@ function createStaticListContextWithComponent<T extends TAny>() {
       }) => {
         set?.(actionDetail);
       },
-      [set],
+      [set]
     );
 
     const toggleAction: MouseEventHandler<HTMLButtonElement> = useCallback(
@@ -103,7 +103,7 @@ function createStaticListContextWithComponent<T extends TAny>() {
         });
         return;
       },
-      [item, memoAction, setAction],
+      [item, memoAction, setAction]
     );
 
     return (

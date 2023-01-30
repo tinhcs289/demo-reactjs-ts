@@ -13,7 +13,7 @@ export type TReducerRoot = {
   name: string;
   reducer: (
     state: TInitState,
-    action: TAction,
+    action: TAction
   ) => {
     [x: string]: any;
   };
@@ -34,5 +34,5 @@ export type TReducerRootCombined = {
 export type TGenericAction<T extends TObject> = { type: string; payload: T };
 export type TGenericReducer<T extends TObject, U extends TObject> = (
   action: TGenericAction<U>,
-  state: ImmutableObject<T>,
+  state: ImmutableObject<T>
 ) => T;

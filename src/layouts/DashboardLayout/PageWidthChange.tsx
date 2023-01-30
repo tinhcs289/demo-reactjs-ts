@@ -22,7 +22,7 @@ const PageWidthChange: FC<any> = (props) => {
       setWidth({ pageMaxWidth: value || DEFAULT_WIDTH });
       contentMaxWidth.set(value || DEFAULT_WIDTH, true);
     },
-    [pageMaxWidth, setWidth],
+    [pageMaxWidth, setWidth]
   );
 
   return (

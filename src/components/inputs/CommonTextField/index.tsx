@@ -45,7 +45,9 @@ const withDebounceChangeHandler =
         props?.onChange?.(e);
       }, ms);
     }, [props]);
-    return <WrappedComponent {...otherProps} defaultValue={value || defaultValue} onChange={handleChangeDelay} />;
+    return (
+      <WrappedComponent {...otherProps} defaultValue={value || defaultValue} onChange={handleChangeDelay} />
+    );
   };
 
 export const CommonTextFieldDebounced = withDebounceChangeHandler(300)(CommonTextField);

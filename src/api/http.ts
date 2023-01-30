@@ -48,7 +48,7 @@ http.interceptors.request.use(
 
     return config;
   },
-  (error) => Promise.reject(error),
+  (error) => Promise.reject(error)
 );
 
 http.interceptors.response.use(
@@ -98,11 +98,12 @@ http.interceptors.response.use(
               } else {
                 authentication.set(data.jwt);
                 Axios.defaults.headers.common['Authorization'] = `Bearer ${data.jwt.accessToken}`;
-                if (!!error?.config?.headers) error.config.headers.Authorization = `Bearer ${data.jwt.accessToken}`;
+                if (!!error?.config?.headers)
+                  error.config.headers.Authorization = `Bearer ${data.jwt.accessToken}`;
 
                 //TODO [Refresh token] More handle for refreshing access token flow
                 // incase token includes `Accept-Language` and it changes header key should be update to
-                // use this code 
+                // use this code
                 //
                 // const lang = language.get();
                 // if (lang !== langInToken) {
@@ -130,7 +131,7 @@ http.interceptors.response.use(
     }
 
     return Promise.reject(error);
-  },
+  }
 );
 
 export default http;

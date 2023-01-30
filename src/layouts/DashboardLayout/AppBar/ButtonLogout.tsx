@@ -14,7 +14,7 @@ const ButtonLogout: FC<any> = (props) => {
       event?.preventDefault?.();
       navigate(PATHS.logout);
     },
-    [navigate],
+    [navigate]
   );
 
   return (

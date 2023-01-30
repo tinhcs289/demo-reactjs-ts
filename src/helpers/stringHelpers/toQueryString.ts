@@ -1,4 +1,6 @@
-const toQueryString = (object: { [x: string]: string | number | boolean | Array<string | number | boolean> }) => {
+const toQueryString = (object: {
+  [x: string]: string | number | boolean | Array<string | number | boolean>;
+}) => {
   if (!object || Object.keys(object).length === 0) return '';
 
   return Object.keys(object)
@@ -21,7 +23,7 @@ const toQueryString = (object: { [x: string]: string | number | boolean | Array<
               return `${key}=${str}`;
             }
           })()
-        : undefined,
+        : undefined
     )
     .filter((q) => !!q)
     .join('&');

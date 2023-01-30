@@ -24,7 +24,7 @@ export default function ProductItemFindSimilar(props?: { onClick?: MouseEventHan
       props?.onClick?.(event);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [props?.onClick],
+    [props?.onClick]
   );
 
   return (
