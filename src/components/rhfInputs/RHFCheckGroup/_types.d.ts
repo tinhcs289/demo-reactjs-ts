@@ -2,5 +2,6 @@ import type { TCommonCheckGroupFieldProps } from '@/components/inputs/CommonChec
 import type { TRHFInputProps } from '@/components/rhfInputs/_types';
 export type TRHFCheckGroupProps = {
   defaultValue?: string;
+  id?: `${string}:check-group:${string}`;
 } & TRHFInputProps &
   Omit<TCommonCheckGroupFieldProps, 'errorText' | 'error' | 'onChange' | 'value' | 'name'>;

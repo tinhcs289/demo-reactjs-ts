@@ -10,9 +10,7 @@ const schema = yup.object().shape({
 
 export function validate(value: TAuthenticationJWT | null) {
   try {
-    debugger;
     schema.validateSync(value);
-    debugger;
     return true;
   } catch (error) {
     return false;

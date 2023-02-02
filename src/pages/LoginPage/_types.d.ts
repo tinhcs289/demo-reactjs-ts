@@ -2,6 +2,7 @@ export type TLoginFormData = {
   Account: string;
   Password: string;
   RememberMe: boolean;
+  SomeField: '1' | '2';
 };
 
 export interface ILoginPageProps {

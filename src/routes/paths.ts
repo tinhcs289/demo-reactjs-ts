@@ -10,6 +10,7 @@ const PATHS = {
   dashboard1: '/dashboard-1',
   dashboard2: '/dashboard-2',
   dashboard3: '/dashboard-3',
+  dashboard4: '/dashboard-4',
   ramdom1: '/ramdom-1',
   ramdom2: '/ramdom-2',
   inDevelop: '/module-in-development',

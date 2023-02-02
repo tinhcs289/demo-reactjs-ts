@@ -15,11 +15,11 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
-import type { ILoginPageProps, TLoginFormData } from './_types';
 import withLoginViaInternalApi from './withLoginViaInternalApi';
 import withLoginViaSSO from './withLoginViaSSO';
 import withRedirectAfterLoginWithExternalQueryString from './withRedirectAfterLoginWithExternalQueryString';
 import withReturnUri from './withReturnUri';
+import type { ILoginPageProps, TLoginFormData } from './_types';
 
 const LoginPage: React.FC<ILoginPageProps> = withHOCs(
   withReturnUri,
@@ -37,6 +37,7 @@ const LoginPage: React.FC<ILoginPageProps> = withHOCs(
     defaultValues: {
       Account: '',
       Password: '',
+      SomeField: '2',
       RememberMe: false,
     },
   });
@@ -53,40 +54,53 @@ const LoginPage: React.FC<ILoginPageProps> = withHOCs(
       <Typography component="h1" variant="h5">
         {t('login:login')}
       </Typography>
-      <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate sx={{ mt: 1 }}>
+      <Box id="login-form" component="form" onSubmit={handleSubmit(onSubmit)} noValidate sx={{ mt: 4 }}>
         <RHFText
+          id="login-form:text:account"
           name="Account"
           label={t('login:account')}
           control={control}
           rules={required(t('common:pleaseEnter'))}
           disabled={!!loading}
-          sx={{
-            mb: theme.spacing(3),
-          }}
+          sx={{ mb: theme.spacing(3) }}
+          variant="bootstrap:outlined"
         />
         <RHFText
+          id="login-form:text:password"
           name="Password"
           label={t('login:password')}
           type="password"
           control={control}
           rules={required(t('common:pleaseEnter'))}
           disabled={!!loading}
-          sx={{
-            mb: theme.spacing(3),
-          }}
+          sx={{ mb: theme.spacing(3) }}
+          variant="bootstrap:outlined"
         />
-        <RHFCheck control={control} name="RememberMe" label={t('login:rememberMe')} disabled={!!loading} />
-        <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} disabled={!!loading}>
+        <RHFCheck
+          id="login-form:check:remember-me"
+          control={control}
+          name="RememberMe"
+          label={t('login:rememberMe')}
+          disabled={!!loading}
+        />
+        <Button
+          id="login-form:button:submit"
+          type="submit"
+          fullWidth
+          variant="contained"
+          sx={{ mt: 3, mb: 2 }}
+          disabled={!!loading}
+        >
           {t('login:login')}
         </Button>
         <Grid container>
           <Grid item xs>
-            <Link component={RouterLink} to={PATHS.forgetPassword}>
+            <Link id="login-form:link:forgot-password" component={RouterLink} to={PATHS.forgetPassword}>
               {t('login:forgotPassword')}
             </Link>
           </Grid>
           <Grid item>
-            <Link component={RouterLink} to={PATHS.register}>
+            <Link id="login-form:link:dont-have-account-register" component={RouterLink} to={PATHS.register}>
               {t('login:dontHaveAccount_register')}
             </Link>
           </Grid>

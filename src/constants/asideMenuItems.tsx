@@ -8,6 +8,10 @@ import PeopleIcon from '@mui/icons-material/People';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import { i18n } from '@/translation';
+import DynamicFormIcon from '@mui/icons-material/DynamicForm';
+import TableChartIcon from '@mui/icons-material/TableChart';
+import GridOnIcon from '@mui/icons-material/GridOn';
+import ViewCarouselIcon from '@mui/icons-material/ViewCarousel';
 
 const asideMenuItems: TAsideMenuItem[] = [
   {
@@ -20,23 +24,30 @@ const asideMenuItems: TAsideMenuItem[] = [
       {
         id: newGuid(),
         type: 'link',
-        label: 'Dashboard 1',
-        icon: KeyboardArrowRightOutlinedIcon,
+        label: i18n.t('aside:demo.form_and_inputs'),
+        icon: DynamicFormIcon,
         url: PATHS.dashboard1,
       },
       {
         id: newGuid(),
         type: 'link',
-        label: 'Dashboard 2',
-        icon: KeyboardArrowRightOutlinedIcon,
+        label: i18n.t('aside:demo.data_table'),
+        icon: TableChartIcon,
         url: PATHS.dashboard2,
       },
       {
         id: newGuid(),
         type: 'link',
-        label: 'Dashboard 3',
-        icon: KeyboardArrowRightOutlinedIcon,
+        label: i18n.t('aside:demo.data_grid_list'),
+        icon: GridOnIcon,
         url: PATHS.dashboard3,
+      },
+      {
+        id: newGuid(),
+        type: 'link',
+        label: i18n.t('aside:demo.carousel'),
+        icon: ViewCarouselIcon,
+        url: PATHS.dashboard4,
       },
     ],
   },
