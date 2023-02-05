@@ -1,10 +1,14 @@
-import paths from '@/routes/paths';
 import wait from '@/functions/wait';
+import paths from '@/routes/paths';
 import type { TRouteConfig } from '@/routes/_types';
 import { lazy } from 'react';
 
 const DashboardPage = lazy(() => wait().then(() => import('@/pages/DashboardPage')));
 const InDevelopPage = lazy(() => wait().then(() => import('@/pages/InDevelopPage')));
+const DemoFormPage = lazy(() => wait().then(() => import('@/pages/DemoFormPage')));
+const DemoTablePage = lazy(() => wait().then(() => import('@/pages/DemoTablePage')));
+const DemoListPage = lazy(() => wait().then(() => import('@/pages/DemoListPage')));
+const DemoCarouselPage = lazy(() => wait().then(() => import('@/pages/DemoCarouselPage')));
 
 const DashboardRoute: TRouteConfig[] = [
   {
@@ -20,17 +24,22 @@ const DashboardRoute: TRouteConfig[] = [
   {
     name: 'DashboardRoute1',
     path: paths.dashboard1,
-    component: InDevelopPage,
+    component: DemoFormPage,
   },
   {
     name: 'DashboardRoute2',
     path: paths.dashboard2,
-    component: InDevelopPage,
+    component: DemoTablePage,
   },
   {
     name: 'DashboardRoute3',
     path: paths.dashboard3,
-    component: InDevelopPage,
+    component: DemoListPage,
+  },
+  {
+    name: 'DashboardRoute4',
+    path: paths.dashboard4,
+    component: DemoCarouselPage,
   },
   {
     name: 'DashboardRoute',

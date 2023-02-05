@@ -1,6 +1,4 @@
 import CommonSelectField from '@/components/inputs/CommonSelectField';
-import type { TAutoCompleteOption } from '@/components/inputs/CommonSelectField/_types';
-import arrayOrEmpty from '@/helpers/formatHelpers/arrayOrEmpty';
 import type { FC } from 'react';
 import { Controller } from 'react-hook-form';
 import type { TRHFSelectProps } from './_types';
@@ -20,13 +18,7 @@ const RHFSelect: FC<TRHFSelectProps> = (props) => {
   return (
     <Controller
       render={({
-        field: {
-          onChange,
-          onBlur,
-          value,
-          // name,
-          ref,
-        },
+        field: { onChange, onBlur, value, ref },
         fieldState: {
           invalid,
           // isTouched,
@@ -39,11 +31,7 @@ const RHFSelect: FC<TRHFSelectProps> = (props) => {
             ref={ref}
             multiple={multiple}
             value={value}
-            defaultValue={
-              multiple
-                ? arrayOrEmpty(defaultValue || value)
-                : (defaultValue as TAutoCompleteOption)?.value || value?.value
-            }
+            defaultValue={defaultValue || value}
             onChange={(_, val) => {
               onChange(val);
             }}

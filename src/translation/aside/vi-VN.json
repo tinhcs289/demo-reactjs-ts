@@ -2,5 +2,11 @@
   "dashboard": "Trang chủ",
   "orders": "Đơn hàng",
   "customers": "Khách hàng",
-  "reports": "Báo cáo"
+  "reports": "Báo cáo",
+  "demo": {
+    "form_and_inputs": "Biểu mẫu & nhập liệu",
+    "data_table": "Danh sách dạng bảng",
+    "data_grid_list": "Danh sách dạng lưới",
+    "carousel": "Danh sách trượt ngang"
+  }
 }

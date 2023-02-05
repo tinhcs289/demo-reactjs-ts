@@ -4,5 +4,6 @@ import type { Moment } from 'moment';
 
 export type TRHFDateMultiProps = {
   defaultValue?: Moment;
+  id?: `${string}:dates:${string}`;
 } & TRHFInputProps &
   Omit<ICommonDateMultiFieldProps, 'name' | 'defaultValue' | 'value' | 'error' | 'errorText', 'onChange'>;

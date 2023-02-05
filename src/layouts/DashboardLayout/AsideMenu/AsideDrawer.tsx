@@ -34,6 +34,9 @@ const DrawerStyled = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== '
           width: theme.spacing(9),
         },
       }),
+      '& div.MuiListItemIcon-root': {
+        minWidth: theme.spacing(4),
+      },
     },
   })
 );
