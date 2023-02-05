@@ -4,4 +4,5 @@ export type TRHFHiddenProps = {
   name: string;
   control: Control<any, any>;
   shouldUnregister?: boolean;
+  id?: `${string}:hidden:${string}`;
 };

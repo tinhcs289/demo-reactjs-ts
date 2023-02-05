@@ -2,5 +2,11 @@
   "dashboard": "Dashboard",
   "orders": "Orders",
   "customers": "Customers",
-  "reports": "Reports"
+  "reports": "Reports",
+  "demo": {
+    "form_and_inputs": "Form & Inputs",
+    "data_table": "Data table",
+    "data_grid_list": "Data grid list",
+    "carousel": "Carousel"
+  }
 }

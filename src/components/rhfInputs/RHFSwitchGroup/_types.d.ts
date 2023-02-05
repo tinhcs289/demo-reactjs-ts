@@ -2,5 +2,6 @@ import type { TCommonSwitchGroupFieldProps } from '@/components/inputs/CommonSwi
 import type { TRHFInputProps } from '@/components/rhfInputs/_types';
 export type TRHFSwitchGroupProps = {
   defaultValue?: string;
+  id?: `${string}:switch-group:${string}`;
 } & TRHFInputProps &
   Omit<TCommonSwitchGroupFieldProps, 'errorText' | 'error' | 'onChange' | 'value' | 'name'>;

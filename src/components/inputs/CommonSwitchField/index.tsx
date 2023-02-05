@@ -1,8 +1,8 @@
 import InputErrorTextWithIcon from '@/components/inputs/InputErrorTextWithIcon';
 import { useTheme } from '@mui/material';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import React from 'react';
+import FormControlLabelStyled from './FormControlLabelStyled';
 import type { TCommonSwitchFieldProps } from './_types';
 
 const CommonSwitchField: React.FC<TCommonSwitchFieldProps> = (props) => {
@@ -20,7 +20,7 @@ const CommonSwitchField: React.FC<TCommonSwitchFieldProps> = (props) => {
   } = props;
   const theme = useTheme();
   return (
-    <FormControlLabel
+    <FormControlLabelStyled
       label={
         <>
           {label}
@@ -38,7 +38,14 @@ const CommonSwitchField: React.FC<TCommonSwitchFieldProps> = (props) => {
             {...(!!error ? { style: { ...(inputProps?.style || {}), color: theme.palette.error.main } } : {})}
             {...inputProps}
           />
-          {!!error && !!errorText && <InputErrorTextWithIcon>{errorText}</InputErrorTextWithIcon>}
+          {!!error && !!errorText && (
+            <InputErrorTextWithIcon
+              style={{ display: 'flex' }}
+              textProps={{ sx: { right: 'unset', left: '-50%' } }}
+            >
+              {errorText}
+            </InputErrorTextWithIcon>
+          )}
         </>
       }
       {...formControlProps}

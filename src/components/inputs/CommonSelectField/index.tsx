@@ -1,20 +1,23 @@
 import CommonTextField from '@/components/inputs/CommonTextField';
+import type { TCommonTextFieldProps } from '@/components/inputs/CommonTextField/_types';
 import arrayOrEmpty from '@/helpers/formatHelpers/arrayOrEmpty';
-import { Chip } from '@mui/material';
 import type {
   AutocompleteInputChangeReason,
-  AutocompleteOwnerState,
-  AutocompleteRenderGetTagProps,
+  AutocompleteRenderInputParams,
 } from '@mui/material/Autocomplete';
-import Autocomplete from '@mui/material/Autocomplete';
+import Chip from '@mui/material/Chip';
 import CircularProgress from '@mui/material/CircularProgress';
 import debounce from 'lodash/debounce';
-import type { FC, SyntheticEvent, Ref } from 'react';
-import { useMemo, forwardRef } from 'react';
+import type { ComponentType, Ref, SyntheticEvent } from 'react';
+import { forwardRef, useCallback, useMemo } from 'react';
+import AutocompleteStyled from './AutocompleteStyled';
+import defaultFilterOptions from './defaultFilterOptions';
+import defaultGetOptionLabel from './defaultGetOptionLabel';
 import defaultRenderOption from './defaultRenderOption';
-import type { TAutoCompleteOption, TCommonSelectFieldProps } from './_types';
+import isOptionEqualToValue from './isOptionEqualToValue';
+import type { TCommonSelectFieldProps, TCommonSelectRenderTags } from './_types';
 
-const CommonSelectField: FC<TCommonSelectFieldProps> = forwardRef((props, ref?: Ref<unknown>) => {
+const CommonSelectField: ComponentType<TCommonSelectFieldProps> = forwardRef((props, ref?: Ref<unknown>) => {
   const {
     multiple,
     label,
@@ -30,39 +33,43 @@ const CommonSelectField: FC<TCommonSelectFieldProps> = forwardRef((props, ref?: 
     loading,
     TextFieldProps,
     color,
+    value,
     ...otherProps
   } = props;
 
-  const memoOptions = useMemo(() => {
-    return arrayOrEmpty(propOptions);
-  }, [propOptions]);
+  const memoOptions = useMemo(() => arrayOrEmpty(propOptions), [propOptions]);
+  const disableCloseOnSelect = useMemo(() => !!multiple, [multiple]);
 
-  const memoRenderOption = useMemo(() => {
-    if (typeof renderOption === 'function') return renderOption;
-    return defaultRenderOption;
-  }, [renderOption]);
+  const memoRenderOption = useMemo(
+    () => (typeof renderOption === 'function' ? renderOption : defaultRenderOption(!!multiple)),
+    [renderOption, multiple]
+  );
 
-  const memoGetOptionLabel = useMemo(() => {
-    if (typeof getOptionLabel === 'function') return getOptionLabel;
-    return (option: string | TAutoCompleteOption) =>
-      typeof option === 'string' ? option : option?.label || '';
-  }, [getOptionLabel]);
+  const memoFilterOptions = useMemo(
+    () => (typeof filterOptions === 'function' ? filterOptions : defaultFilterOptions),
+    [filterOptions]
+  );
 
-  const memoRenderTags = useMemo(() => {
+  const memoGetOptionLabel = useMemo(
+    () => (typeof getOptionLabel === 'function' ? getOptionLabel : defaultGetOptionLabel),
+    [getOptionLabel]
+  );
+
+  const memoRenderTags: TCommonSelectRenderTags = useMemo(() => {
     if (typeof renderTags === 'function') return renderTags;
-    return (
-      v: TAutoCompleteOption[],
-      g: AutocompleteRenderGetTagProps,
-      o: AutocompleteOwnerState<TAutoCompleteOption, boolean, boolean, boolean, 'div'>
-    ) => {
-      return (
-        <>
-          {v?.map?.((opt, index) => (
-            <Chip color={(color as any) || 'primary'} label={memoGetOptionLabel(opt)} {...g({ index })} />
-          ))}
-        </>
-      );
-    };
+    return (v, g, o) => (
+      <>
+        {v?.map?.((opt, index) => (
+          <Chip
+            size="small"
+            color={(color as any) || 'primary'}
+            label={memoGetOptionLabel(opt)}
+            style={{ margin: '1px' }}
+            {...g({ index })}
+          />
+        ))}
+      </>
+    );
   }, [renderTags, memoGetOptionLabel, color]);
 
   const handleChangeTextDelay = useMemo(() => {
@@ -71,49 +78,58 @@ const CommonSelectField: FC<TCommonSelectFieldProps> = forwardRef((props, ref?: 
     }, 400);
   }, [onInputChange]);
 
+  const memoRenderInput = useCallback(
+    (params: AutocompleteRenderInputParams) => {
+      const _props: TCommonTextFieldProps = { ...(params as any), ...TextFieldProps };
+      if (color) _props.color = color as any;
+      if (label) {
+        _props.label = label;
+        _props.InputLabelProps = {
+          ...params?.InputLabelProps,
+          ...TextFieldProps?.InputLabelProps,
+          shrink: false,
+        };
+      }
+      if (required) _props.required = true;
+      if (error) _props.error = true;
+      if (errorText) _props.errorText = errorText;
+      if (loading)
+        _props.InputProps = {
+          ..._props?.InputProps,
+          endAdornment: <CircularProgress color="inherit" size={20} />,
+        };
+
+      return (
+        <CommonTextField
+          {..._props}
+          ref={params?.InputProps?.ref}
+          value={params?.inputProps?.value}
+          defaultValue={params?.inputProps?.defaultValue}
+        />
+      );
+    },
+    [loading, TextFieldProps, label, color, error, errorText, required]
+  );
+
+  const memoValue = useMemo(() => value || (multiple ? [] : null), [value, multiple]);
+
   return (
-    <Autocomplete
-      {...otherProps}
+    <AutocompleteStyled
+      {...(otherProps as any)}
+      value={memoValue}
+      ref={ref}
       color={color}
       multiple={multiple}
-      filterOptions={typeof filterOptions === 'function' ? filterOptions : (opts, s) => opts}
-      isOptionEqualToValue={(o, v) => o.value === v.value}
-      renderTags={memoRenderTags}
-      getOptionLabel={memoGetOptionLabel}
+      filterOptions={memoFilterOptions as any}
+      isOptionEqualToValue={isOptionEqualToValue as any}
+      renderTags={memoRenderTags as any}
+      getOptionLabel={memoGetOptionLabel as any}
       options={memoOptions}
       loading={loading}
       onInputChange={handleChangeTextDelay}
-      renderOption={memoRenderOption}
-      disableCloseOnSelect={!!multiple}
-      ref={ref}
-      renderInput={(params) => (
-        <CommonTextField
-          {...params}
-          {...TextFieldProps}
-          {...(!!color ? { color: color as any } : {})}
-          {...(!!label ? { label } : {})}
-          {...(!!required ? { required } : {})}
-          {...(!!error ? { error } : {})}
-          {...(!!errorText ? { errorText } : {})}
-          InputLabelProps={{
-            ...params?.InputLabelProps,
-            ...(!label ? { shrink: false } : {}),
-          }}
-          InputProps={{
-            ...params?.InputProps,
-            ...TextFieldProps?.InputProps,
-            endAdornment: (
-              <>
-                {loading ? (
-                  <CircularProgress color="inherit" size={20} />
-                ) : (
-                  TextFieldProps?.InputProps?.endAdornment || params?.InputProps?.endAdornment
-                )}
-              </>
-            ),
-          }}
-        />
-      )}
+      renderOption={memoRenderOption as any}
+      disableCloseOnSelect={disableCloseOnSelect}
+      renderInput={memoRenderInput}
     />
   );
 });
