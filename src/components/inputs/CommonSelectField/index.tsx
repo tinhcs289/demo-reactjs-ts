@@ -34,6 +34,7 @@ const CommonSelectField: ComponentType<TCommonSelectFieldProps> = forwardRef((pr
     TextFieldProps,
     color,
     value,
+    placeholder,
     ...otherProps
   } = props;
 
@@ -90,6 +91,7 @@ const CommonSelectField: ComponentType<TCommonSelectFieldProps> = forwardRef((pr
           shrink: false,
         };
       }
+      if (placeholder) _props.placeholder = placeholder;
       if (required) _props.required = true;
       if (error) _props.error = true;
       if (errorText) _props.errorText = errorText;
@@ -108,7 +110,7 @@ const CommonSelectField: ComponentType<TCommonSelectFieldProps> = forwardRef((pr
         />
       );
     },
-    [loading, TextFieldProps, label, color, error, errorText, required]
+    [loading, TextFieldProps, label, color, error, errorText, required, placeholder]
   );
 
   const memoValue = useMemo(() => value || (multiple ? [] : null), [value, multiple]);

@@ -1,10 +1,15 @@
-import type { GridProps } from '@mui/material/Grid';
 import Grid from '@mui/material/Grid';
+import { useMemo } from 'react';
+import type { TFormGridItemProps } from './_types';
 
-export default function FormGridItem(props: GridProps & { contentProps?: GridProps }) {
-  const { children, contentProps, ...otherProps } = props;
+export default function FormGridItem(props: TFormGridItemProps) {
+  const { children, disabledXs, contentProps, ...otherProps } = props;
+  const xs = useMemo(() => {
+    if (!disabledXs) return { xs: 12 };
+    return {};
+  }, [disabledXs]);
   return (
-    <Grid item container xs={12} {...otherProps}>
+    <Grid item container {...xs} {...otherProps}>
       <Grid xs={12} {...contentProps} item>
         {children}
       </Grid>

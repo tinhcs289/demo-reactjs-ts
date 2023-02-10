@@ -1,88 +1,124 @@
-import CommonTextField from '@/components/inputs/CommonTextField';
-import removeAt from '@/helpers/arrayHelpers/removeAt';
+import CommonDateMultiPickerField from '@/components/inputs/CommonDateMultiPickerField';
+import CommonTagInputField from '@/components/inputs/CommonTagInputField';
+import type { TCommonTagInput } from '@/components/inputs/CommonTagInputField/_types';
 import byMomentASC from '@/helpers/arraySortHelpers/byMomentASC';
-import { styled } from '@mui/material';
-import type { PickersDayProps } from '@mui/x-date-pickers/PickersDay';
-import { PickersDay } from '@mui/x-date-pickers/PickersDay';
-import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
-import cloneDeep from 'lodash/cloneDeep';
-import type { Moment } from 'moment';
+import newGuid from '@/helpers/stringHelpers/newGuid';
+import type { SxProps, Theme } from '@mui/material';
+import Popover from '@mui/material/Popover';
+import get from 'lodash/get';
 import moment from 'moment';
-import React, { useCallback, useMemo } from 'react';
-import type { ICommonDateMultiFieldProps } from './_types';
+import { useCallback, useMemo, useState } from 'react';
+import type { TCommonDateMultiFieldProps } from './_types';
 
-const CustomPickersDay = styled(PickersDay, {
-  shouldForwardProp: (prop) => prop !== 'selected',
-})<PickersDayProps<Moment>>(({ theme, selected }) => ({
-  ...(selected && {
-    borderRadius: theme.spacing(0.5),
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.common.white,
-    '&:hover, &:focus': {
-      backgroundColor: theme.palette.primary.dark,
-    },
-  }),
-})) as React.ComponentType<PickersDayProps<Moment>>;
+const TAGS_FORMAT = 'DD/MM/YYYY';
 
-const toDay = moment();
+const popoverSx: SxProps<Theme> = {
+  p: 2,
+  '& div.MuiPickerStaticWrapper-content': { border: 'none', '&:hover': { border: 'none' } },
+};
 
-const CommonDateMultiField: React.FC<ICommonDateMultiFieldProps> = (props) => {
-  const { value, onChange, dayOfWeekFormatter, displayStaticWrapperAs, error, errorText, ...otherProps } =
-    props;
+const anchorOrigin = {
+  vertical: 'top',
+  horizontal: 'left',
+};
 
-  const dates = useMemo(() => {
-    return value instanceof Array ? value : [];
-  }, [value]);
+export default function CommonDateMultiField(props: TCommonDateMultiFieldProps) {
+  const {
+    sx,
+    label,
+    placeholder,
+    value,
+    tagFormat,
+    onChange,
+    error,
+    required,
+    errorText,
+    popoverProps,
+    inputProps,
+    ...otherProps
+  } = props;
 
-  const renderDay = useCallback(
-    (day: Moment, selectedDays: Moment[], pickersDayProps: PickersDayProps<Moment>) => {
-      const selected = dates.length === 0 ? false : dates.findIndex((d) => d.isSame(day, 'date')) >= 0;
-      return <CustomPickersDay {...pickersDayProps} selected={selected} />;
-    },
-    [dates]
-  );
+  const memoTagFormat = useMemo(() => tagFormat || TAGS_FORMAT, [tagFormat]);
 
-  const handleChange = useCallback(
-    (d: Moment | null) => {
-      if (!d || !moment.isMoment(d)) return;
+  const tags: TCommonTagInput[] = useMemo(() => {
+    if (!value || !Array(value) || value?.length === 0) return [];
+    return value.map((date) => ({ id: newGuid(), label: date?.format(memoTagFormat), value: date }));
+  }, [value, memoTagFormat]);
 
-      let _dates = cloneDeep(dates);
-
-      if (_dates.length === 0) {
-        _dates.push(d);
-        onChange?.(_dates);
+  const handleTagsChange = useCallback(
+    (tags?: TCommonTagInput[]) => {
+      if (!tags || !Array(tags) || tags?.length === 0) {
+        onChange?.([]);
         return;
       }
 
-      const index = _dates.findIndex((_) => _.isSame(d, 'date'));
-      if (index === -1) {
-        _dates.push(d);
-        _dates.sort(byMomentASC());
-        onChange?.(_dates);
+      let dates = tags.map((t) => get(t, 'value')).filter((val) => moment.isMoment(val));
+
+      if (dates.length === 0) {
+        onChange?.([]);
         return;
       }
 
-      _dates = removeAt(_dates, index);
-      if (_dates.length > 0) _dates.sort(byMomentASC());
-      onChange?.(_dates);
+      dates.sort(byMomentASC());
+      onChange?.(dates);
       return;
     },
-    [dates, onChange]
+    [onChange]
+  );
+
+  const [anchorEl, setAnchorEl] = useState<any>(null);
+
+  const handleClosePicker = useCallback((e: any) => {
+    e?.stopPropagation?.();
+    e?.preventDefault?.();
+    setAnchorEl(null);
+  }, []);
+
+  const handleOpenPicker = useCallback((e: any) => {
+    e?.stopPropagation?.();
+    e?.preventDefault?.();
+    if (!e?.target || !(e.target instanceof Element)) return;
+
+    const target = e.target as HTMLInputElement | HTMLTextAreaElement;
+
+    setAnchorEl(target.parentElement || target);
+  }, []);
+
+  const PaperProps = useMemo(
+    () => ({
+      ...popoverProps?.PaperProps,
+      sx: {
+        ...popoverProps?.PaperProps?.sx,
+        ...popoverSx,
+      },
+    }),
+    [popoverProps?.PaperProps]
   );
 
   return (
-    <StaticDatePicker
-      dayOfWeekFormatter={dayOfWeekFormatter || ((d) => d)}
-      value={toDay}
-      onChange={handleChange}
-      renderDay={renderDay}
-      displayStaticWrapperAs={displayStaticWrapperAs || 'desktop'}
-      {...(!!error ? { error } : {})}
-      renderInput={(p) => {
-        return <CommonTextField {...p} error={error} errorText={errorText} />;
-      }}
-      {...otherProps}
-    />
+    <>
+      <CommonTagInputField
+        {...inputProps}
+        sx={sx}
+        label={label}
+        placeholder={placeholder}
+        value={tags}
+        onChange={handleTagsChange}
+        onClick={handleOpenPicker}
+        required={required}
+        error={error}
+        errorText={errorText}
+      />
+      <Popover
+        open={!!anchorEl}
+        anchorEl={anchorEl}
+        onClose={handleClosePicker}
+        anchorOrigin={anchorOrigin as any}
+        {...popoverProps}
+        PaperProps={PaperProps}
+      >
+        <CommonDateMultiPickerField {...otherProps} value={value} onChange={onChange} />
+      </Popover>
+    </>
   );
-};
-export default CommonDateMultiField;
+}

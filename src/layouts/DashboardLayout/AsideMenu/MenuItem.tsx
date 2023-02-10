@@ -116,6 +116,7 @@ const MenuItem: FC<TMenuItemProps> = (props) => {
           )}
           <ListItemText
             primary={item.label || ''}
+            primaryTypographyProps={{ noWrap: true, title: item.labelText || '' }}
             {...activeTextProps}
             sx={{ color: theme.palette.text.primary }}
             {...item.labelProps}

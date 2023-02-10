@@ -4,7 +4,7 @@ import { Controller } from 'react-hook-form';
 import type { TRHFRadioProps } from './_types';
 
 const RHFRadio: React.FC<TRHFRadioProps> = (props) => {
-  const { name, control, rules, defaultValue, shouldUnregister, label, ...inputProps } = props;
+  const { name, control, rules, defaultValue, shouldUnregister, label, inputProps, ...otherProps } = props;
 
   return (
     <Controller
@@ -43,6 +43,7 @@ const RHFRadio: React.FC<TRHFRadioProps> = (props) => {
                 errorText: error?.message,
               }
             : {})}
+          {...otherProps}
         />
       )}
     />

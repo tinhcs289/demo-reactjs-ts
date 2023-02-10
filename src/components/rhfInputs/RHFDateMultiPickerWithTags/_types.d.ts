@@ -1,13 +1,13 @@
 import type { TRHFInputProps } from '@/components/rhfInputs/_types';
-import type { ICommonDateMultiWithTagsFieldProps } from '@/components/inputs/CommonDateMultiWithTagsField/_types';
+import type { ICommonDateMultiPickerWithTagsFieldProps } from '@/components/inputs/CommonDateMultiPickerWithTagsField/_types';
 import type { Moment } from 'moment';
 
-export type TRHFDateMultiWithTagsProps = {
+export type TRHFDateMultiPickerWithTagsProps = {
   defaultValue?: Moment;
   id?: `${string}:dates-tags:${string}`;
 } & TRHFInputProps &
   Omit<
-    ICommonDateMultiWithTagsFieldProps,
+    ICommonDateMultiPickerWithTagsFieldProps,
     'name' | 'defaultValue' | 'value' | 'error' | 'errorText',
     'onChange'
   >;
