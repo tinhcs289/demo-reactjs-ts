@@ -30,7 +30,7 @@ export type TCommonSelectFieldProps = Pick<
 > &
   Omit<BaseAutocompleteProps, 'renderInput' | 'options'> & {
     options?: TAutoCompleteOption[];
-    TextFieldProps?: TCommonTextFieldProps;
+    TextFieldProps?: Partial<TCommonTextFieldProps>;
   };
 
 export type TCommonSelectFieldOnChange = (

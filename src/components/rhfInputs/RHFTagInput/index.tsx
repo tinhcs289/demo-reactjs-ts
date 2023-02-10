@@ -1,10 +1,10 @@
-import CommonDateMultiWithTagsField from '@/components/inputs/CommonDateMultiWithTagsField';
+import CommonTagInputField from '@/components/inputs/CommonTagInputField';
 import React from 'react';
 import { Controller } from 'react-hook-form';
-import type { TRHFDateMultiWithTagsProps } from './_types';
+import type { TRHFTagInputProps } from './_types';
 
-const RHFDateMultiWithTags: React.FC<TRHFDateMultiWithTagsProps> = (props) => {
-  const { name, control, rules, defaultValue, shouldUnregister, ...inputProps } = props;
+const RHFTagInput: React.FC<TRHFTagInputProps> = (props) => {
+  const { name, control, rules, defaultValue, shouldUnregister, label, ...inputProps } = props;
 
   return (
     <Controller
@@ -22,13 +22,15 @@ const RHFDateMultiWithTags: React.FC<TRHFDateMultiWithTagsProps> = (props) => {
           error,
         },
       }) => (
-        <CommonDateMultiWithTagsField
+        <CommonTagInputField
+          label={label}
           name={name}
           value={value}
-          {...(!!defaultValue ? { defaultValue } : {})}
-          onChange={onChange}
+          onChange={(tags) => {
+            onChange(tags);
+          }}
           onBlur={onBlur}
-          inputRef={ref}
+          // ref={ref}
           error={invalid}
           {...(!!rules?.required
             ? {
@@ -46,4 +48,4 @@ const RHFDateMultiWithTags: React.FC<TRHFDateMultiWithTagsProps> = (props) => {
     />
   );
 };
-export default RHFDateMultiWithTags;
+export default RHFTagInput;

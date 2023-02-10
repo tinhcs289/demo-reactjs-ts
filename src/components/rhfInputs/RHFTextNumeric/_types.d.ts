@@ -1,7 +1,7 @@
 import type { TCommonTextNumericFieldProps } from '@/components/inputs/CommonTextNumericField/_types';
 import type { TRHFInputProps } from '@/components/rhfInputs/_types';
 
-export type RHFTextNumericProps = {
+export type TRHFTextNumericProps = {
   defaultValue?: string;
   id?: `${string}:numeric:${string}`;
 } & TRHFInputProps &

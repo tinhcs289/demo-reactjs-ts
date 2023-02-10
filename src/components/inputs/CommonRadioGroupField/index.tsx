@@ -1,6 +1,6 @@
 import InputErrorTextWithIcon from '@/components/inputs/InputErrorTextWithIcon';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import FormGroup from '@mui/material/FormGroup';
+import FormGroupWithOptions from '../FormGroupWithOptions';
 import FormLabel from '@mui/material/FormLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
@@ -76,8 +76,8 @@ const CommonRadioGroupField: React.FC<TCommonRadioGroupFieldProps> = (props) => 
   }, [name, memoOption, error, color]);
 
   return (
-    <FormGroup {...otherProps}>
-      <FormLabel component="legend" {...(!!error ? { error } : {})} sx={{ display: 'inherit' }}>
+    <FormGroupWithOptions {...otherProps}>
+      <FormLabel component="label" error={error} sx={{ display: 'inherit', mb: '4px' }}>
         {label || ''}
         {required ? <>&nbsp;{'*'}</> : null}
         {error && !!errorText ? <InputErrorTextWithIcon>{errorText}</InputErrorTextWithIcon> : null}
@@ -90,7 +90,7 @@ const CommonRadioGroupField: React.FC<TCommonRadioGroupFieldProps> = (props) => 
       >
         {memoOptionsRender}
       </RadioGroup>
-    </FormGroup>
+    </FormGroupWithOptions>
   );
 };
 export default CommonRadioGroupField;

@@ -4,7 +4,7 @@ import { Controller } from 'react-hook-form';
 import type { TRHFCheckProps } from './_types';
 
 const RHFCheck: React.FC<TRHFCheckProps> = (props) => {
-  const { name, control, rules, defaultValue, shouldUnregister, label, ...inputProps } = props;
+  const { name, control, rules, defaultValue, shouldUnregister, label, inputProps, ...otherProps } = props;
 
   return (
     <Controller
@@ -41,6 +41,7 @@ const RHFCheck: React.FC<TRHFCheckProps> = (props) => {
                 errorText: error?.message,
               }
             : {})}
+          {...otherProps}
         />
       )}
     />
