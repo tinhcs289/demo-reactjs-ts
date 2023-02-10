@@ -1,7 +1,10 @@
 import type { DatePickerProps } from '@mui/x-date-pickers';
 import type { ReactNode } from 'react';
 import type { Moment } from 'moment';
-export type TCommonDateFieldProps = {
+import type { SxProps, Theme } from '@mui/material';
+export type TCommonDateFieldProps = DatePickerProps<any, Moment> & {
   error?: boolean;
   errorText?: ReactNode;
-} & DatePickerProps<any, Moment>;
+  placeholder?: ReactNode;
+  sx?: SxProps<Theme>;
+};

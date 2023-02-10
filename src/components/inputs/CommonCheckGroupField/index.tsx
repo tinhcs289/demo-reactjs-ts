@@ -1,9 +1,9 @@
 import CommonCheckField from '@/components/inputs/CommonCheckField';
 import InputErrorTextWithIcon from '@/components/inputs/InputErrorTextWithIcon';
 import removeAt from '@/helpers/arrayHelpers/removeAt';
-import FormGroup from '@mui/material/FormGroup';
 import FormLabel from '@mui/material/FormLabel';
 import React from 'react';
+import FormGroupWithOptions from '../FormGroupWithOptions';
 import type { TCheckGroupOption, TCommonCheckGroupFieldProps } from './_types';
 
 const CommonCheckGroupField: React.FC<TCommonCheckGroupFieldProps> = (props) => {
@@ -72,14 +72,14 @@ const CommonCheckGroupField: React.FC<TCommonCheckGroupFieldProps> = (props) => 
   }, [name, memoOption, error, isChecked]);
 
   return (
-    <FormGroup onChange={handleOnchange as any} {...otherProps}>
-      <FormLabel component="legend" error={error} sx={{ display: 'inherit' }}>
+    <FormGroupWithOptions onChange={handleOnchange as any} {...otherProps}>
+      <FormLabel component="label" error={error} sx={{ display: 'inherit', mb: '4px' }}>
         {label || ''}
         {required ? <>&nbsp;{'*'}</> : null}
         {error && !!errorText ? <InputErrorTextWithIcon>{errorText}</InputErrorTextWithIcon> : null}
       </FormLabel>
       {memoOptionsRender}
-    </FormGroup>
+    </FormGroupWithOptions>
   );
 };
 export default CommonCheckGroupField;

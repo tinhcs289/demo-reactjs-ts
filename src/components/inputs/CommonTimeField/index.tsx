@@ -1,11 +1,22 @@
 import CommonTextField from '@/components/inputs/CommonTextField';
-import { TimePicker } from '@mui/x-date-pickers';
-import React from 'react';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import InputAdornment from '@mui/material/InputAdornment';
+import { MobileTimePicker as TimePicker } from '@mui/x-date-pickers';
+import React, { useMemo } from 'react';
 import { DEFAULT_FORMAT, DEFAULT_MASK } from './constants';
 import type { TCommonTimeFieldProps } from './_types';
 
 const CommonTimeField: React.FC<TCommonTimeFieldProps> = (props) => {
-  const { inputFormat, mask, InputProps, error, errorText, ...otherProps } = props;
+  const { inputFormat, mask, InputProps, error, errorText, sx, placeholder, ...otherProps } = props;
+
+  const $endAdornment = useMemo(() => {
+    return (
+      <InputAdornment position="end">
+        <AccessTimeIcon color="inherit" fontSize="inherit" />
+      </InputAdornment>
+    );
+  }, []);
+  
   return (
     <TimePicker
       {...otherProps}
@@ -13,7 +24,20 @@ const CommonTimeField: React.FC<TCommonTimeFieldProps> = (props) => {
       mask={mask || DEFAULT_MASK}
       {...(!!error ? { error } : {})}
       renderInput={(inputProps) => {
-        return <CommonTextField {...inputProps} error={error} errorText={errorText} />;
+        const { InputProps, ...textfieldProps } = inputProps;
+        return (
+          <CommonTextField
+            {...textfieldProps}
+            placeholder={placeholder as any}
+            sx={sx}
+            error={error}
+            errorText={errorText}
+            InputProps={{
+              endAdornment: $endAdornment,
+              ...InputProps,
+            }}
+          />
+        );
       }}
     />
   );

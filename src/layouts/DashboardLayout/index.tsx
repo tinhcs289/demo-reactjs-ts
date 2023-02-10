@@ -14,6 +14,7 @@ import PageWidthChange from './PageWidthChange';
 import withAuthChangeWarning from './withAuthChangeWarning';
 import type { TDashboardProps } from './_types';
 import { DEFAULT_WIDTH } from './constants';
+import AutoToggleAsideByScreen from '@/layouts/DashboardLayout/AsideMenu/AutoToggleAsideByScreen';
 
 const Dashboard: FC<TDashboardProps> = withHOCs(withAuthChangeWarning)((props) => {
   const theme = useTheme();
@@ -65,6 +66,7 @@ const DashboardLayout: FC<{ children?: ReactNode }> = (props) => {
         <Outlet />
       </Dashboard>
       <LayoutInit />
+      <AutoToggleAsideByScreen />
     </DashboardLayoutProvider>
   );
 };

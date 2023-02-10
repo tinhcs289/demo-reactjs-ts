@@ -1,9 +1,9 @@
 import { CommonTextNumericFieldDebounced } from '@/components/inputs/CommonTextNumericField';
 import React from 'react';
 import { Controller } from 'react-hook-form';
-import type { RHFTextNumericProps } from './_types';
+import type { TRHFTextNumericProps } from './_types';
 
-const RHFNumber: React.FC<RHFTextNumericProps> = (props) => {
+const RHFTextNumeric: React.FC<TRHFTextNumericProps> = (props) => {
   const { name, control, rules, defaultValue, shouldUnregister, ...inputProps } = props;
 
   return (
@@ -48,4 +48,4 @@ const RHFNumber: React.FC<RHFTextNumericProps> = (props) => {
     />
   );
 };
-export default RHFNumber;
+export default RHFTextNumeric;

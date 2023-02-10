@@ -39,7 +39,7 @@ const InputErrorTextWithIcon = styled((props: InputErrorTextWithIconProps) => {
   const { children, textProps, ...divElementProps } = props;
   return (
     <div {...divElementProps}>
-      <ErrorIcon color="error" />
+      <ErrorIcon color="error" fontSize="small" />
       <TypographyError {...textProps}>{children}</TypographyError>
     </div>
   );

@@ -40,7 +40,7 @@ const InputHelperTextWithIcon = styled((props: InputHelperTextWithIconProps) => 
   return (
     <div {...divElementProps}>
       <>
-        {icon || <InfoIcon color="primary" />}
+        {icon || <InfoIcon color="primary" fontSize="small" />}
         <TypographyStyled {...textProps}>{children}</TypographyStyled>
       </>
     </div>

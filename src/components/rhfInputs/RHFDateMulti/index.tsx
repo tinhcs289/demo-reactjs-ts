@@ -26,7 +26,10 @@ const RHFDateMulti: React.FC<TRHFDateMultiProps> = (props) => {
           name={name}
           value={value}
           {...(!!defaultValue ? { defaultValue } : {})}
-          onChange={onChange}
+          onChange={(dates) => {
+            if (Array.isArray(dates) && dates.length > 0) onChange(dates);
+            else onChange(undefined);
+          }}
           onBlur={onBlur}
           inputRef={ref}
           error={invalid}

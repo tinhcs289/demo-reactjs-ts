@@ -1,4 +1,4 @@
-import type { TCommonSwitchFieldProps } from '@/components/inputs/CommonSwitchField';
+import type { TCommonSwitchFieldProps } from '@/components/inputs/CommonSwitchField/_types';
 import type { TRHFInputProps } from '@/components/rhfInputs/_types';
 
 export type TRHFSwitchProps = {
