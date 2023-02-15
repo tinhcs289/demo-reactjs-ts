@@ -1,11 +1,12 @@
-import type { TCheckGroupOption } from '@/components/inputs/CommonCheckGroupField/_types';
-import type { TRadioGroupOption } from '@/components/inputs/CommonRadioGroupField/_types';
-import type { TAutoCompleteOption } from '@/components/inputs/CommonSelectField/_types';
+import type { TCheckGroupOption } from '@/components/rhfInputs/RHFCheckGroup';
+import type { TRadioGroupOption } from '@/components/rhfInputs/RHFRadioGroup';
+import type { TAutoCompleteOption } from '@/components/rhfInputs/RHFSelect';
 import consecutiveNumbers from '@/helpers/arrayHelpers/consecutiveNumbers';
 import type { TFormData } from './_types';
 
 export const LABEL = 'Lorem ipsum dolor sit amet';
-export const LABEL1 = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
+export const LABEL1 =
+  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
 
 export const optionsCheck: TCheckGroupOption[] = consecutiveNumbers(5, 1).map((i) => ({
   label: `${LABEL1} ${i}`,

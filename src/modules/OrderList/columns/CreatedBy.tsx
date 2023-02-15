@@ -1,13 +1,13 @@
-import type { TBodyCellInnerComponent } from '@/components/CommonTable/_types';
-import type { TAny } from '@/_types/TAny';
+import type { TBodyCellInnerComponent } from '@/components/CommonTable';
+import momentOrDefault from '@/helpers/formatHelpers/momentOrDefault';
+import type { TAny } from '@/types';
 import Avatar from '@mui/material/Avatar';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
-import type { TOrderListItem } from '../_types';
 import { useMemo } from 'react';
-import momentOrDefault from '@/helpers/formatHelpers/momentOrDefault';
+import type { TOrderListItem } from '../_types';
 
 const CreatedBy: TBodyCellInnerComponent<TOrderListItem, TAny> = ({ row }) => {
   const createdDate = useMemo(() => {

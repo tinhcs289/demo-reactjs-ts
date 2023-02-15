@@ -1,12 +1,12 @@
 import intOrDefault from '@/helpers/formatHelpers/intOrDefault';
 import TablePagination from '@mui/material/TablePagination';
 import upperFirst from 'lodash/upperFirst';
-import type { ChangeEvent, FC } from 'react';
+import type { ChangeEvent, ComponentType } from 'react';
 import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { ICommonTablePaginationProps } from '../_types';
 
-const CommonTablePagination: FC<ICommonTablePaginationProps> = (props) => {
+const CommonTablePagination: ComponentType<ICommonTablePaginationProps> = (props) => {
   const { t } = useTranslation();
 
   const {

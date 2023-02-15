@@ -1,4 +1,4 @@
-import { ERequestStatus } from '@/hooks/useAsyncListState/constants';
+import { EApiRequestStatus } from '@/constants/apiRequestStatus';
 import Grid from '@mui/material/Grid';
 import LinearProgress from '@mui/material/LinearProgress';
 import { useMemo } from 'react';
@@ -9,7 +9,7 @@ import ProductListLoading from './ProductListLoading';
 export default function ProductList() {
   const [data] = useAsyncList((s) => s?.data);
   const [fetchState] = useAsyncList((s) => s.fetchState);
-  const isLoading = useMemo(() => fetchState === ERequestStatus.REQUESTING, [fetchState]);
+  const isLoading = useMemo(() => fetchState === EApiRequestStatus.REQUESTING, [fetchState]);
 
   const $loadingBar = useMemo(
     () => (isLoading ? <LinearProgress sx={{ position: 'absolute', width: '100%' }} /> : null),

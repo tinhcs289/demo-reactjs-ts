@@ -2,7 +2,7 @@ import http from '@/api/http';
 import httpMock from '@/api/httpMock';
 import mockAdapter from '@/api/mockAdapter';
 import { T__module__ListItem } from '../../_types';
-import type { TListDataModel, TListDataQueryModel } from '@/_types/TListDataModel';
+import type { TListDataModel, TListDataQueryModel } from '@/types';
 import type { AxiosResponse } from 'axios';
 
 import page1 from './page-1.json';

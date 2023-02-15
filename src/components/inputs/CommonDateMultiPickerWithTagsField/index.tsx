@@ -1,8 +1,11 @@
-import CommonDateMultiPickerField from '@/components/inputs/CommonDateMultiPickerField';
-import withSelectedDateTags from '@/components/inputs/CommonDateMultiPickerField/hocs/withSelectedDateTags';
-import type { FC } from 'react';
-import type { ICommonDateMultiPickerWithTagsFieldProps } from './_types';
+import type { ICommonDateMultiPickerFieldProps } from '@/components/inputs/CommonDateMultiPickerField';
+import CommonDateMultiPickerField, {
+  withSelectedDateTags,
+} from '@/components/inputs/CommonDateMultiPickerField';
+import type { ComponentType } from 'react';
 
-const CommonDateMultiPickerWithTagsField: FC<ICommonDateMultiPickerWithTagsFieldProps> =
+export type ICommonDateMultiPickerWithTagsFieldProps = ICommonDateMultiPickerFieldProps;
+
+const CommonDateMultiPickerWithTagsField: ComponentType<ICommonDateMultiPickerWithTagsFieldProps> =
   withSelectedDateTags(CommonDateMultiPickerField);
 export default CommonDateMultiPickerWithTagsField;

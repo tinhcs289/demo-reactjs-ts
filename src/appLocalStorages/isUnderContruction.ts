@@ -1,5 +1,5 @@
 import newLocalStorageListenableItem from '@/helpers/localStorageHelpers/newLocalStorageListenableItem';
-import { TAppContruction } from '@/_types/TAppContruction';
+import { TAppContruction } from '@/types';
 import * as yup from 'yup';
 
 const schema = yup.object().shape({

@@ -1,5 +1,5 @@
 import newLocalStorageListenableItem from '@/helpers/localStorageHelpers/newLocalStorageListenableItem';
-import type { TAcceptLanguage } from '@/_types/TAcceptLanguage';
+import type { TAcceptLanguage } from '@/types';
 
 /**
  * @deprecated accept-language was stored as default key `i18nextLng` which defined of `i18next`

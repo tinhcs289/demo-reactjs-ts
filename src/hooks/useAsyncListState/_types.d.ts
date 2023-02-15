@@ -1,4 +1,4 @@
-import { ERequestStatus } from './constants';
+import { EApiRequestStatus } from '@/constants/apiRequestStatus';
 
 export type TPagingState = {
   pageIndex: number;
@@ -50,7 +50,7 @@ export interface IUseListStateParams<T extends { [x: string]: any }> {
 export interface IUseListStateReturnsState<T extends { [x: string]: any }> {
   data: T[];
   listState: TListState;
-  fetchState: ERequestStatus;
+  fetchState: EApiRequestStatus;
   selectedItems: T[];
   isCheckAll: boolean;
   interactItem: T | null;
@@ -116,7 +116,7 @@ export interface IUseListStateReturns<T extends { [x: string]: any }> {
 export type TListStore<T extends { [x: string]: any }> = {
   data: T[];
   listState: TListState;
-  fetchState: ERequestStatus;
+  fetchState: EApiRequestStatus;
   interactItem: T | null;
   anchorEl: any;
   itemAction: string | null;

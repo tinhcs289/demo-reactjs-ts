@@ -1,6 +1,6 @@
-import type { TItemMenuActionComponent } from '@/components/CommonTable/_types';
-import { ACTION } from '@/hooks/useAsyncListState/constants';
-import type { TAny } from '@/_types/TAny';
+import type { TItemMenuActionComponent } from '@/components/CommonTable';
+import { ACTION } from '@/hooks/useAsyncListState';
+import type { TAny } from '@/types';
 import MenuItem from '@mui/material/MenuItem';
 import { useCallback } from 'react';
 import { useAsyncList } from '../context';

@@ -1,5 +1,5 @@
 import render from '@/helpers/reactHelpers/render';
-import { TMuiIcon } from '@/_types/TMuiIcon';
+import { TMuiIcon } from '@/types';
 import type { SxProps, Theme } from '@mui/material';
 import Badge from '@mui/material/Badge';
 import IconButton from '@mui/material/IconButton';

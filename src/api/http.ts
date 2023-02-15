@@ -1,18 +1,18 @@
 import refreshAuthenticateTokenApi from '@/api/authentication/refreshAuthenticateTokenApi';
 import authentication from '@/appCookies/authentication';
 import language from '@/appLocalStorages/language';
-import showSessionTimeoutWarning from '@/redux/session/actions/showSessionTimeoutWarning';
+import { actions as sessionAction } from '@/redux/session';
 import store from '@/redux/store';
 import type { AxiosError, AxiosResponse } from 'axios';
 import Axios from 'axios';
 
 const showWarning = () => {
-  store.dispatch(showSessionTimeoutWarning({}));
+  store.dispatch(sessionAction.sessionTimeoutWarningShow({}));
 };
 
 const doLogout = () => {
   //TODO [logout] logout immediately or show waring then logout by user click
-  store.dispatch(showSessionTimeoutWarning({}));
+  store.dispatch(sessionAction.sessionTimeoutWarningShow({}));
 };
 
 const http = Axios.create({

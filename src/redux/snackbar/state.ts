@@ -1,11 +1,14 @@
+import { SNACKBAR_VARIANT } from '@/constants/snackbar';
 import Immutable from 'seamless-immutable';
-import { SNACKBAR_VARIANT } from './contants';
-import { TReduxStateSnackbar } from './_types';
-
+export type State = {
+  id: string | null;
+  message: string | null;
+  variant: `${SNACKBAR_VARIANT}`;
+};
 export const rootName = 'snackbar';
-const initialState = Immutable<TReduxStateSnackbar>({
+const state = Immutable<State>({
   id: null,
   message: null,
   variant: SNACKBAR_VARIANT.DEFAULT,
 });
-export default initialState;
+export default state;

@@ -1,5 +1,5 @@
 import newCookieItem from '@/helpers/cookieHelpers/newCookieItem';
-import type { TAuthenticationJWT } from '@/_types/TAuthentication';
+import type { TAuthenticationJWT } from '@/types';
 import * as yup from 'yup';
 
 const schema = yup.object().shape({

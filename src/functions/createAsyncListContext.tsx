@@ -1,13 +1,12 @@
 import createFastContext from '@/functions/createFastContext';
-import useAsyncListState from '@/hooks/useAsyncListState';
-import { DEFAULT_DATA } from '@/hooks/useAsyncListState/constants';
 import type {
   IUseListStateParams,
   IUseListStateReturnsAction,
   IUseListStateReturnsControl,
   IUseListStateReturnsState,
-} from '@/hooks/useAsyncListState/_types';
-import type { TAny } from '@/_types/TAny';
+} from '@/hooks/useAsyncListState';
+import useAsyncListState, { DEFAULT_DATA } from '@/hooks/useAsyncListState';
+import type { TAny } from '@/types';
 import isEqual from 'lodash/isEqual';
 import type { FC, ReactNode } from 'react';
 import { useEffect } from 'react';

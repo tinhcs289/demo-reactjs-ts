@@ -1,5 +1,5 @@
-import type { TCommonNumberFieldProps } from '@/components/inputs/CommonNumberField/_types';
-import type { TRHFInputProps } from '@/components/rhfInputs/_types';
+import type { TCommonNumberFieldProps } from '@/components/inputs/CommonNumberField';
+import type { TRHFInputProps } from '@/components/rhfInputs';
 
 export type TRHFNumberProps = {
   defaultValue?: string;

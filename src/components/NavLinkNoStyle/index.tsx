@@ -1,12 +1,3 @@
-import { NavLink } from 'react-router-dom';
-import type { LinkProps } from './_types';
-import type { ReactNode } from 'react';
-
-export default function NavLinkNoStyle(props: Partial<LinkProps & { children?: ReactNode; to: string }>) {
-  const { children, to, ...otherProps } = props as any;
-  return (
-    <NavLink {...otherProps} to={to as any} style={{ textDecoration: 'none', color: 'inherit' }}>
-      {children}
-    </NavLink>
-  );
-}
+import NavLinkNoStyle from './NavLinkNoStyle';
+export type { LinkProps } from './_types';
+export default NavLinkNoStyle;

@@ -1,6 +1,5 @@
-import type { TRHFInputProps } from '@/components/rhfInputs/_types';
-import type { TCommonTextFieldProps } from '@/components/inputs/CommonTextField/_types';
-
+import type { TRHFInputProps } from '@/components/rhfInputs';
+import type { TCommonTextFieldProps } from '@/components/inputs/CommonTextField';
 export type TRHFTextProps = {
   defaultValue?: string;
   id?: `${string}:text:${string}`;

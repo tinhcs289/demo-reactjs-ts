@@ -42,9 +42,9 @@ const FormControlLabelStyled = styled(FormControlLabel)<FormControlLabelProps>((
         },
         '& div.MuiDayPicker-weekContainer': {
           justifyContent: 'space-evenly',
-        }
-      }
-    }
+        },
+      },
+    },
   },
   // '& div.MuiPickersDay-root': {
   //   ...PICKER_DAY_SIZE,

@@ -1,6 +1,6 @@
-import type { TBodyCellInnerComponent } from '@/components/CommonTable/_types';
+import type { TBodyCellInnerComponent } from '@/components/CommonTable';
 import { CURRENCY_FORMAT } from '@/constants/language';
-import type { TAny } from '@/_types/TAny';
+import type { TAny } from '@/types';
 import numeral from 'numeral';
 import type { T__module__ListItem } from '../_types';
 

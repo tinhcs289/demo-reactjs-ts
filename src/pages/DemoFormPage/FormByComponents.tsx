@@ -1,6 +1,7 @@
 import FormSubmitButton from '@/components/buttons/FormSubmitButton';
 import FormGridContainer from '@/components/form/FormGridContainer';
 import FormGridItem from '@/components/form/FormGridItem';
+import CommonDateRangeField from '@/components/inputs/CommonDateRangeField';
 import RHFCheck from '@/components/rhfInputs/RHFCheck';
 import RHFCheckGroup from '@/components/rhfInputs/RHFCheckGroup';
 import RHFDate from '@/components/rhfInputs/RHFDate';
@@ -20,10 +21,12 @@ import RHFText from '@/components/rhfInputs/RHFText';
 import RHFTime from '@/components/rhfInputs/RHFTime';
 import { required } from '@/constants/rhfRules';
 import type { SxProps, Theme } from '@mui/material';
+import { Moment } from 'moment';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { defaultValues, LABEL, optionRadio, options, optionsCheck } from './constants';
 import type { TFormData } from './_types';
+import { useState } from 'react';
 
 const fieldSx: SxProps<Theme> = { p: 1, mb: 2 };
 
@@ -35,6 +38,8 @@ export default function FormByComponents() {
   const onSubmit = (formData: TFormData) => {
     console.log(formData);
   };
+
+  const [dateRange, setDateRange] = useState<{ from: Moment; to: Moment } | undefined>();
 
   return (
     <FormGridContainer onSubmit={handleSubmit(onSubmit)} formProps={{ id: 'demo-form-2' }}>
@@ -212,7 +217,9 @@ export default function FormByComponents() {
           rules={required(t('common:pleaseEnter'))}
         />
       </FormGridItem>
-
+      <FormGridItem sx={fieldSx}>
+        <CommonDateRangeField value={dateRange} onChange={setDateRange} />
+      </FormGridItem>
       <FormGridItem justifyContent="center" contentProps={{ md: 2 }} sx={{ p: 1 }}>
         <FormSubmitButton id="demo-form-2:button:submit">{t('common:submit')}</FormSubmitButton>
       </FormGridItem>

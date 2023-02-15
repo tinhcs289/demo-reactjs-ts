@@ -1,12 +1,12 @@
+import type { TItemMenuAction } from '@/components/CommonTable';
 import { menuActions, renderItemAs } from '@/components/CommonTable';
-import type { TItemMenuAction } from '@/components/CommonTable/_types';
 import PATHS from '@/routes/paths';
 import { i18n } from '@/translation';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import type { TOrderListItem } from '../_types';
 import { ListItemActionDelete, ListItemActionEdit } from '../context';
+import type { TOrderListItem } from '../_types';
 
 // for complex action item or
 // using the hook `useAsyncList` to interact with the List context, see these components

@@ -1,3 +1,5 @@
+import { EApiRequestStatus } from '@/constants/apiRequestStatus';
+
 export const ACTION = {
   NONE: 'NONE',
   MORE_ACTION: 'MORE_ACTION',
@@ -13,13 +15,6 @@ export const ASC = 'ASC';
 export const PAGE_INDEX = 1;
 export const PAGE_SIZE = 10;
 
-export enum ERequestStatus {
-  NONE = 1,
-  REQUESTING = 2,
-  REQUESTSUCCESS = 3,
-  REQUESTFAIL = 4,
-}
-
 export const DEFAULT_DATA = {
   data: [],
   listState: {
@@ -30,7 +25,7 @@ export const DEFAULT_DATA = {
     sortDirection: undefined,
     moreFilter: {},
   },
-  fetchState: ERequestStatus.NONE,
+  fetchState: EApiRequestStatus.NONE,
   interactItem: null,
   anchorEl: null,
   itemAction: ACTION.NONE,

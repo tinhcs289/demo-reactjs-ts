@@ -10,14 +10,14 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
-import React from 'react';
+import type { ComponentType } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
 import withRegisterViaInternalApi from './withRegisterViaInternalApi';
 import type { IRegisterPageProps, TRegisterFormData } from './_types';
 
-const RegisterPage: React.FC<IRegisterPageProps> = withHOCs(withRegisterViaInternalApi)((props) => {
+const RegisterPage: ComponentType<IRegisterPageProps> = withHOCs(withRegisterViaInternalApi)((props) => {
   const { onSubmitRegisterForm } = props;
 
   const { t } = useTranslation();

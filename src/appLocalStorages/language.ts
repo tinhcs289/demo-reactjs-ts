@@ -1,5 +1,5 @@
 import newLocalStorageItem from '@/helpers/localStorageHelpers/newLocalStorageItem';
-import type { TAcceptLanguage } from '@/_types/TAcceptLanguage';
+import type { TAcceptLanguage } from '@/types';
 
 const language = newLocalStorageItem<TAcceptLanguage>({ key: 'i18nextLng' });
 export default language;

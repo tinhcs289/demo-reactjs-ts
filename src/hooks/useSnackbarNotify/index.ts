@@ -1,5 +1,5 @@
+import { SNACKBAR_VARIANT } from '@/constants/snackbar';
 import stringOrEmpty from '@/helpers/formatHelpers/stringOrEmpty';
-import { SNACKBAR_VARIANT } from '@/redux/snackbar/contants';
 import type { OptionsObject } from 'notistack';
 import { useSnackbar } from 'notistack';
 

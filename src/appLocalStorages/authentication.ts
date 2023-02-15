@@ -1,5 +1,5 @@
 import newLocalStorageListenableItem from '@/helpers/localStorageHelpers/newLocalStorageListenableItem';
-import { TAuthenticationJWT } from '@/_types/TAuthentication';
+import { TAuthenticationJWT } from '@/types';
 import { validate } from '@/appCookies/authentication';
 
 /**
