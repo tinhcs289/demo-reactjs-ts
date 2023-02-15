@@ -1,13 +1,12 @@
 import createFastContext from '@/functions/createFastContext';
-import useStaticListState from '@/hooks/useStaticListState';
-import { DEFAULT_DATA } from '@/hooks/useStaticListState/constants';
 import type {
   IUseListStateReturnsAction,
   IUseListStateReturnsControl,
   IUseStaticListStateParams,
   IUseStaticListStateReturnsState,
-} from '@/hooks/useStaticListState/_types';
-import type { TAny } from '@/_types/TAny';
+} from '@/hooks/useStaticListState';
+import useStaticListState, { DEFAULT_DATA } from '@/hooks/useStaticListState';
+import type { TAny } from '@/types';
 import isEqual from 'lodash/isEqual';
 import type { FC, ReactNode } from 'react';
 import { useEffect } from 'react';

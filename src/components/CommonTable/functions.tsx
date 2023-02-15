@@ -1,5 +1,5 @@
 import newGuid from '@/helpers/stringHelpers/newGuid';
-import type { TAny } from '@/_types/TAny';
+import type { TAny } from '@/types';
 import type {
   ICommonTableConfig,
   TBodyCellComponent,

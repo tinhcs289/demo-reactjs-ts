@@ -1,10 +1,10 @@
 import type { CheckboxProps } from '@mui/material/Checkbox';
 import CheckBox from '@mui/material/Checkbox';
-import TableCell from '@mui/material/TableCell';
 import type { TableCellProps } from '@mui/material/TableCell';
-import type { FC } from 'react';
+import TableCell from '@mui/material/TableCell';
+import type { ComponentType } from 'react';
 
-const CheckCell: FC<
+const CheckCell: ComponentType<
   Omit<CheckboxProps, 'onChange'> & { onChange?: (checked: boolean) => void; cellProps?: TableCellProps }
 > = (props) => {
   const { checked, onChange, cellProps, ...otherProps } = props;

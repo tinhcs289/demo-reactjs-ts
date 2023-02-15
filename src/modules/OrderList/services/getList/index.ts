@@ -3,9 +3,9 @@ import tryDo from '@/functions/tryDo';
 import wait from '@/functions/wait';
 import { isValidResult } from '@/hooks/useAsyncListState/functions';
 import type { TOnQueryArgs, TOnQueryRetuns } from '@/hooks/useAsyncListState/_types';
-import type { TListDataQueryModel } from '@/_types/TListDataModel';
-import api from './api';
+import type { TListDataQueryModel } from '@/types';
 import type { TOrderListItem } from '../../_types';
+import api from './api';
 
 const defaultReturns: TOnQueryRetuns<TOrderListItem> = {
   result: [],

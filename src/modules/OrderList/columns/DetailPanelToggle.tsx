@@ -1,5 +1,5 @@
+import type { TDetailPanelComponent, TDetailPanelToggle } from '@/components/CommonTable';
 import { withDetailPanel } from '@/components/CommonTable';
-import type { TDetailPanelComponent, TDetailPanelToggle } from '@/components/CommonTable/_types';
 import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
 import RemoveIcon from '@mui/icons-material/Remove';

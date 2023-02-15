@@ -1,4 +1,4 @@
-import type { TCommonTextFieldProps } from '@/components/inputs/CommonTextField/_types';
+import type { TCommonTextFieldProps } from '@/components/inputs/CommonTextField';
 import type { SxProps, Theme } from '@mui/material';
 import type { StaticDatePickerProps } from '@mui/x-date-pickers/StaticDatePicker';
 import type { Moment } from 'moment';
@@ -8,7 +8,7 @@ export type ICommonDateMultiPickerFieldProps = {
   onChange?: (value?: Moment[]) => void;
   error?: boolean;
   errorText?: ReactNode;
-  required?: boolean,
-  sx?: SxProps<Theme>,
+  required?: boolean;
+  sx?: SxProps<Theme>;
   TextFieldProps?: Partial<TCommonTextFieldProps>;
 } & Omit<StaticDatePickerProps<any, Moment>, 'value' | 'onChange' | 'renderInput' | 'renderDay'>;

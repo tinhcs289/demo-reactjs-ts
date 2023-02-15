@@ -1,6 +1,6 @@
 import { CURRENCY_FORMAT } from '@/constants/language';
 import render from '@/helpers/reactHelpers/render';
-import { TMuiIcon } from '@/_types/TMuiIcon';
+import { TMuiIcon } from '@/types';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';

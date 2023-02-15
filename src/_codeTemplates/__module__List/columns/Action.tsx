@@ -1,5 +1,5 @@
-import type { TBodyCellInnerComponent } from '@/components/CommonTable/_types';
-import type { TAny } from '@/_types/TAny';
+import type { TBodyCellInnerComponent } from '@/components/CommonTable';
+import type { TAny } from '@/types';
 import { ListItemActionMenuToggle } from '../context';
 import type { T__module__ListItem } from '../_types';
 

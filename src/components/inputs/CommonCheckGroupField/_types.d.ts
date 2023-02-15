@@ -1,9 +1,9 @@
-import React from 'react';
+import type { TCommonCheckFieldProps } from '@/components/inputs/CommonCheckField';
 import type { FormGroupProps } from '@mui/material/FormGroup';
-import type { TCommonCheckFieldProps } from '@/components/inputs/CommonCheckField/_types';
+import type { ReactNode } from 'react';
 
 export type TCheckGroupOption = {
-  label: React.ReactNode;
+  label: ReactNode;
   value: string;
   checked?: boolean;
   disabled?: boolean;
@@ -13,10 +13,10 @@ export type TCheckGroupOption = {
 
 export type TCommonCheckGroupFieldProps = {
   name?: string;
-  label?: React.ReactNode;
+  label?: ReactNode;
   required?: boolean;
   error?: boolean;
-  errorText?: React.ReactNode;
+  errorText?: ReactNode;
   options?: TCheckGroupOption[];
   value?: TCheckGroupOption[];
   onChange?: (options?: TCheckGroupOption[]) => void;

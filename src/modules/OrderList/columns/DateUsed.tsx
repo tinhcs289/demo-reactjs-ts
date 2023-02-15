@@ -1,6 +1,6 @@
-import type { TBodyCellInnerComponent } from '@/components/CommonTable/_types';
+import type { TBodyCellInnerComponent } from '@/components/CommonTable';
 import momentOrDefault from '@/helpers/formatHelpers/momentOrDefault';
-import type { TAny } from '@/_types/TAny';
+import type { TAny } from '@/types';
 import Typography from '@mui/material/Typography';
 import { useMemo } from 'react';
 import type { TOrderListItem } from '../_types';

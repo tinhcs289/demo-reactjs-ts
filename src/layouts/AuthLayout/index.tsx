@@ -6,12 +6,13 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import { FC, useMemo } from 'react';
+import type { ComponentType } from 'react';
+import { useMemo } from 'react';
 import { Outlet } from 'react-router-dom';
 import { SIDE_LAYOUT_BG } from './constants';
 import type { IAuthLayoutProps } from './_types';
 
-const AuthLayout: FC<IAuthLayoutProps> = withHOCs(withAuthChangeWarning)((props) => {
+const AuthLayout: ComponentType<IAuthLayoutProps> = withHOCs(withAuthChangeWarning)((props) => {
   const { variant } = props;
 
   const theme = useTheme();

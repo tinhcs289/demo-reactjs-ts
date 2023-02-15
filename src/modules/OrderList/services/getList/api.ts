@@ -1,16 +1,16 @@
 import http from '@/api/http';
 import httpMock from '@/api/httpMock';
 import mockAdapter from '@/api/mockAdapter';
-import { TOrderListItem } from '../../_types';
-import type { TListDataModel, TListDataQueryModel } from '@/_types/TListDataModel';
+import type { TListDataModel, TListDataQueryModel } from '@/types';
 import type { AxiosResponse } from 'axios';
+import { TOrderListItem } from '../../_types';
 
+import page1size20 from './page-1-page-size-20.json';
 import page1size10 from './page-1.json';
+import page2size20 from './page-2-page-size-20.json';
 import page2size10 from './page-2.json';
 import page3size10 from './page-3.json';
 import page4size10 from './page-4.json';
-import page1size20 from './page-1-page-size-20.json';
-import page2size20 from './page-2-page-size-20.json';
 
 const LINK = '/api/booking/sell/list';
 

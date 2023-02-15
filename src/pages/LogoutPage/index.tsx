@@ -1,10 +1,11 @@
 import withHOCs from '@/hocs/withHocs';
-import withLogoutAction from '@/pages/LogoutPage/withLogoutAction';
-import { ILogoutPage } from '@/pages/LogoutPage/_types';
-import type { FC } from 'react';
+import withLogoutAction from './withLogoutAction';
+import { ILogoutPage } from './_types';
+import type { ComponentType } from 'react';
+// import withReduxtAuthentication from './withReduxtAuthentication';
 import { useEffect } from 'react';
 
-const LogoutPage: FC<ILogoutPage> = withHOCs(withLogoutAction)((props) => {
+const LogoutPage: ComponentType<ILogoutPage> = withHOCs(withLogoutAction)((props) => {
   const { onLogout } = props;
 
   useEffect(() => {

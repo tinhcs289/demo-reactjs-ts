@@ -2,7 +2,7 @@ import type {
   TAutoCompleteOption,
   TCommonSelectFieldOnChange,
   TCommonSelectFieldProps,
-} from '@/components/inputs/CommonSelectField/_types';
+} from '@/components/inputs/CommonSelectField';
 import type { ComponentType } from 'react';
 import { useCallback, useMemo } from 'react';
 import { FALSE, TRUE } from './constants';

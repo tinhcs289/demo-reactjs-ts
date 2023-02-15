@@ -1,4 +1,4 @@
-import { TAny } from '@/_types/TAny';
+import { TAny } from '@/types';
 import Slide from '@mui/material/Slide';
 import { forwardRef } from 'react';
 

@@ -1,7 +1,7 @@
 import type { TypographyProps } from '@mui/material/Typography';
-import React from 'react';
+import type { HTMLAttributes, ReactNode } from 'react';
 
 export type InputErrorTextWithIconProps = {
-  children?: React.ReactNode;
+  children?: ReactNode;
   textProps?: TypographyProps;
-} & React.HTMLAttributes<HTMLDivElement>;
+} & HTMLAttributes<HTMLDivElement>;

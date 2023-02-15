@@ -1,6 +1,6 @@
 import uploadFileApi from '@/api/uploadFile/uploadFileApi';
-import { EApiRequestStatus } from '@/constants/EApiRequestStatus';
-import { TApiRequestStatus } from '@/_types/TApiRequestStatus';
+import { EApiRequestStatus } from '@/constants/apiRequestStatus';
+import type { TApiRequestStatus } from '@/types';
 
 type TFileResponse = {
   bin?: File;

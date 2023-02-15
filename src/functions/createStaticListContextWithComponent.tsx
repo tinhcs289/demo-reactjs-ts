@@ -1,13 +1,13 @@
-import CommonTable, { CommonPagination, ItemActionMenu } from '@/components/CommonTable';
 import type {
   ICommonPaginationProps,
   ICommonTableProps,
   TBodyCellComponent,
   TItemMenuAction,
-} from '@/components/CommonTable/_types';
+} from '@/components/CommonTable';
+import CommonTable, { CommonPagination, ItemActionMenu } from '@/components/CommonTable';
 import createStaticListContext from '@/functions/createStaticListContext';
-import { ACTION } from '@/hooks/useStaticListState/constants';
-import { TAny } from '@/_types/TAny';
+import { ACTION } from '@/hooks/useStaticListState';
+import { TAny } from '@/types';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import IconButton from '@mui/material/IconButton';
 import type { MenuProps } from '@mui/material/Menu';

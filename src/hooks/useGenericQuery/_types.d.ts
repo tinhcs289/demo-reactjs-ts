@@ -1,4 +1,4 @@
-import type { RecordWithOptionalKey } from '@/_types/RecordWithOptionalKey';
+import type { RecordWithOptionalKey } from '@/types';
 import type { ECondition, EConditionOperator, EConjunction, EInputType, EValueType } from './constants';
 
 //#region data type

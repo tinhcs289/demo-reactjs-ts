@@ -1,5 +1,5 @@
-import type { TCommonDateFieldProps } from '@/components/inputs/CommonDateField/_types';
-import type { TRHFInputProps } from '@/components/rhfInputs/_types';
+import type { TCommonDateFieldProps } from '@/components/inputs/CommonDateField';
+import type { TRHFInputProps } from '@/components/rhfInputs';
 import type { Moment } from 'moment';
 
 export type TRHFDateProps = {

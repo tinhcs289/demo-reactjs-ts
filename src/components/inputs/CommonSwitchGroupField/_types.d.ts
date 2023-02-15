@@ -1,9 +1,9 @@
-import type { TCommonSwitchFieldProps } from '@/components/inputs/CommonSwitchField/_types';
+import type { TCommonSwitchFieldProps } from '@/components/inputs/CommonSwitchField';
 import type { FormGroupProps } from '@mui/material/FormGroup';
-import React from 'react';
+import type { ReactNode } from 'react';
 
 export type TSwitchGroupOption = {
-  label: React.ReactNode;
+  label: ReactNode;
   value: string;
   checked?: boolean;
   disabled?: boolean;
@@ -13,10 +13,10 @@ export type TSwitchGroupOption = {
 
 export type TCommonSwitchGroupFieldProps = {
   name?: string;
-  label?: React.ReactNode;
+  label?: ReactNode;
   required?: boolean;
   error?: boolean;
-  errorText?: React.ReactNode;
+  errorText?: ReactNode;
   options?: TSwitchGroupOption[];
   value?: TSwitchGroupOption[];
   onChange?: (options?: TSwitchGroupOption[]) => void;

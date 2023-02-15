@@ -16,4 +16,4 @@ const CustomPickersDay = styled(PickersDay, {
     },
   }),
 })) as ComponentType<PickersDayProps<Moment>>;
-export default CustomPickersDay
+export default CustomPickersDay;

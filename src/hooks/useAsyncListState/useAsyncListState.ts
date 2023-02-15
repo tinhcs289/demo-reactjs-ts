@@ -1,7 +1,8 @@
+import { EApiRequestStatus } from '@/constants/apiRequestStatus';
 import concatArray from '@/helpers/arrayHelpers/concatArray';
 import cloneDeep from 'lodash/cloneDeep';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { ACTION, DESC, ERequestStatus, PAGE_INDEX, PAGE_SIZE } from './constants';
+import { ACTION, DESC, PAGE_INDEX, PAGE_SIZE } from './constants';
 import type {
   IUseListStateParams,
   IUseListStateReturns,
@@ -99,7 +100,7 @@ function useAsyncListState<T extends { [x: string]: any }>(
   const [data, setData] = useState<T[]>([]);
   const [selectedItems, setSelectedItems] = useState<T[]>([]);
   const [listState, setListState] = useState<TListState>(dfState);
-  const [fetchState, setFetchState] = useState<ERequestStatus>(ERequestStatus.NONE);
+  const [fetchState, setFetchState] = useState<EApiRequestStatus>(EApiRequestStatus.NONE);
   const [selectable, setSelectable] = useState<boolean>(defaultSelectable === true ? true : false);
   const [checkAll, setCheckAll] = useState<boolean>(false);
   const [interactItem, setInteractItem] = useState<T | null>(null);
@@ -140,7 +141,7 @@ function useAsyncListState<T extends { [x: string]: any }>(
     async (state: TListState) => {
       if (!!onQuery) {
         let [result, totalCount]: [T[], number] = [[], 0];
-        setFetchState(ERequestStatus.REQUESTING);
+        setFetchState(EApiRequestStatus.REQUESTING);
         const queryArgs = getQueryArgs(state);
         try {
           const response = await onQuery(queryArgs);
@@ -162,12 +163,12 @@ function useAsyncListState<T extends { [x: string]: any }>(
             totalCount,
           }));
 
-          setFetchState(ERequestStatus.REQUESTSUCCESS);
+          setFetchState(EApiRequestStatus.REQUESTSUCCESS);
         } catch (error) {
           console.log(error);
-          setFetchState(ERequestStatus.REQUESTFAIL);
+          setFetchState(EApiRequestStatus.REQUESTFAIL);
         } finally {
-          setFetchState(ERequestStatus.NONE);
+          setFetchState(EApiRequestStatus.NONE);
         }
       }
     },
