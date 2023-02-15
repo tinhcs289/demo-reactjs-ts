@@ -1,11 +1,11 @@
-import type { FC } from 'react';
-import Button from '@mui/material/Button';
 import type { ButtonProps } from '@mui/material/Button';
+import Button from '@mui/material/Button';
+import type { ComponentType } from 'react';
 
-const FormSubmitButton: FC<ButtonProps> = (props) => {
+const FormSubmitButton: ComponentType<ButtonProps> = (props) => {
   const { children, ...otherProps } = props;
   return (
-    <Button type="submit" color="primary" variant="contained" {...otherProps}>
+    <Button type="submit" color="primary" variant="contained" size="small" {...otherProps}>
       {children}
     </Button>
   );

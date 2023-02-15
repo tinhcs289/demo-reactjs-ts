@@ -1,9 +1,9 @@
 import FindInPageIcon from '@mui/icons-material/FindInPage';
 import Typography from '@mui/material/Typography';
-import type { FC, ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 
-const LoadingText: FC<{ children?: ReactNode }> = (props) => {
+export default function LoadingText(props: { children?: ReactNode }) {
   const { children } = props;
   const { t } = useTranslation();
   if (!children)
@@ -14,5 +14,4 @@ const LoadingText: FC<{ children?: ReactNode }> = (props) => {
       </Typography>
     );
   return <>{children}</>;
-};
-export default LoadingText;
+}

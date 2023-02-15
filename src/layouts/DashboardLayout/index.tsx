@@ -1,22 +1,23 @@
 import withHOCs from '@/hocs/withHocs';
+import AutoToggleAsideByScreen from '@/layouts/DashboardLayout/AsideMenu/AutoToggleAsideByScreen';
 import DashboardLayoutProvider, { useDashboardLayout } from '@/providers/DashboardLayoutProvider';
 import type { SxProps, Theme } from '@mui/material';
 import { useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Toolbar from '@mui/material/Toolbar';
+import type { ComponentType } from 'react';
 import { FC, ReactNode, useMemo } from 'react';
 import { Outlet } from 'react-router-dom';
 import AppBar from './AppBar';
 import AsideMenu from './AsideMenu';
+import { DEFAULT_WIDTH } from './constants';
 import LayoutInit from './LayoutInit';
 import PageWidthChange from './PageWidthChange';
 import withAuthChangeWarning from './withAuthChangeWarning';
 import type { TDashboardProps } from './_types';
-import { DEFAULT_WIDTH } from './constants';
-import AutoToggleAsideByScreen from '@/layouts/DashboardLayout/AsideMenu/AutoToggleAsideByScreen';
 
-const Dashboard: FC<TDashboardProps> = withHOCs(withAuthChangeWarning)((props) => {
+const Dashboard: ComponentType<TDashboardProps> = withHOCs(withAuthChangeWarning)((props) => {
   const theme = useTheme();
 
   const [pageMaxWidth] = useDashboardLayout((s) => s.pageMaxWidth);

@@ -1,19 +1,20 @@
-import CommonTable, {
-  CommonPagination,
-  ItemActionMenu,
-  CommonTablePagination,
-} from '@/components/CommonTable';
 import type {
   ICommonPaginationProps,
+  ICommonTablePaginationProps,
   ICommonTableProps,
   TBodyCellInnerComponent,
   TItemMenuAction,
   TItemMenuActionComponent,
-  ICommonTablePaginationProps,
-} from '@/components/CommonTable/_types';
+} from '@/components/CommonTable';
+import CommonTable, {
+  CommonPagination,
+  CommonTablePagination,
+  ItemActionMenu,
+} from '@/components/CommonTable';
+import { EApiRequestStatus } from '@/constants/apiRequestStatus';
 import createAsyncListContext from '@/functions/createAsyncListContext';
-import { ACTION, ERequestStatus } from '@/hooks/useAsyncListState/constants';
-import { TAny } from '@/_types/TAny';
+import { ACTION } from '@/hooks/useAsyncListState';
+import { TAny } from '@/types';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import IconButton from '@mui/material/IconButton';
 import type { MenuProps } from '@mui/material/Menu';
@@ -44,7 +45,7 @@ function createAsyncListContextWithComponent<T extends TAny>() {
     }, [isCheckAll, checkAllItems, checkOneItem, isSelected]);
 
     const loading = useMemo(() => {
-      return fetchState === ERequestStatus.REQUESTING;
+      return fetchState === EApiRequestStatus.REQUESTING;
     }, [fetchState]);
 
     return (

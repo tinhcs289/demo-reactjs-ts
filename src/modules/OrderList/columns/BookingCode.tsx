@@ -1,13 +1,13 @@
-import type { TBodyCellInnerComponent } from '@/components/CommonTable/_types';
-import type { TAny } from '@/_types/TAny';
-import type { TOrderListItem } from '../_types';
-import Chip from '@mui/material/Chip';
-import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import FileCopyIcon from '@mui/icons-material/FileCopy';
-import { useCallback } from 'react';
+import type { TBodyCellInnerComponent } from '@/components/CommonTable';
 import useSnackbarNotify from '@/hooks/useSnackbarNotify';
-import { NavLink } from 'react-router-dom';
 import PATHS from '@/routes/paths';
+import type { TAny } from '@/types';
+import FileCopyIcon from '@mui/icons-material/FileCopy';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import Chip from '@mui/material/Chip';
+import { useCallback } from 'react';
+import { NavLink } from 'react-router-dom';
+import type { TOrderListItem } from '../_types';
 
 const BookingCode: TBodyCellInnerComponent<TOrderListItem, TAny> = ({ row }) => {
   const { showSuccessNotify } = useSnackbarNotify();

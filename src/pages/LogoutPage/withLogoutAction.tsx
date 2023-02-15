@@ -3,7 +3,7 @@ import tryCall from '@/api/tryCall';
 import authentication from '@/appCookies/authentication';
 import { default as authenticationInLocalStorage } from '@/appLocalStorages/authentication';
 import PATHS from '@/routes/paths';
-import type { FC } from 'react';
+import type { ComponentType } from 'react';
 import { useState } from 'react';
 import type { ILogoutPage } from './_types';
 
@@ -12,7 +12,7 @@ const redirectToNextPage = () => {
   window.location.replace(PATHS.login);
 };
 
-const withLogoutAction = (WrappedComponent: FC<ILogoutPage>) => (props: ILogoutPage) => {
+const withLogoutAction = (WrappedComponent: ComponentType<ILogoutPage>) => (props: ILogoutPage) => {
   const { onLogout: _, loading: loadingProp, ...otherProps } = props;
 
   const [loading, setLoading] = useState<boolean>(!!loadingProp);

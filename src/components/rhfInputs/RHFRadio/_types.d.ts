@@ -1,5 +1,5 @@
-import type { TCommonRadioFieldProps } from '@/components/inputs/CommonRadioField/_types';
-import type { TRHFInputProps } from '@/components/rhfInputs/_types';
+import type { TCommonRadioFieldProps } from '@/components/inputs/CommonRadioField';
+import type { TRHFInputProps } from '@/components/rhfInputs';
 export type TRHFRadioProps = {
   defaultValue?: string;
   id?: `${string}:radio:${string}`;

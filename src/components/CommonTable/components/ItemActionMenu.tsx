@@ -1,5 +1,5 @@
 import render from '@/helpers/reactHelpers/render';
-import type { TAny } from '@/_types/TAny';
+import type { TAny } from '@/types';
 import Divider from '@mui/material/Divider';
 import ListItemIcon from '@mui/material/ListItemIcon/ListItemIcon';
 import type { MenuProps } from '@mui/material/Menu';
@@ -11,7 +11,7 @@ import { useCallback, useMemo } from 'react';
 import { NavLink } from 'react-router-dom';
 import type { TItemMenuAction } from '../_types';
 
-function ItemActionMenu<T extends TAny>(
+export default function ItemActionMenu<T extends TAny>(
   props: MenuProps & {
     actions?: TItemMenuAction<T>[];
     dataItem?: T;
@@ -107,4 +107,3 @@ function ItemActionMenu<T extends TAny>(
 
   return null;
 }
-export default ItemActionMenu;

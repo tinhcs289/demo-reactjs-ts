@@ -2,7 +2,7 @@ import type { Theme } from '@mui/material';
 import { styled, useMediaQuery } from '@mui/material';
 import type { PaginationProps } from '@mui/material/Pagination';
 import Pagination from '@mui/material/Pagination';
-import type { ChangeEvent, FC } from 'react';
+import type { ChangeEvent, ComponentType } from 'react';
 import { useCallback, useMemo } from 'react';
 import type { ICommonPaginationProps } from '../_types';
 
@@ -11,7 +11,7 @@ const PaginationStyled = styled(Pagination)<PaginationProps>(({ theme }) => ({
   justifyContent: 'center',
 }));
 
-const CommonPagination: FC<ICommonPaginationProps> = (props) => {
+const CommonPagination: ComponentType<ICommonPaginationProps> = (props) => {
   const { pageIndex, pageSize, totalCount, onChange, loading, ...otherProps } = props;
 
   const memoProps = useMemo(() => {

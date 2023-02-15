@@ -11,20 +11,23 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
-import React from 'react';
+import type { ComponentType } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
-import withLoginViaInternalApi from './withLoginViaInternalApi';
+import { defaultValues } from './constants';
+// import withLoginViaInternalApi from './withLoginViaInternalApi';
 import withLoginViaSSO from './withLoginViaSSO';
 import withRedirectAfterLoginWithExternalQueryString from './withRedirectAfterLoginWithExternalQueryString';
 import withReturnUri from './withReturnUri';
 import type { ILoginPageProps, TLoginFormData } from './_types';
+import withReduxAuthentication from './withReduxAuthentication';
 
-const LoginPage: React.FC<ILoginPageProps> = withHOCs(
+const LoginPage: ComponentType<ILoginPageProps> = withHOCs(
   withReturnUri,
   withRedirectAfterLoginWithExternalQueryString,
-  withLoginViaInternalApi,
+  // withLoginViaInternalApi,
+  withReduxAuthentication,
   withLoginViaSSO
 )(function LoginPage(props) {
   const { onSubmitLoginForm, loading } = props;
@@ -33,14 +36,7 @@ const LoginPage: React.FC<ILoginPageProps> = withHOCs(
 
   const { t } = useTranslation();
 
-  const { handleSubmit, control } = useForm<TLoginFormData>({
-    defaultValues: {
-      Account: '',
-      Password: '',
-      SomeField: '2',
-      RememberMe: false,
-    },
-  });
+  const { handleSubmit, control } = useForm<TLoginFormData>({ defaultValues });
 
   const onSubmit = (formData: TLoginFormData) => {
     onSubmitLoginForm?.(formData);

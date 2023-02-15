@@ -5,7 +5,7 @@ import type { SxProps, Theme } from '@mui/material';
 import { LABEL, optionRadio, options, optionsCheck } from './constants';
 import type { TFormData } from './_types';
 
-const fieldSx: SxProps<Theme> = { p: 1, mb: 2 }
+const fieldSx: SxProps<Theme> = { p: 1, mb: 2 };
 
 const fields = [
   {
@@ -191,6 +191,5 @@ const fields = [
     md: 9,
     sx: fieldSx,
   } as FormField<TFormData, 'text-tags'>,
-
 ];
 export default fields;

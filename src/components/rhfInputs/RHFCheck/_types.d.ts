@@ -1,5 +1,5 @@
-import type { TCommonCheckFieldProps } from '@/components/inputs/CommonCheckField/_types';
-import type { TRHFInputProps } from '@/components/rhfInputs/_types';
+import type { TCommonCheckFieldProps } from '@/components/inputs/CommonCheckField';
+import type { TRHFInputProps } from '@/components/rhfInputs';
 export type TRHFCheckProps = {
   defaultValue?: string;
   id?: `${string}:check:${string}`;

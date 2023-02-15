@@ -1,7 +1,7 @@
 import acceptLanguage from '@/appLocalStorages/acceptLanguage';
 import { EAcceptLanguage } from '@/constants/language';
 import { i18n } from '@/translation';
-import { TAcceptLanguage } from '@/_types/TAcceptLanguage';
+import { TAcceptLanguage } from '@/types';
 import TranslateIcon from '@mui/icons-material/Translate';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';

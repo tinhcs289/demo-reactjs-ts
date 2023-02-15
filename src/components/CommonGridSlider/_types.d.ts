@@ -1,5 +1,4 @@
-import type { TAny } from '@/_types/TAny';
-import type { TMuiBreakPoint } from '@/_types/TMuiBreakPoint';
+import type { TAny, TMuiBreakPoint } from '@/types';
 import type { BoxProps } from '@mui/material/Box';
 import type { ComponentType, ReactNode, RefAttributes } from 'react';
 import type { SwiperProps, SwiperRef } from 'swiper/react';

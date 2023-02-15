@@ -1,6 +1,7 @@
-import React from 'react';
+import type { ComponentType } from 'react';
 
-const withHOCs = <TProps,>(...hocs: Array<(FC: React.FC<TProps>) => (props: TProps) => JSX.Element>) => {
+export default function withHOCs<TProps>(
+  ...hocs: Array<(Component: ComponentType<TProps>) => ComponentType<TProps>>
+) {
   return hocs.reverse().reduceRight((h, g) => (p) => h(g(p)));
-};
-export default withHOCs;
+}

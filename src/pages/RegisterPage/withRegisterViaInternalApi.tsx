@@ -1,8 +1,8 @@
-import React from 'react';
+import type { ComponentType } from 'react';
 import type { IRegisterPageProps, TRegisterFormData } from './_types';
 
 const withRegisterViaInternalApi =
-  (WrappedComponent: React.FC<IRegisterPageProps>) => (props: IRegisterPageProps) => {
+  (WrappedComponent: ComponentType<IRegisterPageProps>) => (props: IRegisterPageProps) => {
     const { onSubmitRegisterForm: _, ...otherProps } = props;
 
     const handleRequestRegisterViaApi = (formData: TRegisterFormData) => {

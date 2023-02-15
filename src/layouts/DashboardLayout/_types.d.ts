@@ -25,7 +25,7 @@ export type TAsideMenuItem = {
   id: string;
   type: TAsideMenuItemType;
   label?: ReactNode;
-  labelText?: string,
+  labelText?: string;
   url?: string;
   childs?: TAsideMenuItem[];
   active?: boolean;

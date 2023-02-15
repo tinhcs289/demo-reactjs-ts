@@ -1,6 +1,4 @@
-import type { TAny } from '@/_types/TAny';
-import type { TMuiIcon, TMuiIconProps } from '@/_types/TMuiIcon';
-import type { TNavLinkProps } from '@/_types/TNavLinkProps';
+import type { TAny, TMuiIcon, TMuiIconProps, TNavLinkProps } from '@/types';
 import type { ListItemIconProps } from '@mui/material/ListItemIcon';
 import type { MenuProps } from '@mui/material/Menu/Menu';
 import type { MenuItemProps } from '@mui/material/MenuItem';
@@ -260,7 +258,7 @@ export type TItemMenuAction<T extends TAny> = {
 
 //#region Table extensions
 export type TDetailPanelComponent<T extends TAny> = TBodyCellInnerComponent<T, { closePanel?: () => void }>;
-export type TDetailPanelToggle<T extends TAny> = React.ComponentType<{
+export type TDetailPanelToggle<T extends TAny> = ComponentType<{
   open: boolean;
   toggle: (event: any, position?: 'top' | 'bottom') => void;
   row: T;

@@ -1,17 +1,17 @@
 import useToggle from '@/hooks/useToggle';
-import type { TAny } from '@/_types/TAny';
+import type { TAny } from '@/types';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import cloneDeep from 'lodash/cloneDeep';
-import type { FC, ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { createRef, useCallback, useEffect, useMemo, useRef } from 'react';
-import { createRoot } from 'react-dom/client';
 import type { Root } from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 import type { TBodyCellInnerComponent, TDetailPanelComponent, TDetailPanelToggle } from '../_types';
 
-const DetailPanelBox: FC<{ children?: ReactNode }> = (props) => {
+function DetailPanelBox(props: { children?: ReactNode }) {
   const { children } = props;
   const ref = createRef<HTMLDivElement>();
 
@@ -32,7 +32,7 @@ const DetailPanelBox: FC<{ children?: ReactNode }> = (props) => {
       {children}
     </Box>
   );
-};
+}
 
 function getTableCellElement(rowId: any, position: 'top' | 'bottom') {
   if (!rowId || !position) return null;

@@ -1,7 +1,7 @@
 import http from '@/api/http';
 import httpMock from '@/api/httpMock';
 import mockAdapter from '@/api/mockAdapter';
-import type { TListDataQueryModel } from '@/_types/TListDataModel';
+import type { TListDataQueryModel } from '@/types';
 import type { AxiosResponse } from 'axios';
 import { PAGE_SIZE } from '../../constants';
 import { TShopeeProductItem } from '../../_types';

@@ -1,12 +1,4 @@
-import CommonSelectField from '@/components/inputs/CommonSelectField';
-import type { ComponentType } from 'react';
-import { forwardRef } from 'react';
-import withBooleanValue from './withBooleanValue';
-import type { TCommonSelectBooleanFieldProps } from './_types';
-
-const CommonField: ComponentType<TCommonSelectBooleanFieldProps> = withBooleanValue(CommonSelectField);
-
-const CommonSelectBooleanField: ComponentType<TCommonSelectBooleanFieldProps> = forwardRef((props, ref) => {
-  return <CommonField {...props} inputRef={ref} />;
-});
+import CommonSelectBooleanField from './CommonSelectBooleanField';
 export default CommonSelectBooleanField;
+export { FALSE, TRUE } from './constants';
+export type { TCommonSelectBooleanFieldOnChange, TCommonSelectBooleanFieldProps } from './_types';

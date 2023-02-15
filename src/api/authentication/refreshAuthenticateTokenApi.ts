@@ -1,6 +1,6 @@
 import httpMock from '@/api/httpMock';
 import mockAdapter from '@/api/mockAdapter';
-import type { TAuthentication } from '@/_types/TAuthentication';
+import type { TAuthentication } from '@/types';
 import type { AxiosInstance, AxiosResponse } from 'axios';
 
 const LINK = '/api/auth/refresh-auth-token';

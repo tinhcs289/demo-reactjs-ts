@@ -1,4 +1,4 @@
-import type { TCommonTextFieldProps } from '@/components/inputs/CommonTextField/_types';
+import type { TCommonTextFieldProps } from '@/components/inputs/CommonTextField';
 import type {
   AutocompleteChangeDetails,
   AutocompleteChangeReason,

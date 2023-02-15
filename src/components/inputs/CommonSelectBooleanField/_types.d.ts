@@ -1,4 +1,4 @@
-import type { TCommonSelectFieldProps } from '@/components/inputs/CommonSelectField/_types';
+import type { TCommonSelectFieldProps } from '@/components/inputs/CommonSelectField';
 import type { AutocompleteChangeDetails, AutocompleteChangeReason } from '@mui/material/Autocomplete';
 import type { Ref } from 'react';
 

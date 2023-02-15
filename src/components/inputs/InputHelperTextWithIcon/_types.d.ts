@@ -1,14 +1,14 @@
 import type { SvgIconTypeMap } from '@mui/material';
 import type { TypographyProps } from '@mui/material/Typography';
 import type { OverridableComponent } from '@mui/types';
-import React from 'react';
+import type { HTMLAttributes, ReactNode } from 'react';
 
 export type InputHelperTextWithIconProps = {
-  children?: React.ReactNode;
+  children?: ReactNode;
   textProps?: TypographyProps;
   icon?:
-    | React.ReactNode
+    | ReactNode
     | (OverridableComponent<SvgIconTypeMap<{}, 'svg'>> & {
         muiName: string;
       });
-} & React.HTMLAttributes<HTMLDivElement>;
+} & HTMLAttributes<HTMLDivElement>;
