@@ -20,4 +20,5 @@ export type TAuthenticationJWT = {
 export type TAuthentication = {
   user: TAuthenticationUserInfo;
   jwt: TAuthenticationJWT;
+  hasNotBeenActivated?: boolean;
 };

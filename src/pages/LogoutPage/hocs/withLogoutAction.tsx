@@ -5,7 +5,7 @@ import { default as authenticationInLocalStorage } from '@/appLocalStorages/auth
 import PATHS from '@/routes/paths';
 import type { ComponentType } from 'react';
 import { useState } from 'react';
-import type { ILogoutPage } from './_types';
+import type { ILogoutPage } from '../_types';
 
 const redirectToNextPage = () => {
   if (!(!!window && !!window?.location && typeof window.location.replace === 'function')) return;

@@ -1,8 +1,6 @@
 import type { TAutoCompleteOption } from '@/components/rhfInputs/RHFSelect';
-
-export type FormType<T extends { [x: string]: any }> = ComponentType<TBaseFormProps<T>>;
-
-export type TContactFormValue = {
+import type { TBaseFormProps } from '@/types';
+export type FormValue = {
   Id?: string;
   Title?: string;
   FirstName?: string;
@@ -13,3 +11,5 @@ export type TContactFormValue = {
   EmailAddress?: string;
   Address?: string;
 };
+export type FormProps = TBaseFormProps<FormValue>;
+export type FormType = ComponentType<FormProps>;

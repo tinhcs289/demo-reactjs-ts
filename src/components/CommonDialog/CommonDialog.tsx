@@ -1,6 +1,8 @@
-import { styled } from '@mui/material';
+import { styled, useMediaQuery } from '@mui/material';
+import type { Theme } from '@mui/material';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
+import type { DialogProps } from '@mui/material/Dialog';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -11,7 +13,14 @@ import { useMemo } from 'react';
 import { slideDict } from './constants';
 import type { TCommonDialogProps } from './_types';
 
-const DialogComponent: ComponentType<TCommonDialogProps> = (props) => {
+const StyledDialog = styled(Dialog)<DialogProps>(({ theme }) => ({
+  '& > .MuiDialog-container': {
+    '> .MuiPaper-root': {
+      position: 'relative',
+    },
+  },
+}));
+const CommonDialog: ComponentType<TCommonDialogProps> = (props) => {
   const {
     slide,
     title,
@@ -24,6 +33,7 @@ const DialogComponent: ComponentType<TCommonDialogProps> = (props) => {
     loading,
     backdropProps,
     loadingInner,
+    fullScreen: fullScreenProp,
     ...otherProps
   } = props;
 
@@ -74,23 +84,20 @@ const DialogComponent: ComponentType<TCommonDialogProps> = (props) => {
     );
   }, [loading, backdropProps, loadingInner]);
 
+  const isSmallScreenOrSmaller = useMediaQuery((t: Theme) => t?.breakpoints?.down?.('sm'));
+  const fullScreen = useMemo(() => {
+    if (fullScreenProp) return true;
+    if (isSmallScreenOrSmaller) return true;
+    return false;
+  }, [fullScreenProp, isSmallScreenOrSmaller]);
+
   return (
-    <Dialog TransitionComponent={slideDict[slide || 'down']} {...otherProps}>
+    <StyledDialog TransitionComponent={slideDict[slide || 'down']} fullScreen={fullScreen} {...otherProps}>
       {memoLoading}
       {memoTitle}
       {memoContent}
       {memoAction}
-    </Dialog>
+    </StyledDialog>
   );
 };
-const CommonDialog = styled(DialogComponent)<TCommonDialogProps>(
-  () =>
-    ({
-      '& > .MuiDialog-container': {
-        '> .MuiPaper-root': {
-          position: 'relative',
-        },
-      },
-    } as any)
-) as ComponentType<TCommonDialogProps>;
 export default CommonDialog;

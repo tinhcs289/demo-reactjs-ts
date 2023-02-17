@@ -8,7 +8,7 @@ import type { ReactNode } from 'react';
 import { CommonDialogSlide } from './constants';
 
 export type TCommonDialogSlideProps = `${CommonDialogSlide}`;
-export type TCommonDialogProps = Omit<DialogProps, 'title', 'TransitionComponent'> & {
+export type TCommonDialogProps = DialogProps & {
   slide?: TCommonDialogSlideProps;
   title?: ReactNode;
   titleProps?: Omit<DialogTitleProps, 'children'>;

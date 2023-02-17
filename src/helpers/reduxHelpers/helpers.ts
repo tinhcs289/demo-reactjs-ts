@@ -5,8 +5,8 @@ import { combineReducers } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import type { ForkEffectDescriptor, SimpleEffect } from 'redux-saga/effects';
 import { all, fork } from 'redux-saga/effects';
-import type { ReduxCase, ReduxStore, TAction, TInitState, TObject, TReducer, TReducerRoot, TSaga } from './_types';
-
+import type { ReduxCase, ReduxStore, TAction, TInitState, TObject, TReducer, TReducerRoot, TReducerRootCombined, TSaga } from './_types';
+const registeredActionTypes: string[] = [];
 function createRootReducer(name: string, reducers: TReducerRoot[]) {
   let combine = {} as { [x: string]: any };
   reducers.forEach((c) => { combine[c.name] = c.reducer });
@@ -20,13 +20,11 @@ function createRootReducer(name: string, reducers: TReducerRoot[]) {
     sagas: rootSaga,
   };
 };
-
 export function createReduxStore(reducers: {
   name: string;
   reducer: (state: TInitState, action: TAction) => TObject;
   sagas?: TSaga;
 }[], shouldEnabledDevTools: boolean = false) {
-
   const devTools = !!shouldEnabledDevTools;
   const enhancers = [reduxBatch];
   const { reducer, sagas } = createRootReducer('', reducers);
@@ -43,19 +41,23 @@ export function createReduxStore(reducers: {
   sagaMiddleware.run(sagas);
   return store;
 };
-
-
 function createAction<T extends { [x: string]: any }>(type: string) {
   return function action(payload: T) {
     return { type, payload };
   };
 }
-
 export function createCase<ActionPayload extends TObject, State>(
   actionType: string,
   caseHandle: ReduxCase<ActionPayload, State>,
   sagaEffect?: SimpleEffect<"FORK", ForkEffectDescriptor<never>>,
 ) {
+  //#region duplicated type warning
+  if (registeredActionTypes.includes(actionType)) {
+    console.warn(`the action type of ${actionType} was duplicated`)
+  } else {
+    registeredActionTypes.push(actionType);
+  }
+  //#endregion
   return {
     type: actionType,
     action: createAction<ActionPayload>(actionType),
@@ -101,4 +103,37 @@ export function createRootSelector<State extends { [x: string]: any }>(rootName:
   return function selector(state: ReduxStore) {
     return get(state, rootName) as State | undefined;
   }
+};
+export function createNestedReducer(
+  name: string,
+  initialState: TInitState,
+  cases: Case[],
+  sagas?: TSaga,
+  subReducers?: TReducerRootCombined[]
+) {
+  const combineSagas = subReducers?.filter?.((c) => c.sagas).map((r) => r.sagas) || [];
+  if (!!sagas) combineSagas.push(sagas as any);
+  const caseDict = createReducerCaseDict(...cases);
+  return {
+    name: name,
+    reducer: (state: TInitState, action: TAction) => {
+      let combineState = {};
+      if (typeof state === 'undefined') combineState = { ...initialState };
+      if (typeof caseDict[action.type] === 'function') {
+        combineState = caseDict[action.type](action, state);
+      } else {
+        combineState = { ...initialState, ...state };
+      }
+      subReducers?.forEach?.((c) => {
+        combineState = {
+          ...combineState,
+          [c.name]: c.reducer((state || { [c.name]: undefined })[c.name], action),
+        };
+      });
+      return combineState;
+    },
+    sagas: function* rootSagas() {
+      yield all(combineSagas.map((sagas) => fork(sagas)));
+    },
+  };
 };

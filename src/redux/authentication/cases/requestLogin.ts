@@ -5,6 +5,7 @@ import { EApiRequestStatus } from '@/constants/apiRequestStatus';
 import type { ReduxAction } from '@/helpers/reduxHelpers';
 import { createCase } from '@/helpers/reduxHelpers';
 import { actions as snackbar } from '@/redux/snackbar';
+import { actions as userAccount } from '@/redux/userAccount';
 import { i18n } from '@/translation';
 import type { TAuthentication } from '@/types';
 import type { AxiosResponse } from 'axios';
@@ -27,6 +28,11 @@ const requestLogin = createCase<Payload, State>(
   },
   takeLatest(TYPE, function* (action: ReduxAction<Payload>) {
     const response: LoginApiReturns = (yield loginApi(action.payload)) as LoginApiReturns;
+    if (!!response?.data?.hasNotBeenActivated) {
+      yield put(userAccount.markAsNotBeenActivated({ userAccount: action.payload.username }));
+      yield put(clearStatusOfRequestLogin.action({}));
+      return;
+    }
     if (!response?.data?.jwt || !validate(response.data.jwt)) {
       yield put(requestLoginFail.action({}));
       return;

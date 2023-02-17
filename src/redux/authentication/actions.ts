@@ -7,6 +7,7 @@ const actions = {
   requestLoginSuccess: requestLoginSuccess.action,
   requestLoginFail: requestLoginFail.action,
   clearStatusOfRequestLogin: clearStatusOfRequestLogin.action,
+  //
   requestLogout: requestLogout.action,
   clearStatusOfRequestLogout: clearStatusOfRequestLogout.action,
   requestLogoutFail: requestLogoutFail.action,

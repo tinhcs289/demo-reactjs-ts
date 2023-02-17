@@ -4,7 +4,13 @@ import state, { rootName } from './state';
 import sessionTimeoutWarningHide from './cases/sessionTimeoutWarningHide';
 import sessionTimeoutWarningShow from './cases/sessionTimeoutWarningShow';
 //#endregion
-export default createReducer(rootName, state, sessionTimeoutWarningHide, sessionTimeoutWarningShow);
+export default createReducer(
+  rootName,
+  state,
+  //
+  sessionTimeoutWarningHide,
+  sessionTimeoutWarningShow,
+);
 export { default as actions } from './actions';
 export * from './selectors';
 

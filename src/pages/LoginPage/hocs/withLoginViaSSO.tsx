@@ -1,5 +1,5 @@
 import type { ComponentType } from 'react';
-import type { ILoginPageProps, TLoginFormData } from './_types';
+import type { ILoginPageProps, TLoginFormData } from '../_types';
 
 const withLoginViaSSO = (WrappedComponent: ComponentType<ILoginPageProps>) => (props: ILoginPageProps) => {
   const { onRequestLoginViaSSO: _, ...otherProps } = props;

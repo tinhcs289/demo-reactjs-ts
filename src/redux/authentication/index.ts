@@ -7,10 +7,12 @@ import requestLogout, { clearStatusOfRequestLogout, requestLogoutFail, requestLo
 export default createReducer(
   rootName,
   state,
+  //
   requestLogin,
   requestLoginFail,
   requestLoginSuccess,
   clearStatusOfRequestLogin,
+  //
   requestLogout,
   clearStatusOfRequestLogout,
   requestLogoutFail,

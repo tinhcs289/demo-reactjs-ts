@@ -7,7 +7,7 @@ import PATHS from '@/routes/paths';
 import type { ComponentType } from 'react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { ILoginPageProps, TLoginFormData } from './_types';
+import type { ILoginPageProps, TLoginFormData } from '../_types';
 
 const redirectToNextPage = (returnUri?: string) => {
   if (!(!!window && !!window?.location && typeof window.location.replace === 'function')) return;

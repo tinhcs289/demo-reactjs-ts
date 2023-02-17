@@ -4,7 +4,7 @@ import PATHS from '@/routes/paths';
 import type { ComponentType } from 'react';
 import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import type { ILogoutPage } from './_types';
+import type { ILogoutPage } from '../_types';
 
 const redirectToNextPage = () => {
   if (!(!!window && !!window?.location && typeof window.location.replace === 'function')) return;
