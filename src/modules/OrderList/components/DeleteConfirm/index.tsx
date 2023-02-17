@@ -76,7 +76,7 @@ const DeleteConfirm: FC<any> = (props) => {
       open={open}
       loading={loading}
       onClose={handleClose as any}
-      title={t('common:pleaseConfirmForPerformThisAction')}
+      title={t<string>('common:pleaseConfirmForPerformThisAction')}
       actions={memoActions}
     >
       {content}

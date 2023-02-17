@@ -4,19 +4,16 @@ import RHFText from '@/components/rhfInputs/RHFText';
 import { email, phone, required } from '@/constants/rhfRules';
 import newGuid from '@/helpers/stringHelpers/newGuid';
 import { actions as snackbar } from '@/redux/snackbar';
-import type { TBaseFormProps } from '@/types';
 import Button from '@mui/material/Button';
 import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { genderOptions, itemSx } from './contants';
-import type { TContactFormValue } from './_types';
-
-export default function Form(props: TBaseFormProps<TContactFormValue>) {
+import type { FormProps } from './_types';
+export default function Form(props: FormProps) {
   const { t } = useTranslation();
   const { control } = useFormContext();
   const dispatch = useDispatch();
-
   return (
     <>
       <Button

@@ -3,6 +3,7 @@ const PATHS = {
   login: '/auth/login',
   logout: '/auth/logout',
   register: '/auth/register',
+  userAccountActivate: '/auth/activate-your-account',
   forgetPassword: '/auth/forget-password',
   //#endregion
   //#region Private
