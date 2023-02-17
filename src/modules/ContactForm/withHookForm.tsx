@@ -2,24 +2,15 @@ import FormCloseButton from '@/components/buttons/FormCloseButton';
 import FormSubmitButton from '@/components/buttons/FormSubmitButton';
 import FormGridContainer from '@/components/form/FormGridContainer';
 import FormGridItem from '@/components/form/FormGridItem';
-import type { TBaseFormProps } from '@/types';
-import type { ComponentType } from 'react';
 import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-
-type FormType<T extends { [x: string]: any }> = ComponentType<TBaseFormProps<T>>;
-
-export default function withHookForm<T extends { [x: string]: any }>(
-  WrappedComponent: FormType<T>
-): FormType<T> {
-  return function (props) {
+import type { FormProps, FormType, FormValue } from './_types';
+export default function withHookForm(WrappedComponent: FormType): FormType {
+  return function (props: FormProps) {
     const { defaultValues, loading, resetOnClose, onClose, onSubmit, subForm, ...otherProps } = props;
-
     const { t } = useTranslation();
-
-    const form = useForm<T>({ defaultValues: defaultValues as any });
-
+    const form = useForm<FormValue>({ defaultValues });
     const handleSubmit = useMemo(
       () =>
         form.handleSubmit(function (formData) {
@@ -31,16 +22,14 @@ export default function withHookForm<T extends { [x: string]: any }>(
         }),
       [form, onSubmit]
     );
-
     const closeForm = useMemo(() => {
       if (resetOnClose) {
         form.reset(defaultValues);
         form.clearErrors();
       }
       if (typeof onClose !== 'function') return;
-      onClose({ reload: false });
+      onClose({ shouldReloadAfterClosed: false });
     }, [form, onClose, resetOnClose, defaultValues]);
-
     return (
       <FormProvider {...form}>
         <FormGridContainer onSubmit={handleSubmit} loading={loading}>

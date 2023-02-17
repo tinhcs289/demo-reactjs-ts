@@ -2,7 +2,7 @@ import { TAutoCompleteOption } from '@/components/rhfInputs/RHFSelect';
 import EMPTY_GUID from '@/helpers/stringHelpers/EMPTY_GUID';
 import { i18n } from '@/translation';
 import type { SxProps, Theme } from '@mui/material';
-import type { TContactFormValue } from './_types';
+import type { FormValue } from './_types';
 
 export const itemSx: SxProps<Theme> = { p: 1, mb: 2 };
 
@@ -20,7 +20,7 @@ export const GENDERS: { [x: string]: TAutoCompleteOption } = {
 
 export const genderOptions = Object.values(GENDERS);
 
-export const defaultContact: TContactFormValue = {
+export const defaultContact: FormValue = {
   Id: EMPTY_GUID,
   Title: i18n.t<string>('contact:default.title'),
   FirstName: '',

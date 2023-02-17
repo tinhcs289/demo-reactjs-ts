@@ -1,5 +1,5 @@
 import type { ComponentType } from 'react';
-import type { ILoginPageProps } from './_types';
+import type { ILoginPageProps } from '../_types';
 
 const withRedirectAfterLoginWithExternalQueryString =
   (WrappedComponent: ComponentType<ILoginPageProps>) => (props: ILoginPageProps) => {

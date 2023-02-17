@@ -1,8 +1,6 @@
 import { SNACKBAR_VARIANT } from '@/constants/snackbar';
-import type { ReduxAction } from '@/helpers/reduxHelpers';
 import { createCase } from '@/helpers/reduxHelpers';
 import newGuid from '@/helpers/stringHelpers/newGuid';
-import { delay, takeLatest } from 'redux-saga/effects';
 import type { State } from '../state';
 import { rootName } from '../state';
 export type Payload = {
@@ -21,9 +19,5 @@ const pushMessage = createCase<Payload, State>(
       variant: variant,
     };
   },
-  takeLatest(TYPE, function* (action: ReduxAction<Payload>) {
-    console.log(action.payload);
-    yield delay(1000);
-  }),
 );
 export default pushMessage;
