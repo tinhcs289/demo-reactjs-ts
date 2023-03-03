@@ -1,9 +1,6 @@
-import { styled, useMediaQuery } from '@mui/material';
 import type { Theme } from '@mui/material';
-import Backdrop from '@mui/material/Backdrop';
+import { useMediaQuery } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
-import type { DialogProps } from '@mui/material/Dialog';
-import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -11,15 +8,10 @@ import Grid from '@mui/material/Grid';
 import type { ComponentType } from 'react';
 import { useMemo } from 'react';
 import { slideDict } from './constants';
+import LoadingBackdrop from './LoadingBackdrop';
+import StyledDialog from './StyledDialog';
 import type { TCommonDialogProps } from './_types';
 
-const StyledDialog = styled(Dialog)<DialogProps>(({ theme }) => ({
-  '& > .MuiDialog-container': {
-    '> .MuiPaper-root': {
-      position: 'relative',
-    },
-  },
-}));
 const CommonDialog: ComponentType<TCommonDialogProps> = (props) => {
   const {
     slide,
@@ -74,13 +66,9 @@ const CommonDialog: ComponentType<TCommonDialogProps> = (props) => {
     const { sx: _sx, ..._props } = backdropProps || {};
 
     return (
-      <Backdrop
-        {..._props}
-        open
-        sx={{ ..._sx, zIndex: (theme) => theme.zIndex.drawer + 1, position: 'absolute' }}
-      >
+      <LoadingBackdrop {..._props} open>
         {loadingInner || <CircularProgress color="inherit" />}
-      </Backdrop>
+      </LoadingBackdrop>
     );
   }, [loading, backdropProps, loadingInner]);
 

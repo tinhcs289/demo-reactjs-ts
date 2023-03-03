@@ -1,5 +1,5 @@
 import authentication from '@/appCookies/authentication';
-import CommonFallback from '@/components/CommonFallback';
+import { FallBackAbsolute } from '@/components/CommonFallback';
 import toEncodeUri from '@/helpers/stringHelpers/toEncodeUri';
 import useReturnUrlHashBuilder from '@/hooks/useReturnUrlHashBuilder';
 import AuthLayout from '@/layouts/AuthLayout';
@@ -23,75 +23,87 @@ const AppRouter: FC<BrowserRouterProps> = (props) => {
   if (!accessToken)
     return (
       <BrowserRouter {...props}>
-        <Suspense fallback={<CommonFallback />}>
-          <Routes>
-            <Route element={<LandingLayout />}>
-              {publicRoutes.map((route: TRouteConfig) => {
-                return (
-                  <Route
-                    key={route.name}
-                    path={route.path}
-                    element={createElement(route.component as ComponentType<any>)}
-                  />
-                );
-              })}
-            </Route>
-            <Route element={<AuthLayout variant="fullWidth" />}>
-              {authRoutes.map((route: TRouteConfig) => {
-                return (
-                  <Route
-                    key={route.name}
-                    path={route.path}
-                    element={createElement(route.component as ComponentType<any>)}
-                  />
-                );
-              })}
-            </Route>
-            {privateRoutes.map((route: TRouteConfig) => {
-              const returnHash = buildReturnHash(route);
+        <Routes>
+          <Route element={<LandingLayout />}>
+            {publicRoutes.map((route: TRouteConfig) => {
               return (
                 <Route
                   key={route.name}
                   path={route.path}
-                  element={<Navigate to={toEncodeUri(PATHS.login, returnHash)} replace />}
+                  element={
+                    <Suspense fallback={<FallBackAbsolute open />}>
+                      {createElement(route.component as ComponentType<any>)}
+                    </Suspense>
+                  }
                 />
               );
             })}
-            <Route path="*" element={<Navigate to={PATHS.notfound} replace />} />
-          </Routes>
-        </Suspense>
+          </Route>
+          <Route element={<AuthLayout variant="fullWidth" />}>
+            {authRoutes.map((route: TRouteConfig) => {
+              return (
+                <Route
+                  key={route.name}
+                  path={route.path}
+                  element={
+                    <Suspense fallback={<FallBackAbsolute open />}>
+                      {createElement(route.component as ComponentType<any>)}
+                    </Suspense>
+                  }
+                />
+              );
+            })}
+          </Route>
+          {privateRoutes.map((route: TRouteConfig) => {
+            const returnHash = buildReturnHash(route);
+            return (
+              <Route
+                key={route.name}
+                path={route.path}
+                element={<Navigate to={toEncodeUri(PATHS.login, returnHash)} replace />}
+              />
+            );
+          })}
+          <Route path="*" element={<Navigate to={PATHS.notfound} replace />} />
+        </Routes>
       </BrowserRouter>
     );
   else
     return (
       <BrowserRouter {...props}>
-        <Suspense fallback={<CommonFallback />}>
-          <Routes>
-            <Route element={<LandingLayout />}>
-              {publicRoutes.map((route: TRouteConfig) => {
-                return (
-                  <Route
-                    key={route.name}
-                    path={route.path}
-                    element={createElement(route.component as ComponentType<any>)}
-                  />
-                );
-              })}
-            </Route>
-            <Route element={<DashboardLayout />}>
-              {privateRoutes.map((route: TRouteConfig) => {
-                return (
-                  <Route
-                    key={route.name}
-                    path={route.path}
-                    element={createElement(route.component as ComponentType<any>)}
-                  />
-                );
-              })}
-            </Route>
-            <Route path="*" element={<Navigate to={PATHS.notfound} replace />} />
-          </Routes>
-        </Suspense>
+        <Routes>
+          <Route element={<LandingLayout />}>
+            {publicRoutes.map((route: TRouteConfig) => {
+              return (
+                <Route
+                  key={route.name}
+                  path={route.path}
+                  element={
+                    <Suspense fallback={<FallBackAbsolute open />}>
+                      {createElement(route.component as ComponentType<any>)}
+                    </Suspense>
+                  }
+                />
+              );
+            })}
+          </Route>
+          <Route element={<DashboardLayout />}>
+            {privateRoutes.map((route: TRouteConfig) => {
+              return (
+                <Route
+                  key={route.name}
+                  path={route.path}
+                  element={
+                    <Suspense fallback={<FallBackAbsolute open />}>
+                      {createElement(route.component as ComponentType<any>)}
+                    </Suspense>
+                  }
+                />
+              );
+            })}
+          </Route>
+          <Route path="*" element={<Navigate to={PATHS.notfound} replace />} />
+        </Routes>
       </BrowserRouter>
     );
 };

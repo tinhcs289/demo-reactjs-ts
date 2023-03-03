@@ -1,4 +1,4 @@
-import type { TAsideMenuItem } from '@/layouts/DashboardLayout/_types';
+import type { TAsideMenuItem } from '@/layouts/DashboardLayout';
 import { Breakpoint } from '@mui/material';
 import type { ReactNode } from 'react';
 
