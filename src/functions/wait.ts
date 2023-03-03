@@ -1,4 +1,4 @@
-function wait(time: number = 500) {
+function wait(time: number = 300) {
   return new Promise((resolve) => {
     setTimeout(resolve, time);
   });

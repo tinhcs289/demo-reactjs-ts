@@ -8,3 +8,5 @@ export type { TListDataModel, TListDataQueryModel } from './TListDataModel';
 export type { TMuiBreakPoint } from './TMuiBreakPoint';
 export type { TMuiIcon, TMuiIconProps } from './TMuiIcon';
 export type { TNavLinkProps } from './TNavLinkProps';
+export type { TSiteMapItem, TSiteMapItemIcon, TSiteMapItemIconProps } from './TSiteMapItem';
+
