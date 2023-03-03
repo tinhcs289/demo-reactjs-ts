@@ -1,3 +1,4 @@
+import DashboardTabsContainer from '@/containers/DashboardTabsContainer';
 import ContactForm from '@/modules/ContactForm';
 import { defaultContact } from '@/modules/ContactForm/contants';
 import { Paper } from '@mui/material';
@@ -7,22 +8,24 @@ import FormByConfig from './FormByConfig';
 
 export default function DemoFormPage() {
   return (
-    <Grid container sx={{ width: '100%' }}>
-      <Grid item xs={12} lg={6} container sx={{ p: 1 }}>
-        <Paper elevation={4}>
-          <ContactForm defaultValues={defaultContact} resetOnClose />
-        </Paper>
+    <DashboardTabsContainer>
+      <Grid container sx={{ width: '100%' }}>
+        <Grid item xs={12} lg={6} container sx={{ p: 1 }}>
+          <Paper elevation={4}>
+            <ContactForm defaultValues={defaultContact} resetOnClose />
+          </Paper>
+        </Grid>
+        <Grid item xs={12} container sx={{ p: 1 }}>
+          <Paper elevation={4}>
+            <FormByConfig />
+          </Paper>
+        </Grid>
+        <Grid item xs={12} container sx={{ p: 1 }}>
+          <Paper elevation={4}>
+            <FormByComponents />
+          </Paper>
+        </Grid>
       </Grid>
-      <Grid item xs={12} container sx={{ p: 1 }}>
-        <Paper elevation={4}>
-          <FormByConfig />
-        </Paper>
-      </Grid>
-      <Grid item xs={12} container sx={{ p: 1 }}>
-        <Paper elevation={4}>
-          <FormByComponents />
-        </Paper>
-      </Grid>
-    </Grid>
+    </DashboardTabsContainer>
   );
 }

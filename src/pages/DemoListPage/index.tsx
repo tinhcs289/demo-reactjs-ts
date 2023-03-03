@@ -1,10 +1,13 @@
+import DashboardTabsContainer from '@/containers/DashboardTabsContainer';
 import ShopeeProductList from '@/modules/ShopeeProductList';
 import ItemElementSetsProvider from '@/pages/ShopeePage/context/ItemElementSetsProvider';
 
 export default function DemoListPage() {
   return (
-    <ItemElementSetsProvider>
-      <ShopeeProductList />
-    </ItemElementSetsProvider>
+    <DashboardTabsContainer>
+      <ItemElementSetsProvider>
+        <ShopeeProductList />
+      </ItemElementSetsProvider>
+    </DashboardTabsContainer>
   );
 }

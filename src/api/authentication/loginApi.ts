@@ -27,7 +27,7 @@ const mockSetup = () => {
       lastName: 'An',
       language: 'vi-VN',
     },
-    hasNotBeenActivated: true,
+    // hasNotBeenActivated: true,
   } as TAuthentication);
 };
 

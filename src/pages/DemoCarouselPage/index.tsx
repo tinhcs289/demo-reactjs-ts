@@ -1,3 +1,4 @@
+import DashboardTabsContainer from '@/containers/DashboardTabsContainer';
 import BannerSlider from '@/pages/ShopeePage/components/BannerSlider';
 import CategoryList from '@/pages/ShopeePage/components/CategoryList';
 import PromoBrandList from '@/pages/ShopeePage/components/PromoBrandList';
@@ -7,7 +8,7 @@ import PromoBrandsProvider from '@/pages/ShopeePage/context/PromoBrandsProvider'
 
 export default function DemoCarouselPage() {
   return (
-    <>
+    <DashboardTabsContainer>
       <BannerSlider />
       <QuickTools />
       <PromoBrandsProvider>
@@ -16,6 +17,6 @@ export default function DemoCarouselPage() {
       <CategoriesProvider>
         <CategoryList />
       </CategoriesProvider>
-    </>
+    </DashboardTabsContainer>
   );
 }

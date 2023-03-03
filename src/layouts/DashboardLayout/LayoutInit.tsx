@@ -1,6 +1,6 @@
 import usePrevious from '@/hooks/usePrevious';
 import asideMenuItems from '@/constants/asideMenuItems';
-import { TAsideMenuItem } from '@/layouts/DashboardLayout/_types';
+import type { TAsideMenuItem } from '@/layouts/DashboardLayout';
 import { useDashboardLayout } from '@/providers/DashboardLayoutProvider';
 import isEqual from 'lodash/isEqual';
 import type { FC, ReactNode } from 'react';

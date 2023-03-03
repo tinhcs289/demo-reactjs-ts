@@ -1,5 +1,5 @@
 import newGuid from '@/helpers/stringHelpers/newGuid';
-import { TAsideMenuItem } from '@/layouts/DashboardLayout/_types';
+import type { TAsideMenuItem } from '@/layouts/DashboardLayout';
 import PATHS from '@/routes/paths';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import DashboardIcon from '@mui/icons-material/Dashboard';
