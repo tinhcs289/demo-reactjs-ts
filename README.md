@@ -1,5 +1,7 @@
 # ReactJs Admin App code-base in Typescript 
 
+[Live Demo](https://mui-react-ts-tinhcs289.web.app/)
+
 ## _A very simple ReactJS project with common features_
 - React 18
 - React Router Dom v6
