@@ -2,7 +2,7 @@
   "name": "demo-reactjs-ts",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://tinhcs289.github.io",
+  "homepage": "https://mui-react-ts-tinhcs289.web.app/",
   "dependencies": {
     "@date-io/moment": "2.16.1",
     "@emotion/react": "11.10.5",
