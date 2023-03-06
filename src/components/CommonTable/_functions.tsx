@@ -130,8 +130,7 @@ export const renderBodyCell = <T extends Record<string, any>>(
   return null;
 };
 export const defaultContainerProps = (sx?: SxProps<Theme>): SxProps<Theme> => ({
-  maxHeight: '100%',
-  flex: 1,
+  maxHeight: (t) => t?.spacing?.(72),
   ...sx,
   position: 'relative',
 });

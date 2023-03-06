@@ -1,4 +1,3 @@
-import { CommonTableContainer } from '@/components/CommonTable';
 import type { FC } from 'react';
 import columns from './columns';
 import DeleteConfirm from './components/DeleteConfirm';
@@ -9,11 +8,9 @@ import getList from './services/getList';
 const OrderList: FC<any> = () => {
   return (
     <AsyncListProvider onQuery={getList} queryOnFirstLoad>
-      <CommonTableContainer sx={{ pb: '32px' }}>
-        <AsyncListTablePaging />
-        <ListItemActionMenu actions={rowActions} />
-        <AsyncListTable columns={columns} />
-      </CommonTableContainer>
+      <AsyncListTablePaging />
+      <ListItemActionMenu actions={rowActions} />
+      <AsyncListTable columns={columns} />
       <DeleteConfirm />
     </AsyncListProvider>
   );

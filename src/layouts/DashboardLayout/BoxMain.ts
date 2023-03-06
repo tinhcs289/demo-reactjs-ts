@@ -8,7 +8,5 @@ const BoxMain = styled(Box)<BoxProps>(({ theme }) => ({
   height: '100vh',
   width: '100%',
   position: 'relative',
-  overflowX: 'auto',
-  overflowY: 'hidden',
 }));
 export default BoxMain;
