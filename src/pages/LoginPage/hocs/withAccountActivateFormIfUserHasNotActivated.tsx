@@ -4,7 +4,7 @@ import { hasNotBeenActivatedSelector } from '@/redux/userAccount';
 import PATHS from '@/routes/paths';
 import { TBaseFormOnCloseHandler } from '@/types';
 import type { ComponentType } from 'react';
-import { useCallback, useEffect, useState, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import type { ILoginPageProps } from '../_types';
 

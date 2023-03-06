@@ -7,6 +7,7 @@ export { default as CommonPagination } from './components/CommonPagination';
 export { default as CommonTablePagination } from './components/CommonTablePagination';
 export { default as ItemActionMenu } from './components/ItemActionMenu';
 export { default as withDetailPanel } from './hocs/withDetailPanel';
+export { default as CommonTableContainer } from './components/CommonTableContainer';
 export type {
   //#region Table
   TSortDirect,
