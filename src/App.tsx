@@ -5,7 +5,6 @@ import MUIThemeV5Provider from '@/providers/MUIThemeV5Provider';
 import NotiStackProvider from '@/providers/NotiStackProvider';
 import ReduxProvider from '@/providers/ReduxProvider';
 import React from 'react';
-import './App.css';
 import AppRouter from './AppRouter';
 
 const App: React.FC<any> = (props) => {
