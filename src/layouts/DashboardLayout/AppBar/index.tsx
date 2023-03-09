@@ -4,7 +4,7 @@ import { useDashboardLayout } from '@/providers/DashboardLayoutProvider';
 import type { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import MuiAppBar from '@mui/material/AppBar';
 import { styled, SxProps, useTheme } from '@mui/material/styles';
-import Toolbar from '@mui/material/Toolbar';
+import Toolbar, { ToolbarProps } from '@mui/material/Toolbar';
 import type { FC } from 'react';
 import { memo, useMemo } from 'react';
 import ButtonLogout from './ButtonLogout';
@@ -33,22 +33,20 @@ const AppBarStyled = styled(MuiAppBar, {
   }),
 }));
 
-const AppBar: FC<any> = (props) => {
-  const theme = useTheme();
+const ToolbarStyled = styled(Toolbar)<ToolbarProps>(({ theme }) => ({
+  paddingRight: theme.spacing(3),
+}));
 
+const AppBar: FC<any> = (props) => {
   const [isAsideOpen] = useDashboardLayout((s) => s.isAsideOpen);
 
   const memoOpen = useMemo(() => {
     return !!isAsideOpen;
   }, [isAsideOpen]);
 
-  const style: SxProps = useMemo(() => {
-    return { pr: theme.spacing(3) };
-  }, [theme]);
-
   return (
     <AppBarStyled position="absolute" open={memoOpen}>
-      <Toolbar sx={style}>
+      <ToolbarStyled>
         {useMemo(
           () => (
             <ButtonMenu />
@@ -73,7 +71,7 @@ const AppBar: FC<any> = (props) => {
           ),
           []
         )}
-      </Toolbar>
+      </ToolbarStyled>
     </AppBarStyled>
   );
 };
