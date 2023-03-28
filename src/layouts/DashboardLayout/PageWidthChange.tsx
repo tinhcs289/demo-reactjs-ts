@@ -9,13 +9,11 @@ import type { Breakpoint } from '@mui/material';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import isEqual from 'lodash/isEqual';
-import type { FC, MouseEvent } from 'react';
+import type { MouseEvent } from 'react';
 import { useCallback } from 'react';
 import { DEFAULT_WIDTH } from './constants';
-
-const PageWidthChange: FC<any> = (props) => {
+export default function PageWidthChange() {
   const [pageMaxWidth, setWidth] = useDashboardLayout((s) => s.pageMaxWidth);
-
   const handleChangeWidth = useCallback(
     (event: MouseEvent<HTMLElement>, value: Breakpoint) => {
       if (isEqual(pageMaxWidth, value)) return;
@@ -24,7 +22,6 @@ const PageWidthChange: FC<any> = (props) => {
     },
     [pageMaxWidth, setWidth]
   );
-
   return (
     <ToggleButtonGroup
       size="small"
@@ -57,5 +54,4 @@ const PageWidthChange: FC<any> = (props) => {
       </ToggleButton>
     </ToggleButtonGroup>
   );
-};
-export default PageWidthChange;
+}

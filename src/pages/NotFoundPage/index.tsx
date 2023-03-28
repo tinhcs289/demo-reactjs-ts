@@ -1,22 +1,18 @@
 import authentication from '@/appCookies/authentication';
+import PATHS from '@/constants/paths';
 import LandingBanner from '@/layouts/LandingLayout/LandingBanner';
 import LandingBannerSubTitle from '@/layouts/LandingLayout/LandingBannerSubTitle';
 import LandingBannerTitle from '@/layouts/LandingLayout/LandingBannerTitle';
 import LandingContent from '@/layouts/LandingLayout/LandingContent';
 import LandingTopBar from '@/layouts/LandingLayout/LandingTopBar';
-import PATHS from '@/routes/paths';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import LoginIcon from '@mui/icons-material/Login';
 import Button from '@mui/material/Button';
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
-
-const NotFoundPage: React.FC<any> = (props) => {
+export default function NotFoundPage() {
   const { t } = useTranslation();
-
   const accessToken = authentication.get()?.accessToken;
-
   return (
     <>
       <LandingTopBar>{t('notFound:pageNotFound')}</LandingTopBar>
@@ -43,5 +39,4 @@ const NotFoundPage: React.FC<any> = (props) => {
       </main>
     </>
   );
-};
-export default NotFoundPage;
+}

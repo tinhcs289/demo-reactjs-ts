@@ -1,13 +1,12 @@
-import type { RouteProps } from 'react-router-dom';
-
-export type TRouteConfig = {
-  /**
-   * Name must be unique
-   */
+import type { ComponentType } from 'react';
+import type { RouteProps, BrowserRouterProps } from 'react-router-dom';
+type RouterV5Props = Omit<RouteProps, 'element'>
+export type RouteConfig = RouterV5Props & {
   name: string;
-  /**
-   * The same prop as `component` of `React Router V5`
-   */
-  component: React.FC<any>;
-  breadcrumb?: React.FC<any>;
-} & Omit<RouteProps, 'element'>;
+  component?: ComponentType<any>;
+  breadcrumb?: ComponentType<any>;
+  navigateTo?: string;
+};
+export type AppRouterProps = Partial<BrowserRouterProps>;
+export type AppRouterComponent = ComponentType<AppRouterProps>;
+export type AppRouterHoc = (WrappedComponent: AppRouterComponent) => AppRouterComponent;

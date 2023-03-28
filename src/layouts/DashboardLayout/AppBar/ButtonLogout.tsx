@@ -1,26 +1,18 @@
-import PATHS from '@/routes/paths';
+import PATHS from '@/constants/paths';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import IconButton from '@mui/material/IconButton';
-import type { FC, MouseEventHandler } from 'react';
-import { memo, useCallback } from 'react';
+import type { MouseEventHandler } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-const ButtonLogout: FC<any> = (props) => {
+export default function ButtonLogout() {
   const navigate = useNavigate();
-
-  const handleClickLogout: MouseEventHandler<HTMLButtonElement> = useCallback(
-    (event) => {
-      event?.stopPropagation?.();
-      event?.preventDefault?.();
-      navigate(PATHS.logout);
-    },
-    [navigate]
-  );
-
+  const handleClickLogout: MouseEventHandler<HTMLButtonElement> = (event) => {
+    event?.stopPropagation?.();
+    event?.preventDefault?.();
+    navigate(PATHS.logout);
+  };
   return (
     <IconButton color="inherit" onClick={handleClickLogout}>
       <ExitToAppIcon />
     </IconButton>
   );
-};
-export default memo(ButtonLogout) as FC<any>;
+}

@@ -6,14 +6,10 @@ import '@fontsource/roboto/700.css';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
-
 console.log(`---- environment: ${getEnviromentName()} ----`);
-
 root.render(<App />);
 reportWebVitals();
-
 // DO NOT REMOVE THIS CODE
 // window.breakHoverUI = function (ms?: number) {
 //   setTimeout(() => {

@@ -1,19 +1,17 @@
 import wait from '@/functions/wait';
-import paths from '@/routes/paths';
-import type { TRouteConfig } from '@/routes/_types';
+import paths from '@/constants/paths';
+import type { RouteConfig } from '@/routes/_types';
 import { lazy } from 'react';
-
 const ShopeePage = lazy(() => wait().then(() => import('@/pages/ShopeePage')));
 const ShopeeProductDetailPage = lazy(() => wait().then(() => import('@/pages/ShopeeProductDetailPage')));
-
-const ShopeeRoute: TRouteConfig[] = [
+const ShopeeRoute: RouteConfig[] = [
   {
     name: 'ShopeeRoute',
     path: paths.shopee,
     component: ShopeePage,
   },
   {
-    name: 'shopeeProductDetailRoute',
+    name: 'ShopeeProductDetailRoute',
     path: paths.shopeeProductDetail,
     component: ShopeeProductDetailPage,
   },

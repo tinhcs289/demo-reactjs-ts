@@ -1,6 +1,6 @@
 import type { TBodyCellInnerComponent } from '@/components/CommonTable';
 import useSnackbarNotify from '@/hooks/useSnackbarNotify';
-import PATHS from '@/routes/paths';
+import PATHS  from '@/constants/paths';
 import type { TAny } from '@/types';
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
@@ -23,7 +23,7 @@ const BookingCode: TBodyCellInnerComponent<TOrderListItem, TAny> = ({ row }) => 
   );
 
   return (
-    <NavLink to={PATHS.dashboard2} style={{ textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}>
+    <NavLink to={PATHS.demoTable} style={{ textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}>
       <Chip
         icon={<OpenInNewIcon />}
         label={row?.bookingCode || ''}
