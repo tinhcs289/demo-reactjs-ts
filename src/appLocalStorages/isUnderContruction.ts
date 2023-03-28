@@ -1,4 +1,4 @@
-import newLocalStorageListenableItem from '@/helpers/localStorageHelpers/newLocalStorageListenableItem';
+import { newLocalStorageListenableItem } from '@/helpers/localStorageHelpers';
 import { TAppContruction } from '@/types';
 import * as yup from 'yup';
 
