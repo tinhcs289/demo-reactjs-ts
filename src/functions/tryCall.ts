@@ -1,12 +1,9 @@
 import type { AxiosResponse } from 'axios';
-
 enum RES_ERROR {
   REQUEST_ERROR = 'REQUEST_ERROR',
   //TODO: add more key for specified case of error
 }
-
 type InvalidResponseError = `${RES_ERROR}`;
-
 /**
  * An elegant way to do async/await api call
  * @example
@@ -24,7 +21,7 @@ type InvalidResponseError = `${RES_ERROR}`;
    await tryCall(getUsers, payload).withNoDesire();
    // do something next
  */
-function tryCall<ResponseDataType>(
+export default function tryCall<ResponseDataType>(
   requestCall: (...args: any[]) => Promise<AxiosResponse<ResponseDataType, any>>,
   ...args: any[]
 ) {
@@ -88,4 +85,3 @@ function tryCall<ResponseDataType>(
     },
   };
 }
-export default tryCall;

@@ -3,7 +3,7 @@ import { ASIDE_MENU_WIDTH } from '@/layouts/DashboardLayout/constants';
 import { useDashboardLayout } from '@/providers/DashboardLayoutProvider';
 import type { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import MuiAppBar from '@mui/material/AppBar';
-import { styled, SxProps, useTheme } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import Toolbar, { ToolbarProps } from '@mui/material/Toolbar';
 import type { FC } from 'react';
 import { memo, useMemo } from 'react';

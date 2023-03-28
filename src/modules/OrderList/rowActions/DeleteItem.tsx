@@ -1,27 +1,24 @@
 import type { TItemMenuActionComponent } from '@/components/CommonTable';
-import { ACTION } from '@/hooks/useAsyncListState/constants';
-import type { TAny } from '@/types';
 import MenuItem from '@mui/material/MenuItem';
-import { useCallback } from 'react';
-import { useAsyncList } from '../context';
+import { useCallback, useMemo } from 'react';
+import { useAsyncListAction } from '../context';
 import type { TOrderListItem } from '../_types';
-
-const DeleteItem: TItemMenuActionComponent<TOrderListItem, TAny> = (props) => {
+const DeleteItem: TItemMenuActionComponent<TOrderListItem> = (props) => {
   const { icon, label, props: otherProps } = props;
-  const [set] = useAsyncList((s) => s?.action?.set);
-
+  const { setAction } = useAsyncListAction();
   const handleClick = useCallback(() => {
-    set?.({
-      action: ACTION.DELETE,
-      keepInteract: true,
-    });
-  }, [set]);
-
-  return (
-    <MenuItem {...(otherProps as any)} onClick={handleClick}>
-      {icon()}
-      {label()}
-    </MenuItem>
-  );
+    setAction?.({ action: 'DELETE', keepInteract: true });
+  }, [setAction]);
+  const $Icon = useMemo(() => icon?.() || null, [icon]);
+  const $Label = useMemo(() => label?.() || null, [label]);
+  const $Return = useMemo(() => {
+    return (
+      <MenuItem {...(otherProps as any)} onClick={handleClick}>
+        {$Icon}
+        {$Label}
+      </MenuItem>
+    );
+  }, [$Icon, $Label, handleClick, otherProps]);
+  return $Return;
 };
 export default DeleteItem;
