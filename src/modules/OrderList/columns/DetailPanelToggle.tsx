@@ -7,7 +7,6 @@ import { Grid } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import { useMemo } from 'react';
 import type { TOrderListItem } from '../_types';
-
 const Toggle: TDetailPanelToggle<TOrderListItem> = (props) => {
   const { open, toggle } = props;
 
@@ -17,7 +16,6 @@ const Toggle: TDetailPanelToggle<TOrderListItem> = (props) => {
 
   return $toggler;
 };
-
 const DetailPanel: TDetailPanelComponent<TOrderListItem> = ({ closePanel }) => {
   return (
     <Grid container sx={{ m: 0, p: 0, position: 'relative', height: '100px' }}>

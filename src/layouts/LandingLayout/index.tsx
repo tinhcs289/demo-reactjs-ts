@@ -1,11 +1,8 @@
-import React from 'react';
 import { Outlet } from 'react-router-dom';
-
-const LandingLayout: React.FC<{ children?: React.ReactNode }> = (props) => {
+export default function LandingLayout() {
   return (
     <>
       <Outlet />
     </>
   );
-};
-export default LandingLayout;
+}

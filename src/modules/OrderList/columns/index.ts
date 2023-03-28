@@ -1,6 +1,6 @@
 import { renderCellInnerAs, tableConfig } from '@/components/CommonTable';
 import { i18n } from '@/translation';
-import { ListItemActionMenuToggle } from '../context';
+import { AsyncListItemActionMenuToggle } from '../context';
 import type { TOrderListItem } from '../_types';
 import BookingCode from './BookingCode';
 import CreateBy from './CreatedBy';
@@ -94,7 +94,7 @@ const columns = tableConfig<TOrderListItem>(
     field: 'action',
     headCell: i18n.t('booking:table.action'),
     headCellProps: { align: 'center', sx: { width: '0%' } },
-    bodyCellInner: renderCellInnerAs(ListItemActionMenuToggle),
+    bodyCellInner: renderCellInnerAs(AsyncListItemActionMenuToggle),
     bodyCellProps: { align: 'center', sx: { p: '4px' } },
     stickyLast: true,
   }

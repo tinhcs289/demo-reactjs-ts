@@ -1,5 +1,5 @@
 import loginApi from '@/api/authentication/loginApi';
-import tryCall from '@/api/tryCall';
+import tryCall from '@/functions/tryCall';
 import authentication from '@/appCookies/authentication';
 import { default as authenticationInLocalStorage } from '@/appLocalStorages/authentication';
 import useSnackbarNotify from '@/hooks/useSnackbarNotify';

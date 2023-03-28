@@ -1,5 +1,5 @@
 import logoutApi from '@/api/authentication/logoutApi';
-import tryCall from '@/api/tryCall';
+import tryCall from '@/functions/tryCall';
 import authentication from '@/appCookies/authentication';
 import { default as authenticationInLocalStorage } from '@/appLocalStorages/authentication';
 import PATHS from '@/routes/paths';

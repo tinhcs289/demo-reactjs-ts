@@ -1,16 +1,16 @@
 import type { TOrderListItem } from './_types';
-import createAsyncListContextWithComponent from '@/functions/createAsyncListContextWithComponent';
-
+import createAsyncListContextWithComponent from '@/functions/createAsyncListContext2WithComponents';
 const context = createAsyncListContextWithComponent<TOrderListItem>();
-
 export const {
   AsyncListProvider,
-  useAsyncList,
+  useAsyncListAction,
+  useAsyncListSetter,
+  useAsyncListGetter,
+  useAsyncListInteract,
   AsyncListTable,
-  AsyncListPaging,
   AsyncListTablePaging,
-  ListItemActionMenuToggle,
-  ListItemActionMenu,
-  ListItemActionEdit,
-  ListItemActionDelete,
+  AsyncListItemActionMenu,
+  AsyncListItemActionMenuToggle,
+  AsyncListItemActionMenuEdit,
+  AsyncListItemActionMenuDelete,
 } = context;

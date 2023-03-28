@@ -1,4 +1,4 @@
-import tryCall from '@/api/tryCall';
+import tryCall from '@/functions/tryCall';
 import tryDo from '@/functions/tryDo';
 import wait from '@/functions/wait';
 import type { TOnQueryArgs, TOnQueryRetuns } from '@/hooks/useAsyncListState/_types';
