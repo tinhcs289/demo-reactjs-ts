@@ -37,6 +37,10 @@ const withReduxAuthentication =
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isSuccess]);
 
+    useEffect(() => {
+      console.log(requestStatus)
+    }, [requestStatus])
+
     return (
       <WrappedComponent {...otherProps} loading={loading} onSubmitLoginForm={handleRequestLoginViaApi} />
     );
