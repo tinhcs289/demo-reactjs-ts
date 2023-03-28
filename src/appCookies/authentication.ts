@@ -1,21 +1,13 @@
+import isValidAsYupSchema from '@/functions/isValidAsYupSchema';
 import newCookieItem from '@/helpers/cookieHelpers/newCookieItem';
 import type { TAuthenticationJWT } from '@/types';
 import * as yup from 'yup';
-
-const schema = yup.object().shape({
-  accessToken: yup.string().required(),
-  refreshToken: yup.string().required(),
-  expires: yup.number().required(),
-});
-
 export function validate(value: TAuthenticationJWT | null) {
-  try {
-    schema.validateSync(value);
-    return true;
-  } catch (error) {
-    return false;
-  }
+  return isValidAsYupSchema(value, yup.object().shape({
+    accessToken: yup.string().required(),
+    refreshToken: yup.string().required(),
+    expires: yup.number().required(),
+  }));
 }
-
 const authentication = newCookieItem<TAuthenticationJWT>({ key: 'cookie:authentication', validate });
 export default authentication;

@@ -1,4 +1,4 @@
-import newLocalStorageListenableItem from '@/helpers/localStorageHelpers/newLocalStorageListenableItem';
+import { newLocalStorageListenableItem } from '@/helpers/localStorageHelpers';
 import type { TAcceptLanguage } from '@/types';
 
 /**
