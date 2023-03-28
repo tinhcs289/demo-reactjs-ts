@@ -2,6 +2,7 @@ import authentication from '@/appCookies/authentication';
 import { EApiRequestStatus } from '@/constants/apiRequestStatus';
 import type { TAuthenticationJWT, TAuthenticationUserInfo } from '@/types';
 import Immutable from 'seamless-immutable';
+export const rootName = 'authentication';
 export type State = {
   token: TAuthenticationJWT | null;
   user: TAuthenticationUserInfo | null;
@@ -11,7 +12,6 @@ export type State = {
   refreshTokenRequestStatus: EApiRequestStatus;
 };
 const tokenInfo = authentication.get();
-export const rootName = 'authentication';
 const state = Immutable<State>({
   token: tokenInfo || null,
   user: null,

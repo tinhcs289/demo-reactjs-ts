@@ -3,9 +3,7 @@ import { createCase } from '@/helpers/reduxHelpers';
 import newGuid from '@/helpers/stringHelpers/newGuid';
 import type { State } from '../state';
 import { rootName } from '../state';
-export type Payload = {
-  content: string;
-};
+export type Payload = { content: string };
 const TYPE = `${rootName}/pushMessageInfo`;
 const pushMessageInfo = createCase<Payload, State>(
   TYPE,
