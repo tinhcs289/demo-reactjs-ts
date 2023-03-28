@@ -1,29 +1,25 @@
-import usePrevious from '@/hooks/usePrevious';
-import asideMenuItems from '@/constants/asideMenuItems';
-import type { TAsideMenuItem } from '@/layouts/DashboardLayout';
-import { useDashboardLayout } from '@/providers/DashboardLayoutProvider';
-import isEqual from 'lodash/isEqual';
-import type { FC, ReactNode } from 'react';
-import { memo, useCallback, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 import contentMaxWidth from '@/appLocalStorages/contentMaxWidth';
+import asideMenuItems from '@/constants/asideMenuItems';
+import usePrevious from '@/hooks/usePrevious';
+import type { TAsideMenuItem } from '@/layouts/DashboardLayout';
+import { useDashboardLayoutSetState, useDashboardLayoutState } from '@/providers/DashboardLayoutProvider';
+import isEqual from 'lodash/isEqual';
+import type { ReactNode } from 'react';
+import { useCallback, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { DEFAULT_WIDTH } from './constants';
-
-const LayoutInit: FC<any> = (props) => {
+export default function LayoutInit() {
   const location = useLocation();
-
   const prePathname = usePrevious((location?.pathname || '').split(/[?#]/)[0]);
-
-  const [pageMaxWidth, setPageMaxWidth] = useDashboardLayout((s) => s.pageMaxWidth);
-
+  const setState = useDashboardLayoutSetState();
+  const pageMaxWidth = useDashboardLayoutState((s) => s.pageMaxWidth);
   useEffect(() => {
     contentMaxWidth.onChange((event, detail) => {
       if (isEqual(detail.value, pageMaxWidth)) return;
-      setPageMaxWidth({ pageMaxWidth: detail.value || DEFAULT_WIDTH });
+      setState({ pageMaxWidth: detail.value || DEFAULT_WIDTH });
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
   const isMatchPath = useCallback(
     (url?: string, isExact?: boolean) => {
       if (!url || !location?.pathname) return false;
@@ -36,13 +32,9 @@ const LayoutInit: FC<any> = (props) => {
     },
     [location?.pathname]
   );
-
-  const [urlOfInteractMenuItem, setUrlOfInteractMenuItem] = useDashboardLayout(
-    (s) => s.urlOfInteractMenuItem
-  );
-
+  const urlOfInteractMenuItem = useDashboardLayoutState((s) => s.urlOfInteractMenuItem);
   useEffect(() => {
-    setUrlOfInteractMenuItem({
+    setState({
       urlOfInteractMenuItem: (() => {
         if (!location?.pathname) return null;
         return location?.pathname.split(/[?#]/)[0];
@@ -50,7 +42,6 @@ const LayoutInit: FC<any> = (props) => {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
   const initMenuItems = useCallback(
     (args: {
       items: TAsideMenuItem[];
@@ -86,28 +77,23 @@ const LayoutInit: FC<any> = (props) => {
     },
     [isMatchPath]
   );
-
-  const [menuItems, setAsideMenuItems] = useDashboardLayout((s) => s.menuItems);
-
+  const menuItems = useDashboardLayoutState((s) => s.menuItems);
   useEffect(() => {
     const items = initMenuItems({ items: menuItems }).items;
-    setAsideMenuItems({ menuItems: items });
+    setState({ menuItems: items });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const [pageTitle, setTitle] = useDashboardLayout((s) => s.pageTitle);
-
+  const pageTitle = useDashboardLayoutState((s) => s.pageTitle);
   useEffect(() => {
     if (!urlOfInteractMenuItem) {
       const items = initMenuItems({ items: asideMenuItems }).items;
-      setAsideMenuItems({ menuItems: items });
+      setState({ menuItems: items });
     } else {
       const items = initMenuItems({ items: menuItems, interactUrl: urlOfInteractMenuItem }).items;
-      setAsideMenuItems({ menuItems: items });
+      setState({ menuItems: items });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [urlOfInteractMenuItem]);
-
   useEffect(() => {
     let title: ReactNode | null = null;
     try {
@@ -116,7 +102,6 @@ const LayoutInit: FC<any> = (props) => {
           title = item.label;
           throw new Error();
         }
-
         if (Array.isArray(item.childs)) {
           item.childs.forEach((child) => {
             if (child.active) {
@@ -127,15 +112,12 @@ const LayoutInit: FC<any> = (props) => {
         }
       });
     } catch (error) {}
-
     if (isEqual(title, pageTitle)) return;
-    setTitle({ pageTitle: title });
+    setState({ pageTitle: title });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [menuItems]);
-
   useEffect(() => {
     if (!location?.pathname) return;
-
     const newPath = location?.pathname.split(/[?#]/)[0];
     if (newPath !== prePathname) {
       const _state = initMenuItems({
@@ -143,14 +125,11 @@ const LayoutInit: FC<any> = (props) => {
         interactUrl: urlOfInteractMenuItem || undefined,
         isFirstLoad: true,
       });
-
-      if (!isEqual(_state.items, menuItems)) setAsideMenuItems({ menuItems: _state.items });
+      if (!isEqual(_state.items, menuItems)) setState({ menuItems: _state.items });
       if (_state.interactUrl !== urlOfInteractMenuItem)
-        setUrlOfInteractMenuItem({ urlOfInteractMenuItem: _state.interactUrl });
+        setState({ urlOfInteractMenuItem: _state.interactUrl });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location?.pathname]);
-
   return <></>;
-};
-export default memo(LayoutInit) as FC<any>;
+}

@@ -1,39 +1,32 @@
 import intOrDefault from '@/helpers/formatHelpers/intOrDefault';
 import TablePagination from '@mui/material/TablePagination';
+import type { TablePaginationProps } from '@mui/material/TablePagination';
 import upperFirst from 'lodash/upperFirst';
 import type { ChangeEvent, ComponentType } from 'react';
 import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { ICommonTablePaginationProps } from '../_types';
-
+import styled from '@emotion/styled';
+const TablePaginationStyled = styled(TablePagination)<TablePaginationProps>(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'center',
+}));
 const CommonTablePagination: ComponentType<ICommonTablePaginationProps> = (props) => {
-  const { t } = useTranslation();
-
   const {
-    pageIndex,
-    pageSize,
+    pageIndex: pi,
+    pageSize: ps,
     totalCount,
     onChange,
-    sx,
-    labelDisplayedRows,
-    getItemAriaLabel,
-    labelRowsPerPage,
+    labelDisplayedRows: ldr,
+    getItemAriaLabel: gial,
+    labelRowsPerPage: lrpp,
     loading,
     ...otherProps
   } = props;
-
-  const __pageIndex = useMemo(() => {
-    return Number.isInteger(pageIndex) && pageIndex > 0 ? pageIndex - 1 : 0;
-  }, [pageIndex]);
-
-  const memoStyle = useMemo(() => {
-    return { display: 'flex', justifyContent: 'center', ...sx };
-  }, [sx]);
-
-  const memoProps = useMemo(() => {
-    return otherProps;
-  }, [otherProps]);
-
+  const { t } = useTranslation();
+  const pageIndex = useMemo(() => (Number.isInteger(pi) && pi > 0 ? pi - 1 : 0), [pi]);
+  const pageSize = useMemo(() => (Number.isInteger(ps) ? Number(ps) : 10), [ps]);
+  const labelRowsPerPage = useMemo(() => lrpp || t('common:table.rowsPerPage'), [t, lrpp]);
   const handleChange = useCallback(
     (field?: 'pageIndex' | 'pageSize') => {
       return (event: ChangeEvent<unknown>, page: number) => {
@@ -49,65 +42,39 @@ const CommonTablePagination: ComponentType<ICommonTablePaginationProps> = (props
             onChange?.(1, size);
             break;
           default:
-            break;
+            return;
         }
-        return;
       };
     },
     [onChange, pageSize]
   );
-
-  const __labelRowsPerPage = useMemo(() => {
-    return labelRowsPerPage || t('common:table.rowsPerPage');
-  }, [t, labelRowsPerPage]);
-
-  const __labelDisplayedRows = useCallback(
+  const labelDisplayedRows = useCallback(
     (args: { from: number; to: number; count: number; page: number }) => {
-      return typeof labelDisplayedRows === 'function'
-        ? labelDisplayedRows(args as any)
-        : t('common:table.displayedRows', args);
+      return typeof ldr === 'function' ? ldr(args as any) : t('common:table.displayedRows', args);
     },
-    [t, labelDisplayedRows]
+    [t, ldr]
   );
-
-  const __getItemAriaLabel = useCallback(
+  const getItemAriaLabel = useCallback(
     (type: 'first' | 'last' | 'next' | 'previous') => {
-      return typeof getItemAriaLabel === 'function'
-        ? getItemAriaLabel(type)
-        : t(`common:table.goTo${upperFirst(type)}Page`);
+      return typeof gial === 'function' ? gial(type) : t(`common:table.goTo${upperFirst(type)}Page`);
     },
-    [t, getItemAriaLabel]
+    [t, gial]
   );
-
-  const pagination = useMemo(() => {
-    return (
-      <TablePagination
-        component="div"
-        rowsPerPageOptions={[10, 20, 50, 100]}
-        {...memoProps}
-        sx={memoStyle}
-        onPageChange={handleChange('pageIndex') as any}
-        onRowsPerPageChange={handleChange('pageSize') as any}
-        count={totalCount || 0}
-        page={__pageIndex}
-        rowsPerPage={pageSize}
-        getItemAriaLabel={__getItemAriaLabel}
-        labelRowsPerPage={__labelRowsPerPage}
-        labelDisplayedRows={__labelDisplayedRows}
-      />
-    );
-  }, [
-    __labelDisplayedRows,
-    __getItemAriaLabel,
-    __labelRowsPerPage,
-    __pageIndex,
-    pageSize,
-    totalCount,
-    handleChange,
-    memoProps,
-    memoStyle,
-  ]);
-
-  return pagination;
+  return (
+    <TablePaginationStyled
+      //@ts-ignore
+      component="div"
+      rowsPerPageOptions={[10, 20, 50, 100]}
+      {...otherProps}
+      onPageChange={handleChange('pageIndex') as any}
+      onRowsPerPageChange={handleChange('pageSize') as any}
+      count={totalCount || 0}
+      page={pageIndex}
+      rowsPerPage={pageSize}
+      getItemAriaLabel={getItemAriaLabel}
+      labelRowsPerPage={labelRowsPerPage}
+      labelDisplayedRows={labelDisplayedRows}
+    />
+  );
 };
 export default CommonTablePagination;

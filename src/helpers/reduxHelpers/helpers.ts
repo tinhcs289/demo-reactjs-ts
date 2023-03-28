@@ -2,12 +2,20 @@ import { reduxBatch } from '@manaflair/redux-batch';
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import get from 'lodash/get';
 import { combineReducers } from 'redux';
+import { persistReducer } from 'redux-persist';
+import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
+import storage from 'redux-persist/lib/storage';
 import createSagaMiddleware from 'redux-saga';
 import type { ForkEffectDescriptor, SimpleEffect } from 'redux-saga/effects';
 import { all, fork } from 'redux-saga/effects';
-import type { ReduxCase, ReduxStore, TAction, TInitState, TObject, TReducer, TReducerRoot, TReducerRootCombined, TSaga } from './_types';
+import type { InitState, ReduxCase, ReduxStore, TAction, TObject, TReducer, TReducerRoot, TReducerRootCombined, TSaga } from './_types';
 const registeredActionTypes: string[] = [];
-function createRootReducer(name: string, reducers: TReducerRoot[]) {
+type SagaEffect = TSaga;
+type ReduxAction = TAction;
+type ReduxReducer = TReducer;
+type ReducerRoot = TReducerRoot;
+type CombinedRootReducer = TReducerRootCombined;
+function createRootReducer(name: string, reducers: ReducerRoot[]) {
   let combine = {} as { [x: string]: any };
   reducers.forEach((c) => { combine[c.name] = c.reducer });
   const rootReducer = combineReducers(combine);
@@ -22,8 +30,8 @@ function createRootReducer(name: string, reducers: TReducerRoot[]) {
 };
 export function createReduxStore(reducers: {
   name: string;
-  reducer: (state: TInitState, action: TAction) => TObject;
-  sagas?: TSaga;
+  reducer: (state: InitState, action: ReduxAction) => TObject;
+  sagas?: SagaEffect;
 }[], shouldEnabledDevTools: boolean = false) {
   const devTools = !!shouldEnabledDevTools;
   const enhancers = [reduxBatch];
@@ -37,7 +45,7 @@ export function createReduxStore(reducers: {
     }),
     sagaMiddleware,
   ];
-  const store = configureStore({ reducer, middleware, devTools, enhancers, });
+  const store = configureStore({ reducer, middleware, devTools, enhancers });
   sagaMiddleware.run(sagas);
   return store;
 };
@@ -79,19 +87,46 @@ function createRootSaga(...cases: Case[]) {
     yield all(effects)
   }
 }
-export function createReducer(rootName: string, state: TInitState, ...cases: Case[]) {
+export function createReducer(rootName: string, state: InitState, ...cases: Case[]) {
   function creator(
     name: string,
-    initState: TInitState,
-    reducerCaseDict: { [x: string]: TReducer },
-    sagas?: TSaga
+    initState: InitState,
+    reducerCaseDict: { [x: string]: ReduxReducer },
+    sagas?: SagaEffect
   ) {
     return {
       name,
-      reducer: (state: TInitState, action: TAction) => {
+      reducer: (state: InitState, action: ReduxAction) => {
         if (typeof state === 'undefined') return initState;
         return typeof reducerCaseDict[action.type] === 'function' ? reducerCaseDict[action.type](action, state) : state;
       },
+      sagas,
+    };
+  };
+  const caseDict = createReducerCaseDict(...cases);
+  const sagas = createRootSaga(...cases);
+  return creator(rootName, state, caseDict, sagas as any);
+}
+/**
+ * @deprecated the `createPersistReducer` function is still under development
+ */
+export function createPersistReducer(rootName: string, state: InitState, ...cases: Case[]) {
+  function creator(
+    name: string,
+    initState: InitState,
+    reducerCaseDict: { [x: string]: ReduxReducer },
+    sagas?: SagaEffect
+  ) {
+    return {
+      name,
+      reducer: persistReducer({
+        key: rootName,
+        storage,
+        stateReconciler: autoMergeLevel2,
+      }, function reducer(state: InitState, action: ReduxAction) {
+        if (typeof state === 'undefined') return initState;
+        return typeof reducerCaseDict[action.type] === 'function' ? reducerCaseDict[action.type](action, state) : state;
+      } as any),
       sagas,
     };
   };
@@ -106,17 +141,17 @@ export function createRootSelector<State extends { [x: string]: any }>(rootName:
 };
 export function createNestedReducer(
   name: string,
-  initialState: TInitState,
+  initialState: InitState,
   cases: Case[],
-  sagas?: TSaga,
-  subReducers?: TReducerRootCombined[]
+  sagas?: SagaEffect,
+  subReducers?: CombinedRootReducer[]
 ) {
   const combineSagas = subReducers?.filter?.((c) => c.sagas).map((r) => r.sagas) || [];
   if (!!sagas) combineSagas.push(sagas as any);
   const caseDict = createReducerCaseDict(...cases);
   return {
     name: name,
-    reducer: (state: TInitState, action: TAction) => {
+    reducer: (state: InitState, action: ReduxAction) => {
       let combineState = {};
       if (typeof state === 'undefined') combineState = { ...initialState };
       if (typeof caseDict[action.type] === 'function') {

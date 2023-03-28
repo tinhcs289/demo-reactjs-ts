@@ -196,7 +196,7 @@ export type TItemMenuActionRenderArgs<T extends TAny, U extends TAny> = {
   label: () => ReactNode;
   props: Omit<MenuProps, 'children'>;
 } & U;
-export type TItemMenuActionComponent<T extends TAny, U extends TAny> = ComponentType<
+export type TItemMenuActionComponent<T extends TAny, U extends TAny = TAny> = ComponentType<
   TItemMenuActionRenderArgs<T, U>
 >;
 export type TItemMenuActionRenderFunction<T extends TAny, U extends TAny> = (

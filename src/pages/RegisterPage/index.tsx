@@ -2,7 +2,7 @@ import RHFCheck from '@/components/rhfInputs/RHFCheck';
 import RHFText from '@/components/rhfInputs/RHFText';
 import { email, required } from '@/constants/rhfRules';
 import withHOCs from '@/hocs/withHocs';
-import PATHS from '@/routes/paths';
+import PATHS  from '@/constants/paths';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';

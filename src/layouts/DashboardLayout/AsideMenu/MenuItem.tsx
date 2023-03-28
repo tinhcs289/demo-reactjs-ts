@@ -1,6 +1,6 @@
 import stringOrEmpty from '@/helpers/formatHelpers/stringOrEmpty';
 import render from '@/helpers/reactHelpers/render';
-import { useDashboardLayout } from '@/providers/DashboardLayoutProvider';
+import { useDashboardLayoutSetState, useDashboardLayoutState } from '@/providers/DashboardLayoutProvider';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useTheme } from '@mui/material';
@@ -9,43 +9,31 @@ import IconButton from '@mui/material/IconButton';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import type { FC, MouseEvent } from 'react';
+import type { MouseEventHandler } from 'react';
 import { memo, useCallback, useMemo } from 'react';
 import { NavLink } from 'react-router-dom';
-import type { TMenuItemProps } from '../_types';
-
-const ToggleButton: FC<IconButtonProps & { open?: boolean }> = (props) => {
+import type { AsideMenuItemProps } from '../_types';
+function ToggleButton(props: IconButtonProps & { open?: boolean }) {
   const { open, ...otherProps } = props;
   return (
     <IconButton {...otherProps} edge="end">
       {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
     </IconButton>
   );
-};
-
-const MenuItem: FC<TMenuItemProps> = (props) => {
+}
+function MenuItem(props: AsideMenuItemProps) {
   const theme = useTheme();
-
   const { children } = props;
-
-  const item = useMemo(() => {
-    return props?.data;
-  }, [props?.data]);
-
-  const active = useMemo(() => {
-    return !!props?.active;
-  }, [props?.active]);
-
-  const childActive = useMemo(() => {
-    return !!props?.childActive;
-  }, [props?.childActive]);
-
+  const active = useMemo(() => !!props?.active, [props?.active]);
+  const childActive = useMemo(() => !!props?.childActive, [props?.childActive]);
+  const item = useMemo(() => props?.data || {}, [props?.data]);
   const depth = useMemo(() => {
     return typeof props?.depth === 'number' && !Number.isNaN(props?.depth) ? props.depth : 0;
   }, [props?.depth]);
 
-  const [isAsideOpen] = useDashboardLayout((s) => s.isAsideOpen);
-  const [urlOfInteractMenuItem, setInteractMenuItem] = useDashboardLayout((s) => s.urlOfInteractMenuItem);
+  const setLayoutState = useDashboardLayoutSetState();
+  const isAsideOpen = useDashboardLayoutState((s) => s.isAsideOpen);
+  const urlOfInteractMenuItem = useDashboardLayoutState((s) => s.urlOfInteractMenuItem);
 
   const memoUrl = useMemo(() => {
     return stringOrEmpty(urlOfInteractMenuItem);
@@ -58,21 +46,21 @@ const MenuItem: FC<TMenuItemProps> = (props) => {
     };
   }, [theme, active, depth, isAsideOpen]);
 
-  const handleToggleSubMenu = useCallback(
-    (event: MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+  const handleToggleSubMenu: MouseEventHandler<HTMLButtonElement> = useCallback(
+    (event) => {
       event?.stopPropagation?.();
       event?.preventDefault?.();
       if (!item?.url) return;
 
       if (item.url === memoUrl) {
-        setInteractMenuItem({ urlOfInteractMenuItem: null });
+        setLayoutState({ urlOfInteractMenuItem: null });
         return;
       }
 
-      setInteractMenuItem({ urlOfInteractMenuItem: item.url });
+      setLayoutState({ urlOfInteractMenuItem: item.url });
       return;
     },
-    [item, memoUrl, setInteractMenuItem]
+    [item, memoUrl, setLayoutState]
   );
 
   const linkProps = useMemo(() => {
@@ -122,12 +110,12 @@ const MenuItem: FC<TMenuItemProps> = (props) => {
             {...item.labelProps}
           />
           {Array.isArray(item.childs) && item.childs.length > 0 ? (
-            <ToggleButton open={isOpenSubMenu} onClick={handleToggleSubMenu as any} />
+            <ToggleButton open={isOpenSubMenu} onClick={handleToggleSubMenu} />
           ) : null}
         </ListItemButton>
       </NavLink>
       {children}
     </>
   );
-};
-export default memo(MenuItem) as FC<TMenuItemProps>;
+}
+export default memo(MenuItem);

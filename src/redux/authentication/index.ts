@@ -1,9 +1,20 @@
 import { createReducer } from '@/helpers/reduxHelpers';
 import state, { rootName } from './state';
 //#region import cases
-import requestLogin, { clearStatusOfRequestLogin, requestLoginFail, requestLoginSuccess } from './cases/requestLogin';
-import requestLogout, { clearStatusOfRequestLogout, requestLogoutFail, requestLogoutSuccess } from './cases/requestLogout';
+import clearStatusOfRequestLogin from './cases/clearStatusOfRequestLogin';
+import clearStatusOfRequestLogout from './cases/clearStatusOfRequestLogout';
+import requestLogin from './cases/requestLogin';
+import requestLoginFail from './cases/requestLoginFail';
+import requestLoginSuccess from './cases/requestLoginSuccess';
+import requestLogout from './cases/requestLogout';
+import requestLogoutFail from './cases/requestLogoutFail';
+import requestLogoutSuccess from './cases/requestLogoutSuccess';
 //#endregion
+//#region export Selector
+export * from './selectors';
+export type { State as AuthenticationState } from './state';
+//#endregion
+//#region export Reducer
 export default createReducer(
   rootName,
   state,
@@ -18,6 +29,18 @@ export default createReducer(
   requestLogoutFail,
   requestLogoutSuccess,
 );
-export { default as actions } from './actions';
-export * from './selectors';
+//#endregion
+//#region export Action
+export const actions = {
+  requestLogin: requestLogin.action,
+  requestLoginSuccess: requestLoginSuccess.action,
+  requestLoginFail: requestLoginFail.action,
+  clearStatusOfRequestLogin: clearStatusOfRequestLogin.action,
+  //
+  requestLogout: requestLogout.action,
+  clearStatusOfRequestLogout: clearStatusOfRequestLogout.action,
+  requestLogoutFail: requestLogoutFail.action,
+  requestLogoutSuccess: requestLogoutSuccess.action,
+};
+//#endregion
 

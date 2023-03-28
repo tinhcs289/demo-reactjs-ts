@@ -1,28 +1,30 @@
 import { createReducer } from '@/helpers/reduxHelpers';
 import state, { rootName } from './state';
 //#region import cases
-import markAsNotBeenActivated, { unMarkAsNotBeenActivated } from './cases/markAsNotBeenActivated';
-import requestActivateAccountWithOtp, {
-  clearStatusOfRequestActivateAccountWithOtp,
-  requestActivateAccountWithOtpFail,
-  requestActivateAccountWithOtpSuccess,
-} from './cases/requestActivateAccountWithOtp';
-import requestCreateOtpForResetPassword, {
-  clearStatusOfRequestCreateOtpForResetPassword,
-  requestCreateOtpForResetPasswordFail,
-  requestCreateOtpForResetPasswordSuccess,
-} from './cases/requestCreateOtpForResetPassword';
-import requestRegisterUserAccount, {
-  clearStatusOfRequestRegisterUserAccount,
-  requestRegisterUserAccountFail,
-  requestRegisterUserAccountSuccess,
-} from './cases/requestRegisterUserAccount';
-import requestUpdatePasswordWithOtp, {
-  clearStatusOfRequestUpdatePasswordWithOtp,
-  requestUpdatePasswordWithOtpFail,
-  requestUpdatePasswordWithOtpSuccess,
-} from './cases/requestUpdatePasswordWithOtp';
+import clearStatusOfRequestActivateAccountWithOtp from './cases/clearStatusOfRequestActivateAccountWithOtp';
+import clearStatusOfRequestCreateOtpForResetPassword from './cases/clearStatusOfRequestCreateOtpForResetPassword';
+import clearStatusOfRequestRegisterUserAccount from './cases/clearStatusOfRequestRegisterUserAccount';
+import clearStatusOfRequestUpdatePasswordWithOtp from './cases/clearStatusOfRequestUpdatePasswordWithOtp';
+import markAsNotBeenActivated from './cases/markAsNotBeenActivated';
+import requestActivateAccountWithOtp from './cases/requestActivateAccountWithOtp';
+import requestActivateAccountWithOtpFail from './cases/requestActivateAccountWithOtpFail';
+import requestActivateAccountWithOtpSuccess from './cases/requestActivateAccountWithOtpSuccess';
+import requestCreateOtpForResetPassword from './cases/requestCreateOtpForResetPassword';
+import requestCreateOtpForResetPasswordFail from './cases/requestCreateOtpForResetPasswordFail';
+import requestCreateOtpForResetPasswordSuccess from './cases/requestCreateOtpForResetPasswordSuccess';
+import requestRegisterUserAccount from './cases/requestRegisterUserAccount';
+import requestRegisterUserAccountFail from './cases/requestRegisterUserAccountFail';
+import requestRegisterUserAccountSuccess from './cases/requestRegisterUserAccountSuccess';
+import requestUpdatePasswordWithOtp from './cases/requestUpdatePasswordWithOtp';
+import requestUpdatePasswordWithOtpFail from './cases/requestUpdatePasswordWithOtpFail';
+import requestUpdatePasswordWithOtpSuccess from './cases/requestUpdatePasswordWithOtpSuccess';
+import unMarkAsNotBeenActivated from './cases/unMarkAsNotBeenActivated';
 //#endregion
+//#region export Selector
+export * from './selectors';
+export type { State as UserAccountState } from './state';
+//#endregion
+//#region export Reducer
 export default createReducer(
   rootName,
   state,
@@ -50,6 +52,30 @@ export default createReducer(
   requestUpdatePasswordWithOtpFail,
   clearStatusOfRequestUpdatePasswordWithOtp,
 );
-export { default as actions } from './actions';
-export * from './selectors';
-
+//#endregion
+//#region export Action
+export const actions = {
+  markAsNotBeenActivated: markAsNotBeenActivated.action,
+  unMarkAsNotBeenActivated: unMarkAsNotBeenActivated.action,
+  //
+  requestActivateAccountWithOtp: requestActivateAccountWithOtp.action,
+  requestActivateAccountWithOtpSuccess: requestActivateAccountWithOtpSuccess.action,
+  requestActivateAccountWithOtpFail: requestActivateAccountWithOtpFail.action,
+  clearStatusOfRequestActivateAccountWithOtp: clearStatusOfRequestActivateAccountWithOtp.action,
+  //
+  requestCreateOtpForResetPassword: requestCreateOtpForResetPassword.action,
+  requestCreateOtpForResetPasswordSuccess: requestCreateOtpForResetPasswordSuccess.action,
+  requestCreateOtpForResetPasswordFail: requestCreateOtpForResetPasswordFail.action,
+  clearStatusOfRequestCreateOtpForResetPassword: clearStatusOfRequestCreateOtpForResetPassword.action,
+  //
+  requestRegisterUserAccount: requestRegisterUserAccount.action,
+  requestRegisterUserAccountSuccess: requestRegisterUserAccountSuccess.action,
+  requestRegisterUserAccountFail: requestRegisterUserAccountFail.action,
+  clearStatusOfRequestRegisterUserAccount: clearStatusOfRequestRegisterUserAccount.action,
+  //
+  requestUpdatePasswordWithOtp: requestUpdatePasswordWithOtp.action,
+  requestUpdatePasswordWithOtpSuccess: requestUpdatePasswordWithOtpSuccess.action,
+  requestUpdatePasswordWithOtpFail: requestUpdatePasswordWithOtpFail.action,
+  clearStatusOfRequestUpdatePasswordWithOtp: clearStatusOfRequestUpdatePasswordWithOtp.action,
+};
+//#endregion

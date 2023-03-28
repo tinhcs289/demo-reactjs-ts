@@ -4,10 +4,8 @@ import LanguageProvider from '@/providers/LanguageProvider';
 import MUIThemeV5Provider from '@/providers/MUIThemeV5Provider';
 import NotiStackProvider from '@/providers/NotiStackProvider';
 import ReduxProvider from '@/providers/ReduxProvider';
-import React from 'react';
 import AppRouter from './AppRouter';
-
-const App: React.FC<any> = (props) => {
+export default function App() {
   return (
     <ExceptionHandlingProvider>
       <DateTimeProvider>
@@ -23,5 +21,4 @@ const App: React.FC<any> = (props) => {
       </DateTimeProvider>
     </ExceptionHandlingProvider>
   );
-};
-export default App;
+}

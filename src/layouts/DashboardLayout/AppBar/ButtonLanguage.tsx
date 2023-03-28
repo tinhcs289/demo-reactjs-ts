@@ -8,34 +8,27 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import US from 'country-flag-icons/react/3x2/US';
 import VN from 'country-flag-icons/react/3x2/VN';
-import type { FC, MouseEvent, MouseEventHandler } from 'react';
-import { createElement, memo, useCallback, useMemo, useState } from 'react';
+import type { MouseEvent, MouseEventHandler } from 'react';
+import { createElement, useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-
 const languageCodes = Object.keys(EAcceptLanguage) as Array<`${EAcceptLanguage}`>;
-
 const flagDict = {
   [EAcceptLanguage['vi-VN']]: VN,
   [EAcceptLanguage['en-US']]: US,
 };
-
-const ButtonLanguage: FC<any> = (props) => {
+export default function ButtonLanguage() {
   const {
     i18n: { language: currentLanguage },
   } = useTranslation();
-
   const [anchorEl, setAnchorEl] = useState<any>(null);
-
   const handleClick: MouseEventHandler<HTMLButtonElement> = useCallback((event) => {
     event?.stopPropagation?.();
     event?.preventDefault?.();
     setAnchorEl(event?.target);
   }, []);
-
   const handleClose = useCallback((event: any) => {
     setAnchorEl(null);
   }, []);
-
   const handleChangeLanguage = useCallback(
     (code: `${EAcceptLanguage}`) => {
       return (event: MouseEvent<HTMLLIElement>) => {
@@ -52,8 +45,7 @@ const ButtonLanguage: FC<any> = (props) => {
     },
     [currentLanguage]
   );
-
-  const languages = useMemo(() => {
+  const $LanguageList = useMemo(() => {
     return languageCodes.map((code) => {
       const selected = currentLanguage === code;
       return (
@@ -71,16 +63,14 @@ const ButtonLanguage: FC<any> = (props) => {
       );
     });
   }, [handleChangeLanguage, currentLanguage]);
-
   return (
     <>
       <IconButton color="inherit" onClick={handleClick}>
         <TranslateIcon />
       </IconButton>
       <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={handleClose}>
-        {languages}
+        {$LanguageList}
       </Menu>
     </>
   );
-};
-export default memo(ButtonLanguage) as FC<any>;
+}
