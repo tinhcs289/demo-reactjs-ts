@@ -1,8 +1,7 @@
 import { EAuthLayoutVariant } from './constants';
-
-export type TAuthLayoutVariant = `${EAuthLayoutVariant}`;
-
-export interface IAuthLayoutProps {
-  children?: React.ReactNode;
-  variant: TAuthLayoutVariant;
+import type { ReactNode } from 'react';
+export type AuthLayoutVariant = `${EAuthLayoutVariant}`;
+export type AuthLayoutProps = {
+  children?: ReactNode;
+  variant: AuthLayoutVariant;
 }

@@ -39,7 +39,7 @@ export type TAsideMenuItem = {
   linkProps?: LinkProps;
 };
 
-export type TMenuItemProps = {
+export type AsideMenuItemProps = {
   data: TAsideMenuItem;
   children?: ReactNode;
   active?: boolean;
@@ -48,4 +48,4 @@ export type TMenuItemProps = {
   depth: number;
 };
 
-export type TDashboardProps = { children?: ReactNode };
+export type DashboardProps = { children?: ReactNode };

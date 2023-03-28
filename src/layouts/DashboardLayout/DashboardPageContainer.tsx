@@ -1,10 +1,9 @@
-import { useDashboardLayout } from '@/providers/DashboardLayoutProvider';
+import { useDashboardLayoutState } from '@/providers/DashboardLayoutProvider';
 import { styled } from '@mui/material';
 import type { ContainerProps } from '@mui/material/Container';
 import Container from '@mui/material/Container';
 import { useMemo } from 'react';
 import { DEFAULT_WIDTH } from './constants';
-
 const ContainerStyled = styled(Container)<ContainerProps>(({ theme }) => ({
   padding: `${theme.spacing(1, 1, 1, 1)} !important`,
   marginBottom: theme.spacing(2),
@@ -12,7 +11,7 @@ const ContainerStyled = styled(Container)<ContainerProps>(({ theme }) => ({
 }));
 export default function DashboardPageContainer(props: ContainerProps) {
   const { children, ...otherProps } = props;
-  const [pageMaxWidth] = useDashboardLayout((s) => s.pageMaxWidth);
+  const pageMaxWidth = useDashboardLayoutState((s) => s.pageMaxWidth);
   const maxWidth = useMemo(() => pageMaxWidth || DEFAULT_WIDTH, [pageMaxWidth]);
   return (
     <ContainerStyled {...otherProps} maxWidth={maxWidth}>

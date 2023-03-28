@@ -1,6 +1,6 @@
 import NavLinkNoStyle from '@/components/NavLinkNoStyle';
 import slugify from '@/helpers/stringHelpers/slugify';
-import PATHS from '@/routes/paths';
+import PATHS  from '@/constants/paths';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';

@@ -1,9 +1,10 @@
 import type { ComponentType } from 'react';
-import type { ILoginPageProps } from '../_types';
-
-const withRedirectAfterLoginWithExternalQueryString =
-  (WrappedComponent: ComponentType<ILoginPageProps>) => (props: ILoginPageProps) => {
+import type { LoginPageProps } from '../_types';
+export default function withRedirectAfterLoginWithExternalQueryString(
+  WrappedComponent: ComponentType<LoginPageProps>
+) {
+  return function LoginPageWithRedirectAfterLoginWithExternalQueryString(props: LoginPageProps) {
     //TODO [Login] logic to received query-string from external service
     return <WrappedComponent {...props} />;
   };
-export default withRedirectAfterLoginWithExternalQueryString;
+}

@@ -3,7 +3,6 @@ import MuiDrawer from '@mui/material/Drawer';
 import type { DrawerProps } from '@mui/material/Drawer';
 import { styled } from '@mui/material/styles';
 import type { ComponentType } from 'react';
-
 const DrawerStyled = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
     '& .MuiDrawer-paper': {

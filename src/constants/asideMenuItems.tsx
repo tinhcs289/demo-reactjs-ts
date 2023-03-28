@@ -1,18 +1,19 @@
+import PATHS from '@/constants/paths';
 import newGuid from '@/helpers/stringHelpers/newGuid';
 import type { TAsideMenuItem } from '@/layouts/DashboardLayout';
-import PATHS from '@/routes/paths';
+import { i18n } from '@/translation';
 import BarChartIcon from '@mui/icons-material/BarChart';
+import CameraRearIcon from '@mui/icons-material/CameraRear';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRightOutlined';
+import DynamicFormIcon from '@mui/icons-material/DynamicForm';
+import GridOnIcon from '@mui/icons-material/GridOn';
+import LoginIcon from '@mui/icons-material/Login';
+import LogoutIcon from '@mui/icons-material/Logout';
 import PeopleIcon from '@mui/icons-material/People';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import StorefrontIcon from '@mui/icons-material/Storefront';
-import { i18n } from '@/translation';
-import DynamicFormIcon from '@mui/icons-material/DynamicForm';
 import TableChartIcon from '@mui/icons-material/TableChart';
-import GridOnIcon from '@mui/icons-material/GridOn';
 import ViewCarouselIcon from '@mui/icons-material/ViewCarousel';
-
 const asideMenuItems: TAsideMenuItem[] = [
   {
     id: newGuid(),
@@ -28,7 +29,7 @@ const asideMenuItems: TAsideMenuItem[] = [
         label: i18n.t('aside:demo.form_and_inputs'),
         labelText: i18n.t<string>('aside:demo.form_and_inputs'),
         icon: DynamicFormIcon,
-        url: PATHS.dashboard1,
+        url: PATHS.demoForm,
       },
       {
         id: newGuid(),
@@ -36,7 +37,7 @@ const asideMenuItems: TAsideMenuItem[] = [
         label: i18n.t('aside:demo.data_table'),
         labelText: i18n.t<string>('aside:demo.data_table'),
         icon: TableChartIcon,
-        url: PATHS.dashboard2,
+        url: PATHS.demoTable,
       },
       {
         id: newGuid(),
@@ -44,7 +45,7 @@ const asideMenuItems: TAsideMenuItem[] = [
         label: i18n.t('aside:demo.data_grid_list'),
         labelText: i18n.t<string>('aside:demo.data_grid_list'),
         icon: GridOnIcon,
-        url: PATHS.dashboard3,
+        url: PATHS.demoDataGrid,
       },
       {
         id: newGuid(),
@@ -52,7 +53,7 @@ const asideMenuItems: TAsideMenuItem[] = [
         label: i18n.t('aside:demo.carousel'),
         labelText: i18n.t<string>('aside:demo.carousel'),
         icon: ViewCarouselIcon,
-        url: PATHS.dashboard4,
+        url: PATHS.demoCarousel,
       },
     ],
   },
@@ -62,31 +63,31 @@ const asideMenuItems: TAsideMenuItem[] = [
     labelText: i18n.t<string>('aside:orders'),
     type: 'link',
     icon: ShoppingCartIcon,
-    url: PATHS.inDevelop,
+    url: PATHS.orders,
     childs: [
       {
         id: newGuid(),
         type: 'link',
-        label: 'Orders 1',
-        labelText: 'Orders 1',
-        icon: KeyboardArrowRightOutlinedIcon,
-        url: PATHS.inDevelop1,
+        label: 'Đơn mua',
+        labelText: 'Đơn mua',
+        icon: LoginIcon,
+        url: PATHS.ordersBuy,
       },
       {
         id: newGuid(),
         type: 'link',
-        label: 'Orders 2',
-        labelText: 'Orders 2',
-        icon: KeyboardArrowRightOutlinedIcon,
-        url: PATHS.inDevelop2,
+        label: 'Đơn bán',
+        labelText: 'Đơn bán',
+        icon: LogoutIcon,
+        url: PATHS.ordersSell,
       },
       {
         id: newGuid(),
         type: 'link',
-        label: 'Orders 3',
-        labelText: 'Orders 3',
-        icon: KeyboardArrowRightOutlinedIcon,
-        url: PATHS.inDevelop3,
+        label: 'Xử lý',
+        labelText: 'Xử lý',
+        icon: CameraRearIcon,
+        url: PATHS.ordersProcess,
       },
     ],
   },
@@ -96,7 +97,7 @@ const asideMenuItems: TAsideMenuItem[] = [
     label: i18n.t('aside:customers'),
     labelText: i18n.t<string>('aside:customers'),
     icon: PeopleIcon,
-    url: PATHS.ramdom1,
+    url: PATHS.customers,
   },
   {
     id: newGuid(),
@@ -104,7 +105,7 @@ const asideMenuItems: TAsideMenuItem[] = [
     label: i18n.t('aside:reports'),
     labelText: i18n.t<string>('aside:reports'),
     icon: BarChartIcon,
-    url: PATHS.ramdom2,
+    url: PATHS.report,
   },
   {
     id: newGuid(),

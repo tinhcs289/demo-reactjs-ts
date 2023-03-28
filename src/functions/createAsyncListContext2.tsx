@@ -155,8 +155,8 @@ type Props<T extends RowData = RowData> = AsyncListConfig<T>;
 export default function createAsyncListContext<T extends RowData>(defaultState?: Partial<AsyncListState<T>>) {
   const {
     Provider,
-    useStoreGetter: useAsyncListGetter,
-    useStoreSetter: useAsyncListSetter,
+    useGetter: useAsyncListGetter,
+    useSetter: useAsyncListSetter,
   } = createFastContext<State<T>>({
     ...(DEFAULT_ASYNC_LIST as any),
     ...defaultState,

@@ -2,7 +2,7 @@ import CommonImage from '@/components/CommonImage';
 import NavLinkNoStyle from '@/components/NavLinkNoStyle';
 import slugify from '@/helpers/stringHelpers/slugify';
 import { TShopeeCategoryItem } from '@/modules/ShopeeProductList/_types';
-import PATHS from '@/routes/paths';
+import PATHS  from '@/constants/paths';
 import CategoryButton from './CategoryButton';
 import CategoryName from './CategoryName';
 

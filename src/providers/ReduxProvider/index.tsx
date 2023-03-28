@@ -1,16 +1,7 @@
 import store from '@/redux/store';
-// import { setupAxios } from '@/api/_axios';
-import React from 'react';
+import type { ReactNode } from 'react';
 import { Provider } from 'react-redux';
-
-// setupAxios(store);
-
-const ReduxProvider: React.FC<{ children?: React.ReactNode }> = (props) => {
+export default function ReduxProvider(props: { children?: ReactNode }) {
   const { children } = props;
-  return (
-    <>
-      <Provider store={store}>{children}</Provider>
-    </>
-  );
-};
-export default ReduxProvider;
+  return <Provider store={store}>{children}</Provider>;
+}

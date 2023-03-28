@@ -1,19 +1,29 @@
+import NavLinkNoStyle from '@/components/NavLinkNoStyle';
+import PATHS from '@/constants/paths';
 import { DashboardPageContainer } from '@/layouts/DashboardLayout';
-import PATHS from '@/routes/paths';
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import { Link as RouterLink } from 'react-router-dom';
-
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import DevelopBackground from './DevelopBackground';
 export default function InDevelopPage() {
   return (
     <DashboardPageContainer>
-      <Box
-        sx={{ m: 0, p: 0, display: 'flex', height: '100%', alignItems: 'center', justifyContent: 'center' }}
-      >
-        <RouterLink to={PATHS.dashboard} style={{ textDecoration: 'none' }}>
-          <Button color="primary" variant="contained">{`Quay về trang chủ`}</Button>
-        </RouterLink>
-      </Box>
+      <Grid container>
+        <Grid item xs={12} textAlign="center" sx={{ my: 4 }}>
+          <Typography variant="h4">{`Chức năng đang trong quá trình phát triển`}</Typography>
+        </Grid>
+        <Grid item xs={12} textAlign="center" sx={{ mb: 2 }}>
+          <Typography color="GrayText">{`Vui lòng quay lại sau để trải nghiệm`}</Typography>
+        </Grid>
+        <Grid item xs={12} textAlign="center">
+          <NavLinkNoStyle to={PATHS.dashboard}>
+            <Button color="primary" variant="contained">{`Quay về trang chủ`}</Button>
+          </NavLinkNoStyle>
+        </Grid>
+        <Grid item xs={12} sx={{ '& svg': { maxHeight: '400px', maxWidth: '100%' } }}>
+          <DevelopBackground />
+        </Grid>
+      </Grid>
     </DashboardPageContainer>
   );
 }

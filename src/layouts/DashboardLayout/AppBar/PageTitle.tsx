@@ -1,19 +1,15 @@
 import { useDashboardLayout } from '@/providers/DashboardLayoutProvider';
 import Typography from '@mui/material/Typography';
-import type { FC } from 'react';
-import { memo, useMemo } from 'react';
-
-const PageTitle: FC<any> = (props) => {
+import { useMemo } from 'react';
+export default function PageTitle() {
   const [pageTitle] = useDashboardLayout((s) => s.pageTitle);
-
-  const title = useMemo(() => {
-    return (
+  const $Title = useMemo(
+    () => (
       <Typography component="h1" variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
         {pageTitle}
       </Typography>
-    );
-  }, [pageTitle]);
-
-  return title;
-};
-export default memo(PageTitle) as FC<any>;
+    ),
+    [pageTitle]
+  );
+  return $Title;
+}

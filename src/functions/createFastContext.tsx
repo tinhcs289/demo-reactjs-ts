@@ -1,18 +1,19 @@
 import { ReactNode, createContext, useCallback, useContext, useRef, useSyncExternalStore } from 'react';
 /**
  * @example
-    const { Provider, useStore } = createFastContext<IThemeConfig>(getConfigFromLocalStorage())
+    const { Provider, useGetter, useSetter } = createFastContext<IThemeConfig>(someData)
     //
     <Provider>
       <App />
     </Provider>
     //
     const App = () => {
-        const [backgroundColor, setBackGroundColor] = useStore((store) => store.backgroundColor);
+        const backgroundColor = useGetter((store) => store.backgroundColor);
+        const setState = useSetter();
         return (
             <div style={{ backgroundColor }}>
                 <input
-                    onChange={(e) => setBackGroundColor({ backgroundColor: 'red' })}
+                    onChange={(e) => setState({ backgroundColor: 'red' })}
                 />
             </div>
         );
@@ -58,7 +59,7 @@ export default function createFastContext<StoreValues extends { [x: string]: any
     );
     return [state, store.set];
   }
-  function useStoreGetter<SelectorOutput>(selector: (store: StoreValues) => SelectorOutput): SelectorOutput {
+  function useGetter<SelectorOutput>(selector: (store: StoreValues) => SelectorOutput): SelectorOutput {
     const store = useContext(StoreContext);
     if (!store) {
       throw new Error('Store not found');
@@ -70,12 +71,17 @@ export default function createFastContext<StoreValues extends { [x: string]: any
     );
     return state;
   }
-  function useStoreSetter() {
+  function useSetter(): (value: Partial<StoreValues>) => void {
     const store = useContext(StoreContext);
     if (!store) {
       throw new Error('Store not found');
     }
     return store.set;
   }
-  return { Provider, useStore, useStoreGetter, useStoreSetter };
+  return {
+    Provider,
+    useStore,
+    useGetter,
+    useSetter,
+  };
 }

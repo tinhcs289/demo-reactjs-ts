@@ -9,30 +9,19 @@ import type { SnackbarProviderProps } from 'notistack';
 import { SnackbarProvider } from 'notistack';
 import React from 'react';
 import { useSelector } from 'react-redux';
-
-const SnackbarConnect: React.FC<{ children?: React.ReactNode }> = (props) => {
-  const { children } = props;
-
+function SnackbarConnect() {
   const newMessage = useSelector(snackbarSelector);
   const preMessage = usePrevious(newMessage);
-
   const { showNotify } = useSnackbarNotify();
-
   React.useEffect(() => {
     if (!isEqual(newMessage, preMessage) && isNotBlankString(newMessage?.message)) {
       showNotify(newMessage?.variant || SNACKBAR_VARIANT.DEFAULT, newMessage?.message || '');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newMessage]);
-
-  const memoChildren = React.useMemo(() => {
-    return <>{children}</>;
-  }, [children]);
-
-  return <>{memoChildren}</>;
-};
-
-const NotiStackProvider: React.FC<SnackbarProviderProps> = (props) => {
+  return <></>;
+}
+export default function NotiStackProvider(props: SnackbarProviderProps) {
   const { children, ...otherProps } = props;
   return (
     <SnackbarProvider
@@ -43,8 +32,8 @@ const NotiStackProvider: React.FC<SnackbarProviderProps> = (props) => {
       TransitionComponent={Slide}
       {...otherProps}
     >
-      <SnackbarConnect>{children}</SnackbarConnect>
+      <SnackbarConnect />
+      {children}
     </SnackbarProvider>
   );
-};
-export default NotiStackProvider;
+}
