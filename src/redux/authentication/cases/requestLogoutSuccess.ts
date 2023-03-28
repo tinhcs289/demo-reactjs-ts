@@ -3,7 +3,7 @@ import { default as authenticationInLocalStorage } from '@/appLocalStorages/auth
 import { EApiRequestStatus } from '@/constants/apiRequestStatus';
 import type { ReduxAction } from '@/helpers/reduxHelpers';
 import { createCase } from '@/helpers/reduxHelpers';
-import { put, takeLatest } from 'redux-saga/effects';
+import { delay, put, takeLatest } from 'redux-saga/effects';
 import type { State } from '../state';
 import { rootName } from '../state';
 import clearStatusOfRequestLogout from './clearStatusOfRequestLogout';
@@ -21,6 +21,7 @@ const requestLogoutSuccess = createCase<any, State>(
     };
   },
   takeLatest(TYPE, function* (action: ReduxAction<any>) {
+    yield delay(0);
     yield put(clearStatusOfRequestLogout.action({}));
   }),
 );

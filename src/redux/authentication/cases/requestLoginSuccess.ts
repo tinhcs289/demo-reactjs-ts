@@ -4,7 +4,7 @@ import { EApiRequestStatus } from '@/constants/apiRequestStatus';
 import type { ReduxAction } from '@/helpers/reduxHelpers';
 import { createCase } from '@/helpers/reduxHelpers';
 import type { TAuthentication } from '@/types';
-import { put, takeLatest } from 'redux-saga/effects';
+import { delay, put, takeLatest } from 'redux-saga/effects';
 import type { State } from '../state';
 import { rootName } from '../state';
 import clearStatusOfRequestLogin from './clearStatusOfRequestLogin';
@@ -23,6 +23,7 @@ const requestLoginSuccess = createCase<TAuthentication, State>(
     };
   },
   takeLatest(TYPE, function* (action: ReduxAction<any>) {
+    yield delay(0);
     yield put(clearStatusOfRequestLogin.action({}));
   }),
 );

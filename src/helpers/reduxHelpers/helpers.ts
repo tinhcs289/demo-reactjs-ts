@@ -61,7 +61,6 @@ export function createCase<ActionPayload extends TObject, State>(
 ) {
   //#region duplicated type warning
   if (registeredActionTypes.includes(actionType)) {
-    debugger;
     console.warn(`the action type of ${actionType} was duplicated`)
   } else {
     registeredActionTypes.push(actionType);
