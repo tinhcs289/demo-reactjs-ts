@@ -1,5 +1,4 @@
-import FormGridContainer from '@/components/form/FormGridContainer';
-import FormGridItem from '@/components/form/FormGridItem';
+import { FormGridContainer, FormGridItem } from '@/components/form';
 import RHFCheck from '@/components/rhfInputs/RHFCheck';
 import RHFText from '@/components/rhfInputs/RHFText';
 import PATHS from '@/constants/paths';
@@ -14,8 +13,8 @@ import Typography from '@mui/material/Typography';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
+import type { LoginFormData, LoginPageProps } from './_types';
 import { defaultValues } from './constants';
-import type { LoginPageProps, LoginFormData } from './_types';
 const itemSx: SxProps<Theme> = { p: 1, mb: 2 };
 export default function LoginPage(props: LoginPageProps) {
   const { onSubmitLoginForm, loading } = props;

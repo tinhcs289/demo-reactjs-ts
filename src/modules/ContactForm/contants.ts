@@ -1,4 +1,4 @@
-import { TAutoCompleteOption } from '@/components/rhfInputs/RHFSelect';
+import { AutoCompleteOption } from '@/components/rhfInputs/RHFSelect';
 import EMPTY_GUID from '@/helpers/stringHelpers/EMPTY_GUID';
 import { i18n } from '@/translation';
 import type { SxProps, Theme } from '@mui/material';
@@ -6,7 +6,7 @@ import type { FormValue } from './_types';
 
 export const itemSx: SxProps<Theme> = { p: 1, mb: 2 };
 
-export const GENDERS: { [x: string]: TAutoCompleteOption } = {
+export const GENDERS: { [x: string]: AutoCompleteOption } = {
   MALE: { label: i18n.t('common:male'), value: 'male' },
   FEMALE: {
     label: i18n.t('common:female'),

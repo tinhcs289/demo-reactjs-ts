@@ -2,7 +2,7 @@ import type { CheckboxProps } from '@mui/material/Checkbox';
 import type { FormControlLabelProps } from '@mui/material/FormControlLabelProps';
 import type { ChangeEvent, ReactNode } from 'react';
 
-export type TCommonCheckFieldProps = {
+export type CommonCheckFieldProps = {
   name?: string;
   required?: boolean;
   error?: boolean;

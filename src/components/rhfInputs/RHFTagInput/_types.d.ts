@@ -1,7 +1,8 @@
-import type { TCommonTagInputFieldProps } from '@/components/inputs/CommonTagInputField';
-import type { TRHFInputProps } from '@/components/rhfInputs';
-export type TRHFTagInputProps = {
+import type { CommonTagInputFieldProps } from '@/components/inputs/CommonTagInputField';
+import type { RHFInputProps } from '@/components/rhfInputs';
+export type RHFTagInputProps = {
   id?: `${string}:tags-text:${string}`;
-} & TRHFInputProps &
-  Omit<TCommonTagInputFieldProps, 'errorText' | 'error' | 'onChange' | 'value' | 'name'>;
-export type { TCommonTagInput } from '@/components/inputs/CommonTagInputField';
+} & RHFInputProps &
+  Omit<CommonTagInputFieldProps, 'errorText' | 'error' | 'onChange' | 'value' | 'name'>;
+export type { CommonTagInputItem } from '@/components/inputs/CommonTagInputField';
+

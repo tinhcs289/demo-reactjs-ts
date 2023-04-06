@@ -1,25 +1,23 @@
 import type { FormControlLabelProps } from '@mui/material/FormControlLabel';
 import type { RadioGroupProps } from '@mui/material/RadioGroup';
 import type { FormGroupProps } from '@mui/material/FormGroup';
-import React from 'react';
-
-export type TRadioGroupOption = {
-  label: React.ReactNode;
+import type { ReactNode } from 'react';
+export type RadioGroupOption = {
+  label: ReactNode;
   value: string;
   checked?: boolean;
   disabled?: boolean;
   InputProps?: FormControlLabelProps;
   [x: string]: any;
 };
-
-export type TCommonRadioGroupFieldProps = {
+export type CommonRadioGroupFieldProps = {
   name?: string;
-  label?: React.ReactNode;
+  label?: ReactNode;
   required?: boolean;
   error?: boolean;
-  errorText?: React.ReactNode;
-  options?: TRadioGroupOption[];
-  value?: TRadioGroupOption;
+  errorText?: ReactNode;
+  options?: RadioGroupOption[];
+  value?: RadioGroupOption;
   groupProps?: Omit<RadioGroupProps, 'name' | 'value' | 'onChange'>;
-  onChange?: (option?: TRadioGroupOption) => void;
+  onChange?: (option?: RadioGroupOption) => void;
 } & Omit<FormGroupProps, 'onChange'>;

@@ -1,14 +1,13 @@
 import type { AutocompleteRenderOptionState } from '@mui/material/Autocomplete';
 import Checkbox from '@mui/material/Checkbox';
 import Radio from '@mui/material/Radio';
-import React from 'react';
-import type { TAutoCompleteOption } from './_types';
-
+import type { HTMLAttributes } from 'react';
+import type { AutoCompleteOption } from './_types';
 const defaultRenderOption =
   (multiple: boolean) =>
   (
-    props: React.HTMLAttributes<HTMLLIElement>,
-    option: TAutoCompleteOption,
+    props: HTMLAttributes<HTMLLIElement>,
+    option: AutoCompleteOption,
     state: AutocompleteRenderOptionState
   ) => {
     return (

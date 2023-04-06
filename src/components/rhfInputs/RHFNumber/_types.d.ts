@@ -1,8 +1,7 @@
-import type { TCommonNumberFieldProps } from '@/components/inputs/CommonNumberField';
-import type { TRHFInputProps } from '@/components/rhfInputs';
-
-export type TRHFNumberProps = {
+import type { CommonNumberFieldProps } from '@/components/inputs/CommonNumberField';
+import type { RHFInputProps } from '@/components/rhfInputs';
+export type RHFNumberProps = {
   defaultValue?: string;
   id?: `${string}:number:${string}`;
-} & TRHFInputProps &
-  Omit<TCommonNumberFieldProps, 'error' | 'onChange' | 'value' | 'name'>;
+} & RHFInputProps &
+  Omit<CommonNumberFieldProps, 'error' | 'onChange' | 'value' | 'name'>;

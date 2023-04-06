@@ -1,46 +1,67 @@
+import { CustomPickerActionBar } from '@/components/inputs/CommonDateField';
 import CommonTextField from '@/components/inputs/CommonTextField';
-import EventNoteIcon from '@mui/icons-material/EventNote';
-import InputAdornment from '@mui/material/InputAdornment';
-import { MobileDateTimePicker as DateTimePicker } from '@mui/x-date-pickers';
-import type { ComponentType } from 'react';
-import { useMemo } from 'react';
-import { DEFAULT_FORMAT, DEFAULT_MASK } from './constants';
-import type { TCommonDateTimeFieldProps } from './_types';
-
-const CommonDateTimeField: ComponentType<TCommonDateTimeFieldProps> = (props) => {
-  const { inputFormat, mask, InputProps, error, errorText, sx, placeholder, ...otherProps } = props;
-
-  const $endAdornment = useMemo(() => {
-    return (
-      <InputAdornment position="end">
-        <EventNoteIcon color="inherit" fontSize="inherit" />
-      </InputAdornment>
-    );
-  }, []);
-
+import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
+import { DEFAULT_FORMAT } from './constants';
+import CustomToolbar from './CustomToolbar';
+import EndIcon from './EndIcon';
+import type { CommonDateTimeFieldProps } from './_types';
+export default function CommonDateTimeField(props: CommonDateTimeFieldProps) {
+  const {
+    format,
+    error,
+    errorText,
+    placeholder,
+    sx,
+    value,
+    slotProps,
+    slots,
+    TextFieldProps,
+    buttonOk,
+    buttonClear,
+    buttonCancel,
+    closeOnSelect,
+    ...otherProps
+  } = props;
   return (
-    <DateTimePicker
+    <MobileDateTimePicker
       {...otherProps}
-      inputFormat={inputFormat || DEFAULT_FORMAT}
-      mask={mask || DEFAULT_MASK}
-      {...(!!error ? { error } : {})}
-      renderInput={(inputProps) => {
-        const { InputProps, ...textfieldProps } = inputProps;
-        return (
-          <CommonTextField
-            {...textfieldProps}
-            placeholder={placeholder as any}
-            sx={sx}
-            error={error}
-            errorText={errorText}
-            InputProps={{
-              endAdornment: $endAdornment,
-              ...InputProps,
-            }}
-          />
-        );
+      value={value}
+      format={format || DEFAULT_FORMAT}
+      closeOnSelect={!!closeOnSelect}
+      slots={{
+        toolbar: CustomToolbar,
+        actionBar: CustomPickerActionBar,
+        textField: CommonTextField as any,
+        ...slots,
+      }}
+      slotProps={{
+        ...slotProps,
+        actionBar: {
+          buttonOk,
+          buttonClear,
+          buttonCancel,
+          closeOnSelect,
+          ...slotProps?.actionBar,
+        } as any,
+        toolbar: {
+          label: props?.label || '',
+        } as any,
+        textField(ownerState) {
+          const { slots: _, slotProps: __, ...state } = ownerState;
+          return {
+            ...state,
+            ...TextFieldProps,
+            InputProps: {
+              endAdornment: <EndIcon />,
+              ...TextFieldProps?.InputProps,
+            },
+            sx,
+            placeholder,
+            error,
+            errorText,
+          } as any;
+        },
       }}
     />
   );
-};
-export default CommonDateTimeField;
+}

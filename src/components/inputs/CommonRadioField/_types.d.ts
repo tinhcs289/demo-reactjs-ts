@@ -1,7 +1,7 @@
 import type { FormControlLabelProps } from '@mui/material/FormControlLabelProps';
 import type { RadioProps } from '@mui/material/Radio';
 import type { ChangeEvent, ReactNode } from 'react';
-export type TCommonRadioFieldProps = {
+export type CommonRadioFieldProps = {
   name?: string;
   required?: boolean;
   error?: boolean;

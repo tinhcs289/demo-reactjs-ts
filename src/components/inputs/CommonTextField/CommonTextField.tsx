@@ -1,28 +1,12 @@
-import InputErrorTextWithIcon from '@/components/inputs/InputErrorTextWithIcon';
+import InputErrorTextWithIcon from '../_components/InputErrorTextWithIcon';
 import type { InputLabelProps, SxProps, Theme } from '@mui/material';
 import InputAdornment from '@mui/material/InputAdornment';
 import type { ComponentType, Ref } from 'react';
 import { forwardRef, useMemo } from 'react';
-import { DEFAULT_VARIANT } from './constants';
+import { bootstrapVariantSx, DEFAULT_VARIANT } from './constants';
 import TextFieldStyled from './TextFieldStyled';
-import type { TCommonTextFieldProps } from './_types';
-
-const bootstrapVariantSx: SxProps<Theme> = {
-  '& > label': {
-    left: '-12px',
-  },
-  '& div.MuiInputBase-root': {
-    marginTop: (t) => t.spacing(1.5),
-    '& fieldset': {
-      top: 0,
-      '& legend': {
-        display: 'none',
-      },
-    },
-  },
-};
-
-const CommonTextField: ComponentType<TCommonTextFieldProps> = forwardRef((props, ref?: Ref<any>) => {
+import type { CommonTextFieldProps } from './_types';
+const CommonTextField = forwardRef(function CommonTextFieldWithRef(props, ref?: Ref<any>) {
   const {
     id,
     errorText,
@@ -35,7 +19,6 @@ const CommonTextField: ComponentType<TCommonTextFieldProps> = forwardRef((props,
     placeholder,
     ...otherProps
   } = props;
-
   const memoVariant = useMemo(() => {
     if (!variant) return 'outlined';
     if (variant === 'filled' || variant === 'outlined' || variant === 'standard') return variant;
@@ -45,36 +28,30 @@ const CommonTextField: ComponentType<TCommonTextFieldProps> = forwardRef((props,
       variant === 'bootstrap:standard'
     )
       return variant.split(':')[1] as 'filled' | 'outlined' | 'standard';
-
     return 'outlined';
   }, [variant]);
-
   const memoSx: SxProps<Theme> | undefined = useMemo(() => {
     if (
       variant === 'bootstrap:filled' ||
       variant === 'bootstrap:outlined' ||
       variant === 'bootstrap:standard'
     )
-      return { ...sx, ...bootstrapVariantSx };
+      return { ...sx, ...(bootstrapVariantSx as any) };
     return sx;
   }, [sx, variant]);
-
   const inputId: { id: string } | null = useMemo(() => {
     if (typeof id !== 'string') return null;
     return { id: `${id}__input`, itemID: id };
   }, [id]);
-
   const labelProps: Partial<InputLabelProps> | null | undefined = useMemo(() => {
     const _props = { ...InputLabelProps, shrink: true };
     if (typeof id !== 'string') return _props;
     return { ..._props, id: `${id}__label` };
   }, [id, InputLabelProps]);
-
   const errorId: { id: string } | null = useMemo(() => {
     if (typeof id !== 'string') return null;
     return { id: `${id}__error` };
   }, [id]);
-
   return (
     <TextFieldStyled
       {...inputId}
@@ -104,5 +81,5 @@ const CommonTextField: ComponentType<TCommonTextFieldProps> = forwardRef((props,
       }}
     />
   );
-});
+}) as ComponentType<CommonTextFieldProps>;
 export default CommonTextField;

@@ -1,6 +1,6 @@
-import type { TCheckGroupOption } from '@/components/rhfInputs/RHFCheckGroup';
-import type { TRadioGroupOption } from '@/components/rhfInputs/RHFRadioGroup';
-import type { TAutoCompleteOption } from '@/components/rhfInputs/RHFSelect';
+import type { CheckGroupOption } from '@/components/rhfInputs/RHFCheckGroup';
+import type { RadioGroupOption } from '@/components/rhfInputs/RHFRadioGroup';
+import type { AutoCompleteOption } from '@/components/rhfInputs/RHFSelect';
 import consecutiveNumbers from '@/helpers/arrayHelpers/consecutiveNumbers';
 import type { TFormData } from './_types';
 
@@ -8,17 +8,17 @@ export const LABEL = 'Lorem ipsum dolor sit amet';
 export const LABEL1 =
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
 
-export const optionsCheck: TCheckGroupOption[] = consecutiveNumbers(5, 1).map((i) => ({
+export const optionsCheck: CheckGroupOption[] = consecutiveNumbers(5, 1).map((i) => ({
   label: `${LABEL1} ${i}`,
   value: `${i}`,
 }));
 
-export const optionRadio: TRadioGroupOption[] = consecutiveNumbers(5, 1).map((i) => ({
+export const optionRadio: RadioGroupOption[] = consecutiveNumbers(5, 1).map((i) => ({
   label: `${LABEL1} ${i}`,
   value: `${i}`,
 }));
 
-export const options: TAutoCompleteOption[] = consecutiveNumbers(20, 1).map((i) => ({
+export const options: AutoCompleteOption[] = consecutiveNumbers(20, 1).map((i) => ({
   label: `lựa chọn ${i}`,
   value: `${i}`,
 }));

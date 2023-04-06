@@ -1,6 +1,6 @@
-import type { TCommonSelectBooleanFieldProps } from '@/components/inputs/CommonSelectBooleanField';
-import type { TRHFInputProps } from '@/components/rhfInputs';
-export type TRHFSelectBooleanProps = {
+import type { CommonSelectBooleanFieldProps } from '@/components/inputs/CommonSelectBooleanField';
+import type { RHFInputProps } from '@/components/rhfInputs';
+export type RHFSelectBooleanProps = {
   id?: `${string}:select-boolean:${string}`;
-} & TRHFInputProps &
-  Omit<TCommonSelectBooleanFieldProps, 'name'>;
+} & RHFInputProps &
+  Omit<CommonSelectBooleanFieldProps, 'name'>;

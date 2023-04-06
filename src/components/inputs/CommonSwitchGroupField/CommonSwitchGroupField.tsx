@@ -1,13 +1,13 @@
 import CommonSwitchField from '@/components/inputs/CommonSwitchField';
-import FormGroupWithOptions from '@/components/inputs/FormGroupWithOptions';
-import InputErrorTextWithIcon from '@/components/inputs/InputErrorTextWithIcon';
+import FormGroupWithOptions from '../_components/FormGroupWithOptions';
+import InputErrorTextWithIcon from '../_components/InputErrorTextWithIcon';
 import removeAt from '@/helpers/arrayHelpers/removeAt';
 import FormLabel from '@mui/material/FormLabel';
 import type { ComponentType } from 'react';
 import { useCallback, useMemo } from 'react';
-import type { TCommonSwitchGroupFieldProps, TSwitchGroupOption } from './_types';
+import type { CommonSwitchGroupFieldProps, SwitchGroupOption } from './_types';
 
-const CommonSwitchGroupField: ComponentType<TCommonSwitchGroupFieldProps> = (props) => {
+const CommonSwitchGroupField: ComponentType<CommonSwitchGroupFieldProps> = (props) => {
   const { name, label, required, error, onChange, errorText, options, value, ...otherProps } = props;
 
   const memoOption = useMemo(() => {
@@ -19,7 +19,7 @@ const CommonSwitchGroupField: ComponentType<TCommonSwitchGroupFieldProps> = (pro
   }, [value]);
 
   const isChecked = useCallback(
-    (option: TSwitchGroupOption) => {
+    (option: SwitchGroupOption) => {
       return (
         (memoValue.length > 0 && memoValue.findIndex((v) => v.value === option.value) >= 0) ||
         !!option?.checked

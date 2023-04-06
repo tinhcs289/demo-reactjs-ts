@@ -1,11 +1,9 @@
 import CommonTextField from '@/components/inputs/CommonTextField';
-import type { ComponentType } from 'react';
 import React from 'react';
 import type { InputAttributes } from 'react-number-format';
 import { NumericFormat } from 'react-number-format';
-import type { TCommonNumberFieldProps } from './_types';
-
-const CommonNumberField: ComponentType<TCommonNumberFieldProps> = (props) => {
+import type { CommonNumberFieldProps } from './_types';
+export default function CommonNumberField(props: CommonNumberFieldProps) {
   const { isAllowed, ...otherProps } = props;
   return (
     <NumericFormat
@@ -16,5 +14,4 @@ const CommonNumberField: ComponentType<TCommonNumberFieldProps> = (props) => {
       {...otherProps}
     />
   );
-};
-export default CommonNumberField;
+}

@@ -1,5 +1,5 @@
 import CommonTextField from '@/components/inputs/CommonTextField';
-import type { TCommonTextFieldProps } from '@/components/inputs/CommonTextField';
+import type { CommonTextFieldProps } from '@/components/inputs/CommonTextField';
 import arrayOrEmpty from '@/helpers/formatHelpers/arrayOrEmpty';
 import type {
   AutocompleteInputChangeReason,
@@ -15,9 +15,11 @@ import defaultFilterOptions from './defaultFilterOptions';
 import defaultGetOptionLabel from './defaultGetOptionLabel';
 import defaultRenderOption from './defaultRenderOption';
 import isOptionEqualToValue from './isOptionEqualToValue';
-import type { TCommonSelectFieldProps, TCommonSelectRenderTags } from './_types';
-
-const CommonSelectField: ComponentType<TCommonSelectFieldProps> = forwardRef((props, ref?: Ref<unknown>) => {
+import type { CommonSelectFieldProps, CommonSelectRenderTags } from './_types';
+const CommonSelectField: ComponentType<CommonSelectFieldProps> = forwardRef(function CommonSelectFieldWithRef(
+  props,
+  ref?: Ref<unknown>
+) {
   const {
     multiple,
     label,
@@ -37,26 +39,22 @@ const CommonSelectField: ComponentType<TCommonSelectFieldProps> = forwardRef((pr
     placeholder,
     ...otherProps
   } = props;
-
   const memoOptions = useMemo(() => arrayOrEmpty(propOptions), [propOptions]);
   const disableCloseOnSelect = useMemo(() => !!multiple, [multiple]);
-
+  const memoValue = useMemo(() => value || (multiple ? [] : null), [value, multiple]);
   const memoRenderOption = useMemo(
     () => (typeof renderOption === 'function' ? renderOption : defaultRenderOption(!!multiple)),
     [renderOption, multiple]
   );
-
   const memoFilterOptions = useMemo(
     () => (typeof filterOptions === 'function' ? filterOptions : defaultFilterOptions),
     [filterOptions]
   );
-
   const memoGetOptionLabel = useMemo(
     () => (typeof getOptionLabel === 'function' ? getOptionLabel : defaultGetOptionLabel),
     [getOptionLabel]
   );
-
-  const memoRenderTags: TCommonSelectRenderTags = useMemo(() => {
+  const memoRenderTags: CommonSelectRenderTags = useMemo(() => {
     if (typeof renderTags === 'function') return renderTags;
     return (v, g, o) => (
       <>
@@ -72,16 +70,14 @@ const CommonSelectField: ComponentType<TCommonSelectFieldProps> = forwardRef((pr
       </>
     );
   }, [renderTags, memoGetOptionLabel, color]);
-
   const handleChangeTextDelay = useMemo(() => {
     return debounce((e: SyntheticEvent<Element, Event>, v: string, r: AutocompleteInputChangeReason) => {
       onInputChange?.(e, v, r);
     }, 400);
   }, [onInputChange]);
-
   const memoRenderInput = useCallback(
     (params: AutocompleteRenderInputParams) => {
-      const _props: TCommonTextFieldProps = { ...(params as any), ...TextFieldProps };
+      const _props: CommonTextFieldProps = { ...(params as any), ...TextFieldProps };
       if (color) _props.color = color as any;
       if (label) {
         _props.label = label;
@@ -100,7 +96,6 @@ const CommonSelectField: ComponentType<TCommonSelectFieldProps> = forwardRef((pr
           ..._props?.InputProps,
           endAdornment: <CircularProgress color="inherit" size={20} />,
         };
-
       return (
         <CommonTextField
           {..._props}
@@ -112,9 +107,6 @@ const CommonSelectField: ComponentType<TCommonSelectFieldProps> = forwardRef((pr
     },
     [loading, TextFieldProps, label, color, error, errorText, required, placeholder]
   );
-
-  const memoValue = useMemo(() => value || (multiple ? [] : null), [value, multiple]);
-
   return (
     <AutocompleteStyled
       {...(otherProps as any)}

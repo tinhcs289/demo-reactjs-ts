@@ -1,22 +1,17 @@
 import FormSubmitButton from '@/components/buttons/FormSubmitButton';
-import FormGridContainer from '@/components/form/FormGridContainer';
-import FormGridFields from '@/components/form/FormGridFields';
-import FormGridItem from '@/components/form/FormGridItem';
+import { FormGridContainer, FormGridFields, FormGridItem } from '@/components/form';
+import pickBy from 'lodash/pickBy';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import type { TFormData } from './_types';
 import { defaultValues } from './constants';
 import fields from './fields';
-import type { TFormData } from './_types';
-
 export default function FormByConfig() {
   const { t } = useTranslation();
-
   const form = useForm<TFormData>({ defaultValues: defaultValues as any });
-
   const onSubmit = (formData: TFormData) => {
-    console.log(formData);
+    console.log(pickBy(formData));
   };
-
   return (
     <FormProvider {...form}>
       <FormGridContainer onSubmit={form.handleSubmit(onSubmit)}>

@@ -1,4 +1,4 @@
-import FormGridItem from '@/components/form/FormGridItem';
+import { FormGridItem } from '@/components/form';
 import RHFText from '@/components/rhfInputs/RHFText';
 import { required } from '@/constants/rhfRules';
 import { useFormContext } from 'react-hook-form';
