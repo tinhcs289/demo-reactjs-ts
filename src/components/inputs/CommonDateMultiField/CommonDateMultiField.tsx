@@ -1,123 +1,108 @@
-import CommonDateMultiPickerField from '@/components/inputs/CommonDateMultiPickerField';
-import CommonTagInputField from '@/components/inputs/CommonTagInputField';
-import type { TCommonTagInput } from '@/components/inputs/CommonTagInputField';
-import byMomentASC from '@/helpers/arraySortHelpers/byMomentASC';
-import newGuid from '@/helpers/stringHelpers/newGuid';
-import type { SxProps, Theme } from '@mui/material';
-import Popover from '@mui/material/Popover';
-import get from 'lodash/get';
+import { CustomPickerActionBar } from '@/components/inputs/CommonDateField';
+import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
+import type { Moment } from 'moment';
 import moment from 'moment';
-import { useCallback, useMemo, useState } from 'react';
-import { TAGS_FORMAT } from './constants';
-import type { TCommonDateMultiFieldProps } from './_types';
-
-const popoverSx: SxProps<Theme> = {
-  p: 2,
-  '& div.MuiPickerStaticWrapper-content': { border: 'none', '&:hover': { border: 'none' } },
-};
-
-const anchorOrigin = {
-  vertical: 'top',
-  horizontal: 'left',
-};
-
-export default function CommonDateMultiField(props: TCommonDateMultiFieldProps) {
+import { useCallback, useMemo } from 'react';
+import CustomInput from './CustomInput';
+import CustomPickerDay from './CustomPickerDay';
+import CustomPickerLayout from './CustomPickerLayout';
+import CustomToolbar from './CustomToolbar';
+import EndIcon from './EndIcon';
+import type { CommonDateMultiFieldProps, DateTagInputItem } from './_types';
+import { DEFAULT_FORMAT } from './constants';
+import { addOrRemoveDate, datesFromTags, tagsFromDates } from './functions';
+export default function CommonDateMultiField(props: CommonDateMultiFieldProps) {
   const {
-    sx,
-    label,
-    placeholder,
-    value,
-    tagFormat,
-    onChange,
+    format,
     error,
-    required,
     errorText,
-    popoverProps,
-    inputProps,
+    placeholder,
+    sx,
+    value,
+    slotProps,
+    slots,
+    TextFieldProps,
+    buttonOk,
+    buttonClear,
+    buttonCancel,
+    closeOnSelect,
+    onChange,
     ...otherProps
   } = props;
-
-  const memoTagFormat = useMemo(() => tagFormat || TAGS_FORMAT, [tagFormat]);
-
-  const tags: TCommonTagInput[] = useMemo(() => {
-    if (!value || !Array(value) || value?.length === 0) return [];
-    return value.map((date) => ({ id: newGuid(), label: date?.format(memoTagFormat), value: date }));
-  }, [value, memoTagFormat]);
-
-  const handleTagsChange = useCallback(
-    (tags?: TCommonTagInput[]) => {
-      if (!tags || !Array(tags) || tags?.length === 0) {
-        onChange?.([]);
-        return;
-      }
-
-      let dates = tags.map((t) => get(t, 'value')).filter((val) => moment.isMoment(val));
-
-      if (dates.length === 0) {
-        onChange?.([]);
-        return;
-      }
-
-      dates.sort(byMomentASC());
-      onChange?.(dates);
+  const dates = useMemo(() => (value instanceof Array ? value : []), [value]);
+  const tags: DateTagInputItem[] = useMemo(() => tagsFromDates(dates, format), [dates, format]);
+  const handleChangeTags = useCallback(
+    (newTags?: DateTagInputItem[]) => {
+      const newDates = datesFromTags(newTags);
+      onChange?.(newDates);
       return;
     },
     [onChange]
   );
-
-  const [anchorEl, setAnchorEl] = useState<any>(null);
-
-  const handleClosePicker = useCallback((e: any) => {
-    e?.stopPropagation?.();
-    e?.preventDefault?.();
-    setAnchorEl(null);
-  }, []);
-
-  const handleOpenPicker = useCallback((e: any) => {
-    e?.stopPropagation?.();
-    e?.preventDefault?.();
-    if (!e?.target || !(e.target instanceof Element)) return;
-
-    const target = e.target as HTMLInputElement | HTMLTextAreaElement;
-
-    setAnchorEl(target.parentElement || target);
-  }, []);
-
-  const PaperProps = useMemo(
-    () => ({
-      ...popoverProps?.PaperProps,
-      sx: {
-        ...popoverProps?.PaperProps?.sx,
-        ...popoverSx,
-      },
-    }),
-    [popoverProps?.PaperProps]
+  const handleChange = useCallback(
+    (date?: Moment) => {
+      if (!date || !moment.isMoment(date)) return;
+      const newDates = addOrRemoveDate(date, dates);
+      onChange?.(newDates);
+      return;
+    },
+    [dates, onChange]
   );
-
+  const onClear = useCallback(() => {
+    onChange?.([]);
+  }, [onChange]);
   return (
-    <>
-      <CommonTagInputField
-        {...inputProps}
-        sx={sx}
-        label={label}
-        placeholder={placeholder}
-        value={tags}
-        onChange={handleTagsChange}
-        onClick={handleOpenPicker}
-        required={required}
-        error={error}
-        errorText={errorText}
-      />
-      <Popover
-        open={!!anchorEl}
-        anchorEl={anchorEl}
-        onClose={handleClosePicker}
-        anchorOrigin={anchorOrigin as any}
-        {...popoverProps}
-        PaperProps={PaperProps}
-      >
-        <CommonDateMultiPickerField {...otherProps} value={value} onChange={onChange} />
-      </Popover>
-    </>
+    <MobileDatePicker
+      {...otherProps}
+      format={format || DEFAULT_FORMAT}
+      closeOnSelect={!!closeOnSelect}
+      value={null}
+      onChange={handleChange as any}
+      slots={{
+        layout: CustomPickerLayout,
+        toolbar: CustomToolbar,
+        actionBar: CustomPickerActionBar,
+        textField: CustomInput as any,
+        day: CustomPickerDay,
+        ...slots,
+      }}
+      slotProps={{
+        ...slotProps,
+        day: {
+          dates,
+          ...slotProps?.day,
+        } as any,
+        actionBar: {
+          buttonOk,
+          buttonClear,
+          buttonCancel,
+          closeOnSelect,
+          onClear,
+          ...slotProps?.actionBar,
+        } as any,
+        toolbar: {
+          label: props?.label || '',
+          dates: dates || [],
+          onDelete: handleChange,
+        } as any,
+        textField(ownerState) {
+          const { slots: _, slotProps: __, ...state } = ownerState;
+          return {
+            ...state,
+            ...TextFieldProps,
+            InputProps: {
+              endAdornment: <EndIcon />,
+              ...TextFieldProps?.InputProps,
+            },
+            dates: tags,
+            sx,
+            placeholder,
+            error,
+            errorText,
+            onChangeTags: handleChangeTags,
+          } as any;
+        },
+      }}
+    />
   );
 }

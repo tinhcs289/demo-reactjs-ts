@@ -1,13 +1,12 @@
 import FormSubmitButton from '@/components/buttons/FormSubmitButton';
-import FormGridContainer from '@/components/form/FormGridContainer';
-import FormGridItem from '@/components/form/FormGridItem';
+import { FormGridContainer, FormGridItem } from '@/components/form';
 import { accoutNeedToBeActivatedSelector } from '@/redux/userAccount';
 import { isEqual } from 'lodash';
 import { useEffect, useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
-import { defaultValues } from './constants';
 import type { FormType, FormValue } from './_types';
+import { defaultValues } from './constants';
 export default function withHookForm(WrappedComponent: FormType): FormType {
   return function (props) {
     const { loading, onSubmit, ...otherProps } = props;

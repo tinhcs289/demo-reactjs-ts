@@ -1,3 +1,3 @@
 import RHFSwitch from './RHFSwitch';
 export default RHFSwitch;
-export type { TRHFSwitchProps } from './_types';
+export type { RHFSwitchProps } from './_types';

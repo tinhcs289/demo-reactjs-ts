@@ -20,8 +20,6 @@ function renderInput(props: TextFieldProps) {
   return <CommonTextField {...props} />;
 }
 
-type HandleChangeDate = (value: Moment | null, keyboardInputValue?: string | undefined) => void;
-
 type RenderDay = (
   day: Moment,
   selectedDays: Moment[],
@@ -49,15 +47,15 @@ export default function CommonDateRangeField(props: TCommonDateRangeFieldProps) 
     return value.to;
   }, [value?.to]);
 
-  const handleChangeStartDate: HandleChangeDate = useCallback(
-    (value) => {
+  const handleChangeStartDate = useCallback(
+    (value: Moment | null | undefined) => {
       onChange?.({ from: value || toDay, to: endDate });
     },
     [onChange, endDate]
   );
 
-  const handleChangeEndDate: HandleChangeDate = useCallback(
-    (value) => {
+  const handleChangeEndDate = useCallback(
+    (value: Moment | null | undefined) => {
       onChange?.({ from: startDate, to: value || toDay });
     },
     [onChange, startDate]
@@ -86,32 +84,39 @@ export default function CommonDateRangeField(props: TCommonDateRangeFieldProps) 
     [startDate, endDate, handleHoverOnDay]
   );
 
-  return (
-    <Grid container sx={sx}>
-      <Grid item xs={12} lg={6}>
-        <StaticDatePicker
-          ref={startDateRef}
-          dayOfWeekFormatter={dayOfWeekFormatter}
-          value={startDate}
-          onChange={handleChangeStartDate}
-          displayStaticWrapperAs="desktop"
-          renderInput={renderInput}
-          renderDay={renderDay}
-          maxDate={endDate}
-        />
-      </Grid>
-      <Grid item xs={12} lg={6}>
-        <StaticDatePicker
-          ref={endDateRef}
-          dayOfWeekFormatter={dayOfWeekFormatter}
-          value={endDate}
-          onChange={handleChangeEndDate}
-          displayStaticWrapperAs="desktop"
-          renderInput={renderInput}
-          renderDay={renderDay}
-          minDate={startDate}
-        />
-      </Grid>
-    </Grid>
-  );
+  // return (
+  //   <Grid container sx={sx}>
+  //     <Grid item xs={12} lg={6}>
+  //       <StaticDatePicker
+  //         ref={startDateRef}
+  //         dayOfWeekFormatter={dayOfWeekFormatter}
+  //         value={startDate}
+  //         onChange={handleChangeStartDate as any}
+  //         displayStaticWrapperAs="desktop"
+  //         slots={{
+  //           day: CustomPickersDay as any,
+  //         }}
+  //         //renderInput={renderInput}
+  //         //renderDay={renderDay}
+  //         maxDate={endDate}
+  //       />
+  //     </Grid>
+  //     <Grid item xs={12} lg={6}>
+  //       <StaticDatePicker
+  //         ref={endDateRef}
+  //         dayOfWeekFormatter={dayOfWeekFormatter}
+  //         value={endDate}
+  //         onChange={handleChangeEndDate as any}
+  //         displayStaticWrapperAs="desktop"
+  //         //renderInput={renderInput}
+  //         //renderDay={renderDay}
+  //         slots={{
+  //           day: CustomPickersDay as any,
+  //         }}
+  //         minDate={startDate}
+  //       />
+  //     </Grid>
+  //   </Grid>
+  // );
+  return <></>
 }

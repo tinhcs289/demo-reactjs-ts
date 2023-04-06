@@ -1,3 +1,3 @@
 import RHFCheck from './RHFCheck';
 export default RHFCheck;
-export type { TRHFCheckProps } from './_types';
+export type { RHFCheckProps } from './_types';

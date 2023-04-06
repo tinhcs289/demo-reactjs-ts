@@ -1,8 +1,8 @@
-import type { TCommonRadioGroupFieldProps } from '@/components/inputs/CommonRadioGroupField';
-import type { TRHFInputProps } from '@/components/rhfInputs';
-export type TRHFRadioGroupProps = {
+import type { CommonRadioGroupFieldProps } from '@/components/inputs/CommonRadioGroupField';
+import type { RHFInputProps } from '@/components/rhfInputs';
+export type RHFRadioGroupProps = {
   defaultValue?: string;
   id?: `${string}:radio-group:${string}`;
-} & TRHFInputProps &
-  Omit<TCommonRadioGroupFieldProps, 'errorText' | 'error' | 'onChange' | 'value' | 'name'>;
-export type { TRadioGroupOption } from '@/components/inputs/CommonRadioGroupField';
+} & RHFInputProps &
+  Omit<CommonRadioGroupFieldProps, 'errorText' | 'error' | 'onChange' | 'value' | 'name'>;
+export type { RadioGroupOption } from '@/components/inputs/CommonRadioGroupField';

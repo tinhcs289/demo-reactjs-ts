@@ -1,8 +1,7 @@
 import type { FormControlLabelProps } from '@mui/material/FormControlLabelProps';
 import type { SwitchProps } from '@mui/material/Switch';
 import type { ChangeEvent, ReactNode } from 'react';
-
-export type TCommonSwitchFieldProps = {
+export type CommonSwitchFieldProps = {
   name?: string;
   required?: boolean;
   error?: boolean;

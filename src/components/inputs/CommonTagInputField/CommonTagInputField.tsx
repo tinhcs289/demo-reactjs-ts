@@ -6,13 +6,14 @@ import Chip from '@mui/material/Chip';
 import { cloneDeep, get } from 'lodash';
 import type { KeyboardEvent } from 'react';
 import { createRef, Fragment, useCallback, useMemo } from 'react';
-import type { TCommonTagInput, TCommonTagInputFieldProps } from './_types';
+import type { CommonTagInputItem, CommonTagInputFieldProps } from './_types';
 
 const ChipStyled = styled(Chip)<ChipProps>(({ theme }) => ({
   margin: theme.spacing(0.5, 0.25),
 }));
 
 const CommonTextFieldWithTag = styled(CommonTextField)(({ theme }) => ({
+  display: 'flex',
   '& div.MuiInputBase-root': {
     display: 'flex',
     flexGrow: 0,
@@ -31,11 +32,9 @@ const CommonTextFieldWithTag = styled(CommonTextField)(({ theme }) => ({
   },
 }));
 
-export default function CommonTagInputField(props: TCommonTagInputFieldProps) {
+export default function CommonTagInputField(props: CommonTagInputFieldProps) {
   const { value, defaultValue: _, onChange, renderTag, placeholder, InputProps, sx, ...other } = props;
-
   const inputRef = createRef<HTMLInputElement | HTMLTextAreaElement>();
-
   const clearTextInput = useCallback(() => {
     if (!(inputRef?.current instanceof Element)) return;
     let input = inputRef.current.querySelector('input');
@@ -44,7 +43,6 @@ export default function CommonTagInputField(props: TCommonTagInputFieldProps) {
     input.value = '';
     return;
   }, [inputRef]);
-
   const addTag = useCallback(
     (event: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       if (!event?.target || !event?.key) return;
@@ -63,18 +61,16 @@ export default function CommonTagInputField(props: TCommonTagInputFieldProps) {
     },
     [value, onChange, clearTextInput]
   );
-
   const deleteTag = useCallback(
-    (tag: TCommonTagInput) => {
+    (tag: CommonTagInputItem) => {
       if (!tag || !tag?.id || !Array.isArray(value)) return;
       const newTags = value.filter((t) => t.id !== tag.id);
       onChange?.(newTags);
     },
     [onChange, value]
   );
-
   const handleDeleteTag = useCallback(
-    (tag: TCommonTagInput) => {
+    (tag: CommonTagInputItem) => {
       return function handleDelete(event: any) {
         event?.preventDefault?.();
         event?.stopPropagation?.();
@@ -83,7 +79,6 @@ export default function CommonTagInputField(props: TCommonTagInputFieldProps) {
     },
     [deleteTag]
   );
-
   const $tags = useMemo(() => {
     if (!value || !Array.isArray(value)) return null;
     return value.map((tag, index) => {
@@ -102,7 +97,6 @@ export default function CommonTagInputField(props: TCommonTagInputFieldProps) {
       );
     });
   }, [value, deleteTag, renderTag, handleDeleteTag]);
-
   return (
     <CommonTextFieldWithTag
       {...other}
@@ -111,7 +105,6 @@ export default function CommonTagInputField(props: TCommonTagInputFieldProps) {
         startAdornment: $tags,
       }}
       placeholder={placeholder}
-      sx={{ ...sx, display: 'flex' }}
       multiline
       ref={inputRef as any}
       onKeyDown={addTag as any}

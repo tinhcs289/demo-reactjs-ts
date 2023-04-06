@@ -1,11 +1,11 @@
-import InputErrorTextWithIcon from '@/components/inputs/InputErrorTextWithIcon';
+import InputErrorTextWithIcon from '../_components/InputErrorTextWithIcon';
 import { useTheme } from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
 import type { ComponentType } from 'react';
 import FormControlLabelStyled from './FormControlLabelStyled';
-import { TCommonCheckFieldProps } from './_types';
+import { CommonCheckFieldProps } from './_types';
 
-const CommonCheckField: ComponentType<TCommonCheckFieldProps> = (props) => {
+const CommonCheckField: ComponentType<CommonCheckFieldProps> = (props) => {
   const {
     name,
     label,

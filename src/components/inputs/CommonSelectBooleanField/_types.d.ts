@@ -1,19 +1,19 @@
-import type { TCommonSelectFieldProps } from '@/components/inputs/CommonSelectField';
+import type { CommonSelectFieldProps } from '@/components/inputs/CommonSelectField';
 import type { AutocompleteChangeDetails, AutocompleteChangeReason } from '@mui/material/Autocomplete';
-import type { Ref } from 'react';
+import type { Ref, SyntheticEvent } from 'react';
 
-export type TCommonSelectBooleanFieldOnChange = (
-  event: React.SyntheticEvent<Element, Event>,
+export type CommonSelectBooleanFieldOnChange = (
+  event: SyntheticEvent<Element, Event>,
   value: boolean | null | undefined,
   reason: AutocompleteChangeReason,
-  details: AutocompleteChangeDetails<TAutoCompleteOption> | undefined
+  details: AutocompleteChangeDetails<AutoCompleteOption> | undefined
 ) => void;
 
-export type TCommonSelectBooleanFieldProps = Omit<
-  TCommonSelectFieldProps,
+export type CommonSelectBooleanFieldProps = Omit<
+  CommonSelectFieldProps,
   'value' | 'defaultValue' | 'onChange' | 'multiple' | 'options'
 > & {
-  onChange?: TCommonSelectBooleanFieldOnChange;
+  onChange?: CommonSelectBooleanFieldOnChange;
   value?: boolean;
   defaultValue?: boolean;
   labelTrue?: string;

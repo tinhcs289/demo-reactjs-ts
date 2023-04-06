@@ -1,14 +1,14 @@
-import type { TCommonTextFieldProps } from '@/components/inputs/CommonTextField';
+import type { CommonTextFieldProps } from '@/components/inputs/CommonTextField';
 import type { ReactNode } from 'react';
 
-export type TCommonTagInput = {
+export type CommonTagInputItem = {
   id: string | number;
   label?: string;
   [x: string]: any;
 };
 
-export type TCommonTagInputFieldProps = Omit<TCommonTextFieldProps, 'value' | 'onChange'> & {
-  value?: TCommonTagInput[];
-  onChange?: (tags?: TCommonTagInput[]) => void;
-  renderTag?: (tag: TCommonTagInput, index: number, deleteTag: (tag: TCommonTagInput) => void) => ReactNode;
+export type CommonTagInputFieldProps = Omit<CommonTextFieldProps, 'value' | 'onChange'> & {
+  value?: CommonTagInputItem[];
+  onChange?: (tags?: CommonTagInputItem[]) => void;
+  renderTag?: (tag: CommonTagInputItem, index: number, deleteTag: (tag: CommonTagInputItem) => void) => ReactNode;
 };

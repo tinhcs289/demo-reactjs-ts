@@ -1,9 +1,7 @@
-import type { TCommonDateFieldProps } from '@/components/inputs/CommonDateField';
-import type { TRHFInputProps } from '@/components/rhfInputs';
+import type { CommonDateTimeFieldProps } from '@/components/inputs/CommonDateTimeField';
+import type { RHFInputProps } from '@/components/rhfInputs';
 import type { Moment } from 'moment';
-
-export type TRHFDateTimeProps = {
+export type RHFDateTimeProps = CommonDateTimeFieldProps & RHFInputProps & {
   defaultValue?: Moment;
   id?: `${string}:date-time:${string}`;
-} & TRHFInputProps &
-  Omit<TCommonDateFieldProps, 'name' | 'defaultValue' | 'value' | 'error' | 'errorText', 'onChange'>;
+};

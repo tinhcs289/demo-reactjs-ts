@@ -1,11 +1,37 @@
 import { CommonNumberFieldDebounced } from '@/components/inputs/CommonNumberField';
-import type { ComponentType } from 'react';
+import type { RHFRenderInput } from '@/components/rhfInputs';
+import { useCallback } from 'react';
 import { Controller } from 'react-hook-form';
-import type { TRHFNumberProps } from './_types';
-
-const RHFNumber: ComponentType<TRHFNumberProps> = (props) => {
+import type { RHFNumberProps } from './_types';
+export default function RHFNumber(props: RHFNumberProps) {
   const { name, control, rules, defaultValue, shouldUnregister, ...inputProps } = props;
-
+  const renderInput: RHFRenderInput = useCallback(
+    ({ field: { onBlur, onChange, value, name, ref }, fieldState: { invalid, error } }) => (
+      <CommonNumberFieldDebounced
+        name={name}
+        value={value}
+        {...(!!defaultValue ? { defaultValue } : {})}
+        onValueChange={({ floatValue }) => {
+          onChange(floatValue);
+        }}
+        onBlur={onBlur}
+        inputRef={ref}
+        error={invalid}
+        {...(!!rules?.required
+          ? {
+              required: true,
+            }
+          : {})}
+        {...(!!error?.message
+          ? {
+              errorText: error?.message,
+            }
+          : {})}
+        {...inputProps}
+      />
+    ),
+    [rules?.required, inputProps, defaultValue]
+  );
   return (
     <Controller
       name={name || ''}
@@ -13,39 +39,7 @@ const RHFNumber: ComponentType<TRHFNumberProps> = (props) => {
       rules={rules}
       {...(!!defaultValue ? { defaultValue } : {})}
       {...(typeof shouldUnregister === 'boolean' ? { shouldUnregister } : {})}
-      render={({
-        field: { onBlur, onChange, value, name, ref },
-        fieldState: {
-          invalid,
-          // isTouched,
-          // isDirty,
-          error,
-        },
-      }) => (
-        <CommonNumberFieldDebounced
-          name={name}
-          value={value}
-          {...(!!defaultValue ? { defaultValue } : {})}
-          onValueChange={({ floatValue }) => {
-            onChange(floatValue);
-          }}
-          onBlur={onBlur}
-          inputRef={ref}
-          error={invalid}
-          {...(!!rules?.required
-            ? {
-                required: true,
-              }
-            : {})}
-          {...(!!error?.message
-            ? {
-                errorText: error?.message,
-              }
-            : {})}
-          {...inputProps}
-        />
-      )}
+      render={renderInput}
     />
   );
-};
-export default RHFNumber;
+}

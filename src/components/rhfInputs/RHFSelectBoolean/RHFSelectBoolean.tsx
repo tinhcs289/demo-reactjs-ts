@@ -1,9 +1,9 @@
 import CommonSelectBooleanField from '@/components/inputs/CommonSelectBooleanField';
 import type { ComponentType } from 'react';
 import { Controller } from 'react-hook-form';
-import type { TRHFSelectBooleanProps } from './_types';
+import type { RHFSelectBooleanProps } from './_types';
 
-const RHFSelectBoolean: ComponentType<TRHFSelectBooleanProps> = (props) => {
+const RHFSelectBoolean: ComponentType<RHFSelectBooleanProps> = (props) => {
   const { name, control, rules, defaultValue, shouldUnregister, TextFieldProps, ...otherProps } = props;
   return (
     <Controller

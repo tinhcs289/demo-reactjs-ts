@@ -1,13 +1,10 @@
 import FormSubmitButton from '@/components/buttons/FormSubmitButton';
-import FormGridContainer from '@/components/form/FormGridContainer';
-import FormGridItem from '@/components/form/FormGridItem';
+import { FormGridContainer, FormGridItem } from '@/components/form';
 import CommonDateRangeField from '@/components/inputs/CommonDateRangeField';
 import RHFCheck from '@/components/rhfInputs/RHFCheck';
 import RHFCheckGroup from '@/components/rhfInputs/RHFCheckGroup';
 import RHFDate from '@/components/rhfInputs/RHFDate';
 import RHFDateMulti from '@/components/rhfInputs/RHFDateMulti';
-import RHFDateMultiPicker from '@/components/rhfInputs/RHFDateMultiPicker';
-import RHFDateMultiPickerWithTags from '@/components/rhfInputs/RHFDateMultiPickerWithTags';
 import RHFDateTime from '@/components/rhfInputs/RHFDateTime';
 import RHFNumber from '@/components/rhfInputs/RHFNumber';
 import RHFRadio from '@/components/rhfInputs/RHFRadio';
@@ -22,25 +19,19 @@ import RHFTime from '@/components/rhfInputs/RHFTime';
 import { required } from '@/constants/rhfRules';
 import type { SxProps, Theme } from '@mui/material';
 import { Moment } from 'moment';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { defaultValues, LABEL, optionRadio, options, optionsCheck } from './constants';
 import type { TFormData } from './_types';
-import { useState } from 'react';
-
+import { LABEL, defaultValues, optionRadio, options, optionsCheck } from './constants';
 const fieldSx: SxProps<Theme> = { p: 1, mb: 2 };
-
 export default function FormByComponents() {
   const { t } = useTranslation();
-
   const { handleSubmit, control } = useForm<TFormData>({ defaultValues: defaultValues as any });
-
   const onSubmit = (formData: TFormData) => {
     console.log(formData);
   };
-
   const [dateRange, setDateRange] = useState<{ from: Moment; to: Moment } | undefined>();
-
   return (
     <FormGridContainer onSubmit={handleSubmit(onSubmit)} formProps={{ id: 'demo-form-2' }}>
       <FormGridItem lg={4} sx={fieldSx}>
@@ -170,27 +161,9 @@ export default function FormByComponents() {
           options={optionRadio}
         />
       </FormGridItem>
-      <FormGridItem lg={4} sx={fieldSx}>
-        <RHFDateMultiPicker
-          id="demo-form-2:date-time:select-us"
-          control={control}
-          name="DateMultiField"
-          label={LABEL}
-          rules={required(t('common:pleaseSelect'))}
-        />
-      </FormGridItem>
-      <FormGridItem lg={8} sx={fieldSx}>
-        <RHFDateMultiPickerWithTags
-          id="demo-form-2:date-time:select-us-2"
-          control={control}
-          name="DateMultiField2"
-          label={LABEL}
-          rules={required(t('common:pleaseSelect'))}
-        />
-      </FormGridItem>
       <FormGridItem sx={fieldSx}>
         <RHFDateMulti
-          id="demo-form-3:date-time:select-us-3"
+          id="demo-form-3:dates:select-us-3"
           control={control}
           name="DateMultiField3"
           label={LABEL}

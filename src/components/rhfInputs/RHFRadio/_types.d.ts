@@ -1,7 +1,7 @@
-import type { TCommonRadioFieldProps } from '@/components/inputs/CommonRadioField';
-import type { TRHFInputProps } from '@/components/rhfInputs';
-export type TRHFRadioProps = {
+import type { CommonRadioFieldProps } from '@/components/inputs/CommonRadioField';
+import type { RHFInputProps } from '@/components/rhfInputs';
+export type RHFRadioProps = {
   defaultValue?: string;
   id?: `${string}:radio:${string}`;
-} & TRHFInputProps &
-  Omit<TCommonRadioFieldProps, 'checked' | 'error' | 'onChange' | 'value' | 'name'>;
+} & RHFInputProps &
+  Omit<CommonRadioFieldProps, 'checked' | 'error' | 'onChange' | 'value' | 'name'>;

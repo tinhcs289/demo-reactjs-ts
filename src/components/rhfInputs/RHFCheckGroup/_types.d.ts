@@ -1,8 +1,8 @@
-import type { TCommonCheckGroupFieldProps } from '@/components/inputs/CommonCheckGroupField';
-import type { TRHFInputProps } from '@/components/rhfInputs';
-export type TRHFCheckGroupProps = {
+import type { CommonCheckGroupFieldProps } from '@/components/inputs/CommonCheckGroupField';
+import type { RHFInputProps } from '@/components/rhfInputs';
+export type RHFCheckGroupProps = {
   defaultValue?: string;
   id?: `${string}:check-group:${string}`;
-} & TRHFInputProps &
-  Omit<TCommonCheckGroupFieldProps, 'errorText' | 'error' | 'onChange' | 'value' | 'name'>;
-export type { TCheckGroupOption } from '@/components/inputs/CommonCheckGroupField';
+} & RHFInputProps &
+  Omit<CommonCheckGroupFieldProps, 'errorText' | 'error' | 'onChange' | 'value' | 'name'>;
+export type { CheckGroupOption } from '@/components/inputs/CommonCheckGroupField';

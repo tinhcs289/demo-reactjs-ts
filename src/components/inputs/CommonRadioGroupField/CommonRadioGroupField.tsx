@@ -1,14 +1,13 @@
-import InputErrorTextWithIcon from '@/components/inputs/InputErrorTextWithIcon';
+import InputErrorTextWithIcon from '../_components/InputErrorTextWithIcon';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
-import type { ChangeEvent, ComponentType } from 'react';
+import type { ChangeEvent } from 'react';
 import { useCallback, useMemo } from 'react';
-import FormGroupWithOptions from '../FormGroupWithOptions';
-import type { TCommonRadioGroupFieldProps } from './_types';
-
-const CommonRadioGroupField: ComponentType<TCommonRadioGroupFieldProps> = (props) => {
+import FormGroupWithOptions from '../_components/FormGroupWithOptions';
+import type { CommonRadioGroupFieldProps } from './_types';
+export default function CommonRadioGroupField(props: CommonRadioGroupFieldProps) {
   const {
     name,
     label,
@@ -22,27 +21,21 @@ const CommonRadioGroupField: ComponentType<TCommonRadioGroupFieldProps> = (props
     groupProps,
     ...otherProps
   } = props;
-
   const memoOption = useMemo(() => {
     return options instanceof Array && options.length > 0 ? options : [];
   }, [options]);
-
   const memoValue = useMemo(() => {
     return !!value?.value ? value : null;
   }, [value]);
-
   const handleOnchange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       if (!event?.target?.value) return;
-
       const val = (event.target as HTMLInputElement).value as string;
       const checked = (event.target as HTMLInputElement).checked;
-
       if (!checked) {
         onChange?.(undefined);
         return;
       }
-
       if (memoOption.length === 0) return;
       const i = memoOption.findIndex((o) => o.value === val);
       if (i < 0) return;
@@ -50,7 +43,6 @@ const CommonRadioGroupField: ComponentType<TCommonRadioGroupFieldProps> = (props
     },
     [memoOption, onChange]
   );
-
   const memoOptionsRender = useMemo(() => {
     return (
       <>
@@ -75,7 +67,6 @@ const CommonRadioGroupField: ComponentType<TCommonRadioGroupFieldProps> = (props
       </>
     );
   }, [name, memoOption, error, color]);
-
   return (
     <FormGroupWithOptions {...otherProps}>
       <FormLabel component="label" error={error} sx={{ display: 'inherit', mb: '4px' }}>
@@ -93,5 +84,4 @@ const CommonRadioGroupField: ComponentType<TCommonRadioGroupFieldProps> = (props
       </RadioGroup>
     </FormGroupWithOptions>
   );
-};
-export default CommonRadioGroupField;
+}

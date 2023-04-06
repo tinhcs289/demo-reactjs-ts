@@ -1,11 +1,9 @@
-import InputErrorTextWithIcon from '@/components/inputs/InputErrorTextWithIcon';
+import InputErrorTextWithIcon from '../_components/InputErrorTextWithIcon';
 import { useTheme } from '@mui/material';
 import Switch from '@mui/material/Switch';
-import type { ComponentType } from 'react';
 import FormControlLabelStyled from './FormControlLabelStyled';
-import type { TCommonSwitchFieldProps } from './_types';
-
-const CommonSwitchField: ComponentType<TCommonSwitchFieldProps> = (props) => {
+import type { CommonSwitchFieldProps } from './_types';
+export default function CommonSwitchField(props: CommonSwitchFieldProps) {
   const {
     name,
     label,
@@ -51,5 +49,4 @@ const CommonSwitchField: ComponentType<TCommonSwitchFieldProps> = (props) => {
       {...formControlProps}
     />
   );
-};
-export default CommonSwitchField;
+}

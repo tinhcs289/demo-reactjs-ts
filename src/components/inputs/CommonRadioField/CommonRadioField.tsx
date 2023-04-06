@@ -1,11 +1,9 @@
-import InputErrorTextWithIcon from '@/components/inputs/InputErrorTextWithIcon';
+import InputErrorTextWithIcon from '../_components/InputErrorTextWithIcon';
 import { useTheme } from '@mui/material';
 import Radio from '@mui/material/Radio';
-import type { ComponentType } from 'react';
 import FormControlLabelStyled from './FormControlLabelStyled';
-import { TCommonRadioFieldProps } from './_types';
-
-const CommonRadioField: ComponentType<TCommonRadioFieldProps> = (props) => {
+import { CommonRadioFieldProps } from './_types';
+export default function CommonRadioField(props: CommonRadioFieldProps) {
   const {
     name,
     label,
@@ -57,5 +55,4 @@ const CommonRadioField: ComponentType<TCommonRadioFieldProps> = (props) => {
       }}
     />
   );
-};
-export default CommonRadioField;
+}
