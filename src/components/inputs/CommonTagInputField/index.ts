@@ -1,3 +1,3 @@
 import CommonTagInputField from './CommonTagInputField';
 export default CommonTagInputField;
-export type { TCommonTagInput, TCommonTagInputFieldProps } from './_types';
+export type { CommonTagInputItem, CommonTagInputFieldProps } from './_types';

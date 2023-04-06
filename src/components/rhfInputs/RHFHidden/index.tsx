@@ -1,3 +1,3 @@
 import RHFHidden from './RHFHidden';
 export default RHFHidden;
-export type { TRHFHiddenProps } from './_types';
+export type { RHFHiddenProps } from './_types';

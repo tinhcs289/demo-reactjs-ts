@@ -1,4 +1,4 @@
-import type { TAutoCompleteOption } from '@/components/rhfInputs/RHFSelect';
+import type { AutoCompleteOption } from '@/components/rhfInputs/RHFSelect';
 import type { TBaseFormProps } from '@/types';
 export type FormValue = {
   Id?: string;
@@ -6,7 +6,7 @@ export type FormValue = {
   FirstName?: string;
   MiddleName?: string;
   LastName?: string;
-  Gender?: TAutoCompleteOption;
+  Gender?: AutoCompleteOption;
   PhoneNumber?: string;
   EmailAddress?: string;
   Address?: string;

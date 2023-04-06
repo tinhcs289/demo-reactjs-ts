@@ -1,13 +1,13 @@
 import CommonCheckField from '@/components/inputs/CommonCheckField';
-import InputErrorTextWithIcon from '@/components/inputs/InputErrorTextWithIcon';
+import InputErrorTextWithIcon from '../_components/InputErrorTextWithIcon';
 import removeAt from '@/helpers/arrayHelpers/removeAt';
 import FormLabel from '@mui/material/FormLabel';
 import type { ComponentType } from 'react';
 import { useCallback, useMemo } from 'react';
-import FormGroupWithOptions from '../FormGroupWithOptions';
-import type { TCheckGroupOption, TCommonCheckGroupFieldProps } from './_types';
+import FormGroupWithOptions from '../_components/FormGroupWithOptions';
+import type { CheckGroupOption, CommonCheckGroupFieldProps } from './_types';
 
-const CommonCheckGroupField: ComponentType<TCommonCheckGroupFieldProps> = (props) => {
+const CommonCheckGroupField: ComponentType<CommonCheckGroupFieldProps> = (props) => {
   const { name, label, required, error, onChange, errorText, options, value, ...otherProps } = props;
 
   const memoOption = useMemo(() => {
@@ -19,7 +19,7 @@ const CommonCheckGroupField: ComponentType<TCommonCheckGroupFieldProps> = (props
   }, [value]);
 
   const isChecked = useCallback(
-    (option: TCheckGroupOption) => {
+    (option: CheckGroupOption) => {
       return (
         (memoValue.length > 0 && memoValue.findIndex((v) => v.value === option.value) >= 0) ||
         !!option?.checked

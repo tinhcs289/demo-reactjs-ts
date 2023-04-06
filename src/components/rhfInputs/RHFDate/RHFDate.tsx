@@ -1,11 +1,28 @@
 import CommonDateField from '@/components/inputs/CommonDateField';
-import type { ComponentType } from 'react';
+import type { RHFRenderInput } from '@/components/rhfInputs';
+import { useCallback } from 'react';
 import { Controller } from 'react-hook-form';
-import type { TRHFDateProps } from './_types';
-
-const RHFDate: ComponentType<TRHFDateProps> = (props) => {
+import type { RHFDateProps } from './_types';
+export default function RHFDate(props: RHFDateProps) {
   const { name, control, rules, defaultValue, shouldUnregister, ...inputProps } = props;
-
+  const renderInput: RHFRenderInput = useCallback(
+    ({ field: { onChange, value, ref }, fieldState: { invalid, error } }) => {
+      const _props: { [x: string]: any } = { ...inputProps };
+      if (!!rules?.required) _props.required = true;
+      if (!!error?.message) _props.errorText = error.message;
+      return (
+        <CommonDateField
+          value={value || null}
+          defaultValue={defaultValue || value || null}
+          onChange={onChange}
+          inputRef={ref}
+          error={invalid}
+          {..._props}
+        />
+      );
+    },
+    [rules?.required, inputProps, defaultValue]
+  );
   return (
     <Controller
       name={name}
@@ -13,37 +30,7 @@ const RHFDate: ComponentType<TRHFDateProps> = (props) => {
       rules={rules}
       {...(!!defaultValue ? { defaultValue } : {})}
       {...(typeof shouldUnregister === 'boolean' ? { shouldUnregister } : {})}
-      render={({
-        field: { onBlur, onChange, value, name, ref },
-        fieldState: {
-          invalid,
-          // isTouched,
-          // isDirty,
-          error,
-        },
-      }) => (
-        <CommonDateField
-          name={name}
-          value={value}
-          {...(!!defaultValue ? { defaultValue } : {})}
-          onChange={onChange}
-          onBlur={onBlur}
-          inputRef={ref}
-          error={invalid}
-          {...(!!rules?.required
-            ? {
-                required: true,
-              }
-            : {})}
-          {...(!!error?.message
-            ? {
-                errorText: error?.message,
-              }
-            : {})}
-          {...inputProps}
-        />
-      )}
+      render={renderInput}
     />
   );
-};
-export default RHFDate;
+}

@@ -1,14 +1,14 @@
-import type { TCheckGroupOption } from '@/components/rhfInputs/RHFCheckGroup';
-import type { TRadioGroupOption } from '@/components/rhfInputs/RHFRadioGroup';
-import type { TAutoCompleteOption } from '@/components/rhfInputs/RHFSelect';
-import type { TSwitchGroupOption } from '@/components/rhfInputs/RHFSwitchGroup';
-import type { TCommonTagInput } from '@/components/rhfInputs/RHFTagInput';
+import type { CheckGroupOption } from '@/components/rhfInputs/RHFCheckGroup';
+import type { RadioGroupOption } from '@/components/rhfInputs/RHFRadioGroup';
+import type { AutoCompleteOption } from '@/components/rhfInputs/RHFSelect';
+import type { SwitchGroupOption } from '@/components/rhfInputs/RHFSwitchGroup';
+import type { CommonTagInputItem } from '@/components/rhfInputs/RHFTagInput';
 import type { Moment } from 'moment';
 
 export type TFormData = {
   TextField?: string;
-  SelectField?: TAutoCompleteOption;
-  SelectMultiField?: TAutoCompleteOption[];
+  SelectField?: AutoCompleteOption;
+  SelectMultiField?: AutoCompleteOption[];
   RadioField?: boolean;
   CheckField?: boolean;
   SwitchField?: boolean;
@@ -19,9 +19,9 @@ export type TFormData = {
   DateMultiField?: Moment[];
   DateMultiField2?: Moment[];
   DateMultiField3?: Moment[];
-  CheckGroupField?: TCheckGroupOption[];
-  RadioGroupField?: TRadioGroupOption[];
-  SwithGroupField?: TSwitchGroupOption[];
-  TagInputField?: TCommonTagInput[];
+  CheckGroupField?: CheckGroupOption[];
+  RadioGroupField?: RadioGroupOption[];
+  SwithGroupField?: SwitchGroupOption[];
+  TagInputField?: CommonTagInputItem[];
   NumberField?: number;
 };

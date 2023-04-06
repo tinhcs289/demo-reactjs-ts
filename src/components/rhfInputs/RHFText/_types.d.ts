@@ -1,7 +1,7 @@
-import type { TRHFInputProps } from '@/components/rhfInputs';
-import type { TCommonTextFieldProps } from '@/components/inputs/CommonTextField';
-export type TRHFTextProps = {
+import type { RHFInputProps } from '@/components/rhfInputs';
+import type { CommonTextFieldProps } from '@/components/inputs/CommonTextField';
+export type RHFTextProps = {
   defaultValue?: string;
   id?: `${string}:text:${string}`;
-} & TRHFInputProps &
-  Omit<TCommonTextFieldProps, 'name' | 'defaultValue' | 'value' | 'error' | 'errorText'>;
+} & RHFInputProps &
+  Omit<CommonTextFieldProps, 'name' | 'defaultValue' | 'value' | 'error' | 'errorText'>;

@@ -1,7 +1,7 @@
-import type { TCommonSwitchFieldProps } from '@/components/inputs/CommonSwitchField';
-import type { TRHFInputProps } from '@/components/rhfInputs';
-export type TRHFSwitchProps = {
+import type { CommonSwitchFieldProps } from '@/components/inputs/CommonSwitchField';
+import type { RHFInputProps } from '@/components/rhfInputs';
+export type RHFSwitchProps = {
   defaultValue?: string;
   id?: `${string}:switch:${string}`;
-} & TRHFInputProps &
-  Omit<TCommonSwitchFieldProps, 'checked' | 'error' | 'onChange' | 'value' | 'name'>;
+} & RHFInputProps &
+  Omit<CommonSwitchFieldProps, 'checked' | 'error' | 'onChange' | 'value' | 'name'>;

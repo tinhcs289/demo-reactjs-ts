@@ -1,3 +1,3 @@
-import type { TCommonTextFieldProps } from '@/components/inputs/CommonTextField';
+import type { CommonTextFieldProps } from '@/components/inputs/CommonTextField';
 import type { NumericFormatProps } from 'react-number-format';
-export type TCommonNumberFieldProps = TCommonTextFieldProps & NumericFormatProps;
+export type CommonNumberFieldProps = CommonTextFieldProps & NumericFormatProps;

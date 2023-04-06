@@ -1,95 +1,74 @@
-import FormGridItem from '@/components/form/FormGridItem';
-import RHFSelect from '@/components/rhfInputs/RHFSelect';
-import RHFText from '@/components/rhfInputs/RHFText';
+import { FormGridFields, field } from '@/components/form';
 import { email, phone, required } from '@/constants/rhfRules';
-import newGuid from '@/helpers/stringHelpers/newGuid';
-import { actions as snackbar } from '@/redux/snackbar';
-import Button from '@mui/material/Button';
-import { useFormContext } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
-import { genderOptions, itemSx } from './contants';
+import { i18n } from '@/translation';
 import type { FormProps } from './_types';
+import { genderOptions, itemSx } from './contants';
+const fields = [
+  field({
+    name: 'Title',
+    inputType: 'text',
+    label: i18n.t('contact:title'),
+    rules: required(i18n.t('common:pleaseEnter')),
+    md: 3,
+    sx: itemSx,
+  }),
+  field({
+    name: 'FirstName',
+    inputType: 'text',
+    label: i18n.t('contact:firstName'),
+    rules: required(i18n.t('common:pleaseEnter')),
+    md: 3,
+    sx: itemSx,
+  }),
+  field({
+    name: 'MiddleName',
+    inputType: 'text',
+    label: i18n.t('contact:middleName'),
+    rules: required(i18n.t('common:pleaseEnter')),
+    md: 3,
+    sx: itemSx,
+  }),
+  field({
+    name: 'LastName',
+    inputType: 'text',
+    label: i18n.t('contact:lastName'),
+    rules: required(i18n.t('common:pleaseEnter')),
+    md: 3,
+    sx: itemSx,
+  }),
+  field({
+    name: 'Gender',
+    inputType: 'select',
+    label: i18n.t('contact:gender'),
+    rules: required(i18n.t('common:pleaseEnter')),
+    md: 2,
+    sx: itemSx,
+    componentProps: { options: genderOptions },
+  }),
+  field({
+    name: 'PhoneNumber',
+    inputType: 'text',
+    label: i18n.t('contact:phoneNumber'),
+    rules: { ...required(i18n.t('common:pleaseEnter')), ...phone(i18n.t('common:invalidPhone')) },
+    md: 5,
+    sx: itemSx,
+  }),
+  field({
+    name: 'EmailAddress',
+    inputType: 'text',
+    label: i18n.t('contact:emailAddress'),
+    rules: { ...required(i18n.t('common:pleaseEnter')), ...email(i18n.t('common:invalidEmail')) },
+    md: 5,
+    sx: itemSx,
+  }),
+  field({
+    name: 'Address',
+    inputType: 'text',
+    label: i18n.t('contact:address'),
+    sx: itemSx,
+    componentProps: { multiline: true, rows: 3 },
+  }),
+];
 export default function Form(props: FormProps) {
-  const { t } = useTranslation();
-  const { control } = useFormContext();
-  const dispatch = useDispatch();
-  return (
-    <>
-      <Button
-        onClick={() => {
-          dispatch(snackbar.pushMessageError({ content: newGuid() }));
-        }}
-      >
-        aaaaaaaaaaaaaaaaa
-      </Button>
-      <FormGridItem sx={itemSx} lg={3}>
-        <RHFText
-          control={control}
-          name="Title"
-          label={t('contact:title')}
-          rules={required(t('common:pleaseEnter'))}
-        />
-      </FormGridItem>
-      <FormGridItem sx={itemSx} lg={3}>
-        <RHFText
-          control={control}
-          name="FirstName"
-          label={t('contact:firstName')}
-          rules={required(t('common:pleaseEnter'))}
-        />
-      </FormGridItem>
-      <FormGridItem sx={itemSx} lg={3}>
-        <RHFText
-          control={control}
-          name="MiddleName"
-          label={t('contact:middleName')}
-          rules={required(t('common:pleaseEnter'))}
-        />
-      </FormGridItem>
-      <FormGridItem sx={itemSx} lg={3}>
-        <RHFText
-          control={control}
-          name="LastName"
-          label={t('contact:lastName')}
-          rules={required(t('common:pleaseEnter'))}
-        />
-      </FormGridItem>
-      <FormGridItem sx={itemSx} lg={3}>
-        <RHFSelect
-          control={control}
-          name="Gender"
-          label={t('contact:gender')}
-          rules={required(t('common:pleaseSelect'))}
-          options={genderOptions}
-        />
-      </FormGridItem>
-      <FormGridItem sx={itemSx} lg={6}>
-        <RHFText
-          control={control}
-          name="PhoneNumber"
-          label={t('contact:phoneNumber')}
-          rules={{ ...required(t('common:pleaseEnter')), ...phone(t('common:invalidPhone')) }}
-        />
-      </FormGridItem>
-      <FormGridItem sx={itemSx} lg={6}>
-        <RHFText
-          control={control}
-          name="EmailAddress"
-          label={t('contact:emailAddress')}
-          rules={{ ...required(t('common:pleaseEnter')), ...email(t('common:invalidPhone')) }}
-        />
-      </FormGridItem>
-      <FormGridItem sx={itemSx}>
-        <RHFText
-          control={control}
-          name="Address"
-          label={t('contact:address')}
-          rules={{ ...required(t('common:pleaseEnter')), ...email(t('common:invalidPhone')) }}
-          multiline
-          minRows={3}
-        />
-      </FormGridItem>
-    </>
-  );
+  return <FormGridFields fields={fields} />;
 }

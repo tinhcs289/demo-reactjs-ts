@@ -1,9 +1,9 @@
 import CommonRadioGroupField from '@/components/inputs/CommonRadioGroupField';
 import type { ComponentType } from 'react';
 import { Controller } from 'react-hook-form';
-import type { TRHFRadioGroupProps } from './_types';
+import type { RHFRadioGroupProps } from './_types';
 
-const RHFRadioGroup: ComponentType<TRHFRadioGroupProps> = (props) => {
+const RHFRadioGroup: ComponentType<RHFRadioGroupProps> = (props) => {
   const { name, control, rules, defaultValue, shouldUnregister, label, ...inputProps } = props;
 
   return (

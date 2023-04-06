@@ -1,9 +1,9 @@
 import CommonSelectField from '@/components/inputs/CommonSelectField';
 import type { ComponentType } from 'react';
 import { Controller } from 'react-hook-form';
-import type { TRHFSelectProps } from './_types';
+import type { RHFSelectProps } from './_types';
 
-const RHFSelect: ComponentType<TRHFSelectProps> = (props) => {
+const RHFSelect: ComponentType<RHFSelectProps> = (props) => {
   const {
     name,
     multiple,

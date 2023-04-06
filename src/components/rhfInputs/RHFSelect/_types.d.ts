@@ -1,7 +1,7 @@
-import type { TCommonSelectFieldProps } from '@/components/inputs/CommonSelectField';
-import type { TRHFInputProps } from '@/components/rhfInputs';
-export type TRHFSelectProps = {
+import type { CommonSelectFieldProps } from '@/components/inputs/CommonSelectField';
+import type { RHFInputProps } from '@/components/rhfInputs';
+export type RHFSelectProps = {
   id?: `${string}:select:${string}`;
-} & TRHFInputProps &
-  Omit<TCommonSelectFieldProps, 'name'>;
-export type { TAutoCompleteOption } from '@/components/inputs/CommonSelectField';
+} & RHFInputProps &
+  Omit<CommonSelectFieldProps, 'name'>;
+export type { AutoCompleteOption } from '@/components/inputs/CommonSelectField';

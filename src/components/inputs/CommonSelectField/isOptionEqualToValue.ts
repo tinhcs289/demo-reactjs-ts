@@ -1,8 +1,8 @@
-import type { TAutoCompleteOption } from './_types';
+import type { AutoCompleteOption } from './_types';
 
 export default function isOptionEqualToValue(
-  option: TAutoCompleteOption,
-  value: TAutoCompleteOption | string
+  option: AutoCompleteOption,
+  value: AutoCompleteOption | string
 ) {
-  return option?.value === (value as string) || option?.value === (value as TAutoCompleteOption)?.value;
+  return option?.value === (value as string) || option?.value === (value as AutoCompleteOption)?.value;
 }

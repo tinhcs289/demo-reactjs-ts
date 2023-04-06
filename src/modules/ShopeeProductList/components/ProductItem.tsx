@@ -1,31 +1,31 @@
 import NavLinkNoStyle from '@/components/NavLinkNoStyle';
+import TypographyLimitLines from '@/components/typo/TypographyLimitLines';
+import PATHS from '@/constants/paths';
 import slugify from '@/helpers/stringHelpers/slugify';
-import PATHS  from '@/constants/paths';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import numeral from 'numeral';
 import { useMemo } from 'react';
+import { generatePath } from 'react-router';
+import type { TShopeeProductItem } from '../_types';
 import { PRODUCT_IMAGE_HEIGHT } from '../constants';
 import useItemFlagSet from '../hooks/useItemFlagSet';
 import useItemOverlaySet from '../hooks/useItemOverlaySet';
 import useItemPromoLabelSet from '../hooks/useItemPromoLabelSet';
-import type { TShopeeProductItem } from '../_types';
 import LabelDiscount from './LabelDiscount';
 import { LabelTextGroup, LabelVoucher } from './LabelText';
 import ProductItemCard from './ProductItemCard';
 import ProductItemFindSimilar from './ProductItemFindSimilar';
 import ProductItemGrid from './ProductItemGrid';
-import ProductItemName from './ProductItemName';
-import { generatePath } from 'react-router';
 
 function useMemoDisplay(product: TShopeeProductItem) {
   const $productName = useMemo(() => {
     return (
-      <ProductItemName variant="h5" fontSize="small">
+      <TypographyLimitLines variant="h5" fontSize="small" maxLines={2} fontWeight={500}>
         {product?.name || ''}
-      </ProductItemName>
+      </TypographyLimitLines>
     );
   }, [product?.name]);
 

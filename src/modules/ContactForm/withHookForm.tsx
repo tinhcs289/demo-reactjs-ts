@@ -1,7 +1,6 @@
 import FormCloseButton from '@/components/buttons/FormCloseButton';
 import FormSubmitButton from '@/components/buttons/FormSubmitButton';
-import FormGridContainer from '@/components/form/FormGridContainer';
-import FormGridItem from '@/components/form/FormGridItem';
+import { FormGridContainer, FormGridItem } from '@/components/form';
 import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';

@@ -1,15 +1,15 @@
 import type {
-  TAutoCompleteOption,
-  TCommonSelectFieldOnChange,
-  TCommonSelectFieldProps,
+  AutoCompleteOption,
+  CommonSelectFieldOnChange,
+  CommonSelectFieldProps,
 } from '@/components/inputs/CommonSelectField';
 import type { ComponentType } from 'react';
 import { useCallback, useMemo } from 'react';
 import { FALSE, TRUE } from './constants';
-import type { TCommonSelectBooleanFieldProps } from './_types';
+import type { CommonSelectBooleanFieldProps } from './_types';
 
 const withBooleanValue =
-  (WrappedComponent: ComponentType<TCommonSelectFieldProps>) => (props: TCommonSelectBooleanFieldProps) => {
+  (WrappedComponent: ComponentType<CommonSelectFieldProps>) => (props: CommonSelectBooleanFieldProps) => {
     const {
       value: valueProp,
       defaultValue: dfValueProp,
@@ -20,32 +20,32 @@ const withBooleanValue =
       ...otherProps
     } = props;
 
-    const trueValue: TAutoCompleteOption = useMemo(
+    const trueValue: AutoCompleteOption = useMemo(
       () => ({ value: TRUE, label: labelTrue || 'Yes' }),
       [labelTrue]
     );
-    const falseValue: TAutoCompleteOption = useMemo(
+    const falseValue: AutoCompleteOption = useMemo(
       () => ({ value: FALSE, label: labelFalse || 'No' }),
       [labelFalse]
     );
 
-    const options: TAutoCompleteOption[] = useMemo(() => [trueValue, falseValue], [trueValue, falseValue]);
+    const options: AutoCompleteOption[] = useMemo(() => [trueValue, falseValue], [trueValue, falseValue]);
 
-    const value: TAutoCompleteOption | null | undefined = useMemo(() => {
+    const value: AutoCompleteOption | null | undefined = useMemo(() => {
       if (valueProp === true) return trueValue;
       if (valueProp === false) return falseValue;
       return undefined;
     }, [valueProp, trueValue, falseValue]);
 
-    const defaultValue: TAutoCompleteOption | null | undefined = useMemo(() => {
+    const defaultValue: AutoCompleteOption | null | undefined = useMemo(() => {
       if (dfValueProp === true) return trueValue;
       if (dfValueProp === false) return falseValue;
       return undefined;
     }, [dfValueProp, trueValue, falseValue]);
 
-    const onChange: TCommonSelectFieldOnChange = useCallback(
+    const onChange: CommonSelectFieldOnChange = useCallback(
       (event, val, reason, details) => {
-        const selected = val as TAutoCompleteOption;
+        const selected = val as AutoCompleteOption;
         if (!selected) {
           propOnChange?.(event, null, reason, details);
           return;

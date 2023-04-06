@@ -1,6 +1,5 @@
 import type { Control } from 'react-hook-form';
-
-export type TRHFHiddenProps = {
+export type RHFHiddenProps = {
   name: string;
   control: Control<any, any>;
   shouldUnregister?: boolean;
