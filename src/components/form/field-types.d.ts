@@ -64,20 +64,22 @@ export type FieldComponentProps<T extends FormInputType> = T extends 'text'
   ? RHFHiddenProps
   : ComponentProps<any>;
 export type FormFieldHoc<U extends FormInputType> = (RHFField: ComponentType<FieldComponentProps<U>>) => ComponentType<FieldComponentProps<U>>;
+type FormFieldGridProps = Pick<
+  FormGridItemProps,
+  'sx' | 'className' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'disabledXs' | 'contentProps'
+>
 export type FormField<T extends FieldValues, U extends FormInputType> = {
   name: keyof T;
-  inputType: U;
+  inputType?: U;
   label?: ReactNode;
   rules?: RHFRules;
   component?: ComponentType<FieldComponentProps<U> & { [x: string]: any }>;
   componentProps?: Partial<FieldComponentProps<U>>;
   componentSx?: SxProps<Theme>;
   hocs?: FormFieldHoc<U>[];
-} & Pick<
-  FormGridItemProps,
-  'sx' | 'className' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'disabledXs' | 'contentProps'
->;
+  fields?: FormField<any, any>[];
+} & FormFieldGridProps;
 export type ReactHookForm<T extends FieldValues> = ReturnType<typeof useForm<T>>;
 export type FormGridProps<T extends FieldValues> = {
-  fields: FormField<T, any>[];
+  fields: Array<FormField<T, any>>;
 };
