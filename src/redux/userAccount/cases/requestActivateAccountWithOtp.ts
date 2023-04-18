@@ -1,5 +1,5 @@
 import activateAccountWithOtpApi from '@/api/registerAccount/activateAccountWithOtpApi';
-import { TApiResponseWithMessageOnly } from '@/api/_types';
+import { ApiResponseWithMessageOnly } from '@/api/_types';
 import { EApiRequestStatus } from '@/constants/apiRequestStatus';
 import type { ReduxAction } from '@/helpers/reduxHelpers';
 import { createCase } from '@/helpers/reduxHelpers';
@@ -10,7 +10,7 @@ import { rootName } from '../state';
 import requestActivateAccountWithOtpFail from './requestActivateAccountWithOtpFail';
 import requestActivateAccountWithOtpSuccess from './requestActivateAccountWithOtpSuccess';
 type ActivateAccountPayload = Parameters<typeof activateAccountWithOtpApi>[0];
-type ActivateAccountApiReturns = AxiosResponse<TApiResponseWithMessageOnly>;
+type ActivateAccountApiReturns = AxiosResponse<ApiResponseWithMessageOnly>;
 const TYPE = `${rootName}/requestActivateAccountWithOtp`;
 const requestActivateAccountWithOtp = createCase<ActivateAccountPayload, State>(
   TYPE,

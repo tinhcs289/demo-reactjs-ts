@@ -18,5 +18,5 @@
     "jsx": "react-jsx",
     "baseUrl": "."
   },
-  "include": ["src"]
+  "include": ["src", "src/types/SiteMapItem/.d.ts"]
 }

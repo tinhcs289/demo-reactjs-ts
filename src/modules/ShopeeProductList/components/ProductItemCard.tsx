@@ -1,7 +1,6 @@
 import { styled } from '@mui/material';
 import type { CardProps } from '@mui/material/Card';
 import Card from '@mui/material/Card';
-
 const ProductItemCard = styled(Card)<CardProps>(({ theme }) => ({
   position: 'relative',
   transition: 'all ease .2s',

@@ -1,6 +1,5 @@
 import Grid from '@mui/material/Grid';
 import { ReactNode } from 'react';
-
 export default function ProductItemGrid(props?: { children?: ReactNode }) {
   const { children } = props || {};
   return (

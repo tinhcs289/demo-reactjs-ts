@@ -24,7 +24,7 @@ import type { FieldValues } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import { EFormInputType } from './constants';
 export type FormInputType = `${EFormInputType}`;
-export type FieldComponentProps<T extends EFormInputType> = T extends 'text'
+export type FieldComponentProps<T extends FormInputType> = T extends 'text'
   ? RHFTextProps
   : T extends 'check'
   ? RHFCheckProps
@@ -63,6 +63,7 @@ export type FieldComponentProps<T extends EFormInputType> = T extends 'text'
   : T extends 'hidden'
   ? RHFHiddenProps
   : ComponentProps<any>;
+export type FormFieldHoc<U extends FormInputType> = (RHFField: ComponentType<FieldComponentProps<U>>) => ComponentType<FieldComponentProps<U>>;
 export type FormField<T extends FieldValues, U extends FormInputType> = {
   name: keyof T;
   inputType: U;
@@ -71,6 +72,7 @@ export type FormField<T extends FieldValues, U extends FormInputType> = {
   component?: ComponentType<FieldComponentProps<U> & { [x: string]: any }>;
   componentProps?: Partial<FieldComponentProps<U>>;
   componentSx?: SxProps<Theme>;
+  hocs?: FormFieldHoc<U>[];
 } & Pick<
   FormGridItemProps,
   'sx' | 'className' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'disabledXs' | 'contentProps'

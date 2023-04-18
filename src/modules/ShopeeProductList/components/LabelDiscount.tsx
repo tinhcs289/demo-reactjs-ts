@@ -3,15 +3,13 @@ import type { BoxProps } from '@mui/material/Box';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import type { ReactNode } from 'react';
-
-const LabelWrap = styled(Box)<BoxProps>(({ theme }) => ({
+const LabelWrap = styled(Box)<BoxProps>(() => ({
   position: 'absolute',
   right: 0,
   top: 0,
   zIndex: 1,
 }));
-
-const Label = styled(Box)<BoxProps>(({ theme }) => ({
+const Label = styled(Box)<BoxProps>(() => ({
   display: 'flex',
   flexDirection: 'column',
   textAlign: 'center',
@@ -31,7 +29,6 @@ const Label = styled(Box)<BoxProps>(({ theme }) => ({
     borderWidth: '0 18px 4px',
   },
 }));
-
 export default function LabelDiscount(props?: { discount?: ReactNode }) {
   return (
     <LabelWrap>

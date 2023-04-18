@@ -4,7 +4,7 @@ import { EApiRequestStatus } from '@/constants/apiRequestStatus';
 import type { ReduxAction } from '@/helpers/reduxHelpers';
 import { createCase } from '@/helpers/reduxHelpers';
 import { actions as userAccount } from '@/redux/userAccount';
-import type { TAuthentication } from '@/types';
+import type { Authentication } from '@/types';
 import type { AxiosResponse } from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 import type { State } from '../state';
@@ -13,7 +13,7 @@ import clearStatusOfRequestLogin from './clearStatusOfRequestLogin';
 import requestLoginFail from './requestLoginFail';
 import requestLoginSuccess from './requestLoginSuccess';
 export type Payload = { username: string; password: string };
-type LoginApiReturns = AxiosResponse<TAuthentication>;
+type LoginApiReturns = AxiosResponse<Authentication>;
 const TYPE = `${rootName}/requestLogin`;
 const requestLogin = createCase<Payload, State>(
   TYPE,

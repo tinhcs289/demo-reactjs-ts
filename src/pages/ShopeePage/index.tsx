@@ -1,62 +1,39 @@
-import { styled } from '@mui/material';
-import type { BoxProps } from '@mui/material/Box';
-import Box from '@mui/material/Box';
-import type { FC } from 'react';
+import wait from '@/functions/wait';
 import { lazy, Suspense } from 'react';
-
-const ShopeeProductList = lazy(() => import('@/modules/ShopeeProductList'));
-const ItemElementSetsProvider = lazy(() => import('./context/ItemElementSetsProvider'));
-const PromoBrandsProvider = lazy(() => import('./context/PromoBrandsProvider'));
-const CategoriesProvider = lazy(() => import('./context/CategoriesProvider'));
-const BannerSlider = lazy(() => import('./components/BannerSlider'));
-const QuickTools = lazy(() => import('./components/QuickTools'));
-const PromoBrandList = lazy(() => import('./components/PromoBrandList'));
-const CategoryList = lazy(() => import('./components/CategoryList'));
-const BottomNavigator = lazy(() => import('./components/BottomNavigator'));
-const PageContent = lazy(() => import('./components/PageContent'));
-const PageTopBar = lazy(() => import('./components/PageTopBar'));
-
-const Fallback = styled(Box)<BoxProps>(({ theme }) => ({
-  height: theme.spacing(20),
-  background: theme.palette.action.hover,
-}));
-
-const ProductListFallback = styled(Box)<BoxProps>(({ theme }) => ({
-  height: theme.spacing(100),
-  background: theme.palette.action.hover,
-}));
-
-const ShopeePage: FC<any> = () => {
+import FallbackContentBlock from './components/FallbackContentBlock';
+import FallbackProductList from './components/FallbackProductList';
+const BottomNavigator = lazy(() => wait(0).then(() => import('./components/BottomNavigator')));
+const ProductListContainer = lazy(() => wait(0).then(() => import('./components/ProductListContainer')));
+const ShopeePageTopBar = lazy(() => wait(0).then(() => import('@/modules/ShopeePageTopBar')));
+const ShopeeTopBanner = lazy(() => wait(0).then(() => import('@/modules/ShopeeTopBanner')));
+const ShopeeQuickTools = lazy(() => wait(0).then(() => import('@/modules/ShopeeQuickTools')));
+const ShopeeCategoryList = lazy(() => wait(0).then(() => import('@/modules/ShopeeCategoryList')));
+const ShopeePromoBrandSlider = lazy(() => wait(0).then(() => import('@/modules/ShopeePromoBrandSlider')));
+const ShopeeProductList = lazy(() => wait(0).then(() => import('@/modules/ShopeeProductList')));
+export default function ShopeePage() {
   return (
     <>
-      <PageTopBar />
-      <Suspense fallback={<Fallback />}>
-        <BannerSlider />
+      <ShopeePageTopBar />
+      <Suspense fallback={<FallbackContentBlock />}>
+        <ShopeeTopBanner />
       </Suspense>
-      <Suspense fallback={<Fallback />}>
-        <QuickTools />
+      <Suspense fallback={<FallbackContentBlock />}>
+        <ShopeeQuickTools />
       </Suspense>
-      <Suspense fallback={<Fallback />}>
-        <PromoBrandsProvider>
-          <PromoBrandList />
-        </PromoBrandsProvider>
+      <Suspense fallback={<FallbackContentBlock />}>
+        <ShopeePromoBrandSlider />
       </Suspense>
-      <Suspense fallback={<Fallback />}>
-        <CategoriesProvider>
-          <CategoryList />
-        </CategoriesProvider>
+      <Suspense fallback={<FallbackContentBlock />}>
+        <ShopeeCategoryList />
       </Suspense>
-      <Suspense fallback={<ProductListFallback />}>
-        <PageContent component="main">
-          <ItemElementSetsProvider>
-            <ShopeeProductList />
-          </ItemElementSetsProvider>
-        </PageContent>
+      <Suspense fallback={<FallbackProductList />}>
+        <ProductListContainer>
+          <ShopeeProductList />
+        </ProductListContainer>
       </Suspense>
-      <Suspense fallback={<Fallback />}>
+      <Suspense fallback={<FallbackContentBlock />}>
         <BottomNavigator />
       </Suspense>
     </>
   );
-};
-export default ShopeePage;
+}

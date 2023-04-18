@@ -1,22 +1,18 @@
-import DashboardTabsContainer from '@/containers/DashboardTabsContainer';
-import BannerSlider from '@/pages/ShopeePage/components/BannerSlider';
-import CategoryList from '@/pages/ShopeePage/components/CategoryList';
-import PromoBrandList from '@/pages/ShopeePage/components/PromoBrandList';
-import QuickTools from '@/pages/ShopeePage/components/QuickTools';
-import CategoriesProvider from '@/pages/ShopeePage/context/CategoriesProvider';
-import PromoBrandsProvider from '@/pages/ShopeePage/context/PromoBrandsProvider';
+import wait from '@/functions/wait';
+import { lazy } from 'react';
+const DashboardTabsContainer = lazy(() => wait(0).then(() => import('@/containers/DashboardTabsContainer')));
+const ShopeeTopBanner = lazy(() => wait(0).then(() => import('@/modules/ShopeeTopBanner')));
+const ShopeeQuickTools = lazy(() => wait(0).then(() => import('@/modules/ShopeeQuickTools')));
+const ShopeeCategoryList = lazy(() => wait(0).then(() => import('@/modules/ShopeeCategoryList')));
+const ShopeePromoBrandSlider = lazy(() => wait(0).then(() => import('@/modules/ShopeePromoBrandSlider')));
 
 export default function DemoCarouselPage() {
   return (
     <DashboardTabsContainer>
-      <BannerSlider />
-      <QuickTools />
-      <PromoBrandsProvider>
-        <PromoBrandList />
-      </PromoBrandsProvider>
-      <CategoriesProvider>
-        <CategoryList />
-      </CategoriesProvider>
+      <ShopeeTopBanner />
+      <ShopeeQuickTools />
+      <ShopeePromoBrandSlider />
+      <ShopeeCategoryList />
     </DashboardTabsContainer>
   );
 }

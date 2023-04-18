@@ -1,11 +1,11 @@
 import uploadFileApi from '@/api/uploadFile/uploadFileApi';
 import { EApiRequestStatus } from '@/constants/apiRequestStatus';
-import type { TApiRequestStatus } from '@/types';
+import type { ApiRequestStatus } from '@/types';
 
 type TFileResponse = {
   bin?: File;
   source?: string;
-  requestStatus?: TApiRequestStatus;
+  requestStatus?: ApiRequestStatus;
 };
 
 const uploadFileListApi = async (payload: {

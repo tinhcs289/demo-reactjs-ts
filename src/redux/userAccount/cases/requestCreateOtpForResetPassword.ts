@@ -1,5 +1,5 @@
 import requestOtpForResetPasswordApi from '@/api/resetPassword/requestOtpForResetPasswordApi';
-import { TApiResponseWithMessageOnly } from '@/api/_types';
+import { ApiResponseWithMessageOnly } from '@/api/_types';
 import { EApiRequestStatus } from '@/constants/apiRequestStatus';
 import type { ReduxAction } from '@/helpers/reduxHelpers';
 import { createCase } from '@/helpers/reduxHelpers';
@@ -10,7 +10,7 @@ import { rootName } from '../state';
 import requestCreateOtpForResetPasswordFail from './requestCreateOtpForResetPasswordFail';
 import requestCreateOtpForResetPasswordSuccess from './requestCreateOtpForResetPasswordSuccess';
 type RequestOtpPayload = Parameters<typeof requestOtpForResetPasswordApi>[0];
-type RequestOtpApiReturns = AxiosResponse<TApiResponseWithMessageOnly>;
+type RequestOtpApiReturns = AxiosResponse<ApiResponseWithMessageOnly>;
 const TYPE = `${rootName}/requestCreateOtpForResetPassword`;
 const requestCreateOtpForResetPassword = createCase<RequestOtpPayload, State>(
   TYPE,
