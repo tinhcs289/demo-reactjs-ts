@@ -3,6 +3,7 @@ import { email, required } from "@/constants/rhfRules";
 import { i18n } from "@/translation";
 import type { SxProps, Theme } from "@mui/material";
 import withPasswordAndPasswordReEnterdMustMatch from './hocs/withPasswordAndPasswordReEnterdMustMatch';
+import { fields as contactFields } from '@/modules/FormContact';
 export const fieldSx: SxProps<Theme> = { p: 1, mb: 2 };
 export const fields = [
   field({
@@ -55,4 +56,8 @@ export const fields = [
     sx: fieldSx,
     rules: required(i18n.t<string>('common:pleaseSelect')),
   }),
+  field({
+    name: 'Contact',
+    fields: contactFields
+  })
 ];

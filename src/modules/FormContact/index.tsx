@@ -1,4 +1,5 @@
 import { default as FormContact } from './components/Form';
+export { fields } from './constants';
 export default FormContact;
 export type {
   FormComponent as FormContactComponent,

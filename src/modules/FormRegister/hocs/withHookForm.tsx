@@ -21,6 +21,7 @@ export default function withHookForm(WrappedComponent: ComponentType<FormProps>)
       },
     });
     const handleSubmit = form.handleSubmit((values) => {
+      console.log(values);
       onSubmit?.(values);
     });
     return (
