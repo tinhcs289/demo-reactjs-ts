@@ -1,5 +1,5 @@
 import authentication from '@/appCookies/authentication';
-import { RouteFallback } from '@/components/CommonFallback';
+import { RouteFallback } from '@/components/fallback';
 import PATHS from '@/constants/paths';
 import toEncodeUri from '@/helpers/stringHelpers/toEncodeUri';
 import useReturnUrlHashBuilder from '@/hooks/useReturnUrlHashBuilder';

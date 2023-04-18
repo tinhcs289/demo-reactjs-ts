@@ -1,7 +1,7 @@
 import http from '@/api/http';
 import httpMock from '@/api/httpMock';
 import mockAdapter from '@/api/mockAdapter';
-import { TApiResponseWithMessageOnly } from '@/api/_types';
+import { ApiResponseWithMessageOnly } from '@/api/_types';
 import type { AxiosResponse } from 'axios';
 
 const LINK = '/api/auth/sign-up';
@@ -11,7 +11,7 @@ const isMock = true;
 const mockSetup = () => {
   mockAdapter.onPost(LINK).reply(200, {
     message: 'Account created!',
-  } as TApiResponseWithMessageOnly);
+  } as ApiResponseWithMessageOnly);
 };
 
 if (isMock) mockSetup();
@@ -30,7 +30,7 @@ const registerApi = (payload: {
   firstName?: string;
   middleName?: string;
   lastName?: string;
-}): Promise<AxiosResponse<TApiResponseWithMessageOnly>> => {
+}): Promise<AxiosResponse<ApiResponseWithMessageOnly>> => {
   return !isMock ? http.post(LINK, payload) : httpMock.post(LINK, payload);
 };
 export default registerApi;

@@ -1,3 +1,5 @@
+export type AnyAsyncFuntion<Returns> = (...args: any[]) => Promise<Returns>;
+export type AnyPromise<Returns> = Promise<Returns>;
 /**
  * An elegant wait to do async/await
  * @example 
@@ -14,11 +16,11 @@
    // do next with result
  */
 async function tryDo<T>(
-  prom: (...args: any[]) => Promise<T>,
+  prom: AnyAsyncFuntion<T> | AnyPromise<T>,
   ...args: any[]
 ): Promise<[null, T] | [unknown, null]> {
   try {
-    const result = await prom(...args);
+    const result = await (typeof prom === 'function' ? prom(...args) : prom);
     return [null, result as T];
   } catch (error) {
     return [error, null];

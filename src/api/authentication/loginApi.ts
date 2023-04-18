@@ -1,7 +1,7 @@
 import http from '@/api/http';
 import httpMock from '@/api/httpMock';
 import mockAdapter from '@/api/mockAdapter';
-import type { TAuthentication } from '@/types';
+import type { Authentication } from '@/types';
 import type { AxiosResponse } from 'axios';
 
 const LINK = '/api/auth/sign-in';
@@ -28,7 +28,7 @@ const mockSetup = () => {
       language: 'vi-VN',
     },
     // hasNotBeenActivated: true,
-  } as TAuthentication);
+  } as Authentication);
 };
 
 if (isMock) mockSetup();
@@ -36,7 +36,7 @@ if (isMock) mockSetup();
 const loginApi = (payload: {
   username: string;
   password: string;
-}): Promise<AxiosResponse<TAuthentication>> => {
+}): Promise<AxiosResponse<Authentication>> => {
   return !isMock ? http.post(LINK, payload) : httpMock.post(LINK, payload);
 };
 export default loginApi;

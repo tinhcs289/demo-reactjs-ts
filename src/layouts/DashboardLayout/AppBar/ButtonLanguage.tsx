@@ -1,7 +1,7 @@
 import acceptLanguage from '@/appLocalStorages/acceptLanguage';
 import { EAcceptLanguage } from '@/constants/language';
 import { i18n } from '@/translation';
-import { TAcceptLanguage } from '@/types';
+import { AcceptLanguage } from '@/types';
 import TranslateIcon from '@mui/icons-material/Translate';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
@@ -40,7 +40,7 @@ export default function ButtonLanguage() {
         event?.preventDefault?.();
         setAnchorEl(null);
         i18n.changeLanguage(code);
-        acceptLanguage.set(code as TAcceptLanguage);
+        acceptLanguage.set(code as AcceptLanguage);
       };
     },
     [currentLanguage]

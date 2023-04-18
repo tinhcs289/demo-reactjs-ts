@@ -1,29 +1,26 @@
-import NavLinkNoStyle from '@/components/NavLinkNoStyle';
+import { ButtonLink } from '@/components/buttons';
+import { GridContainer, GridItem } from '@/components/grid';
 import PATHS from '@/constants/paths';
 import { DashboardPageContainer } from '@/layouts/DashboardLayout';
-import Button from '@mui/material/Button';
-import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import DevelopBackground from './DevelopBackground';
+import DevelopBackground from './components/DevelopBackground';
 export default function InDevelopPage() {
   return (
     <DashboardPageContainer>
-      <Grid container>
-        <Grid item xs={12} textAlign="center" sx={{ my: 4 }}>
+      <GridContainer sx={{ p: 2 }}>
+        <GridItem textAlign="center" sx={{ my: 4 }}>
           <Typography variant="h4">{`Chức năng đang trong quá trình phát triển`}</Typography>
-        </Grid>
-        <Grid item xs={12} textAlign="center" sx={{ mb: 2 }}>
+        </GridItem>
+        <GridItem textAlign="center" sx={{ mb: 2 }}>
           <Typography color="GrayText">{`Vui lòng quay lại sau để trải nghiệm`}</Typography>
-        </Grid>
-        <Grid item xs={12} textAlign="center">
-          <NavLinkNoStyle to={PATHS.dashboard}>
-            <Button color="primary" variant="contained">{`Quay về trang chủ`}</Button>
-          </NavLinkNoStyle>
-        </Grid>
-        <Grid item xs={12} sx={{ '& svg': { maxHeight: '400px', maxWidth: '100%' } }}>
+        </GridItem>
+        <GridItem textAlign="center">
+          <ButtonLink to={PATHS.dashboard} variant="contained">{`Quay về trang chủ`}</ButtonLink>
+        </GridItem>
+        <GridItem textAlign="center" sx={{ '& svg': { maxHeight: '400px', maxWidth: '100%' } }}>
           <DevelopBackground />
-        </Grid>
-      </Grid>
+        </GridItem>
+      </GridContainer>
     </DashboardPageContainer>
   );
 }

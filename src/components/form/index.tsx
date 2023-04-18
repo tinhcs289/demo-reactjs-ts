@@ -4,6 +4,7 @@ export { COMPONENT_DICT, EFormInputType } from './constants';
 export type {
   FieldComponentProps,
   FormField,
+  FormFieldHoc,
   FormGridProps,
   FormInputType,
   ReactHookForm,

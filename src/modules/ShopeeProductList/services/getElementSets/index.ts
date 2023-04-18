@@ -1,30 +1,25 @@
-import tryCall from '@/functions/tryCall';
+import callHttp from '@/functions/callHttp';
 import tryDo from '@/functions/tryDo';
 import wait from '@/functions/wait';
-import type { TShopeeElementSet } from '../../_types';
+import type { ShopeeElementSet } from '@/types/Shopee';
 import api from './api';
-
-const getElementSets = async (): Promise<TShopeeElementSet> => {
-  const [data, error] = await tryCall(api).desireSuccessWith(
-    (response) =>
-      !!response?.data &&
-      Array.isArray(response.data.image_flag) &&
-      response.data.image_flag.length > 0 &&
-      Array.isArray(response.data.overlay_image) &&
-      response.data.overlay_image.length > 0 &&
-      Array.isArray(response.data.promotion_label) &&
-      response.data.promotion_label.length > 0
-  );
-
-  if (error)
-    return {
-      image_flag: [],
-      overlay_image: [],
-      promotion_label: [],
-    };
-
+const defaultReturns: ShopeeElementSet = {
+  image_flag: [],
+  overlay_image: [],
+  promotion_label: [],
+};
+function isValidData(r: any) {
+  return !!r?.data &&
+    Array.isArray(r.data.image_flag) &&
+    r.data.image_flag.length > 0 &&
+    Array.isArray(r.data.overlay_image) &&
+    r.data.overlay_image.length > 0 &&
+    Array.isArray(r.data.promotion_label) &&
+    r.data.promotion_label.length > 0;
+}
+export default async function getElementSets(): Promise<ShopeeElementSet> {
+  const [error, data] = await callHttp(api).waitFor(isValidData);
+  if (error) return defaultReturns;
   await tryDo(wait, 500);
-
   return data;
 };
-export default getElementSets;

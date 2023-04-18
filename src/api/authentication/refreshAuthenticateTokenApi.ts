@@ -1,6 +1,6 @@
 import httpMock from '@/api/httpMock';
 import mockAdapter from '@/api/mockAdapter';
-import type { TAuthentication } from '@/types';
+import type { Authentication } from '@/types';
 import type { AxiosInstance, AxiosResponse } from 'axios';
 
 const LINK = '/api/auth/refresh-auth-token';
@@ -26,7 +26,7 @@ const mockSetup = () => {
       lastName: 'An',
       language: 'vi-VN',
     },
-  } as TAuthentication);
+  } as Authentication);
 };
 
 if (isMock) mockSetup();
@@ -34,7 +34,7 @@ if (isMock) mockSetup();
 const refreshAuthenticateTokenApi = (
   payload: { refreshToken: string },
   http: AxiosInstance
-): Promise<AxiosResponse<TAuthentication>> => {
+): Promise<AxiosResponse<Authentication>> => {
   return !isMock
     ? http.get(`${LINK}/${payload?.refreshToken}`)
     : httpMock.get(`${LINK}/${payload?.refreshToken}`);

@@ -1,5 +1,5 @@
 import updatePasswordWithOtpApi from '@/api/resetPassword/updatePasswordWithOtpApi';
-import { TApiResponseWithMessageOnly } from '@/api/_types';
+import { ApiResponseWithMessageOnly } from '@/api/_types';
 import { EApiRequestStatus } from '@/constants/apiRequestStatus';
 import type { ReduxAction } from '@/helpers/reduxHelpers';
 import { createCase } from '@/helpers/reduxHelpers';
@@ -10,7 +10,7 @@ import { rootName } from '../state';
 import requestUpdatePasswordWithOtpFail from './requestUpdatePasswordWithOtpFail';
 import requestUpdatePasswordWithOtpSuccess from './requestUpdatePasswordWithOtpSuccess';
 type UpdatePasswordApiPayload = Parameters<typeof updatePasswordWithOtpApi>[0];
-type UpdatePasswordApiReturns = AxiosResponse<TApiResponseWithMessageOnly>;
+type UpdatePasswordApiReturns = AxiosResponse<ApiResponseWithMessageOnly>;
 const TYPE = `${rootName}/requestUpdatePasswordWithOtp`;
 const requestUpdatePasswordWithOtp = createCase<UpdatePasswordApiPayload, State>(
   TYPE,

@@ -1,39 +1,29 @@
-import tryCall from '@/functions/tryCall';
-import tryDo from '@/functions/tryDo';
-import wait from '@/functions/wait';
-import type { TOnQueryArgs, TOnQueryRetuns } from '@/hooks/useAsyncListState/_types';
-import type { TListDataQueryModel } from '@/types';
+import callHttp from '@/functions/callHttp';
+import type { OnQueryArgs, OnQueryReturns } from '@/functions/createAsyncListContext';
+import type { PaginatedListQuery } from '@/types';
+import type { ShopeeProductItem } from '@/types/Shopee';
 import { PAGE_SIZE } from '../../constants';
-import type { TShopeeProductItem } from '../../_types';
 import api from './api';
-
-const defaultReturns: TOnQueryRetuns<TShopeeProductItem> = {
+const defaultReturns: OnQueryReturns<ShopeeProductItem> = {
   result: [],
   totalCount: 0,
 };
-
-const getList = async (args: TOnQueryArgs): Promise<TOnQueryRetuns<TShopeeProductItem>> => {
-  const payload: TListDataQueryModel = {
-    pageIndex: args?.pagination?.pageIndex || 1,
-    pageSize: args?.pagination?.pageSize || PAGE_SIZE,
+function isValidData(r: any) {
+  return !!r?.data &&
+    Number.isInteger(r.data.total) &&
+    r.data.total > 0 &&
+    Array.isArray(r.data.item) &&
+    r.data.item.length > 0
+}
+export default async function getList(args: OnQueryArgs): Promise<OnQueryReturns<ShopeeProductItem>> {
+  const payload: PaginatedListQuery = {
+    pageIndex: args?.pageIndex || 1,
+    pageSize: args?.pageSize || PAGE_SIZE,
   };
-
-  const [data, error] = await tryCall(api, payload).desireSuccessWith(
-    (response) =>
-      !!response?.data &&
-      Number.isInteger(response.data.total) &&
-      response.data.total > 0 &&
-      Array.isArray(response.data.item) &&
-      response.data.item.length > 0
-  );
-
+  const [error, data] = await callHttp(api(payload)).waitFor(isValidData);
   if (error) return defaultReturns;
-
-  await tryDo(wait, 500);
-
   return {
     totalCount: data.total,
     result: data.item,
   };
 };
-export default getList;

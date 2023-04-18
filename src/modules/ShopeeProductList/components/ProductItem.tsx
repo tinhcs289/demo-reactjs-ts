@@ -1,7 +1,8 @@
-import NavLinkNoStyle from '@/components/NavLinkNoStyle';
-import TypographyLimitLines from '@/components/typo/TypographyLimitLines';
+import NavLinkNoStyle from '@/components/nav/NavLinkNoStyle';
+import { CommonTypography } from '@/components/typo';
 import PATHS from '@/constants/paths';
 import slugify from '@/helpers/stringHelpers/slugify';
+import type { ShopeeProductItem } from '@/types/Shopee';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -9,7 +10,6 @@ import Typography from '@mui/material/Typography';
 import numeral from 'numeral';
 import { useMemo } from 'react';
 import { generatePath } from 'react-router';
-import type { TShopeeProductItem } from '../_types';
 import { PRODUCT_IMAGE_HEIGHT } from '../constants';
 import useItemFlagSet from '../hooks/useItemFlagSet';
 import useItemOverlaySet from '../hooks/useItemOverlaySet';
@@ -19,13 +19,12 @@ import { LabelTextGroup, LabelVoucher } from './LabelText';
 import ProductItemCard from './ProductItemCard';
 import ProductItemFindSimilar from './ProductItemFindSimilar';
 import ProductItemGrid from './ProductItemGrid';
-
-function useMemoDisplay(product: TShopeeProductItem) {
+function useMemoDisplay(product: ShopeeProductItem) {
   const $productName = useMemo(() => {
     return (
-      <TypographyLimitLines variant="h5" fontSize="small" maxLines={2} fontWeight={500}>
+      <CommonTypography variant="h5" fontSize="small" maxLines={2} fontWeight={500}>
         {product?.name || ''}
-      </TypographyLimitLines>
+      </CommonTypography>
     );
   }, [product?.name]);
 
@@ -33,7 +32,6 @@ function useMemoDisplay(product: TShopeeProductItem) {
     if (!product.discount) return null;
     return <LabelDiscount discount={product.discount} />;
   }, [product?.discount]);
-
   const $productImage = useMemo(() => {
     return (
       <CardMedia
@@ -43,7 +41,6 @@ function useMemoDisplay(product: TShopeeProductItem) {
       />
     );
   }, [product?.name, product?.image]);
-
   const $productPrice = useMemo(() => {
     return (
       <Typography fontSize="small" color="primary">
@@ -51,7 +48,6 @@ function useMemoDisplay(product: TShopeeProductItem) {
       </Typography>
     );
   }, [product?.price]);
-
   const $productHistorySold = useMemo(() => {
     return (
       <Typography fontSize="small" color="GrayText">
@@ -59,16 +55,13 @@ function useMemoDisplay(product: TShopeeProductItem) {
       </Typography>
     );
   }, [product?.historical_sold]);
-
   const $voucherInfo = useMemo(() => {
     if (!product?.voucher_info?.label) return null;
     return <LabelVoucher>{product.voucher_info.label}</LabelVoucher>;
   }, [product?.voucher_info?.label]);
-
   const { $overlayImage } = useItemOverlaySet(product);
   const { $promoLabelSet } = useItemPromoLabelSet(product);
   const { $imageFlagSet } = useItemFlagSet(product);
-
   return {
     $productName,
     $productImage,
@@ -81,10 +74,8 @@ function useMemoDisplay(product: TShopeeProductItem) {
     $imageFlagSet,
   };
 }
-
-export default function ProductItem(props: { product: TShopeeProductItem }) {
+export default function ProductItem(props: { product: ShopeeProductItem }) {
   const product = useMemo(() => props?.product, [props?.product]);
-
   const productUrl = useMemo(
     () =>
       generatePath(PATHS.shopeeProductDetail, {
@@ -93,7 +84,6 @@ export default function ProductItem(props: { product: TShopeeProductItem }) {
       }),
     [product?.name, product?.itemid]
   );
-
   const {
     $productName,
     $productImage,
@@ -105,7 +95,6 @@ export default function ProductItem(props: { product: TShopeeProductItem }) {
     $promoLabelSet,
     $imageFlagSet,
   } = useMemoDisplay(product);
-
   return (
     <ProductItemGrid>
       <NavLinkNoStyle to={productUrl}>

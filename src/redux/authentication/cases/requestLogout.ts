@@ -1,5 +1,5 @@
 import logoutApi from '@/api/authentication/logoutApi';
-import { TApiResponseWithMessageOnly } from '@/api/_types';
+import { ApiResponseWithMessageOnly } from '@/api/_types';
 import { EApiRequestStatus } from '@/constants/apiRequestStatus';
 import type { ReduxAction } from '@/helpers/reduxHelpers';
 import { createCase } from '@/helpers/reduxHelpers';
@@ -9,7 +9,7 @@ import type { State } from '../state';
 import { rootName } from '../state';
 import requestLogoutFail from './requestLogoutFail';
 import requestLogoutSuccess from './requestLogoutSuccess';
-type logoutApiReturns = AxiosResponse<TApiResponseWithMessageOnly>;
+type logoutApiReturns = AxiosResponse<ApiResponseWithMessageOnly>;
 const TYPE = `${rootName}/requestLogout`;
 const requestLogout = createCase<any, State>(
   TYPE,

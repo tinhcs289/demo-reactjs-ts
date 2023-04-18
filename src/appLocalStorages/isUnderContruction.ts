@@ -1,5 +1,5 @@
 import { newLocalStorageListenableItem } from '@/helpers/localStorageHelpers';
-import { TAppContruction } from '@/types';
+import { AppContruction } from '@/types';
 import * as yup from 'yup';
 
 const schema = yup.object().shape({
@@ -7,7 +7,7 @@ const schema = yup.object().shape({
   isUnder: yup.boolean().required(),
 });
 
-export function validate(value: TAppContruction | null) {
+export function validate(value: AppContruction | null) {
   try {
     schema.validateSync(value);
     return true;
@@ -16,7 +16,7 @@ export function validate(value: TAppContruction | null) {
   }
 }
 
-const isUnderContruction = newLocalStorageListenableItem<TAppContruction>({
+const isUnderContruction = newLocalStorageListenableItem<AppContruction>({
   key: 'isUnderContruction',
   validate,
 });

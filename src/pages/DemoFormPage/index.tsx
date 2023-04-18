@@ -1,30 +1,29 @@
-import DashboardTabsContainer from '@/containers/DashboardTabsContainer';
-import ContactForm from '@/modules/ContactForm';
-import { defaultContact } from '@/modules/ContactForm/contants';
-import { Paper } from '@mui/material';
-import Grid from '@mui/material/Grid';
-import FormByComponents from './FormByComponents';
-import FormByConfig from './FormByConfig';
+import { GridContainer, GridItemPaper } from '@/components/grid';
+import wait from '@/functions/wait';
+import { defaultContact } from '@/modules/FormContact/constants';
+import { lazy } from 'react';
+const DashboardTabsContainer = lazy(() => wait(0).then(() => import('@/containers/DashboardTabsContainer')));
+const FormContact = lazy(() => wait(0).then(() => import('@/modules/FormContact')));
+const FormDemo1 = lazy(() =>
+  wait(0).then(() => import('@/modules/FormDemo').then((_) => ({ default: _.FormDemo1 })))
+);
+const FormDemo2 = lazy(() =>
+  wait(0).then(() => import('@/modules/FormDemo').then((_) => ({ default: _.FormDemo2 })))
+);
 export default function DemoFormPage() {
   return (
     <DashboardTabsContainer>
-      <Grid container sx={{ width: '100%' }}>
-        <Grid item xs={12} lg={6} container sx={{ mb: 2 }}>
-          <Paper elevation={4}>
-            <ContactForm defaultValues={defaultContact} resetOnClose />
-          </Paper>
-        </Grid>
-        <Grid item xs={12} container sx={{ mb: 2 }}>
-          <Paper elevation={4} sx={{ width: '100%' }}>
-            <FormByConfig />
-          </Paper>
-        </Grid>
-        <Grid item xs={12} container sx={{ mb: 2 }}>
-          <Paper elevation={4}>
-            <FormByComponents />
-          </Paper>
-        </Grid>
-      </Grid>
+      <GridContainer fullWidth>
+        <GridItemPaper lg={6} sx={{ mb: 2 }}>
+          <FormContact defaultValues={defaultContact} />
+        </GridItemPaper>
+        <GridItemPaper sx={{ mb: 2 }}>
+          <FormDemo1 />
+        </GridItemPaper>
+        <GridItemPaper sx={{ mb: 2 }}>
+          <FormDemo2 />
+        </GridItemPaper>
+      </GridContainer>
     </DashboardTabsContainer>
   );
 }

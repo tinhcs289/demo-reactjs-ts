@@ -1,5 +1,5 @@
 import authentication from '@/appCookies/authentication';
-import { RouteFallback } from '@/components/CommonFallback';
+import { RouteFallback } from '@/components/fallback';
 import PATHS from '@/constants/paths';
 import DashboardLayout from '@/layouts/DashboardLayout';
 import LandingLayout from '@/layouts/LandingLayout';
@@ -21,7 +21,9 @@ export default function ifAuthenticated(WrappedComponent: AppRouterComponent): A
           <Route element={<DashboardLayout />}>
             <Route
               path={PATHS.notfound}
-              element={<Suspense fallback={<RouteFallback />}>{renderNotFound()}</Suspense>}
+              element={
+                <Suspense fallback={<RouteFallback />}>{renderNotFound({ contentOnly: true })}</Suspense>
+              }
             />
           </Route>
           <Route path="*" element={<Navigate to={PATHS.notfound} replace />} />

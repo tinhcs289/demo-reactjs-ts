@@ -3,13 +3,11 @@ import type { BoxProps } from '@mui/material/Box';
 import Box from '@mui/material/Box';
 import type { TooltipProps } from '@mui/material/Tooltip';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
-import type { ComponentType } from 'react';
 import { forwardRef } from 'react';
-import type { TCommonTooltipProps } from './_types';
-
-const HtmlTooltip = styled(({ className, ...props }: TooltipProps) => (
-  <Tooltip {...props} classes={{ popper: className }} />
-))(({ theme }) => ({
+import type { CommonTooltipProps } from './_types';
+const HtmlTooltip = styled(function HtmlTooltip({ className, ...props }: TooltipProps) {
+  return <Tooltip {...props} classes={{ popper: className }} />;
+})(({ theme }) => ({
   [`& .${tooltipClasses.tooltip}`]: {
     padding: 0,
     backgroundColor: theme.palette.background.paper,
@@ -20,8 +18,7 @@ const HtmlTooltip = styled(({ className, ...props }: TooltipProps) => (
     border: `1px solid ${theme.palette.divider}`,
   },
 }));
-
-const BoxWrap = forwardRef((props: BoxProps, ref?: any) => {
+const BoxWrap = forwardRef(function BoxWithRef(props: BoxProps, ref?: any) {
   const { children, ...others } = props;
   return (
     <Box {...others} ref={ref}>
@@ -29,13 +26,11 @@ const BoxWrap = forwardRef((props: BoxProps, ref?: any) => {
     </Box>
   );
 });
-
-const CommonTooltip: ComponentType<TCommonTooltipProps> = (props) => {
+export default function CommonTooltip(props: CommonTooltipProps) {
   const { children, childrenProps, ...others } = props;
   return (
     <HtmlTooltip {...others}>
       <BoxWrap {...childrenProps}>{children}</BoxWrap>
     </HtmlTooltip>
   );
-};
-export default CommonTooltip;
+}

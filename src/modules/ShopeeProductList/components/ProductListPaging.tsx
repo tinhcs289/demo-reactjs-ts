@@ -1,25 +1,21 @@
-import { CommonPagination } from '@/components/CommonTable';
+import { CommonPagination } from '@/components/table';
 import { EApiRequestStatus } from '@/constants/apiRequestStatus';
 import { useCallback, useMemo } from 'react';
 import { PAGE_SIZE } from '../constants';
-import { useAsyncList } from '../context';
-
+import { useAsyncListGetter, useAsyncListAction } from '../context';
 export default function ProductListPaging() {
-  const [pageIndex] = useAsyncList((s) => s.listState.pageIndex);
-  const [pageSize] = useAsyncList((s) => s.listState.pageSize);
-  const [totalCount] = useAsyncList((s) => s.listState.totalCount);
-  const [updatePaging] = useAsyncList((s) => s.control?.updatePaging);
-  const [fetchState] = useAsyncList((s) => s.fetchState);
-
-  const isLoading = useMemo(() => fetchState === EApiRequestStatus.REQUESTING, [fetchState]);
-
+  const pageIndex = useAsyncListGetter((s) => s.pageIndex);
+  const pageSize = useAsyncListGetter((s) => s.pageSize);
+  const totalCount = useAsyncListGetter((s) => s.totalCount);
+  const fetchStatus = useAsyncListGetter((s) => s.fetchStatus);
+  const isLoading = useMemo(() => fetchStatus === EApiRequestStatus.REQUESTING, [fetchStatus]);
+  const { updatePaging } = useAsyncListAction();
   const handleChangePage = useCallback(
     (page: number) => {
       updatePaging?.(page, PAGE_SIZE);
     },
     [updatePaging]
   );
-
   return (
     <CommonPagination
       pageIndex={pageIndex}

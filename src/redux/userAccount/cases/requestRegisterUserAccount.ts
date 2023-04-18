@@ -1,5 +1,5 @@
 import registerApi from '@/api/registerAccount/registerApi';
-import { TApiResponseWithMessageOnly } from '@/api/_types';
+import { ApiResponseWithMessageOnly } from '@/api/_types';
 import { EApiRequestStatus } from '@/constants/apiRequestStatus';
 import type { ReduxAction } from '@/helpers/reduxHelpers';
 import { createCase } from '@/helpers/reduxHelpers';
@@ -10,7 +10,7 @@ import { rootName } from '../state';
 import requestRegisterUserAccountFail from './requestRegisterUserAccountFail';
 import requestRegisterUserAccountSuccess from './requestRegisterUserAccountSuccess';
 type RegisterAccountApiPayload = Parameters<typeof registerApi>[0];
-type RegisterAccountApiReturns = AxiosResponse<TApiResponseWithMessageOnly>;
+type RegisterAccountApiReturns = AxiosResponse<ApiResponseWithMessageOnly>;
 const TYPE = `${rootName}/requestRegisterUserAccount`;
 const requestRegisterUserAccount = createCase<RegisterAccountApiPayload, State>(
   TYPE,
