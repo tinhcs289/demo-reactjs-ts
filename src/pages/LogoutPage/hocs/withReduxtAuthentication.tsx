@@ -9,8 +9,8 @@ const redirectToNextPage = () => {
   if (!(!!window && !!window?.location && typeof window.location.replace === 'function')) return;
   window.location.replace(PATHS.login);
 };
-export default function withReduxtAuthentication(WrappedComponent: ComponentType<LogoutPageProps>) {
-  return function LogoutPageWithReduxtAuthentication(props: LogoutPageProps) {
+export default function withReduxAuthentication(WrappedComponent: ComponentType<LogoutPageProps>) {
+  return function LogoutPageWithReduxAuthentication(props: LogoutPageProps) {
     const { onLogout: _, loading: loadingProp, ...otherProps } = props;
     const requestStatus = useSelector(logoutRequestStatusSelector);
     const loading = useMemo(() => requestStatus === EApiRequestStatus.REQUESTING, [requestStatus]);

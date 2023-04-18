@@ -5,8 +5,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import type { MouseEventHandler } from 'react';
 import { useCallback } from 'react';
-
-const ButtonWrap = styled(Box)<BoxProps>(({ theme }) => ({
+const ButtonWrap = styled(Box)<BoxProps>(() => ({
   position: 'absolute',
   width: '100%',
   transition: 'all ease 0.3s',
@@ -15,7 +14,6 @@ const ButtonWrap = styled(Box)<BoxProps>(({ theme }) => ({
   zIndex: 2,
   height: 0,
 }));
-
 export default function ProductItemFindSimilar(props?: { onClick?: MouseEventHandler<HTMLButtonElement> }) {
   const preventDefault: MouseEventHandler<HTMLButtonElement> = useCallback(
     (event) => {
@@ -26,7 +24,6 @@ export default function ProductItemFindSimilar(props?: { onClick?: MouseEventHan
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [props?.onClick]
   );
-
   return (
     <ButtonWrap className="btn-find-similar">
       <Button

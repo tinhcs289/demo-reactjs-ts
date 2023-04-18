@@ -1,10 +1,10 @@
-import CommonFallback from '@/components/CommonFallback';
+import { CommonFallback } from '@/components/fallback';
+import type { GridContainerProps, GridItemProps } from '@/components/grid';
+import { GridContainer, GridItem } from '@/components/grid';
 import render from '@/helpers/reactHelpers/render';
 import type { SxProps, Theme } from '@mui/material';
 import type { BoxProps } from '@mui/material/Box';
 import Box from '@mui/material/Box';
-import type { GridProps } from '@mui/material/Grid';
-import Grid from '@mui/material/Grid';
 import get from 'lodash/get';
 import type { FormEventHandler, ReactNode } from 'react';
 import { Fragment, useCallback, useMemo } from 'react';
@@ -12,6 +12,7 @@ import type { FieldValues } from 'react-hook-form';
 import { useFormContext } from 'react-hook-form';
 import { COMPONENT_DICT } from './constants';
 import type { FormField, FormGridProps } from './field-types';
+import withHOCs from '@/hocs/withHocs';
 const fallbackSx: SxProps<Theme> = {
   position: 'absolute',
   width: '100%',
@@ -25,13 +26,13 @@ const fallbackSx: SxProps<Theme> = {
 function FormLoading() {
   return <CommonFallback sx={fallbackSx} />;
 }
-export type FormGridContainerProps = GridProps & {
+export type FormGridContainerProps = GridContainerProps & {
   onSubmit?: FormEventHandler<HTMLFormElement>;
   formProps?: BoxProps<'form'>;
   loading?: boolean;
 };
 export function FormGridContainer(props: FormGridContainerProps) {
-  const { children, onSubmit, formProps, sx, loading, ...otherProps } = props;
+  const { children, onSubmit, formProps, loading, ...otherProps } = props;
   const memoFormProps = useMemo(() => {
     if (!formProps) return { noValidate: true };
     else return { noValidate: true, ...formProps };
@@ -45,33 +46,29 @@ export function FormGridContainer(props: FormGridContainerProps) {
     if (loading) (_sx as any).position = 'relative';
     return _sx;
   }, [loading, formProps?.sx]);
-  const gridSx = useMemo(() => ({ width: '100%', height: '100%', ...sx }), [sx]);
   return (
     <Box {...memoFormProps} component="form" onSubmit={onSubmit} sx={formSx}>
       {$loading}
-      <Grid {...otherProps} sx={gridSx} container>
+      <GridContainer {...otherProps} fullHeight fullWidth>
         {children}
-      </Grid>
+      </GridContainer>
     </Box>
   );
 }
-export type FormGridItemProps = GridProps & {
-  contentProps?: GridProps;
+export type FormGridItemProps = GridItemProps & {
   disabledXs?: boolean;
   label?: ReactNode;
 };
 export function FormGridItem(props: FormGridItemProps) {
-  const { children, disabledXs, contentProps, ...otherProps } = props;
+  const { children, disabledXs, ...otherProps } = props;
   const xs = useMemo(() => {
     if (!disabledXs) return { xs: 12 };
     return {};
   }, [disabledXs]);
   return (
-    <Grid item container {...xs} {...otherProps}>
-      <Grid xs={12} {...contentProps} item>
-        {children}
-      </Grid>
-    </Grid>
+    <GridItem {...otherProps} {...xs}>
+      {children}
+    </GridItem>
   );
 }
 export function FormGridFields<T extends FieldValues>(props: FormGridProps<T>) {
@@ -79,7 +76,8 @@ export function FormGridFields<T extends FieldValues>(props: FormGridProps<T>) {
   const form = useFormContext();
   const renderField = useCallback(
     (field: FormField<T, any>, index: number, allFields: FormField<T, any>[]) => {
-      const { name, label, inputType, rules, component, componentProps, componentSx, ...itemProps } = field;
+      const { name, label, inputType, rules, component, componentProps, componentSx, hocs, ...itemProps } =
+        field;
       let input = component;
       if (!input) input = (COMPONENT_DICT as any)[inputType as any];
       if (!input) return <Fragment key={field.name as any} />;
@@ -94,6 +92,7 @@ export function FormGridFields<T extends FieldValues>(props: FormGridProps<T>) {
           ...componentSx,
         },
       };
+      if (hocs instanceof Array && hocs.length > 0) input = withHOCs(...hocs)(input);
       return (
         <FormGridItem {...itemProps} key={field.name as any}>
           {render(input, inputProps)}

@@ -1,11 +1,11 @@
 import authentication from '@/appCookies/authentication';
 import { EApiRequestStatus } from '@/constants/apiRequestStatus';
-import type { TAuthenticationJWT, TAuthenticationUserInfo } from '@/types';
+import type { AuthenticationJWT, AuthenticationUserInfo } from '@/types';
 import Immutable from 'seamless-immutable';
 export const rootName = 'authentication';
 export type State = {
-  token: TAuthenticationJWT | null;
-  user: TAuthenticationUserInfo | null;
+  token: AuthenticationJWT | null;
+  user: AuthenticationUserInfo | null;
   loginRequestStatus: EApiRequestStatus;
   logoutRequestStatus: EApiRequestStatus;
   verifyTokenRequestStatus: EApiRequestStatus;

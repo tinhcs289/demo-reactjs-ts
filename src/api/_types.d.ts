@@ -1,3 +1,3 @@
-export type TApiResponseWithMessageOnly = {
+export type ApiResponseWithMessageOnly = {
   message: string;
 };

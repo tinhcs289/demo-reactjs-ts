@@ -1,6 +1,5 @@
 import Box from '@mui/material/Box';
 import ProductItemGrid from './ProductItemGrid';
-
 export default function ProductItemSekeleton() {
   return (
     <ProductItemGrid>

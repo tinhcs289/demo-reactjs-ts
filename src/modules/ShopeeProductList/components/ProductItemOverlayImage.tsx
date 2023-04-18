@@ -2,7 +2,7 @@ import { PRODUCT_IMAGE_HEIGHT } from '../constants';
 import { styled } from '@mui/material';
 import type { BoxProps } from '@mui/material/Box';
 import Box from '@mui/material/Box';
-const Label = styled(Box)<BoxProps>(({ theme }) => ({
+const Label = styled(Box)<BoxProps>(() => ({
   transition: 'all ease .2s',
   content: "''",
   display: 'block',

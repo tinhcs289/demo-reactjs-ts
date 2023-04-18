@@ -1,12 +1,13 @@
-import { RouteFallback } from '@/components/CommonFallback';
+import { RouteFallback } from '@/components/fallback';
 import type { ComponentType } from 'react';
 import { createElement, Suspense } from 'react';
 import { Navigate, Route } from 'react-router-dom';
 import { InDevelopRoute, NotFoundRoute } from './common';
 import type { RouteConfig } from './_types';
-export function renderNotFound() {
+import type { NotFoundPageProps } from '@/pages/NotFoundPage';
+export function renderNotFound(props?: Partial<NotFoundPageProps>) {
   if (!NotFoundRoute[0].component) return null;
-  return createElement(NotFoundRoute[0].component);
+  return createElement(NotFoundRoute[0].component, props);
 }
 export function renderDevelopment() {
   if (!InDevelopRoute[0].component) return null;

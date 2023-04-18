@@ -1,23 +1,18 @@
 import CommonCheckField from '@/components/inputs/CommonCheckField';
-import InputErrorTextWithIcon from '../_components/InputErrorTextWithIcon';
 import removeAt from '@/helpers/arrayHelpers/removeAt';
 import FormLabel from '@mui/material/FormLabel';
-import type { ComponentType } from 'react';
 import { useCallback, useMemo } from 'react';
 import FormGroupWithOptions from '../_components/FormGroupWithOptions';
+import InputErrorTextWithIcon from '../_components/InputErrorTextWithIcon';
 import type { CheckGroupOption, CommonCheckGroupFieldProps } from './_types';
-
-const CommonCheckGroupField: ComponentType<CommonCheckGroupFieldProps> = (props) => {
+export default function CommonCheckGroupField(props: CommonCheckGroupFieldProps) {
   const { name, label, required, error, onChange, errorText, options, value, ...otherProps } = props;
-
   const memoOption = useMemo(() => {
     return options instanceof Array && options.length > 0 ? options : [];
   }, [options]);
-
   const memoValue = useMemo(() => {
     return value instanceof Array && value.length > 0 ? value : [];
   }, [value]);
-
   const isChecked = useCallback(
     (option: CheckGroupOption) => {
       return (
@@ -27,14 +22,11 @@ const CommonCheckGroupField: ComponentType<CommonCheckGroupFieldProps> = (props)
     },
     [memoValue]
   );
-
   const handleOnchange = useCallback(
     (event: any) => {
       if (!event?.target?.value) return;
-
       const val = event.target.value as string;
       const checked = !!event?.target?.checked;
-
       if (checked) {
         if (memoOption.length === 0) return;
         const i = memoOption.findIndex((o) => o.value === val);
@@ -49,29 +41,23 @@ const CommonCheckGroupField: ComponentType<CommonCheckGroupFieldProps> = (props)
     },
     [memoOption, memoValue, onChange]
   );
-
   const memoOptionsRender = useMemo(() => {
-    return (
-      <>
-        {memoOption.map((option) => {
-          const checked = isChecked(option);
-          return (
-            <CommonCheckField
-              key={option.value}
-              value={option.value}
-              name={name}
-              checked={checked}
-              label={option?.label || option?.name || ''}
-              disabled={!!option?.disabled}
-              error={error}
-              {...option?.InputProps}
-            />
-          );
-        })}
-      </>
-    );
+    return memoOption.map((option) => {
+      const checked = isChecked(option);
+      return (
+        <CommonCheckField
+          key={option.value}
+          value={option.value}
+          name={name}
+          checked={checked}
+          label={option?.label || option?.name || ''}
+          disabled={!!option?.disabled}
+          error={error}
+          {...option?.InputProps}
+        />
+      );
+    });
   }, [name, memoOption, error, isChecked]);
-
   return (
     <FormGroupWithOptions onChange={handleOnchange as any} {...otherProps}>
       <FormLabel component="label" error={error} sx={{ display: 'inherit', mb: '4px' }}>
@@ -82,5 +68,4 @@ const CommonCheckGroupField: ComponentType<CommonCheckGroupFieldProps> = (props)
       {memoOptionsRender}
     </FormGroupWithOptions>
   );
-};
-export default CommonCheckGroupField;
+}
