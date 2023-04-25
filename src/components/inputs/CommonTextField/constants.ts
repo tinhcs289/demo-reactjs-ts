@@ -1,6 +1,6 @@
 import type { SxProps, Theme } from '@mui/material';
 import type { CommonTextFieldVariant } from './_types';
-export const DEFAULT_VARIANT: CommonTextFieldVariant = 'outlined';//'bootstrap:outlined';
+export const DEFAULT_VARIANT: CommonTextFieldVariant = 'bootstrap';//'bootstrap';
 export const bootstrapVariantSx: SxProps<Theme> = {
   '& > label': {
     left: '-12px',

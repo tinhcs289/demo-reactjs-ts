@@ -14,7 +14,6 @@ export const optionsCheck: CheckGroupOption[] = consecutiveNumbers(5, 1).map((i)
   label: `${LABEL1} ${i}`,
   value: `${i}`,
 }));
-
 export const optionRadio: RadioGroupOption[] = consecutiveNumbers(5, 1).map((i) => ({
   label: `${LABEL1} ${i}`,
   value: `${i}`,
@@ -227,4 +226,27 @@ export const fields = [
     md: 9,
     sx: fieldSx,
   }),
+  field({
+    name: 'Place',
+    inputType: 'google-place',
+    label: 'Địa điểm',
+    rules: required(i18n.t<string>('common:pleaseEnter')),
+    componentProps: {
+      placeholder: 'Tìm kiếm địa điểm',
+    },
+    sx: fieldSx,
+    md: 6,
+  }),
+  field({
+    name: 'Places',
+    inputType: 'google-places',
+    label: 'Các địa điểm',
+    rules: required(i18n.t<string>('common:pleaseEnter')),
+    componentProps: {
+      multiple: true,
+      placeholder: 'Tìm kiếm địa điểm',
+    },
+    sx: fieldSx,
+    md: 6,
+  })
 ];

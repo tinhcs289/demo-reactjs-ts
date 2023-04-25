@@ -6,7 +6,7 @@ const AutocompleteStyled = styled(Autocomplete)<BaseAutocompleteProps>(({ theme 
     paddingRight: `${theme.spacing(0.5)} !important`,
   },
   '& input.MuiInputBase-input.MuiAutocomplete-input': {
-    padding: '0 !important',
+    //padding: '0 !important',
   },
 }));
 export default AutocompleteStyled;
