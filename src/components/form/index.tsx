@@ -8,5 +8,5 @@ export type {
   FormGridProps,
   FormInputType,
   ReactHookForm,
-} from './field-types';
+} from './_types';
 export { field } from './functions';

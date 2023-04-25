@@ -1,22 +1,33 @@
-import CommonTextField from '@/components/inputs/CommonTextField';
 import type { CommonTextFieldProps } from '@/components/inputs/CommonTextField';
+import CommonTextField from '@/components/inputs/CommonTextField';
 import arrayOrEmpty from '@/helpers/formatHelpers/arrayOrEmpty';
+import { styled } from '@mui/material';
 import type {
   AutocompleteInputChangeReason,
   AutocompleteRenderInputParams,
 } from '@mui/material/Autocomplete';
+import Autocomplete from '@mui/material/Autocomplete';
 import Chip from '@mui/material/Chip';
 import CircularProgress from '@mui/material/CircularProgress';
 import debounce from 'lodash/debounce';
 import type { ComponentType, Ref, SyntheticEvent } from 'react';
 import { forwardRef, useCallback, useMemo } from 'react';
-import AutocompleteStyled from './AutocompleteStyled';
-import defaultFilterOptions from './defaultFilterOptions';
-import defaultGetOptionLabel from './defaultGetOptionLabel';
-import defaultRenderOption from './defaultRenderOption';
-import isOptionEqualToValue from './isOptionEqualToValue';
-import type { CommonSelectFieldProps, CommonSelectRenderTags } from './_types';
-const CommonSelectField: ComponentType<CommonSelectFieldProps> = forwardRef(function CommonSelectFieldWithRef(
+import type { BaseAutocompleteProps, GooglePlaceFieldProps, SelectedPlaceTagsRender } from './_types';
+import {
+  defaultFilterOptions,
+  defaultGetOptionLabel,
+  defaultRenderOption,
+  isOptionEqualToValue,
+} from './functions';
+const AutocompleteStyled = styled(Autocomplete)<BaseAutocompleteProps>(({ theme }) => ({
+  '& div.MuiInputBase-root': {
+    paddingRight: `${theme.spacing(0.5)} !important`,
+  },
+  '& input.MuiInputBase-input.MuiAutocomplete-input': {
+    //padding: '0 !important',
+  },
+}));
+const PlaceField: ComponentType<GooglePlaceFieldProps> = forwardRef(function PlaceFieldWithRef(
   props,
   ref?: Ref<unknown>
 ) {
@@ -54,7 +65,7 @@ const CommonSelectField: ComponentType<CommonSelectFieldProps> = forwardRef(func
     () => (typeof getOptionLabel === 'function' ? getOptionLabel : defaultGetOptionLabel),
     [getOptionLabel]
   );
-  const memoRenderTags: CommonSelectRenderTags = useMemo(() => {
+  const memoRenderTags: SelectedPlaceTagsRender = useMemo(() => {
     if (typeof renderTags === 'function') return renderTags;
     return (v, g, o) => (
       <>
@@ -84,7 +95,6 @@ const CommonSelectField: ComponentType<CommonSelectFieldProps> = forwardRef(func
         _props.InputLabelProps = {
           ...params?.InputLabelProps,
           ...TextFieldProps?.InputLabelProps,
-           shrink: false,
         };
       }
       if (placeholder) _props.placeholder = placeholder;
@@ -109,6 +119,7 @@ const CommonSelectField: ComponentType<CommonSelectFieldProps> = forwardRef(func
   );
   return (
     <AutocompleteStyled
+      fullWidth
       size="small"
       {...(otherProps as any)}
       value={memoValue}
@@ -128,4 +139,4 @@ const CommonSelectField: ComponentType<CommonSelectFieldProps> = forwardRef(func
     />
   );
 });
-export default CommonSelectField;
+export default PlaceField;
