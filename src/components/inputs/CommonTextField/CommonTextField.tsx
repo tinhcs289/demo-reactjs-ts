@@ -22,21 +22,11 @@ const CommonTextField = forwardRef(function CommonTextFieldWithRef(props, ref?: 
   const memoVariant = useMemo(() => {
     if (!variant) return 'outlined';
     if (variant === 'filled' || variant === 'outlined' || variant === 'standard') return variant;
-    if (
-      variant === 'bootstrap:filled' ||
-      variant === 'bootstrap:outlined' ||
-      variant === 'bootstrap:standard'
-    )
-      return variant.split(':')[1] as 'filled' | 'outlined' | 'standard';
+    if (variant === 'bootstrap') return 'outlined';
     return 'outlined';
   }, [variant]);
   const memoSx: SxProps<Theme> | undefined = useMemo(() => {
-    if (
-      variant === 'bootstrap:filled' ||
-      variant === 'bootstrap:outlined' ||
-      variant === 'bootstrap:standard'
-    )
-      return { ...sx, ...(bootstrapVariantSx as any) };
+    if (variant === 'bootstrap') return { ...sx, ...(bootstrapVariantSx as any) };
     return sx;
   }, [sx, variant]);
   const inputId: { id: string } | null = useMemo(() => {
@@ -44,10 +34,11 @@ const CommonTextField = forwardRef(function CommonTextFieldWithRef(props, ref?: 
     return { id: `${id}__input`, itemID: id };
   }, [id]);
   const labelProps: Partial<InputLabelProps> | null | undefined = useMemo(() => {
-    const _props = { ...InputLabelProps, shrink: true };
-    if (typeof id !== 'string') return _props;
-    return { ..._props, id: `${id}__label` };
-  }, [id, InputLabelProps]);
+    let _props = { ...InputLabelProps };
+    if (variant === 'bootstrap') _props['shrink'] = true;
+    if (typeof id === 'string') _props['id'] = `${id}__label`;
+    return _props;
+  }, [id, InputLabelProps, variant]);
   const errorId: { id: string } | null = useMemo(() => {
     if (typeof id !== 'string') return null;
     return { id: `${id}__error` };

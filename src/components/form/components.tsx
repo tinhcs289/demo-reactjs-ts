@@ -11,7 +11,7 @@ import { Fragment, useCallback, useMemo } from 'react';
 import type { FieldValues } from 'react-hook-form';
 import { useFormContext } from 'react-hook-form';
 import { COMPONENT_DICT } from './constants';
-import type { FormField, FormGridProps } from './field-types';
+import type { FormField, FormGridProps } from './_types';
 import withHOCs from '@/hocs/withHocs';
 const fallbackSx: SxProps<Theme> = {
   position: 'absolute',

@@ -1,5 +1,4 @@
 import type { AutoCompleteOption } from './_types';
-
 export default function isOptionEqualToValue(
   option: AutoCompleteOption,
   value: AutoCompleteOption | string
