@@ -1,8 +1,8 @@
 import concatArray from '@/helpers/arrayHelpers/concatArray';
 import type { ComponentType, Ref } from 'react';
 import { useMemo, forwardRef } from 'react';
-import type { GooglePlaceFieldProps, GooglePlaceOption } from './_types';
-import { isValidPlace } from './functions';
+import type { GooglePlaceFieldProps, GooglePlaceOption } from '../_types';
+import { isValidPlace } from '../functions';
 /**
  * The autocomplete has no options.
  * In order for the function work properly,

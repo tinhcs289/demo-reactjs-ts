@@ -14,6 +14,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import TableChartIcon from '@mui/icons-material/TableChart';
 import ViewCarouselIcon from '@mui/icons-material/ViewCarousel';
+import MapIcon from '@mui/icons-material/Map';
 const asideMenuItems: TAsideMenuItem[] = [
   {
     id: newGuid(),
@@ -54,6 +55,14 @@ const asideMenuItems: TAsideMenuItem[] = [
         labelText: i18n.t<string>('aside:demo.carousel'),
         icon: ViewCarouselIcon,
         url: PATHS.demoCarousel,
+      },
+      {
+        id: newGuid(),
+        type: 'link',
+        label: i18n.t('aside:demo.googleMap'),
+        labelText: i18n.t<string>('aside:demo.googleMap'),
+        icon: MapIcon,
+        url: PATHS.demoGoogleMap,
       },
     ],
   },

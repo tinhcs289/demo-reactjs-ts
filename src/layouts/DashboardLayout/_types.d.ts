@@ -28,8 +28,6 @@ export type TAsideMenuItem = {
   labelText?: string;
   url?: string;
   childs?: TAsideMenuItem[];
-  active?: boolean;
-  openSubMenu?: boolean;
   // mui props
   icon?: MuiIcon | SvgImage | ReactNode;
   iconWrapProps?: ListItemIconProps;
@@ -37,6 +35,15 @@ export type TAsideMenuItem = {
   itemProps?: Omit<ListItemProps, 'href'>;
   labelProps?: ListItemTextProps;
   linkProps?: LinkProps;
+  // ----------------------------------------------
+   /**
+   * @deprecated do not set this property manually
+   */
+   active?: boolean;
+   /**
+    * @deprecated do not set this property manually
+    */
+   openSubMenu?: boolean;
 };
 
 export type AsideMenuItemProps = {
