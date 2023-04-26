@@ -51,6 +51,10 @@ const PATHS = {
    * @url '/dashboard/demo-data-carousel'
    */
   demoCarousel: '/dashboard/demo-data-carousel',
+  /**
+   * @url '/dashboard/demo-google-map'
+   */
+  demoGoogleMap: '/dashboard/demo-google-map',
   //#endregion
   customers: '/khach-hang',
   report: '/bao-cao',

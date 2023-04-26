@@ -12,13 +12,13 @@ import CircularProgress from '@mui/material/CircularProgress';
 import debounce from 'lodash/debounce';
 import type { ComponentType, Ref, SyntheticEvent } from 'react';
 import { forwardRef, useCallback, useMemo } from 'react';
-import type { BaseAutocompleteProps, GooglePlaceFieldProps, SelectedPlaceTagsRender } from './_types';
+import type { BaseAutocompleteProps, GooglePlaceFieldProps, SelectedPlaceTagsRender } from '../_types';
 import {
   defaultFilterOptions,
   defaultGetOptionLabel,
   defaultRenderOption,
   isOptionEqualToValue,
-} from './functions';
+} from '../functions';
 const AutocompleteStyled = styled(Autocomplete)<BaseAutocompleteProps>(({ theme }) => ({
   '& div.MuiInputBase-root': {
     paddingRight: `${theme.spacing(0.5)} !important`,

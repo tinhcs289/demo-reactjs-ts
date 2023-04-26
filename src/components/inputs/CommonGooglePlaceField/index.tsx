@@ -1,4 +1,4 @@
-import CommonGooglePlaceField from './CommonGooglePlaceField';
+import CommonGooglePlaceField from './components/CommonGooglePlaceField';
 export default CommonGooglePlaceField;
 export type {
   OnSelectPlaceHandler,

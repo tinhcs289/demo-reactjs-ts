@@ -1,7 +1,6 @@
 import { EApiRequestStatus } from '@/constants/apiRequestStatus';
 import tryDo from '@/functions/tryDo';
 import { ApiRequestStatus } from '@/types';
-import { Loader } from '@googlemaps/js-api-loader';
 import type { Ref } from 'react';
 import { ComponentType, forwardRef, useEffect, useMemo, useState } from 'react';
 import type {
@@ -11,18 +10,9 @@ import type {
   OnSelectPlaceHandler,
   PlaceQueryFailReason,
   RequestError,
-} from './_types';
-import { APIKEY } from './constants';
-import { toOption } from './functions';
-const LOADER = new Loader({ apiKey: APIKEY, libraries: ['places'] });
-const placeService: { current: google.maps.places.AutocompleteService } = { current: null as any };
-function loadPlacesLibrary() {
-  LOADER.load().then(async () => {
-    if (!google) return;
-    const { AutocompleteService } = (await google.maps.importLibrary('places')) as google.maps.PlacesLibrary;
-    placeService.current = new AutocompleteService();
-  });
-}
+} from '../_types';
+import { toOption } from '../functions';
+import { loadPlacesLibrary, placeService } from '@/helpers/googleMapApiHelpers';
 async function requestCall(searchText: string): Promise<google.maps.places.AutocompletePrediction[]> {
   if (!searchText || !searchText.trim()) return [];
   if (!placeService.current) return [];
