@@ -7,6 +7,7 @@ const DemoFormPage = lazy(() => wait().then(() => import('@/pages/DemoFormPage')
 const DemoTablePage = lazy(() => wait().then(() => import('@/pages/DemoTablePage')));
 const DemoListPage = lazy(() => wait().then(() => import('@/pages/DemoListPage')));
 const DemoCarouselPage = lazy(() => wait().then(() => import('@/pages/DemoCarouselPage')));
+const DemoGoogleMapPage = lazy(() => wait().then(() => import('@/pages/DemoGoogleMapPage')));
 const DashboardRoute: RouteConfig[] = [
   {
     name: 'DemoFormRoute',
@@ -27,6 +28,11 @@ const DashboardRoute: RouteConfig[] = [
     name: 'DemoCarouselRoute',
     path: PATHS.demoCarousel,
     component: DemoCarouselPage,
+  },
+  {
+    name: 'DemoGoogleMapRoute',
+    path: PATHS.demoGoogleMap,
+    component: DemoGoogleMapPage,
   },
   {
     name: 'DashboardRoute',
