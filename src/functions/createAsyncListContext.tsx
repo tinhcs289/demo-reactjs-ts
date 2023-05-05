@@ -3,7 +3,7 @@ import createFastContext from '@/functions/createFastContext';
 import concatArray from '@/helpers/arrayHelpers/concatArray';
 import get from 'lodash/get';
 import type { ReactNode } from 'react';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 type Obj = { [x: string]: any };
 type NullableProps<T extends Obj = Obj> = { [P in keyof T]: T[P] | null };
 export type RowData = Obj;
@@ -157,22 +157,11 @@ export default function createAsyncListContext<T extends RowData>(defaultState?:
     Provider,
     useGetter: useAsyncListGetter,
     useSetter: useAsyncListSetter,
+    useDefaultPropInit,
   } = createFastContext<State<T>>({
     ...(DEFAULT_ASYNC_LIST as any),
     ...defaultState,
   });
-  function useDefaultPropInit(field: string, value?: number | string | boolean) {
-    const setState = useAsyncListSetter();
-    const state = useAsyncListGetter((s) => get(s, field));
-    const [init, setInit] = useState(false);
-    useEffect(() => {
-      if (init) return;
-      if (value === state) return;
-      setInit(true);
-      setState({ [field]: value });
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [value]);
-  }
   function ListRequestInit(
     props?: Pick<
       Props<T>,

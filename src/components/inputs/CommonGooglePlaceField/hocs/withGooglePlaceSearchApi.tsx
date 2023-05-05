@@ -1,5 +1,10 @@
 import { EApiRequestStatus } from '@/constants/apiRequestStatus';
-import tryDo from '@/functions/tryDo';
+import {
+  getPlaceById,
+  getPlacesBySearchText,
+  loadPlacesLibrary,
+  placeService,
+} from '@/helpers/googleMapApiHelpers';
 import { ApiRequestStatus } from '@/types';
 import type { Ref } from 'react';
 import { ComponentType, forwardRef, useEffect, useMemo, useState } from 'react';
@@ -12,22 +17,7 @@ import type {
   RequestError,
 } from '../_types';
 import { toOption } from '../functions';
-import { loadPlacesLibrary, placeService } from '@/helpers/googleMapApiHelpers';
-async function requestCall(searchText: string): Promise<google.maps.places.AutocompletePrediction[]> {
-  if (!searchText || !searchText.trim()) return [];
-  if (!placeService.current) return [];
-  const promise = new Promise<google.maps.places.AutocompletePrediction[]>((resolve, reject) => {
-    placeService.current
-      .getPlacePredictions({ input: searchText })
-      .then((results) => {
-        resolve(results?.predictions || []);
-      })
-      .catch(reject);
-  });
-  const [error, results] = await tryDo(promise);
-  if (!!error || !results) return [];
-  return results;
-}
+import tryDo from '@/functions/tryDo';
 export default function withGooglePlaceSearchApi(WrappedComponent: ComponentType<GooglePlaceFieldProps>) {
   return forwardRef(function CommonGooglePlaceFieldWithSearchApi(
     props: GooglePlaceFieldProps,
@@ -46,7 +36,7 @@ export default function withGooglePlaceSearchApi(WrappedComponent: ComponentType
       setPreText(text);
       setRequestStatus(EApiRequestStatus.REQUESTING);
       try {
-        const result = await requestCall(text);
+        const result = await getPlacesBySearchText(text);
         const error: RequestError = {};
         if (result.length === 0) {
           error.reason = 'not_found';
@@ -56,8 +46,21 @@ export default function withGooglePlaceSearchApi(WrappedComponent: ComponentType
           error.reason = 'invalid_params';
           throw error;
         }
-        const newOptions = result.map((r) => toOption(r));
-        setOptions(newOptions);
+        const resultWithGeocode = await Promise.all(
+          result.map((r) =>
+            (async () => {
+              const place: GooglePlaceOption = toOption(r);
+              if (!place?.placeId) return place;
+              const [_error, geocode] = await tryDo(getPlaceById(place.placeId));
+              if (!!_error || !geocode) return place;
+              place.placeGeocode = geocode;
+              place.lng = geocode.geometry.location.lng();
+              place.lat = geocode.geometry.location.lat();
+              return place;
+            })()
+          )
+        );
+        setOptions(resultWithGeocode);
         setRequestStatus(EApiRequestStatus.REQUESTSUCCESS);
       } catch (error: RequestError | any) {
         setOptions([]);

@@ -1,11 +1,12 @@
-import type { FormGridItemProps } from '@/components/form';
+import type { GridContainerProps, GridItemProps } from '@/components/grid';
 import type { RHFRules } from '@/components/rhfInputs';
+import type { RHFComponentProps as FieldComponentProps, FormInputType } from '@/constants/genericFormDefine';
 import type { SxProps, Theme } from '@mui/material';
-import type { ComponentType, ReactNode } from 'react';
+import type { BoxProps } from '@mui/material/Box';
+import type { ComponentType, FormEventHandler, ReactNode } from 'react';
 import type { FieldValues } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
-import type { RHFComponentProps as FieldComponentProps, FormInputType } from '@/constants/genericFormDefine';
-export { FormInputType, FieldComponentProps }
+export { FormInputType, FieldComponentProps };
 export type FormFieldHoc<U extends FormInputType> = (RHFField: ComponentType<FieldComponentProps<U>>) => ComponentType<FieldComponentProps<U>>;
 type FormFieldGridProps = Pick<
   FormGridItemProps,
@@ -25,4 +26,13 @@ export type FormField<T extends FieldValues, U extends FormInputType> = {
 export type ReactHookForm<T extends FieldValues> = ReturnType<typeof useForm<T>>;
 export type FormGridProps<T extends FieldValues> = {
   fields: Array<FormField<T, any>>;
+};
+export type FormGridContainerProps = GridContainerProps & {
+  onSubmit?: FormEventHandler<HTMLFormElement>;
+  formProps?: BoxProps<'form'>;
+  loading?: boolean;
+};
+export type FormGridItemProps = GridItemProps & {
+  disabledXs?: boolean;
+  label?: ReactNode;
 };

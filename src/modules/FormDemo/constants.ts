@@ -7,6 +7,7 @@ import consecutiveNumbers from '@/helpers/arrayHelpers/consecutiveNumbers';
 import { i18n } from '@/translation';
 import type { SxProps, Theme } from '@mui/material';
 import type { FormValues } from './_types';
+import { fields as ContactFields } from '@/modules/FormContact';
 export const LABEL = 'Lorem ipsum dolor sit amet';
 export const LABEL1 =
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
@@ -248,5 +249,11 @@ export const fields = [
     },
     sx: fieldSx,
     md: 6,
-  })
+  }),
+  field({
+    name: 'Contact',
+    label: 'Thông tin liên hệ',
+    fields: ContactFields,
+    sx: fieldSx,
+  }),
 ];

@@ -15,16 +15,8 @@ export default function RHFSwitchGroup(props: RHFSwitchGroupProps) {
         onChange={onChange}
         onBlur={onBlur}
         error={invalid}
-        {...(!!rules?.required
-          ? {
-              required: true,
-            }
-          : {})}
-        {...(!!error?.message
-          ? {
-              errorText: error?.message,
-            }
-          : {})}
+        {...(!!rules?.required ? { required: true } : {})}
+        {...(!!error?.message ? { errorText: error?.message } : {})}
         {...inputProps}
       />
     ),
