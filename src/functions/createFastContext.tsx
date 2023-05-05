@@ -1,4 +1,15 @@
-import { ReactNode, createContext, useCallback, useContext, useRef, useSyncExternalStore } from 'react';
+import get from 'lodash/get';
+import isEqual from 'lodash/isEqual';
+import type { ReactNode } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from 'react';
 /**
  * @example
     const { Provider, useGetter, useSetter } = createFastContext<IThemeConfig>(someData)
@@ -78,10 +89,32 @@ export default function createFastContext<StoreValues extends { [x: string]: any
     }
     return store.set;
   }
+  function useDefaultPropInit(
+    field: string,
+    value?: number | string | boolean | Array<any> | { [x: string]: any }
+  ) {
+    const setState = useSetter();
+    const state = useGetter((s) => get(s, field));
+    const [init, setInit] = useState(false);
+    useEffect(() => {
+      if (init) return;
+      if (value instanceof Array || typeof value === 'object') {
+        if (isEqual(value, state)) return;
+        setInit(true);
+        setState({ [field]: value } as any);
+      } else {
+        if (value === state) return;
+        setInit(true);
+        setState({ [field]: value } as any);
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [value]);
+  }
   return {
     Provider,
     useStore,
     useGetter,
     useSetter,
+    useDefaultPropInit,
   };
 }

@@ -13,16 +13,8 @@ export default function RHFTime(props: RHFTimeProps) {
         onChange={onChange}
         inputRef={ref}
         error={invalid}
-        {...(!!rules?.required
-          ? {
-              required: true,
-            }
-          : {})}
-        {...(!!error?.message
-          ? {
-              errorText: error?.message,
-            }
-          : {})}
+        {...(!!rules?.required ? { required: true } : {})}
+        {...(!!error?.message ? { errorText: error?.message } : {})}
         {...inputProps}
       />
     ),

@@ -1,6 +1,5 @@
 import type { AutoCompleteOption } from '@/components/inputs/CommonSelectField';
 import type { CommonTextFieldProps } from '@/components/inputs/CommonTextField';
-import type { AnyObject } from '@/types';
 import type {
   AutocompleteChangeDetails,
   AutocompleteChangeReason,
@@ -16,7 +15,10 @@ import type { HTMLAttributes, ReactNode, SyntheticEvent } from 'react';
 export type GooglePlaceOption = AutoCompleteOption & {
   placeId?: string;
   placeName?: string;
-  placeData?: AnyObject
+  placeData?: google.maps.places.AutocompletePrediction;
+  placeGeocode?: google.maps.GeocoderResult;
+  lat?: number;
+  lng?: number;
   [x: string]: any;
 };
 export type BaseAutocompleteProps = AutocompleteProps<

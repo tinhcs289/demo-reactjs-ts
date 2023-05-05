@@ -43,7 +43,7 @@ export default function CommonRadioGroupField(props: CommonRadioGroupFieldProps)
     },
     [memoOption, onChange]
   );
-  const memoOptionsRender = useMemo(() => {
+  const $Options = useMemo(() => {
     return (
       <>
         {memoOption.map((option) => {
@@ -67,20 +67,31 @@ export default function CommonRadioGroupField(props: CommonRadioGroupFieldProps)
       </>
     );
   }, [name, memoOption, error, color]);
+  const $Label = useMemo(() => {
+    if (!label && !errorText) return;
+    return (
+      <FormLabel component="label" error={error} sx={{ display: 'inherit', mb: '4px' }}>
+        {!label ? null : (
+          <>
+            {' '}
+            {label || ''}
+            {required ? <>&nbsp;{'*'}</> : null}
+          </>
+        )}
+        {!!error && !!errorText ? <InputErrorTextWithIcon>{errorText}</InputErrorTextWithIcon> : null}
+      </FormLabel>
+    );
+  }, [error, errorText, label, required]);
   return (
     <FormGroupWithOptions {...otherProps}>
-      <FormLabel component="label" error={error} sx={{ display: 'inherit', mb: '4px' }}>
-        {label || ''}
-        {required ? <>&nbsp;{'*'}</> : null}
-        {error && !!errorText ? <InputErrorTextWithIcon>{errorText}</InputErrorTextWithIcon> : null}
-      </FormLabel>
+      {$Label}
       <RadioGroup
         {...groupProps}
         {...(!!name ? { name } : {})}
         value={memoValue?.value || ''}
         onChange={handleOnchange as any}
       >
-        {memoOptionsRender}
+        {$Options}
       </RadioGroup>
     </FormGroupWithOptions>
   );
