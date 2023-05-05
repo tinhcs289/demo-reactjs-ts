@@ -71,14 +71,24 @@ const CommonSwitchGroupField: ComponentType<CommonSwitchGroupFieldProps> = (prop
       </>
     );
   }, [name, memoOption, error, isChecked]);
-
+  const $Label = useMemo(() => {
+    if (!label && !errorText) return;
+    return (
+      <FormLabel component="label" error={error} sx={{ display: 'inherit', mb: '4px' }}>
+        {!label ? null : (
+          <>
+            {' '}
+            {label || ''}
+            {required ? <>&nbsp;{'*'}</> : null}
+          </>
+        )}
+        {!!error && !!errorText ? <InputErrorTextWithIcon>{errorText}</InputErrorTextWithIcon> : null}
+      </FormLabel>
+    );
+  }, [error, errorText, label, required]);
   return (
     <FormGroupWithOptions onChange={handleOnchange as any} {...otherProps}>
-      <FormLabel component="label" error={error} sx={{ display: 'inherit', mb: '4px' }}>
-        {label || ''}
-        {required ? <>&nbsp;{'*'}</> : null}
-        {error && !!errorText ? <InputErrorTextWithIcon>{errorText}</InputErrorTextWithIcon> : null}
-      </FormLabel>
+      {$Label}
       {memoOptionsRender}
     </FormGroupWithOptions>
   );

@@ -16,16 +16,8 @@ export default function RHFSwitch(props: RHFSwitchProps) {
         onChange={onChange}
         inputProps={{ inputRef: ref, onBlur, ...inputProps }}
         error={invalid}
-        {...(!!rules?.required
-          ? {
-              required: true,
-            }
-          : {})}
-        {...(!!error?.message
-          ? {
-              errorText: error?.message,
-            }
-          : {})}
+        {...(!!rules?.required ? { required: true } : {})}
+        {...(!!error?.message ? { errorText: error?.message } : {})}
         {...otherProps}
       />
     ),

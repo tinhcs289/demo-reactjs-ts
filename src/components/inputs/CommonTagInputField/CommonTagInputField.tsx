@@ -7,6 +7,7 @@ import { cloneDeep, get } from 'lodash';
 import type { KeyboardEvent } from 'react';
 import { createRef, Fragment, useCallback, useMemo } from 'react';
 import type { CommonTagInputItem, CommonTagInputFieldProps } from './_types';
+import render from '@/helpers/reactHelpers/render';
 
 const ChipStyled = styled(Chip)<ChipProps>(({ theme }) => ({
   margin: theme.spacing(0.5, 0.25),
@@ -82,8 +83,8 @@ export default function CommonTagInputField(props: CommonTagInputFieldProps) {
   const $tags = useMemo(() => {
     if (!value || !Array.isArray(value)) return null;
     return value.map((tag, index) => {
-      if (typeof renderTag === 'function') {
-        return <Fragment key={tag.id}>{renderTag(tag, index, deleteTag)}</Fragment>;
+      if (!!renderTag) {
+        return <Fragment key={tag.id}>{render(renderTag, { tag, index, deleteTag })}</Fragment>;
       }
       return (
         <ChipStyled
