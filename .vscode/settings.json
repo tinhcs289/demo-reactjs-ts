@@ -22,6 +22,7 @@
     ".firebase": true,
     ".firebaserc": true,
     "firebase.json": true,
+    "open-vscode.bat": true
   },
   "typescript.preferences.importModuleSpecifier": "non-relative"
 }

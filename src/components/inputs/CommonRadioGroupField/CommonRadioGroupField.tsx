@@ -7,6 +7,7 @@ import type { ChangeEvent } from 'react';
 import { useCallback, useMemo } from 'react';
 import FormGroupWithOptions from '../_components/FormGroupWithOptions';
 import type { CommonRadioGroupFieldProps } from './_types';
+import { TextWithRequiredMark } from '@/components/typo';
 export default function CommonRadioGroupField(props: CommonRadioGroupFieldProps) {
   const {
     name,
@@ -71,13 +72,7 @@ export default function CommonRadioGroupField(props: CommonRadioGroupFieldProps)
     if (!label && !errorText) return;
     return (
       <FormLabel component="label" error={error} sx={{ display: 'inherit', mb: '4px' }}>
-        {!label ? null : (
-          <>
-            {' '}
-            {label || ''}
-            {required ? <>&nbsp;{'*'}</> : null}
-          </>
-        )}
+        {!label ? null : <TextWithRequiredMark required={required}>{label}</TextWithRequiredMark>}
         {!!error && !!errorText ? <InputErrorTextWithIcon>{errorText}</InputErrorTextWithIcon> : null}
       </FormLabel>
     );

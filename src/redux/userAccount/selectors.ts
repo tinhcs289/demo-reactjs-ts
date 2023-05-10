@@ -18,6 +18,9 @@ export function activateAccountWithOtpRequestStatusSelector(state: ReduxStore) {
 export function createOtpForResetPasswordRequestStatusSelector(state: ReduxStore) {
   return rootSelector(state)?.createOtpForResetPasswordRequestStatus;
 };
-export function updatePasswordWithOptSelector(state: ReduxStore) {
-  return rootSelector(state)?.updatePasswordWithOpt;
+export function updatePasswordWithOptRequestStatusSelector(state: ReduxStore) {
+  return rootSelector(state)?.updatePasswordWithOptRequestStatus;
+};
+export function updatePasswordWithOldPasswordRequestStatusSelector(state: ReduxStore) {
+  return rootSelector(state)?.updatePasswordWithOldPasswordRequestStatus;
 };

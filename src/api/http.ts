@@ -15,7 +15,7 @@ const doLogout = () => {
 const http = Axios.create({
   baseURL: process.env.REACT_APP_BASE_API_URL,
   timeout: 30000,
-  // withCredentials: true,
+  withCredentials: true,
 });
 let isRefreshing = false;
 let failedQueue: { resolve: any; reject: any }[] = [];
