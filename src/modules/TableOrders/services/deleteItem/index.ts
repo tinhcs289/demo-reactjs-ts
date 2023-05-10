@@ -1,7 +1,6 @@
-import { ApiResponseWithMessageOnly } from '@/api/_types';
+import { ApiResponseWithMessageOnly } from '@/types';
 import http from '@/api/http';
-import httpMock from '@/api/httpMock';
-import mockAdapter from '@/api/mockAdapter';
+import httpMock, { mockAdapter } from '@/api/httpMock';
 import callHttp from '@/functions/callHttp';
 import tryDo from '@/functions/tryDo';
 import wait from '@/functions/wait';

@@ -1,34 +1,28 @@
 import http from '@/api/http';
-import httpMock from '@/api/httpMock';
-import mockAdapter from '@/api/mockAdapter';
-import type { ApiResponseWithMessageOnly } from '@/api/_types';
+import httpMock, { mockAdapter } from '@/api/httpMock';
+import endpoints from '@/constants/endpoints';
+import type { ApiResponseWithMessageOnly } from '@/types';
 import type { AxiosResponse } from 'axios';
-
-const LINK = '/api/auth/verify-auth-token';
-
-const isMock = true;
-
-const mockSetup = () => {
-  mockAdapter.onGet(LINK).reply(200, {
+const LINK = endpoints['verifyAuthenticateToken'];
+function mockSetup() {
+  mockAdapter.onGet(LINK.url).reply(200, {
     message: 'Valid token!',
   } as ApiResponseWithMessageOnly);
 };
-
-if (isMock) mockSetup();
-
-const verifyAuthenticateTokenApi = (
+if (LINK.isMock) mockSetup();
+export type VerifyAuthenticateTokenApiReturns = ApiResponseWithMessageOnly;
+export default async function verifyAuthenticateTokenApi(
   accessToken?: string
-): Promise<AxiosResponse<ApiResponseWithMessageOnly>> => {
-  return !isMock
+): Promise<AxiosResponse<VerifyAuthenticateTokenApiReturns>> {
+  return !LINK.isMock
     ? !!accessToken
-      ? http.get(LINK, {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        })
-      : http.get(LINK)
-    : !!accessToken
-    ? httpMock.get(LINK, {
+      ? http.get(LINK.url, {
         headers: { Authorization: `Bearer ${accessToken}` },
       })
-    : httpMock.get(LINK);
+      : http.get(LINK.url)
+    : !!accessToken
+      ? httpMock.get(LINK.url, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      })
+      : httpMock.get(LINK.url);
 };
-export default verifyAuthenticateTokenApi;
