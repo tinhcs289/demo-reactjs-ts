@@ -1,25 +1,20 @@
 import http from '@/api/http';
-import httpMock from '@/api/httpMock';
-import mockAdapter from '@/api/mockAdapter';
-import { ApiResponseWithMessageOnly } from '@/api/_types';
+import httpMock, { mockAdapter } from '@/api/httpMock';
+import endpoints from '@/constants/endpoints';
+import { ApiResponseWithMessageOnly } from '@/types';
 import type { AxiosResponse } from 'axios';
-
-const LINK = '/api/auth/account-activate';
-
-const isMock = true;
-
-const mockSetup = () => {
-  mockAdapter.onPost(LINK).reply(200, {
+const LINK = endpoints['activateAccountWithOtp'];
+function mockSetup() {
+  mockAdapter.onPost(LINK.url).reply(200, {
     message: 'Account activated!',
   } as ApiResponseWithMessageOnly);
 };
-
-if (isMock) mockSetup();
-
-const activateAccountWithOtpApi = (payload: {
+if (LINK.isMock) mockSetup();
+export type ActivateAccountWithOtpApiParams = {
   username: string;
   optCode: string;
-}): Promise<AxiosResponse<ApiResponseWithMessageOnly>> => {
-  return !isMock ? http.post(LINK, payload) : httpMock.post(LINK, payload);
+}
+export type ActivateAccountWithOtpApiReturns = ApiResponseWithMessageOnly;
+export default async function activateAccountWithOtpApi(payload: ActivateAccountWithOtpApiParams): Promise<AxiosResponse<ActivateAccountWithOtpApiReturns>> {
+  return !LINK.isMock ? http.post(LINK.url, payload) : httpMock.post(LINK.url, payload);
 };
-export default activateAccountWithOtpApi;

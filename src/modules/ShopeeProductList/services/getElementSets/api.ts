@@ -1,6 +1,5 @@
 import http from '@/api/http';
-import httpMock from '@/api/httpMock';
-import mockAdapter from '@/api/mockAdapter';
+import httpMock, { mockAdapter } from '@/api/httpMock';
 import { ShopeeElementSet } from '@/types/Shopee';
 import type { AxiosResponse } from 'axios';
 import data from './mock.json';

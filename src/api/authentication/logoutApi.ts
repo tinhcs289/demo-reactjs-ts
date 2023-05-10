@@ -1,22 +1,16 @@
 import http from '@/api/http';
-import httpMock from '@/api/httpMock';
-import mockAdapter from '@/api/mockAdapter';
-import type { ApiResponseWithMessageOnly } from '@/api/_types';
+import httpMock, { mockAdapter } from '@/api/httpMock';
+import endpoints from '@/constants/endpoints';
+import type { ApiResponseWithMessageOnly } from '@/types';
 import type { AxiosResponse } from 'axios';
-
-const LINK = '/api/auth/sign-out';
-
-const isMock = true;
-
-const mockSetup = () => {
-  mockAdapter.onPost(LINK).reply(200, {
+const LINK = endpoints['logout'];
+function mockSetup() {
+  mockAdapter.onPost(LINK.url).reply(200, {
     message: 'signed out!',
   } as ApiResponseWithMessageOnly);
 };
-
-if (isMock) mockSetup();
-
-const logoutApi = (): Promise<AxiosResponse<ApiResponseWithMessageOnly>> => {
-  return !isMock ? http.post(LINK) : httpMock.post(LINK);
+if (LINK.isMock) mockSetup();
+export type LogoutApiReturns = ApiResponseWithMessageOnly;
+export default async function logoutApi(): Promise<AxiosResponse<LogoutApiReturns>> {
+  return !LINK.isMock ? http.post(LINK.url) : httpMock.post(LINK.url);
 };
-export default logoutApi;

@@ -5,6 +5,7 @@ import { useCallback, useMemo } from 'react';
 import FormGroupWithOptions from '../_components/FormGroupWithOptions';
 import InputErrorTextWithIcon from '../_components/InputErrorTextWithIcon';
 import type { CheckGroupOption, CommonCheckGroupFieldProps } from './_types';
+import { TextWithRequiredMark } from '@/components/typo';
 export default function CommonCheckGroupField(props: CommonCheckGroupFieldProps) {
   const { name, label, required, error, onChange, errorText, options, value, ...otherProps } = props;
   const memoOption = useMemo(() => {
@@ -62,13 +63,7 @@ export default function CommonCheckGroupField(props: CommonCheckGroupFieldProps)
     if (!label && !errorText) return;
     return (
       <FormLabel component="label" error={error} sx={{ display: 'inherit', mb: '4px' }}>
-        {!label ? null : (
-          <>
-            {' '}
-            {label || ''}
-            {required ? <>&nbsp;{'*'}</> : null}
-          </>
-        )}
+        {!label ? null : <TextWithRequiredMark required={required}>{label}</TextWithRequiredMark>}
         {!!error && !!errorText ? <InputErrorTextWithIcon>{errorText}</InputErrorTextWithIcon> : null}
       </FormLabel>
     );

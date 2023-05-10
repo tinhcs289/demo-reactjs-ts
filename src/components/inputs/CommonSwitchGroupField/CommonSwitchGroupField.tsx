@@ -6,6 +6,7 @@ import FormLabel from '@mui/material/FormLabel';
 import type { ComponentType } from 'react';
 import { useCallback, useMemo } from 'react';
 import type { CommonSwitchGroupFieldProps, SwitchGroupOption } from './_types';
+import { TextWithRequiredMark } from '@/components/typo';
 
 const CommonSwitchGroupField: ComponentType<CommonSwitchGroupFieldProps> = (props) => {
   const { name, label, required, error, onChange, errorText, options, value, ...otherProps } = props;
@@ -75,13 +76,7 @@ const CommonSwitchGroupField: ComponentType<CommonSwitchGroupFieldProps> = (prop
     if (!label && !errorText) return;
     return (
       <FormLabel component="label" error={error} sx={{ display: 'inherit', mb: '4px' }}>
-        {!label ? null : (
-          <>
-            {' '}
-            {label || ''}
-            {required ? <>&nbsp;{'*'}</> : null}
-          </>
-        )}
+        {!label ? null : <TextWithRequiredMark required={required}>{label}</TextWithRequiredMark>}
         {!!error && !!errorText ? <InputErrorTextWithIcon>{errorText}</InputErrorTextWithIcon> : null}
       </FormLabel>
     );

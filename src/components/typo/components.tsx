@@ -1,7 +1,22 @@
 import { styled } from '@mui/material';
 import type { TypographyProps } from '@mui/material/Typography';
 import Typography from '@mui/material/Typography';
-export type CommonTypographyProps<D extends React.ElementType<any> = 'span'> = TypographyProps<D> & {
+import type { ReactNode, ElementType } from 'react';
+export type TextWithRequiredMarkProps = {
+  children?: ReactNode;
+  required?: boolean;
+  mask?: ReactNode;
+};
+export function TextWithRequiredMark(props: TextWithRequiredMarkProps) {
+  if (!props?.children) return null;
+  return (
+    <>
+      {props.children}
+      {!!props?.required ? <>&nbsp;{props?.mask || '*'}</> : null}
+    </>
+  );
+}
+export type CommonTypographyProps<D extends ElementType<any> = 'span'> = TypographyProps<D> & {
   maxLines?: number;
   lineHeight?: number;
 };

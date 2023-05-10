@@ -6,7 +6,8 @@ export type State = {
   registerUserAccountRequestStatus: EApiRequestStatus;
   activateAccountWithOtpRequestStatus: EApiRequestStatus;
   createOtpForResetPasswordRequestStatus: EApiRequestStatus;
-  updatePasswordWithOpt: EApiRequestStatus;
+  updatePasswordWithOptRequestStatus: EApiRequestStatus;
+  updatePasswordWithOldPasswordRequestStatus: EApiRequestStatus;
 };
 export const rootName = 'userAccount';
 const state = Immutable<State>({
@@ -15,6 +16,7 @@ const state = Immutable<State>({
   registerUserAccountRequestStatus: EApiRequestStatus.NONE,
   activateAccountWithOtpRequestStatus: EApiRequestStatus.NONE,
   createOtpForResetPasswordRequestStatus: EApiRequestStatus.NONE,
-  updatePasswordWithOpt: EApiRequestStatus.NONE,
+  updatePasswordWithOptRequestStatus: EApiRequestStatus.NONE,
+  updatePasswordWithOldPasswordRequestStatus: EApiRequestStatus.NONE,
 });
 export default state;

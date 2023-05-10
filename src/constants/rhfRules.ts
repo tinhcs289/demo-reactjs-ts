@@ -1,6 +1,5 @@
 import { REGEX_EMAIL, REGEX_PHONE } from '@/constants/regex';
 import type { ValidationRule } from 'react-hook-form';
-
 export const required = (message: string): { required: string | ValidationRule<boolean> } => ({
   required: { value: true, message },
 });
@@ -16,10 +15,8 @@ export const minLength = (value: number, message: string): { minLength: Validati
 export const maxLength = (value: number, message: string): { maxLength: ValidationRule<number> } => ({
   maxLength: { value, message },
 });
-
 export const pattern = (value: RegExp, message: string): { pattern: ValidationRule<RegExp> } => ({
   pattern: { value, message },
 });
-
 export const email = (message: string) => pattern(REGEX_EMAIL, message);
 export const phone = (message: string) => pattern(REGEX_PHONE, message);
