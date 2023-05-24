@@ -45,7 +45,7 @@ export default function FormGridFieldsVertical<T extends FieldValues>(props: For
               {!required ? null : <>&nbsp;{`*`}</>}
             </FormGridItem>
             <FormGridItem
-              lg={10}
+              md={10}
               {...itemProps}
               contentProps={{ container: true, width: '100%', height: '100%', ...itemProps?.contentProps }}
             >
@@ -71,7 +71,7 @@ export default function FormGridFieldsVertical<T extends FieldValues>(props: For
             {label}
             {!required ? null : <>&nbsp;{`*`}</>}
           </FormGridItem>
-          <FormGridItem lg={10} {...itemProps}>
+          <FormGridItem md={10} {...itemProps}>
             {render(input, inputProps)}
           </FormGridItem>
         </Fragment>

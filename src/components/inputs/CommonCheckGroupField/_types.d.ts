@@ -1,7 +1,6 @@
 import type { CommonCheckFieldProps } from '@/components/inputs/CommonCheckField';
 import type { FormGroupProps } from '@mui/material/FormGroup';
 import type { ReactNode } from 'react';
-
 export type CheckGroupOption = {
   label: ReactNode;
   value: string;

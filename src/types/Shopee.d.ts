@@ -1,3 +1,4 @@
+import type { AnyObject } from "@/types/AnyObject";
 export type ShopeeCategoryItem = {
   catid?: number;
   parent_catid?: number;
@@ -11,7 +12,7 @@ export type ShopeeCategoryItem = {
   children?: ShopeeCategoryItem[];
   [x: string]: any;
 };
-export type ShopeeProductItem = {
+export type ShopeeProductItem = AnyObject & {
   itemid: number;
   key: `item:${number}`;
   item_status?: string;

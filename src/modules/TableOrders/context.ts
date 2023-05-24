@@ -9,8 +9,8 @@ export const {
   useAsyncListInteract,
   AsyncListTable,
   AsyncListTablePaging,
-  AsyncListItemActionMenu,
-  AsyncListItemActionMenuToggle,
-  AsyncListItemActionMenuEdit,
-  AsyncListItemActionMenuDelete,
+  AsyncListItemActionsPopoverToggle,
+  AsyncListItemActionsPopover,
+  AsyncListItemActionsPopoverEdit,
+  AsyncListItemActionsPopoverDelete,
 } = context;

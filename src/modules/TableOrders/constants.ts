@@ -1,4 +1,4 @@
-import { menuActions, tableConfig } from '@/components/table';
+import { BodyRowHoc, menuActions, tableConfig } from '@/components/table';
 import PATHS from '@/constants/paths';
 import { i18n } from '@/translation';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
@@ -12,6 +12,7 @@ import CellToggleDetailPanel from './components/CellToggleDetailPanel';
 import CellTotalPrice from './components/CellTotalPrice';
 import MenuActionDelete from './components/MenuActionDelete';
 import MenuActionOpenDetail from './components/MenuActionOpenDetail';
+import withRowClickHandler from './hocs/withRowClickHandler';
 export const actions = menuActions<RowData>([
   { render: MenuActionOpenDetail },
   { render: MenuActionDelete },
@@ -108,3 +109,4 @@ export const columns = tableConfig<RowData>(
     stickyLast: true,
   }
 );
+export const rowHocs: BodyRowHoc<RowData>[] = [withRowClickHandler];

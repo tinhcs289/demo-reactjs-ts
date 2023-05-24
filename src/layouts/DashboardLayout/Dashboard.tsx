@@ -8,6 +8,7 @@ import BoxMain from './BoxMain';
 import BoxRoot from './BoxRoot';
 import PageWidthChange from './PageWidthChange';
 import withAuthChangeWarning from './withAuthChangeWarning';
+import { MODIFIABLE_WIDTH } from '@/layouts/DashboardLayout/constants';
 const Dashboard = withHOCs(withAuthChangeWarning)(function Dashboard() {
   return (
     <BoxRoot>
@@ -18,7 +19,7 @@ const Dashboard = withHOCs(withAuthChangeWarning)(function Dashboard() {
         <BoxContent>
           <Outlet />
         </BoxContent>
-        <PageWidthChange />
+        {!MODIFIABLE_WIDTH ? null : <PageWidthChange />}
       </BoxMain>
     </BoxRoot>
   );

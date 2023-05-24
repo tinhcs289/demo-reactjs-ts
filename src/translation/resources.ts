@@ -6,6 +6,7 @@ import login from './login';
 import notFound from './notFound';
 import register from './register';
 import theme from './theme';
+import contact from './contact';
 import type { TSubTranslation, TTranslation } from './_types';
 
 //#region functions
@@ -34,6 +35,7 @@ addTranslation('register', register);
 addTranslation('notFound', notFound);
 addTranslation('theme', theme);
 addTranslation('booking', booking);
+addTranslation('contact', contact);
 //TODO [Multi-language] register more translations here
 //#endregion
 

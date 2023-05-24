@@ -1,0 +1,13 @@
+{
+  "mrOrMrs": "Anh/Chị",
+  "gender": "Giới tính",
+  "male": "Nam",
+  "female": "Nữ",
+  "title": "Danh xưng",
+  "firstName": "Tên",
+  "middleName": "Đệm",
+  "lastName": "Họ",
+  "phoneNumber": "Số điện thoại",
+  "emailAddress": "Hòm thư",
+  "address": "Địa chỉ"
+}

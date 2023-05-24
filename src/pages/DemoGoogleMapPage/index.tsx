@@ -11,7 +11,7 @@ const CENTER = {
 export default function DemoFormPage() {
   return (
     <DashboardTabsContainer>
-      <GoogleMapWithDataContext defaultCenter={CENTER} defaultZoom={30}>
+      <GoogleMapWithDataContext defaultCenter={CENTER} defaultZoom={18}>
         <GoogleMapMarker lat={21.043414199999997} lng={105.82113869999999}>
           <CommonAvatar src={images.mockAvatar} style={{ width: '50px', height: '50px' }} />
         </GoogleMapMarker>

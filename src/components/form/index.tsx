@@ -3,6 +3,7 @@ export type {
   FormField,
   FormFieldHoc,
   FormGridContainerProps,
+  FormGridFieldHoc,
   FormGridItemProps,
   FormGridProps,
   FormInputType,
@@ -14,4 +15,6 @@ export { default as FormGridFieldsVertical } from './components/FormGridFieldsVe
 export { default as FormGridItem } from './components/FormGridItem';
 export { COMPONENT_DICT, EFormInputType } from './constants';
 export { field } from './functions';
+export { default as withRHF } from './hocs/withRHF';
+export { default as withRHFSubmitHandler } from './hocs/withRHFSubmitHandler';
 
