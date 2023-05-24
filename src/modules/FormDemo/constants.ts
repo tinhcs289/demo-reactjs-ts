@@ -8,6 +8,18 @@ import { i18n } from '@/translation';
 import type { SxProps, Theme } from '@mui/material';
 import type { FormValues } from './_types';
 import { fields as ContactFields } from '@/modules/FormContact';
+import withDisplayBySwitch from './hocs/withDisplayBySwitch';
+import { ToggledOption } from '@/components/inputs/CommonToggledField';
+import FormatBoldIcon from '@mui/icons-material/FormatBold';
+import FormatColorFillIcon from '@mui/icons-material/FormatColorFill';
+import FormatItalicIcon from '@mui/icons-material/FormatItalic';
+import FormatUnderlinedIcon from '@mui/icons-material/FormatUnderlined';
+const toggledOptions: ToggledOption[] = [
+  { value: 'bold', icon: FormatBoldIcon },
+  { value: 'italic', icon: FormatItalicIcon },
+  { value: 'underlined', icon: FormatUnderlinedIcon },
+  { value: 'color', icon: FormatColorFillIcon, disabled: true },
+];
 export const LABEL = 'Lorem ipsum dolor sit amet';
 export const LABEL1 =
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
@@ -58,6 +70,7 @@ export const fields = [
     label: LABEL,
     rules: required(i18n.t<string>('common:pleaseSelect')),
     md: 4,
+    gridFieldHocs: [withDisplayBySwitch],
     sx: fieldSx,
   }),
   field({
@@ -66,6 +79,17 @@ export const fields = [
     label: LABEL,
     md: 4,
     sx: fieldSx,
+  }),
+  field({
+    name: 'Toggle',
+    inputType: 'toggle',
+    label: 'Lựa chọn định dạng',
+    rules: required(i18n.t<string>('common:pleaseSelect')),
+    md: 3,
+    sx: fieldSx,
+    componentProps: {
+      options: toggledOptions,
+    },
   }),
   field({
     name: 'TextField',
@@ -161,7 +185,7 @@ export const fields = [
   field({
     name: 'CheckGroupField',
     inputType: 'check-group',
-    label: LABEL,
+    label: 'Lựa chọn ít nhất 01 trong các mục sau',
     rules: required(i18n.t<string>('common:pleaseSelect')),
     componentProps: {
       options: optionsCheck,
@@ -172,7 +196,7 @@ export const fields = [
   field({
     name: 'RadioGroupField',
     inputType: 'radio-group',
-    label: LABEL,
+    label: 'Lựa chọn 01 trong các mục sau',
     rules: required(i18n.t<string>('common:pleaseSelect')),
     componentProps: {
       options: optionRadio,
@@ -219,7 +243,7 @@ export const fields = [
   field({
     name: 'TagInputField',
     inputType: 'text-tags',
-    label: LABEL,
+    label: 'Các từ khoá',
     rules: required(i18n.t<string>('common:pleaseEnter')),
     componentProps: {
       placeholder: i18n.t<string>('common:pleaseEnter'),
@@ -254,6 +278,5 @@ export const fields = [
     name: 'Contact',
     label: 'Thông tin liên hệ',
     fields: ContactFields,
-    sx: fieldSx,
   }),
 ];

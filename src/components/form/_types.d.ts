@@ -1,6 +1,7 @@
 import type { GridContainerProps, GridItemProps } from '@/components/grid';
 import type { RHFRules } from '@/components/rhfInputs';
 import type { RHFComponentProps as FieldComponentProps, FormInputType } from '@/constants/genericFormDefine';
+import { AnyObject } from '@/types';
 import type { SxProps, Theme } from '@mui/material';
 import type { BoxProps } from '@mui/material/Box';
 import type { ComponentType, FormEventHandler, ReactNode } from 'react';
@@ -8,6 +9,7 @@ import type { FieldValues } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 export { FormInputType, FieldComponentProps };
 export type FormFieldHoc<U extends FormInputType> = (RHFField: ComponentType<FieldComponentProps<U>>) => ComponentType<FieldComponentProps<U>>;
+export type FormGridFieldHoc = (FormGridItem: ComponentType<FormGridProps<AnyObject>>) => ComponentType<FormGridProps<AnyObject>>;
 type FormFieldGridProps = Pick<
   FormGridItemProps,
   'sx' | 'className' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'disabledXs' | 'contentProps'
@@ -22,7 +24,8 @@ export type FormField<T extends FieldValues, U extends FormInputType> = {
   componentSx?: SxProps<Theme>;
   hocs?: FormFieldHoc<U>[];
   fields?: FormField<any, any>[];
-} & FormFieldGridProps;
+  gridFieldHocs?: FormGridFieldHoc[];
+} & Partial<FormFieldGridProps>;
 export type ReactHookForm<T extends FieldValues> = ReturnType<typeof useForm<T>>;
 export type FormGridProps<T extends FieldValues> = {
   fields: Array<FormField<T, any>>;

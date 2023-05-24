@@ -1,13 +1,13 @@
-import InputErrorTextWithIcon from '../_components/InputErrorTextWithIcon';
+import FormLabelStyled from '@/components/inputs/_components/FormLabelStyled';
+import { TextWithRequiredMark } from '@/components/typo';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import FormLabel from '@mui/material/FormLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import type { ChangeEvent } from 'react';
 import { useCallback, useMemo } from 'react';
 import FormGroupWithOptions from '../_components/FormGroupWithOptions';
+import InputErrorTextWithIcon from '../_components/InputErrorTextWithIcon';
 import type { CommonRadioGroupFieldProps } from './_types';
-import { TextWithRequiredMark } from '@/components/typo';
 export default function CommonRadioGroupField(props: CommonRadioGroupFieldProps) {
   const {
     name,
@@ -47,7 +47,7 @@ export default function CommonRadioGroupField(props: CommonRadioGroupFieldProps)
   const $Options = useMemo(() => {
     return (
       <>
-        {memoOption.map((option) => {
+        {memoOption.map((option, index) => {
           return (
             <FormControlLabel
               key={option.value}
@@ -56,6 +56,7 @@ export default function CommonRadioGroupField(props: CommonRadioGroupFieldProps)
               label={option?.label || option?.name || ''}
               disabled={!!option?.disabled}
               {...option?.InputProps}
+              sx={{ ...option?.InputProps?.sx, ...(index === 0 ? { mt: '12px' } : {}) }}
               control={
                 <Radio
                   {...(!!color ? { color: color as any } : {})}
@@ -71,10 +72,10 @@ export default function CommonRadioGroupField(props: CommonRadioGroupFieldProps)
   const $Label = useMemo(() => {
     if (!label && !errorText) return;
     return (
-      <FormLabel component="label" error={error} sx={{ display: 'inherit', mb: '4px' }}>
+      <FormLabelStyled {...({ component: 'label' } as any)} error={error} inputType="radiogroup">
         {!label ? null : <TextWithRequiredMark required={required}>{label}</TextWithRequiredMark>}
         {!!error && !!errorText ? <InputErrorTextWithIcon>{errorText}</InputErrorTextWithIcon> : null}
-      </FormLabel>
+      </FormLabelStyled>
     );
   }, [error, errorText, label, required]);
   return (

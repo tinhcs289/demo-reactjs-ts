@@ -34,7 +34,7 @@ const TabsStyled = styled(Tabs, {
         left: 0,
         top: 0,
         background: theme.palette.background.paper,
-        zIndex: theme.zIndex.drawer,
+        zIndex: theme.zIndex.modal,
         width: '100%',
       }
     : {}),

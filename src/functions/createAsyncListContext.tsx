@@ -299,8 +299,9 @@ export default function createAsyncListContext<T extends RowData>(defaultState?:
     return <></>;
   }
   function ListSelectableInit(props: Pick<Props<T>, 'idField'>) {
-    const { idField = ID } = props;
-    const getId = useCallback((item?: T) => (!idField ? null : get(item, idField)), [idField]);
+    const { idField } = props;
+    const _idField = useAsyncListGetter((s) => s.idField);
+    const getId = useCallback((item?: T) => get(item, idField || _idField), [idField, _idField]);
     const setState = useAsyncListSetter();
     const isCurrentCheckAll = useAsyncListGetter((s) => s.isCheckAll);
     const dataInPage = useAsyncListGetter((s) => s.dataInPage);
@@ -329,28 +330,31 @@ export default function createAsyncListContext<T extends RowData>(defaultState?:
     const checkAllItems = useCallback(
       (checked: boolean = true) => {
         setState({ isCheckAll: checked });
-        if (!Array.isArray(dataInPage) || dataInPage.length === 0) return;
-        if (checked) {
-          const selecteds = concatArray(
-            selectedItems,
-            dataInPage.filter((i) => {
-              const id = getId(i);
-              if (!id) return false;
-              return selectedItems.findIndex((s) => getId(s) === id) < 0;
-            })
-          );
-          setState({
-            selectedItems: selecteds,
-            selectedItemIds: selecteds.map((i) => getId(i)),
-          });
-        } else {
-          const listUncheckIds = dataInPage.map((i) => getId(i));
-          const selecteds = selectedItems.filter((i) => !listUncheckIds.includes(getId(i)));
-          setState({
-            selectedItems: selecteds,
-            selectedItemIds: selecteds.map((i) => getId(i)),
-          });
-        }
+        setTimeout(() => {
+          if (!Array.isArray(dataInPage) || dataInPage.length === 0) return;
+          if (checked) {
+            const selecteds = concatArray(
+              selectedItems,
+              dataInPage.filter((i) => {
+                const id = getId(i);
+                if (!id) return false;
+                return selectedItems.findIndex((s) => getId(s) === id) < 0;
+              })
+            );
+            setState({
+              selectedItems: selecteds,
+              selectedItemIds: selecteds.map((i) => getId(i)),
+            });
+          } else {
+            const listUncheckIds = dataInPage.map((i) => getId(i));
+            const selecteds = selectedItems.filter((i) => !listUncheckIds.includes(getId(i)));
+            setState({
+              selectedItems: selecteds,
+              selectedItemIds: selecteds.map((i) => getId(i)),
+            });
+          }
+        }, 0);
+        return;
       },
       [getId, selectedItems, dataInPage, setState]
     );
@@ -364,19 +368,29 @@ export default function createAsyncListContext<T extends RowData>(defaultState?:
         if (shouldChecked) {
           const selecteds = concatArray(selectedItems, [item]);
           const shouldCheckAll = isCheckAll(selecteds, dataInPage);
-          setState({
-            isCheckAll: shouldCheckAll,
-            selectedItems: selecteds,
-            selectedItemIds: selecteds.map((i) => getId(i)),
-          });
+          setTimeout(() => {
+            setState({ isCheckAll: shouldCheckAll });
+          }, 0);
+          setTimeout(() => {
+            setState({
+              selectedItems: selecteds,
+              selectedItemIds: selecteds.map((i) => getId(i)),
+            });
+          }, 0);
+          return;
         } else {
           const selecteds = selectedItems.filter((i) => getId(i) !== id);
           const shouldCheckAll = isCheckAll(selecteds, dataInPage);
-          setState({
-            isCheckAll: shouldCheckAll,
-            selectedItems: selecteds,
-            selectedItemIds: selecteds.map((i) => getId(i)),
-          });
+          setTimeout(() => {
+            setState({ isCheckAll: shouldCheckAll });
+          }, 0);
+          setTimeout(() => {
+            setState({
+              selectedItems: selecteds,
+              selectedItemIds: selecteds.map((i) => getId(i)),
+            });
+          }, 0);
+          return;
         }
       },
       [getId, selectedItems, selectedItemIds, dataInPage, isCheckAll, setState]
@@ -385,20 +399,32 @@ export default function createAsyncListContext<T extends RowData>(defaultState?:
       (isOn: boolean) => {
         setState({ selectable: isOn });
         if (isOn) return;
-        setState({
-          isCheckAll: false,
-          selectedItemIds: [],
-          selectedItems: [],
-        });
+        setTimeout(() => {
+          setState({
+            isCheckAll: false,
+          });
+        }, 0);
+        setTimeout(() => {
+          setState({
+            selectedItemIds: [],
+            selectedItems: [],
+          });
+        }, 0);
       },
       [setState]
     );
     const clearSelectItems = useCallback(() => {
-      setState({
-        isCheckAll: false,
-        selectedItemIds: [],
-        selectedItems: [],
-      });
+      setTimeout(() => {
+        setState({
+          isCheckAll: false,
+        });
+      }, 0);
+      setTimeout(() => {
+        setState({
+          selectedItemIds: [],
+          selectedItems: [],
+        });
+      }, 0);
     }, [setState]);
     useEffect(() => {
       if (!dispatch) return;
@@ -406,19 +432,19 @@ export default function createAsyncListContext<T extends RowData>(defaultState?:
         case 'select':
           clearDispatch();
           checkOneItem(dispatch.payload as any);
-          break;
+          return;
         case 'select:all':
           clearDispatch();
           checkAllItems(...dispatch.payload);
-          break;
+          return;
         case 'select:clear':
           clearDispatch();
           clearSelectItems();
-          break;
+          return;
         case 'select:toggle':
           clearDispatch();
           toggleSelectable(...dispatch.payload);
-          break;
+          return;
         default:
           clearDispatch();
           return;
@@ -426,17 +452,25 @@ export default function createAsyncListContext<T extends RowData>(defaultState?:
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dispatch, clearDispatch]);
     useEffect(() => {
-      if (!Number.isInteger(dataInPage?.length)) {
-        setState({ isCheckAll: false });
-        return;
-      }
-      if (dataInPage?.length === 0) {
-        setState({ isCheckAll: false });
+      if (!Number.isInteger(dataInPage?.length) || dataInPage?.length === 0) {
+        setTimeout(() => {
+          setState({ isCheckAll: false });
+        }, 0);
         return;
       }
       const shouldCheckAll = isCheckAll(selectedItems, dataInPage);
-      if (shouldCheckAll && !isCurrentCheckAll) setState({ isCheckAll: true });
-      if (!shouldCheckAll && isCurrentCheckAll) setState({ isCheckAll: false });
+      if (shouldCheckAll && !isCurrentCheckAll) {
+        setTimeout(() => {
+          setState({ isCheckAll: true });
+        }, 0);
+        return;
+      }
+      if (!shouldCheckAll && isCurrentCheckAll) {
+        setTimeout(() => {
+          setState({ isCheckAll: false });
+        }, 0);
+        return;
+      }
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dataInPage]);
     return <></>;
@@ -537,7 +571,7 @@ export default function createAsyncListContext<T extends RowData>(defaultState?:
     const clearAction: AsyncListClearActionCallback = useCallback(() => {
       setState({ dispatch: { type: 'interact:clear' } });
     }, [setState]);
-    const check: AsyncListCheckOrUncheckItemCallback<T> = useCallback(
+    const checkOrUncheck: AsyncListCheckOrUncheckItemCallback<T> = useCallback(
       (payload) => {
         setState({ dispatch: { type: 'select', payload } });
       },
@@ -566,7 +600,7 @@ export default function createAsyncListContext<T extends RowData>(defaultState?:
       reset,
       setAction,
       clearAction,
-      check,
+      checkOrUncheck,
       checkAll,
       clearSelect,
       toggleSelectable,

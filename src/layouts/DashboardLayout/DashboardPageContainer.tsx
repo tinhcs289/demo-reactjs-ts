@@ -3,7 +3,7 @@ import { styled } from '@mui/material';
 import type { ContainerProps } from '@mui/material/Container';
 import Container from '@mui/material/Container';
 import { useMemo } from 'react';
-import { DEFAULT_WIDTH } from './constants';
+import { DEFAULT_WIDTH, MODIFIABLE_WIDTH } from './constants';
 const ContainerStyled = styled(Container)<ContainerProps>(({ theme }) => ({
   padding: `0 !important`,
   marginBottom: theme.spacing(2),
@@ -15,9 +15,9 @@ const ContainerStyled = styled(Container)<ContainerProps>(({ theme }) => ({
 export default function DashboardPageContainer(props: ContainerProps) {
   const { children, ...otherProps } = props;
   const pageMaxWidth = useDashboardLayoutState((s) => s.pageMaxWidth);
-  const maxWidth = useMemo(() => pageMaxWidth || DEFAULT_WIDTH, [pageMaxWidth]);
+  const maxWidth = useMemo(() => (!MODIFIABLE_WIDTH ? 'sx' : pageMaxWidth || DEFAULT_WIDTH), [pageMaxWidth]);
   return (
-    <ContainerStyled {...otherProps} maxWidth={maxWidth}>
+    <ContainerStyled {...otherProps} sx={{ height: '100%', ...otherProps?.sx }} maxWidth={maxWidth as any}>
       {children}
     </ContainerStyled>
   );

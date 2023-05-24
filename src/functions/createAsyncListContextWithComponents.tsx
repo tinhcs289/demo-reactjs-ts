@@ -1,16 +1,22 @@
 import type {
-  BodyCellInnerComponent,
+  BodyCellInnerRenderFunctionArgs,
   CommonPaginationProps,
   CommonTablePaginationProps,
   CommonTableProps,
-  ItemMenuActionComponent,
   ItemMenuActionConfig,
+  ItemMenuActionRenderArgs,
   Selectability,
 } from '@/components/table';
-import { CommonPagination, CommonTable, CommonTablePagination, ItemActionMenu } from '@/components/table';
+import {
+  CommonPagination,
+  CommonTable,
+  CommonTableActionsPopover,
+  CommonTablePagination,
+} from '@/components/table';
 import { EApiRequestStatus } from '@/constants/apiRequestStatus';
 import type { AsyncListState, RowData } from '@/functions/createAsyncListContext';
 import createAsyncListContext from '@/functions/createAsyncListContext';
+import { AnyObject } from '@/types';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import IconButton from '@mui/material/IconButton';
 import type { MenuProps } from '@mui/material/Menu';
@@ -63,7 +69,7 @@ export type AsyncListTablePagingProps = Omit<
   CommonTablePaginationProps,
   'pageIndex' | 'pageSize' | 'totalCount' | 'onChange'
 >;
-export type AsyncListItemActionMenuProps<T extends RowData> = Omit<
+export type AsyncListItemActionsPopoverProps<T extends RowData> = Omit<
   MenuProps,
   'anchorEl' | 'open' | 'onClose'
 > & {
@@ -72,7 +78,7 @@ export type AsyncListItemActionMenuProps<T extends RowData> = Omit<
 };
 const anchorOrigin = { vertical: 'top', horizontal: 'right' };
 const transformOrigin = { vertical: 'top', horizontal: 'right' };
-export default function createAsyncListContext2WithComponents<T extends RowData>(
+export default function createAsyncListContextWithComponents<T extends RowData>(
   defaultState?: Partial<AsyncListState<T>>
 ) {
   const {
@@ -94,21 +100,22 @@ export default function createAsyncListContext2WithComponents<T extends RowData>
       (row: T) => selectedItemIds.includes(getId(row)),
       [selectedItemIds, getId]
     );
-    const { checkAll, check } = useAsyncListAction();
+    const { checkAll, checkOrUncheck } = useAsyncListAction();
     const selectability: Selectability<T> = useMemo(() => {
       return {
         isCheckAll,
         onCheckAll: checkAll,
-        onCheckRow: check,
+        onCheckRow: checkOrUncheck,
         isRowSelected: isSelected,
       };
-    }, [isCheckAll, checkAll, check, isSelected]);
+    }, [isCheckAll, checkAll, checkOrUncheck, isSelected]);
     const loading = useMemo(() => {
       return fetchStatus === EApiRequestStatus.REQUESTING;
     }, [fetchStatus]);
     const $Return = useMemo(
       () => (
         <CommonTable
+          idField={idField}
           rows={data}
           columns={columns}
           loading={loading}
@@ -116,7 +123,7 @@ export default function createAsyncListContext2WithComponents<T extends RowData>
           {...otherProps}
         />
       ),
-      [data, columns, loading, selectability, otherProps]
+      [data, columns, loading, selectability, otherProps, idField]
     );
     return $Return;
   }
@@ -169,7 +176,9 @@ export default function createAsyncListContext2WithComponents<T extends RowData>
     );
     return $Return;
   }
-  const AsyncListItemActionMenuToggle: BodyCellInnerComponent<T, { actionType?: string }> = (props) => {
+  function AsyncListItemActionsPopoverToggle(
+    props: BodyCellInnerRenderFunctionArgs<T, { actionType?: string }>
+  ) {
     const { row, actionType } = props;
     const action = useMemo(() => actionType || 'MORE_ACTION', [actionType]);
     const { setAction } = useAsyncListAction();
@@ -193,8 +202,8 @@ export default function createAsyncListContext2WithComponents<T extends RowData>
       );
     }, [toggleAction]);
     return $Return;
-  };
-  function AsyncListItemActionMenu(props: AsyncListItemActionMenuProps<T>) {
+  }
+  function AsyncListItemActionsPopover(props: AsyncListItemActionsPopoverProps<T>) {
     const { actionType, actions, ...otherProps } = props;
     const memoAction = useMemo(() => actionType || 'MORE_ACTION', [actionType]);
     const { clearAction } = useAsyncListAction();
@@ -205,7 +214,7 @@ export default function createAsyncListContext2WithComponents<T extends RowData>
     );
     const $Return = useMemo(
       () => (
-        <ItemActionMenu
+        <CommonTableActionsPopover
           dataItem={interactItem as T}
           anchorEl={anchorEl}
           onClose={clearAction}
@@ -220,7 +229,7 @@ export default function createAsyncListContext2WithComponents<T extends RowData>
     );
     return $Return;
   }
-  const AsyncListItemActionMenuDelete: ItemMenuActionComponent<T> = (props) => {
+  function AsyncListItemActionsPopoverDelete(props: ItemMenuActionRenderArgs<T, AnyObject>) {
     const { icon, label, props: otherProps } = props;
     const { setAction } = useAsyncListAction();
     const handleClick = useCallback(() => {
@@ -238,8 +247,8 @@ export default function createAsyncListContext2WithComponents<T extends RowData>
       [$Icon, $Label, handleClick, otherProps]
     );
     return $Return;
-  };
-  const AsyncListItemActionMenuEdit: ItemMenuActionComponent<T> = (props) => {
+  }
+  function AsyncListItemActionsPopoverEdit(props: ItemMenuActionRenderArgs<T, AnyObject>) {
     const { icon, label, props: otherProps } = props;
     const { setAction } = useAsyncListAction();
     const handleClick = useCallback(() => {
@@ -257,7 +266,7 @@ export default function createAsyncListContext2WithComponents<T extends RowData>
       [$Icon, $Label, handleClick, otherProps]
     );
     return $Return;
-  };
+  }
   return {
     AsyncListProvider,
     useAsyncListAction,
@@ -267,9 +276,9 @@ export default function createAsyncListContext2WithComponents<T extends RowData>
     AsyncListTable,
     AsyncListTablePaging,
     AsyncListPaging,
-    AsyncListItemActionMenuToggle,
-    AsyncListItemActionMenu,
-    AsyncListItemActionMenuEdit,
-    AsyncListItemActionMenuDelete,
+    AsyncListItemActionsPopoverToggle,
+    AsyncListItemActionsPopover,
+    AsyncListItemActionsPopoverEdit,
+    AsyncListItemActionsPopoverDelete,
   };
 }

@@ -37,19 +37,19 @@ export default function PageWidthChange() {
         background: (theme) => theme.palette.background.paper,
       }}
     >
-      <ToggleButton value="sm">
+      <ToggleButton value="sm" title="sm">
         <StayCurrentPortraitIcon />
       </ToggleButton>
-      <ToggleButton value="md">
+      <ToggleButton value="md" title="sm">
         <TabletMacIcon />
       </ToggleButton>
-      <ToggleButton value="lg">
+      <ToggleButton value="lg" title="sm">
         <LaptopMacIcon />
       </ToggleButton>
-      <ToggleButton value="xl">
+      <ToggleButton value="xl" title="sm">
         <MonitorIcon />
       </ToggleButton>
-      <ToggleButton value="sx">
+      <ToggleButton value="sx" title="max">
         <ScreenshotMonitorIcon />
       </ToggleButton>
     </ToggleButtonGroup>

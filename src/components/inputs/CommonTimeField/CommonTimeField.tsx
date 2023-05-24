@@ -30,45 +30,51 @@ export default function CommonTimeField(props: CommonTimeFieldProps) {
     ...otherProps
   } = props;
   return (
+    //@ts-ignore
     <MobileTimePicker
       {...otherProps}
       value={value}
       format={format || DEFAULT_FORMAT}
       closeOnSelect={!!closeOnSelect}
-      slots={{
-        toolbar: CustomToolbar,
-        actionBar: CustomPickerActionBar,
-        textField: CommonTextField as any,
-        ...slots,
-      }}
-      slotProps={{
-        ...slotProps,
-        actionBar: {
-          buttonOk,
-          buttonClear,
-          buttonCancel,
-          closeOnSelect,
-          ...slotProps?.actionBar,
-        } as any,
-        toolbar: {
-          label: props?.label || '',
-        } as any,
-        textField(ownerState) {
-          const { slots: _, slotProps: __, ...state } = ownerState;
-          return {
-            ...state,
-            ...TextFieldProps,
-            InputProps: {
-              endAdornment: <EndIcon />,
-              ...TextFieldProps?.InputProps,
-            },
-            sx,
-            placeholder,
-            error,
-            errorText,
-          } as any;
-        },
-      }}
+      slots={
+        {
+          toolbar: CustomToolbar,
+          actionBar: CustomPickerActionBar,
+          textField: CommonTextField as any,
+          ...slots,
+        } as any
+      }
+      slotProps={
+        {
+          ...slotProps,
+          actionBar: {
+            buttonOk,
+            buttonClear,
+            buttonCancel,
+            closeOnSelect,
+            ...slotProps?.actionBar,
+          } as any,
+          toolbar: {
+            label: props?.label || '',
+          } as any,
+          //@ts-ignore
+          textField(ownerState) {
+            const { slots: _, slotProps: __, ...state } = ownerState;
+            return {
+              ...state,
+              ...TextFieldProps,
+              InputProps: {
+                endAdornment: <EndIcon />,
+                ...TextFieldProps?.InputProps,
+              },
+              sx,
+              placeholder,
+              error,
+              errorText,
+            } as any;
+          },
+        } as any
+      }
     />
   );
 }

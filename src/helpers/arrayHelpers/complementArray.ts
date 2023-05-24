@@ -1,4 +1,4 @@
-export default function intersectionArrays<T>(array1: T[], array2: T[], comparer?: (i1: T, i2: T) => boolean) {
+export default function complementArray<T>(array1: T[], array2: T[], comparer?: (i1: T, i2: T) => boolean) {
   if (!(array1 instanceof Array && array1.length > 0)) return [];
   if (!(array2 instanceof Array && array2.length > 0)) return [];
   if (typeof comparer !== 'function') {

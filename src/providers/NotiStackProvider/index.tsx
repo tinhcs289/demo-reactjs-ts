@@ -19,6 +19,20 @@ function SnackbarConnect() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newMessage]);
+  React.useEffect(() => {
+    function networkDownListener() {
+      if (!navigator || typeof navigator?.onLine !== 'boolean') return;
+      if (!navigator.onLine) {
+        showNotify('error', 'Mất kết nối! hãy kiểm tra lại cài đặt Internet');
+        return;
+      }
+    }
+    document.addEventListener('DOMContentLoaded', networkDownListener);
+    return function () {
+      window.removeEventListener('DOMContentLoaded', networkDownListener);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return <></>;
 }
 export default function NotiStackProvider(props: SnackbarProviderProps) {
