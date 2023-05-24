@@ -1,24 +1,19 @@
 import CommonSwitchField from '@/components/inputs/CommonSwitchField';
+import FormLabelStyled from '@/components/inputs/_components/FormLabelStyled';
+import { TextWithRequiredMark } from '@/components/typo';
+import removeAt from '@/helpers/arrayHelpers/removeAt';
+import { useCallback, useMemo } from 'react';
 import FormGroupWithOptions from '../_components/FormGroupWithOptions';
 import InputErrorTextWithIcon from '../_components/InputErrorTextWithIcon';
-import removeAt from '@/helpers/arrayHelpers/removeAt';
-import FormLabel from '@mui/material/FormLabel';
-import type { ComponentType } from 'react';
-import { useCallback, useMemo } from 'react';
 import type { CommonSwitchGroupFieldProps, SwitchGroupOption } from './_types';
-import { TextWithRequiredMark } from '@/components/typo';
-
-const CommonSwitchGroupField: ComponentType<CommonSwitchGroupFieldProps> = (props) => {
+export default function CommonSwitchGroupField(props: CommonSwitchGroupFieldProps) {
   const { name, label, required, error, onChange, errorText, options, value, ...otherProps } = props;
-
   const memoOption = useMemo(() => {
     return options instanceof Array && options.length > 0 ? options : [];
   }, [options]);
-
   const memoValue = useMemo(() => {
     return value instanceof Array && value.length > 0 ? value : [];
   }, [value]);
-
   const isChecked = useCallback(
     (option: SwitchGroupOption) => {
       return (
@@ -28,14 +23,11 @@ const CommonSwitchGroupField: ComponentType<CommonSwitchGroupFieldProps> = (prop
     },
     [memoValue]
   );
-
   const handleOnchange = useCallback(
     (event: any) => {
       if (!event?.target?.value) return;
-
       const val = event.target.value as string;
       const checked = !!event?.target?.checked;
-
       if (checked) {
         if (memoOption.length === 0) return;
         const i = memoOption.findIndex((o) => o.value === val);
@@ -50,11 +42,10 @@ const CommonSwitchGroupField: ComponentType<CommonSwitchGroupFieldProps> = (prop
     },
     [memoOption, memoValue, onChange]
   );
-
   const memoOptionsRender = useMemo(() => {
     return (
       <>
-        {memoOption.map((option) => {
+        {memoOption.map((option, index) => {
           const checked = isChecked(option);
           return (
             <CommonSwitchField
@@ -66,6 +57,7 @@ const CommonSwitchGroupField: ComponentType<CommonSwitchGroupFieldProps> = (prop
               disabled={!!option?.disabled}
               error={error}
               {...option?.InputProps}
+              sx={{ ...option?.InputProps?.sx, ...(index === 0 ? { mt: '12px' } : {}) }}
             />
           );
         })}
@@ -75,10 +67,10 @@ const CommonSwitchGroupField: ComponentType<CommonSwitchGroupFieldProps> = (prop
   const $Label = useMemo(() => {
     if (!label && !errorText) return;
     return (
-      <FormLabel component="label" error={error} sx={{ display: 'inherit', mb: '4px' }}>
+      <FormLabelStyled {...({ component: 'label' } as any)} error={error} inputType="switchgroup">
         {!label ? null : <TextWithRequiredMark required={required}>{label}</TextWithRequiredMark>}
         {!!error && !!errorText ? <InputErrorTextWithIcon>{errorText}</InputErrorTextWithIcon> : null}
-      </FormLabel>
+      </FormLabelStyled>
     );
   }, [error, errorText, label, required]);
   return (
@@ -87,5 +79,4 @@ const CommonSwitchGroupField: ComponentType<CommonSwitchGroupFieldProps> = (prop
       {memoOptionsRender}
     </FormGroupWithOptions>
   );
-};
-export default CommonSwitchGroupField;
+}

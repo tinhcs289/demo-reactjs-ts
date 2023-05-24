@@ -7,7 +7,7 @@ import type { Moment } from 'moment';
 import moment from 'moment';
 import 'moment/locale/vi';
 export type DateTimeProviderProps = Omit<
-  LocalizationProviderProps<Moment>,
+  LocalizationProviderProps<Moment, string>,
   'dateAdapter' | 'moment' | 'locale'
 >;
 export default function DateTimeProvider(props: DateTimeProviderProps) {
@@ -16,7 +16,7 @@ export default function DateTimeProvider(props: DateTimeProviderProps) {
     <LocalizationProvider
       {...otherProps}
       dateAdapter={AdapterMoment}
-      moment={moment}
+      // moment={moment as any}
       adapterLocale={moment.locale(DATETIME_LOCALE[language.get() || LANGUAGE_DEFAULT])}
     >
       {children}

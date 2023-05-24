@@ -1,11 +1,11 @@
 import CommonCheckField from '@/components/inputs/CommonCheckField';
+import FormLabelStyled from '@/components/inputs/_components/FormLabelStyled';
+import { TextWithRequiredMark } from '@/components/typo';
 import removeAt from '@/helpers/arrayHelpers/removeAt';
-import FormLabel from '@mui/material/FormLabel';
 import { useCallback, useMemo } from 'react';
 import FormGroupWithOptions from '../_components/FormGroupWithOptions';
 import InputErrorTextWithIcon from '../_components/InputErrorTextWithIcon';
 import type { CheckGroupOption, CommonCheckGroupFieldProps } from './_types';
-import { TextWithRequiredMark } from '@/components/typo';
 export default function CommonCheckGroupField(props: CommonCheckGroupFieldProps) {
   const { name, label, required, error, onChange, errorText, options, value, ...otherProps } = props;
   const memoOption = useMemo(() => {
@@ -43,7 +43,7 @@ export default function CommonCheckGroupField(props: CommonCheckGroupFieldProps)
     [memoOption, memoValue, onChange]
   );
   const $Options = useMemo(() => {
-    return memoOption.map((option) => {
+    return memoOption.map((option, index) => {
       const checked = isChecked(option);
       return (
         <CommonCheckField
@@ -55,6 +55,7 @@ export default function CommonCheckGroupField(props: CommonCheckGroupFieldProps)
           disabled={!!option?.disabled}
           error={error}
           {...option?.InputProps}
+          sx={{ ...option?.InputProps?.sx, ...(index === 0 ? { mt: '12px' } : {}) }}
         />
       );
     });
@@ -62,10 +63,10 @@ export default function CommonCheckGroupField(props: CommonCheckGroupFieldProps)
   const $Label = useMemo(() => {
     if (!label && !errorText) return;
     return (
-      <FormLabel component="label" error={error} sx={{ display: 'inherit', mb: '4px' }}>
+      <FormLabelStyled {...({ component: 'label' } as any)} error={error} inputType="checkgroup">
         {!label ? null : <TextWithRequiredMark required={required}>{label}</TextWithRequiredMark>}
         {!!error && !!errorText ? <InputErrorTextWithIcon>{errorText}</InputErrorTextWithIcon> : null}
-      </FormLabel>
+      </FormLabelStyled>
     );
   }, [error, errorText, label, required]);
   return (

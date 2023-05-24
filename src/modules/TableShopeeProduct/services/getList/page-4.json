@@ -1,0 +1,40 @@
+{
+  "totalCount": 31,
+  "result": [
+    {
+      "id": "3ae9e267-dacd-4c02-b4c3-561cabd82c8f",
+      "workGroupId": "94ba8c79-6633-43ab-bb75-6afc449fa5b6",
+      "quotationId": "493bfa0e-7b9c-4a55-86f5-5f37e40a7ec7",
+      "name": "Báo giá 2",
+      "bookingCode": "001635266707",
+      "totalPrice": 123200000,
+      "userProcess": 1444,
+      "processUserName": null,
+      "priceProfit": 0,
+      "status": 0,
+      "customerId": "c89caa34-c4ba-43b6-b0c6-be2f86b27f49",
+      "customerName": "Bóng đá Nam - Đoàn Việt Nam",
+      "customGroupId": "31f2314a-a804-4667-9581-44a70aabbaf1",
+      "customGroupName": "Môn Bóng đá Nam",
+      "paymentMethod": 1,
+      "buyOrSell": 2,
+      "supplierId": "00000000-0000-0000-0000-000000000000",
+      "supplierName": null,
+      "totalPassenger": 27,
+      "totalAdult": 27,
+      "totalChild": 0,
+      "totalInf": 0,
+      "version": 1,
+      "startDate": "2022-04-01T00:00:00",
+      "active": true,
+      "createdDate": "2022-01-06T10:54:25.913",
+      "createdBy": 1444,
+      "modifiedBy": 1444,
+      "modifiedDate": "2022-01-06T10:54:27.41",
+      "deletedBy": null,
+      "deletedDate": null,
+      "isDeleted": false,
+      "bookingServices": null
+    }
+  ]
+}

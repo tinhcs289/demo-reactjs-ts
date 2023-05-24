@@ -5,15 +5,14 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import { useMemo } from 'react';
 import InputErrorTextWithIcon from '../_components/InputErrorTextWithIcon';
 import { CommonCheckFieldProps } from './_types';
+import { TextWithRequiredMark } from '@/components/typo';
+import { optionBackground } from '@/components/inputs/_components/FormGroupWithOptions';
 const FormControlLabelStyled = styled(FormControlLabel)<FormControlLabelProps>(({ theme }) => ({
   width: '100%',
   marginRight: 0,
   marginLeft: 0,
   minHeight: '42px',
-  background: theme.palette.mode === 'light' ? theme.palette.action.hover : theme.palette.background.default,
-  '&:hover': {
-    background: theme.palette.mode === 'light' ? theme.palette.grey[300] : theme.palette.grey[800],
-  },
+  ...optionBackground(theme),
   '& span.MuiButtonBase-root.MuiCheckbox-root': {
     marginBottom: '0 !important',
   },
@@ -34,12 +33,7 @@ export default function CommonCheckField(props: CommonCheckFieldProps) {
   const theme = useTheme();
   const $Label = useMemo(() => {
     if (!label) return null;
-    return (
-      <>
-        {label}
-        {required ? ` *` : ''}
-      </>
-    );
+    return <TextWithRequiredMark required={required}>{label}</TextWithRequiredMark>;
   }, [label, required]);
   const checkBoxStyle = useMemo(() => {
     if (!error) return {};

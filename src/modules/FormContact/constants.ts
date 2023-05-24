@@ -7,9 +7,9 @@ import type { SxProps, Theme } from '@mui/material';
 import type { FormValues } from './_types';
 export const itemSx: SxProps<Theme> = { p: 1, mb: 2 };
 export const GENDERS: { [x: string]: AutoCompleteOption } = {
-  MALE: { label: i18n.t('common:male'), value: 'male' },
+  MALE: { label: i18n.t('contact:male'), value: 'male' },
   FEMALE: {
-    label: i18n.t('common:female'),
+    label: i18n.t('contact:female'),
     value: 'female',
   },
   OTHER: {
@@ -20,7 +20,7 @@ export const GENDERS: { [x: string]: AutoCompleteOption } = {
 export const genderOptions = Object.values(GENDERS);
 export const defaultContact: FormValues = {
   Id: EMPTY_GUID,
-  Title: i18n.t<string>('contact:default.title'),
+  Title: i18n.t<string>('contact:mrOrMrs'),
   FirstName: '',
   MiddleName: '',
   LastName: '',

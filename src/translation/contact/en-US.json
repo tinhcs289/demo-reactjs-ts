@@ -1,0 +1,13 @@
+{
+  "mrOrMrs": "Mr/Mrs",
+  "gender": "Gender",
+  "male": "Male",
+  "female": "Female",
+  "title": "Title",
+  "firstName": "First name",
+  "middleName": "Middle name",
+  "lastName": "Last name",
+  "phoneNumber": "Phone number",
+  "emailAddress": "Email address",
+  "address": "Address"
+}
