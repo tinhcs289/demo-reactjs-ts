@@ -180,6 +180,7 @@ export interface CommonTableProps<RowData extends AnyObject = AnyObject> {
   idField?: string;
   virtualized?: boolean;
   rowHeight?: number;
+  totalOfRowsToDisplay?: number;
 }
 //#endregion
 //#region Table extensions

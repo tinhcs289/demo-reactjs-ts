@@ -1,10 +1,10 @@
 import type { TableBodyProps } from '@mui/material/TableBody';
 import TableBody from '@mui/material/TableBody';
-import type { ReactNode } from 'react';
+import type { ReactNode, CSSProperties } from 'react';
 import { createRef, useCallback, useEffect, useMemo, useState, Children } from 'react';
 export type TableBodyVirtualizedProps = TableBodyProps & {
-  itemHeight: number;
-  amount: number;
+  rowHeight: number;
+  totalOfRowsToDisplay: number;
   tolerance: number;
   minIndex: number;
   maxIndex: number;
@@ -29,41 +29,63 @@ function getDataVirtualized(args: {
   }
   return data;
 }
+function getElementIndex(args: {
+  rootScrollTop?: number;
+  minIndex: number;
+  rowHeight: number;
+  toleranceHeight: number;
+}) {
+  const { rootScrollTop = 0, minIndex, rowHeight, toleranceHeight } = args;
+  return minIndex + Math.floor((rootScrollTop - toleranceHeight) / rowHeight);
+}
 export default function TableBodyVirtualized(props: TableBodyVirtualizedProps) {
-  const { children, itemHeight, amount, tolerance, minIndex, maxIndex, startIndex, ...otherProps } = props;
-  const viewportHeight = useMemo(() => amount * itemHeight, [amount, itemHeight]);
-  const totalHeight = useMemo(() => (maxIndex - minIndex + 1) * itemHeight, [maxIndex, minIndex, itemHeight]);
-  const toleranceHeight = useMemo(() => tolerance * itemHeight, [tolerance, itemHeight]);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const bufferHeight = useMemo(() => viewportHeight + 2 * toleranceHeight, [viewportHeight, toleranceHeight]);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const bufferedItems = useMemo(() => amount + 2 * tolerance, [amount, tolerance]);
+  const {
+    children,
+    rowHeight,
+    totalOfRowsToDisplay,
+    tolerance,
+    minIndex,
+    maxIndex,
+    startIndex,
+    ...otherProps
+  } = props;
+  const viewportHeight = useMemo(() => totalOfRowsToDisplay * rowHeight, [totalOfRowsToDisplay, rowHeight]);
+  const totalHeight = useMemo(() => (maxIndex - minIndex + 1) * rowHeight, [maxIndex, minIndex, rowHeight]);
+  const toleranceHeight = useMemo(() => tolerance * rowHeight, [tolerance, rowHeight]);
+  // const bufferHeight = useMemo(() => viewportHeight + 2 * toleranceHeight, [viewportHeight, toleranceHeight]);
+  const bufferedItems = useMemo(
+    () => totalOfRowsToDisplay + 2 * tolerance,
+    [totalOfRowsToDisplay, tolerance]
+  );
   const itemsAbove = useMemo(() => startIndex - tolerance - minIndex, [startIndex, tolerance, minIndex]);
-  const tph = useMemo(() => itemsAbove * itemHeight, [itemsAbove, itemHeight]);
+  const tph = useMemo(() => itemsAbove * rowHeight, [itemsAbove, rowHeight]);
   const bph = useMemo(() => totalHeight - tph, [totalHeight, tph]);
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [bottomPaddingHeight, setBottomPaddingHeight] = useState<number>(bph);
   const [topPaddingHeight, setTopPaddingHeight] = useState<number>(tph);
-
-  const initialPosition = useMemo(
-    () => topPaddingHeight + toleranceHeight,
-    [topPaddingHeight, toleranceHeight]
-  );
+  const initialPosition = useMemo(() => tph + toleranceHeight, [tph, toleranceHeight]);
   const viewportElement = createRef<HTMLElement>();
-  //@ts-ignore
-  const runScroller = useCallback(({ target: { scrollTop } }) => {
-    const index = minIndex + Math.floor((scrollTop - toleranceHeight) / itemHeight);
-    const _tph = Math.max((index - minIndex) * itemHeight, 0);
-    const _bph = Math.max(totalHeight - _tph - amount * itemHeight, 0);
-    setTimeout(() => {
-      setBottomPaddingHeight(_bph);
-    }, 0);
-    setTimeout(() => {
-      setTopPaddingHeight(_tph);
-    }, 0);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const initIndex = useMemo(
+    () => getElementIndex({ minIndex, rowHeight, toleranceHeight }),
+    [minIndex, rowHeight, toleranceHeight]
+  );
+  const [index, setIndex] = useState<number>(initIndex);
+  const runScroller: (args: { target: { scrollTop: number } }) => void = useCallback(
+    ({ target: { scrollTop } }) => {
+      const i = getElementIndex({ rootScrollTop: scrollTop, minIndex, rowHeight, toleranceHeight });
+      setTimeout(() => {
+        setIndex(i);
+      }, 0);
+      const _tph = Math.max((i - minIndex) * rowHeight, 0);
+      const _bph = Math.max(totalHeight - _tph - totalOfRowsToDisplay * rowHeight, 0);
+      setTimeout(() => {
+        setBottomPaddingHeight(_bph);
+      }, 0);
+      setTimeout(() => {
+        setTopPaddingHeight(_tph);
+      }, 0);
+    },
+    [minIndex, rowHeight, toleranceHeight, totalHeight, totalOfRowsToDisplay]
+  );
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (!viewportElement?.current) return;
@@ -77,24 +99,29 @@ export default function TableBodyVirtualized(props: TableBodyVirtualizedProps) {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const $Loading = useMemo(() => {
-    const childrens = Children.map(children, (c) => c);
-    return childrens?.[0];
-  }, [children]);
   const $Rows = useMemo(() => {
-    // return getDataVirtualized({
-    //   source: Children.map(Children.map(children as any, (c) => c)[1] as any, (c) => c),
-
-    // })
-    return <></>;
-  }, []);
+    let rows = Children.map(children, (c) => c) as ReactNode[];
+    if (!rows) return null;
+    rows = getDataVirtualized({
+      source: rows as Array<any>,
+      offset: index,
+      limit: bufferedItems,
+      minIndex,
+      maxIndex,
+    }) as ReactNode[];
+    return rows;
+  }, [index, children, bufferedItems, maxIndex, minIndex]);
+  const styles: CSSProperties = useMemo(
+    () => ({
+      ...otherProps?.style,
+      height: `${viewportHeight}px`,
+      paddingTop: `${topPaddingHeight}px`,
+      paddingBottom: `${bottomPaddingHeight}px`,
+    }),
+    [otherProps?.style, viewportHeight, topPaddingHeight, bottomPaddingHeight]
+  );
   return (
-    <TableBody
-      ref={viewportElement}
-      {...(otherProps as any)}
-      style={{ ...otherProps?.style, height: viewportHeight + 'px' } as any}
-    >
-      {$Loading}
+    <TableBody ref={viewportElement} {...(otherProps as any)} style={styles}>
       {$Rows}
     </TableBody>
   );

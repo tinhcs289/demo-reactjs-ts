@@ -27,6 +27,7 @@ import buildTableRowProps from './functions/buildTableRowProps';
 import initStickyColumn from './functions/initStickyColumn';
 import renderHeadCell from './functions/renderHeadCell';
 import withRemoveHocProps from './functions/withRemoveHocProps';
+import TableBodyVirtualized from './components/TableBodyVirtualized';
 const CommonTable = forwardRef(function CommonTableWithRef<RowData extends AnyObject>(
   props: CommonTableProps<RowData>,
   ref?: Ref<HTMLDivElement>
@@ -47,8 +48,9 @@ const CommonTable = forwardRef(function CommonTableWithRef<RowData extends AnyOb
     selectability,
     columnStickyAsStack,
     rowHocs,
-    //virtualized,
-    //rowHeight,
+    virtualized,
+    totalOfRowsToDisplay,
+    rowHeight,
   } = props;
   const tableRef = createRef();
   //#region memo props
@@ -191,13 +193,26 @@ const CommonTable = forwardRef(function CommonTableWithRef<RowData extends AnyOb
   );
   const $rows = useMemo(() => rows.map(renderRow), [rows, renderRow]);
   const $body = useMemo(
-    () => (
-      <TableBody {...tableBodyProps}>
-        {$noDataOrLoading}
-        {$rows}
-      </TableBody>
-    ),
-    [tableBodyProps, $rows, $noDataOrLoading]
+    () =>
+      !virtualized || !rowHeight || !totalOfRowsToDisplay ? (
+        <TableBody {...tableBodyProps}>
+          {$noDataOrLoading}
+          {$rows}
+        </TableBody>
+      ) : (
+        <TableBodyVirtualized
+          {...tableBodyProps}
+          rowHeight={rowHeight}
+          totalOfRowsToDisplay={totalOfRowsToDisplay}
+          tolerance={5}
+          minIndex={-9999}
+          maxIndex={200000}
+          startIndex={1}
+        >
+          {$rows}
+        </TableBodyVirtualized>
+      ),
+    [tableBodyProps, $rows, $noDataOrLoading, rowHeight, totalOfRowsToDisplay, virtualized]
   );
   //#endregion
   //#region Header render

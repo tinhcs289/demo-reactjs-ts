@@ -10,7 +10,13 @@ export default function TableList() {
       <CommonTableContainer sx={{ pb: '32px' }}>
         <LabelSelectedItemCount />
         <AsyncListPaging />
-        <AsyncListTable columns={columns} rowHocs={rowHocs} />
+        <AsyncListTable
+          columns={columns}
+          rowHocs={rowHocs}
+          // virtualized
+          // rowHeight={49}
+          // totalOfRowsToDisplay={10}
+        />
         <AsyncListItemActionsPopover actions={actions} />
         <DialogConfirmDelete />
       </CommonTableContainer>
