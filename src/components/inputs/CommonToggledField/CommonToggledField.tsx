@@ -1,13 +1,11 @@
-import FormGroupWithOptions from '@/components/inputs/_components/FormGroupWithOptions';
-import FormLabelStyled from '@/components/inputs/_components/FormLabelStyled';
-import InputErrorTextWithIcon from '@/components/inputs/_components/InputErrorTextWithIcon';
-import { TextWithRequiredMark } from '@/components/typo';
+import { CommonFormGroup } from '@/components/formGroup';
 import render from '@/helpers/reactHelpers/render';
-import ToggleButton from '@mui/material/ToggleButton';
 import get from 'lodash/get';
 import type { MouseEvent } from 'react';
 import { useCallback, useMemo } from 'react';
+import ButtonIconAdornment from './ButtonIconAdornment';
 import ToggleButtonGroupStyled from './ToggleButtonGroupStyled';
+import ToggleButtonStyled from './ToggleButtonStyled';
 import type { CommonToggledFieldProps } from './_types';
 import { toValue, toValues } from './functions';
 export default function CommonToggledField(props: CommonToggledFieldProps) {
@@ -21,6 +19,7 @@ export default function CommonToggledField(props: CommonToggledFieldProps) {
     errorText,
     required,
     formGroupProps,
+    //buttonComponent: CustomButton,
     ...otherProps
   } = props;
   const isMultiple = useMemo(() => !!multiple, [multiple]);
@@ -62,32 +61,58 @@ export default function CommonToggledField(props: CommonToggledFieldProps) {
       return null;
     }
     return options.map((o, i) => {
-      const { value: optionValue, label: optionLabel, icon, iconProps, ...otherOptionProps } = o;
+      const {
+        value: optionValue,
+        label: optionLabel,
+        icon,
+        iconProps,
+        startIcon,
+        startIconProps,
+        endIcon,
+        endIconProps,
+        ...otherOptionProps
+      } = o;
       return (
-        <ToggleButton
+        <ToggleButtonStyled
           size="small"
           key={optionValue}
           value={optionValue}
           aria-label={optionLabel || optionValue}
           {...otherOptionProps}
         >
-          {!icon ? optionLabel : render(icon, iconProps)}
-        </ToggleButton>
+          {!icon ? (
+            <>
+              {!!startIcon && (
+                <ButtonIconAdornment
+                  position="start"
+                  size={startIconProps?.fontSize || otherOptionProps?.size}
+                >
+                  {render(startIcon, startIconProps)}
+                </ButtonIconAdornment>
+              )}
+              {optionLabel}
+              {!!endIcon && (
+                <ButtonIconAdornment position="end" size={endIconProps?.fontSize || otherOptionProps?.size}>
+                  {render(endIcon, endIconProps)}
+                </ButtonIconAdornment>
+              )}
+            </>
+          ) : (
+            render(icon, iconProps)
+          )}
+        </ToggleButtonStyled>
       );
     });
   }, [options]);
-  const $Label = useMemo(() => {
-    if (!label && !errorText) return;
-    return (
-      <FormLabelStyled {...({ component: 'label' } as any)} error={error} inputType="toggle">
-        {!label ? null : <TextWithRequiredMark required={required}>{label}</TextWithRequiredMark>}
-        {!!error && !!errorText ? <InputErrorTextWithIcon>{errorText}</InputErrorTextWithIcon> : null}
-      </FormLabelStyled>
-    );
-  }, [error, errorText, label, required]);
   return (
-    <FormGroupWithOptions {...formGroupProps}>
-      {$Label}
+    <CommonFormGroup
+      {...formGroupProps}
+      label={label}
+      labelProps={{ inputType: 'toggle' }}
+      error={error}
+      errorText={errorText}
+      required={required}
+    >
       <ToggleButtonGroupStyled
         {...otherProps}
         exclusive={!isMultiple}
@@ -96,6 +121,6 @@ export default function CommonToggledField(props: CommonToggledFieldProps) {
       >
         {$Buttons}
       </ToggleButtonGroupStyled>
-    </FormGroupWithOptions>
+    </CommonFormGroup>
   );
 }

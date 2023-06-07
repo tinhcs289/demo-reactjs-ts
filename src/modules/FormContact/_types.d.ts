@@ -1,5 +1,6 @@
 import type { AutoCompleteOption } from '@/components/rhfInputs/RHFSelect';
-import type { GenericFormProps } from '@/types';
+import type { CommonFormProps } from '@/types';
+import type { ComponentType } from 'react';
 export type FormValues = {
   Id?: string;
   Title?: string;
@@ -11,5 +12,5 @@ export type FormValues = {
   EmailAddress?: string;
   Address?: string;
 };
-export type FormProps = GenericFormProps<FormValue>;
+export type FormProps = CommonFormProps<FormValues>;
 export type FormComponent = ComponentType<FormProps>;

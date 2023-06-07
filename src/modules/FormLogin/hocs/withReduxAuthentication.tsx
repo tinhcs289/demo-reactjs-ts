@@ -11,16 +11,16 @@ function redirectToNextPage(returnUri?: string) {
 }
 export default function withReduxAuthentication(WrappedComponent: ComponentType<FormProps>) {
   return function LogigFormWithReduxAuthentication(props: FormProps) {
-    const { onRequestLoginViaSSO: _, loading: loadingProp, returnUri, ...otherProps } = props;
+    const { loading: loadingProp, returnUri, ...otherProps } = props;
     const requestStatus = useSelector(loginRequestStatusSelector);
     const loading = useMemo(() => requestStatus === EApiRequestStatus.REQUESTING, [requestStatus]);
     const isSuccess = useMemo(() => requestStatus === EApiRequestStatus.REQUESTSUCCESS, [requestStatus]);
     const dispatch = useDispatch();
-    const handleRequestLoginViaApi = async (fd: FormValues): Promise<void> => {
-      if (!fd?.Account || !fd?.Password) return;
+    const handleRequestLoginViaApi = (values: FormValues) => {
+      if (!values?.Account || !values?.Password) return;
       const payload = {
-        username: fd?.Account,
-        password: fd?.Password,
+        username: values?.Account,
+        password: values?.Password,
       };
       dispatch(actions.requestLogin(payload));
     };
@@ -29,8 +29,6 @@ export default function withReduxAuthentication(WrappedComponent: ComponentType<
       redirectToNextPage(returnUri);
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isSuccess]);
-    return (
-      <WrappedComponent {...otherProps} loading={loading} onSubmitFormLogin={handleRequestLoginViaApi} />
-    );
+    return <WrappedComponent {...otherProps} loading={loading} onSubmit={handleRequestLoginViaApi as any} />;
   };
 }

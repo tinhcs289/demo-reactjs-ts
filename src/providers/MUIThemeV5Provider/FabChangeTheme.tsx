@@ -3,24 +3,20 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import type { PaletteMode, SxProps } from '@mui/material';
 import { useTheme } from '@mui/material';
-import Zoom from '@mui/material/Zoom';
 import Fab from '@mui/material/Fab';
-import type { FC, CSSProperties } from 'react';
+import Zoom from '@mui/material/Zoom';
+import type { CSSProperties } from 'react';
 import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-
 const fabStyle: SxProps = {
   position: 'fixed',
   bottom: 16,
   right: 16,
 };
-
-const FabChangeTheme: FC<{ mode?: PaletteMode }> = (props) => {
+export default function FabChangeTheme(props: { mode?: PaletteMode }) {
   const { mode } = props;
   const { t } = useTranslation();
-
   const theme = useTheme();
-
   const zoomProps = useMemo(
     () => ({
       timeout: {
@@ -33,13 +29,11 @@ const FabChangeTheme: FC<{ mode?: PaletteMode }> = (props) => {
     }),
     [theme]
   );
-
   const handleChangeTheme = useCallback((variant: PaletteMode) => {
     return () => {
       themeVariant.set(variant);
     };
   }, []);
-
   const switchThemeButton = useMemo(() => {
     if (mode === 'light')
       return (
@@ -55,7 +49,6 @@ const FabChangeTheme: FC<{ mode?: PaletteMode }> = (props) => {
           </Fab>
         </Zoom>
       );
-
     if (mode === 'dark')
       return (
         <Zoom in {...zoomProps}>
@@ -70,10 +63,7 @@ const FabChangeTheme: FC<{ mode?: PaletteMode }> = (props) => {
           </Fab>
         </Zoom>
       );
-
     return null;
   }, [t, mode, handleChangeTheme, zoomProps]);
-
   return switchThemeButton;
-};
-export default FabChangeTheme;
+}

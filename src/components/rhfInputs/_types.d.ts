@@ -12,6 +12,7 @@ export type RHFRules = Omit<
   RegisterOptions<FieldValues, FieldPath<FieldValues>>,
   'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'
 >;
+export type RHFRuleValidate = Required<RHFRules>['validate'];
 export type RHFInputProps = {
   name: string;
   control: Control<any, any>;

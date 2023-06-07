@@ -3,7 +3,7 @@ import type { ComponentType } from 'react';
 import type { InputAttributes } from 'react-number-format';
 import { PatternFormat } from 'react-number-format';
 import type { CommonTextNumericFieldProps } from './_types';
-const CommonTextNumericField: ComponentType<CommonTextNumericFieldProps> = (props) => {
+export default function CommonTextNumericField(props: CommonTextNumericFieldProps) {
   return (
     <PatternFormat
       customInput={CommonTextField as ComponentType<InputAttributes>}
@@ -11,5 +11,4 @@ const CommonTextNumericField: ComponentType<CommonTextNumericFieldProps> = (prop
       {...props}
     />
   );
-};
-export default CommonTextNumericField;
+}
