@@ -1,25 +1,20 @@
-import type { FC, ReactNode, ForwardRefExoticComponent, RefAttributes } from 'react';
 import type { SvgIconTypeMap } from '@mui/material';
+import type { ListItemProps } from '@mui/material/ListItem';
+import type { ListItemIconProps } from '@mui/material/ListItemIcon';
+import type { ListItemTextProps } from '@mui/material/ListItemText';
 import type { OverridableComponent } from '@mui/material/OverridableComponent';
 import type { SvgIconProps } from '@mui/material/SvgIcon';
-import type { ListItemTextProps } from '@mui/material/ListItemText';
-import type { ListItemIconProps } from '@mui/material/ListItemIcon';
-import type { ListItemProps } from '@mui/material/ListItem';
+import type { ComponentType, ForwardRefExoticComponent, ReactNode, RefAttributes } from 'react';
 import type { NavLinkProps } from 'react-router-dom';
-
 type MuiIcon = OverridableComponent<SvgIconTypeMap<{}, 'svg'>> & {
   muiName: string;
 };
-
-type SvgImage = FC<SvgIconProps<SvgIconTypeMap['defaultComponent'], {}>>;
-
+type SvgImage = ComponentType<SvgIconProps<SvgIconTypeMap['defaultComponent'], {}>>;
 type TAsideMenuItemType = 'link' | 'label';
-
 export type LinkProps = Omit<
   ForwardRefExoticComponent<NavLinkProps & RefAttributes<HTMLAnchorElement>>,
   'to' | 'href'
 >;
-
 export type TAsideMenuItem = {
   // logic props
   id: string;
@@ -36,16 +31,15 @@ export type TAsideMenuItem = {
   labelProps?: ListItemTextProps;
   linkProps?: LinkProps;
   // ----------------------------------------------
-   /**
+  /**
+  * @deprecated do not set this property manually
+  */
+  active?: boolean;
+  /**
    * @deprecated do not set this property manually
    */
-   active?: boolean;
-   /**
-    * @deprecated do not set this property manually
-    */
-   openSubMenu?: boolean;
+  openSubMenu?: boolean;
 };
-
 export type AsideMenuItemProps = {
   data: TAsideMenuItem;
   children?: ReactNode;
@@ -54,5 +48,4 @@ export type AsideMenuItemProps = {
   open?: boolean;
   depth: number;
 };
-
 export type DashboardProps = { children?: ReactNode };

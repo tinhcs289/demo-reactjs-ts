@@ -1,12 +1,9 @@
-import FormLabelStyled from '@/components/inputs/_components/FormLabelStyled';
-import { TextWithRequiredMark } from '@/components/typo';
+import { CommonFormGroup } from '@/components/formGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import type { ChangeEvent } from 'react';
 import { useCallback, useMemo } from 'react';
-import FormGroupWithOptions from '../_components/FormGroupWithOptions';
-import InputErrorTextWithIcon from '../_components/InputErrorTextWithIcon';
 import type { CommonRadioGroupFieldProps } from './_types';
 export default function CommonRadioGroupField(props: CommonRadioGroupFieldProps) {
   const {
@@ -69,18 +66,15 @@ export default function CommonRadioGroupField(props: CommonRadioGroupFieldProps)
       </>
     );
   }, [name, memoOption, error, color]);
-  const $Label = useMemo(() => {
-    if (!label && !errorText) return;
-    return (
-      <FormLabelStyled {...({ component: 'label' } as any)} error={error} inputType="radiogroup">
-        {!label ? null : <TextWithRequiredMark required={required}>{label}</TextWithRequiredMark>}
-        {!!error && !!errorText ? <InputErrorTextWithIcon>{errorText}</InputErrorTextWithIcon> : null}
-      </FormLabelStyled>
-    );
-  }, [error, errorText, label, required]);
   return (
-    <FormGroupWithOptions {...otherProps}>
-      {$Label}
+    <CommonFormGroup
+      {...otherProps}
+      label={label}
+      labelProps={{ inputType: 'radiogroup' }}
+      error={error}
+      errorText={errorText}
+      required={required}
+    >
       <RadioGroup
         {...groupProps}
         {...(!!name ? { name } : {})}
@@ -89,6 +83,6 @@ export default function CommonRadioGroupField(props: CommonRadioGroupFieldProps)
       >
         {$Options}
       </RadioGroup>
-    </FormGroupWithOptions>
+    </CommonFormGroup>
   );
 }

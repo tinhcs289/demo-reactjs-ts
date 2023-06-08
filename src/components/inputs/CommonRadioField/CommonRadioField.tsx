@@ -1,7 +1,6 @@
-import InputErrorTextWithIcon from '../_components/InputErrorTextWithIcon';
+import { CommonFormControlLabel, InputErrorTextWithIcon } from '@/components/formGroup';
 import { useTheme } from '@mui/material';
 import Radio from '@mui/material/Radio';
-import FormControlLabelStyled from './FormControlLabelStyled';
 import { CommonRadioFieldProps } from './_types';
 export default function CommonRadioField(props: CommonRadioFieldProps) {
   const {
@@ -18,7 +17,7 @@ export default function CommonRadioField(props: CommonRadioFieldProps) {
   } = props;
   const theme = useTheme();
   return (
-    <FormControlLabelStyled
+    <CommonFormControlLabel
       label={
         <>
           {label}

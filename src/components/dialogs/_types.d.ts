@@ -19,6 +19,8 @@ export type CommonDialogProps = DialogProps & {
   loading?: boolean;
   loadingInner?: ReactNode;
 };
+export type CommonDialogOnClose = Required<DialogProps>['onClose'];
 export type CommonDialogContentProps = DialogContentProps & {
   gridProps?: GridProps;
+  onClose?: CommonDialogOnClose;
 };

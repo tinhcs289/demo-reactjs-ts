@@ -1,22 +1,9 @@
-import { styled, useTheme } from '@mui/material';
-import Checkbox from '@mui/material/Checkbox';
-import type { FormControlLabelProps } from '@mui/material/FormControlLabel';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import { useMemo } from 'react';
-import InputErrorTextWithIcon from '../_components/InputErrorTextWithIcon';
-import { CommonCheckFieldProps } from './_types';
+import { CommonFormControlLabel, InputErrorTextWithIcon } from '@/components/formGroup';
 import { TextWithRequiredMark } from '@/components/typo';
-import { optionBackground } from '@/components/inputs/_components/FormGroupWithOptions';
-const FormControlLabelStyled = styled(FormControlLabel)<FormControlLabelProps>(({ theme }) => ({
-  width: '100%',
-  marginRight: 0,
-  marginLeft: 0,
-  minHeight: '42px',
-  ...optionBackground(theme),
-  '& span.MuiButtonBase-root.MuiCheckbox-root': {
-    marginBottom: '0 !important',
-  },
-}));
+import { useTheme } from '@mui/material';
+import Checkbox from '@mui/material/Checkbox';
+import { useMemo } from 'react';
+import { CommonCheckFieldProps } from './_types';
 export default function CommonCheckField(props: CommonCheckFieldProps) {
   const {
     name,
@@ -63,7 +50,7 @@ export default function CommonCheckField(props: CommonCheckFieldProps) {
     );
   }, [name, checked, onChange, value, error, errorText, inputProps, checkBoxStyle]);
   return (
-    <FormControlLabelStyled
+    <CommonFormControlLabel
       label={$Label}
       control={$Control}
       {...formControlProps}

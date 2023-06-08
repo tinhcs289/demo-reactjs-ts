@@ -1,9 +1,9 @@
-import InputErrorTextWithIcon from '../_components/InputErrorTextWithIcon';
+import { CommonFormControlLabel, InputErrorTextWithIcon } from '@/components/formGroup';
+import { TextWithRequiredMark } from '@/components/typo';
 import { useTheme } from '@mui/material';
 import Switch from '@mui/material/Switch';
-import FormControlLabelStyled from './FormControlLabelStyled';
-import type { CommonSwitchFieldProps } from './_types';
 import { useMemo } from 'react';
+import type { CommonSwitchFieldProps } from './_types';
 export default function CommonSwitchField(props: CommonSwitchFieldProps) {
   const {
     name,
@@ -20,12 +20,7 @@ export default function CommonSwitchField(props: CommonSwitchFieldProps) {
   const theme = useTheme();
   const $Label = useMemo(() => {
     if (!label) return null;
-    return (
-      <>
-        {label}
-        {required ? ` *` : ''}
-      </>
-    );
+    return <TextWithRequiredMark required={required}>{label}</TextWithRequiredMark>;
   }, [label, required]);
   const $Switch = useMemo(() => {
     return (
@@ -52,7 +47,7 @@ export default function CommonSwitchField(props: CommonSwitchFieldProps) {
     );
   }, [error, errorText]);
   return (
-    <FormControlLabelStyled
+    <CommonFormControlLabel
       label={$Label}
       control={
         <>

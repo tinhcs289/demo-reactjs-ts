@@ -13,13 +13,13 @@ export default function Content404() {
   const accessToken = authentication.get()?.accessToken;
   return (
     <GridContainer sx={{ p: 2 }}>
-      <GridItem textAlign="center" sx={{ my: 4 }}>
+      <GridItem sx={{ my: 4 }} contentProps={{ justifyContent: 'center' }}>
         <H4>{`404`}</H4>
       </GridItem>
-      <GridItem textAlign="center" sx={{ mb: 2 }}>
+      <GridItem contentProps={{ justifyContent: 'center' }} sx={{ mb: 2 }}>
         <CommonTypography color="GrayText">{t('notFound:theContentDoesnotExist')}</CommonTypography>
       </GridItem>
-      <GridItem textAlign="center">
+      <GridItem contentProps={{ justifyContent: 'center' }}>
         {!accessToken ? (
           <ButtonLink to={PATHS.login} startIcon={<LoginIcon />} variant="contained">
             {t('notFound:backToSignin')}
@@ -30,7 +30,10 @@ export default function Content404() {
           </ButtonLink>
         )}
       </GridItem>
-      <GridItem textAlign="center" sx={{ pt: 10, '& svg': { maxHeight: '400px', maxWidth: '100%' } }}>
+      <GridItem
+        contentProps={{ justifyContent: 'center' }}
+        sx={{ pt: 10, '& svg': { maxHeight: '400px', maxWidth: '100%' } }}
+      >
         <CommonImage src={images.notFoundModules} height={400} />
       </GridItem>
     </GridContainer>

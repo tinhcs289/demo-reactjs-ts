@@ -1,27 +1,28 @@
-import { FormGridContainer } from '@/components/form';
-import type { AnyObject, GenericFormProps } from '@/types';
-import type { ComponentType } from 'react';
-import { useMemo } from 'react';
+import type { AnyObject, CommonFormProps } from '@/types';
+import Grid from '@mui/material/Grid';
+import type { ComponentType, FormEventHandler } from 'react';
+import { useCallback } from 'react';
 import { useFormContext } from 'react-hook-form';
-export default function withRHFSubmitHandler<FormValues extends AnyObject>(
-  WrappedComponent: ComponentType<GenericFormProps<FormValues>>
-): ComponentType<GenericFormProps<FormValues>> {
-  return function FormWithRHFSubmitHandler(props: GenericFormProps<FormValues>) {
-    const { onSubmit, loading, ...otherProps } = props;
-    const form = useFormContext<FormValues>();
-    const handleSubmit = useMemo(
-      () =>
-        form.handleSubmit(function (formData) {
-          console.log(formData);
+export default function withRHFSubmitHandler<FormValues extends AnyObject = AnyObject>(
+  WrappedComponent: ComponentType<CommonFormProps<FormValues>>
+) {
+  return function FormWithSubmitHandler(props: CommonFormProps<FormValues>) {
+    const { onSubmit, ...otherProps } = props;
+    const { handleSubmit } = useFormContext<FormValues>();
+    const handleSubmitOverride: FormEventHandler<HTMLFormElement> = useCallback(
+      (event) => {
+        event?.preventDefault?.();
+        event?.stopPropagation?.();
+        handleSubmit(function (formData) {
           onSubmit?.(formData);
-          return;
-        }),
-      [form, onSubmit]
+        })(event);
+      },
+      [handleSubmit, onSubmit]
     );
     return (
-      <FormGridContainer onSubmit={handleSubmit} loading={loading}>
+      <Grid component="form" onSubmit={handleSubmitOverride} noValidate width={'100%'} container>
         <WrappedComponent {...otherProps} />
-      </FormGridContainer>
+      </Grid>
     );
   };
 }

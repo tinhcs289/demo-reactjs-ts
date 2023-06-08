@@ -29,6 +29,7 @@ export type FormField<T extends FieldValues, U extends FormInputType> = {
 export type ReactHookForm<T extends FieldValues> = ReturnType<typeof useForm<T>>;
 export type FormGridProps<T extends FieldValues> = {
   fields: Array<FormField<T, any>>;
+  variant?: 'linear' | 'vertical'
 };
 export type FormGridContainerProps = GridContainerProps & {
   onSubmit?: FormEventHandler<HTMLFormElement>;

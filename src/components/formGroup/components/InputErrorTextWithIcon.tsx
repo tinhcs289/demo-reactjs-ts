@@ -3,8 +3,11 @@ import type { Theme } from '@mui/material';
 import { styled } from '@mui/material';
 import type { TypographyProps } from '@mui/material/Typography';
 import Typography from '@mui/material/Typography';
-import type { ComponentType } from 'react';
-import { InputErrorTextWithIconProps } from './_types';
+import type { ComponentType, HTMLAttributes, ReactNode } from 'react';
+export type InputErrorTextWithIconProps = {
+  children?: ReactNode;
+  textProps?: TypographyProps;
+} & HTMLAttributes<HTMLDivElement>;
 const TypographyError = styled(Typography)<TypographyProps>((args: { theme: Theme }) => {
   const { theme } = args;
   return {

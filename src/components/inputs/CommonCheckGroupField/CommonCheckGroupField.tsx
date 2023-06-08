@@ -1,10 +1,7 @@
+import { CommonFormGroup } from '@/components/formGroup';
 import CommonCheckField from '@/components/inputs/CommonCheckField';
-import FormLabelStyled from '@/components/inputs/_components/FormLabelStyled';
-import { TextWithRequiredMark } from '@/components/typo';
 import removeAt from '@/helpers/arrayHelpers/removeAt';
 import { useCallback, useMemo } from 'react';
-import FormGroupWithOptions from '../_components/FormGroupWithOptions';
-import InputErrorTextWithIcon from '../_components/InputErrorTextWithIcon';
 import type { CheckGroupOption, CommonCheckGroupFieldProps } from './_types';
 export default function CommonCheckGroupField(props: CommonCheckGroupFieldProps) {
   const { name, label, required, error, onChange, errorText, options, value, ...otherProps } = props;
@@ -60,19 +57,17 @@ export default function CommonCheckGroupField(props: CommonCheckGroupFieldProps)
       );
     });
   }, [name, memoOption, error, isChecked]);
-  const $Label = useMemo(() => {
-    if (!label && !errorText) return;
-    return (
-      <FormLabelStyled {...({ component: 'label' } as any)} error={error} inputType="checkgroup">
-        {!label ? null : <TextWithRequiredMark required={required}>{label}</TextWithRequiredMark>}
-        {!!error && !!errorText ? <InputErrorTextWithIcon>{errorText}</InputErrorTextWithIcon> : null}
-      </FormLabelStyled>
-    );
-  }, [error, errorText, label, required]);
   return (
-    <FormGroupWithOptions onChange={handleOnchange as any} {...otherProps}>
-      {$Label}
+    <CommonFormGroup
+      onChange={handleOnchange as any}
+      {...otherProps}
+      label={label}
+      labelProps={{ inputType: 'checkgroup' }}
+      error={error}
+      errorText={errorText}
+      required={required}
+    >
       {$Options}
-    </FormGroupWithOptions>
+    </CommonFormGroup>
   );
 }

@@ -4,7 +4,16 @@ export type { ApiRequestStatus, ApiResponseWithMessageOnly, AsyncApi, HttpApiEnd
 export type { AppContruction } from './AppContruction';
 export type { Authentication, AuthenticationJWT, AuthenticationUserInfo } from './Authentication';
 export type { GenericForm, GenericFormOnChangeValuesHandler, GenericFormOnCloseHandler, GenericFormOnSubmitHandler, GenericFormProps, GenericFormViewType } from './GenericForm';
+export type { HtmlElementProps } from './HtmlElements';
 export type { MuiBreakPoint, MuiIcon, MuiIconProps } from './Mui';
 export type { NavLinkProps } from './NavLinkProps';
 export type { PaginatedListData, PaginatedListQuery } from './PaginatedList';
 export type { SiteMapItem, SiteMapItemIcon, SiteMapItemIconProps } from './SiteMapItem';
+export type {
+  CommonFormCloseReason,
+  CommonFormOnCloseParams,
+  CommomFormOnSubmit,
+  CommonFormOnClose,
+  CommonFormProps,
+  CommonFormComponent,
+} from './commonForm';

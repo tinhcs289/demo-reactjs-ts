@@ -6,6 +6,36 @@ import { useFormContext } from 'react-hook-form';
 import type { FormField, FormGridProps } from '../_types';
 import { COMPONENT_DICT } from '../constants';
 import FormGridItem from './FormGridItem';
+function FormGridItemSubField<T extends FieldValues>(props: FormField<T, any>) {
+  const {
+    name,
+    label,
+    inputType,
+    rules,
+    component,
+    componentProps,
+    componentSx,
+    hocs,
+    fields: _fields,
+    ...itemProps
+  } = props;
+  if (!name) return null;
+  if (!(_fields instanceof Array && _fields.length >= 0)) return null;
+  const subFields = _fields.map((f) => ({ ...f, name: `${name as string}.${(f?.name as string) || ''}` }));
+  let FormGridFieldsWithHocs = FormGridFields;
+  if (hocs instanceof Array && hocs.length > 0) {
+    FormGridFieldsWithHocs = withHOCs(...hocs)(FormGridFieldsWithHocs) as any;
+  }
+  return (
+    <FormGridItem
+      {...itemProps}
+      key={name as any}
+      contentProps={{ container: true, width: '100%', height: '100%', ...itemProps?.contentProps }}
+    >
+      <FormGridFieldsWithHocs fields={subFields} />
+    </FormGridItem>
+  );
+}
 function FormGridField<T extends FieldValues>(props: FormField<T, any>) {
   const {
     name,
@@ -21,32 +51,18 @@ function FormGridField<T extends FieldValues>(props: FormField<T, any>) {
   } = props;
   const { control } = useFormContext();
   if (!name) return null;
-  if (_fields instanceof Array && _fields.length >= 0) {
-    const subFields = _fields.map((f) => ({ ...f, name: `${name as string}.${(f?.name as string) || ''}` }));
-    let FormGridFieldsWithHocs = FormGridFields;
-    if (hocs instanceof Array && hocs.length > 0) {
-      FormGridFieldsWithHocs = withHOCs(...hocs)(FormGridFieldsWithHocs) as any;
-    }
-    return (
-      <FormGridItem
-        {...itemProps}
-        key={name as any}
-        contentProps={{ container: true, width: '100%', height: '100%', ...itemProps?.contentProps }}
-      >
-        <FormGridFieldsWithHocs fields={subFields} />
-      </FormGridItem>
-    );
+  if (_fields instanceof Array && _fields.length > 0) {
+    return <FormGridItemSubField {...props} />;
   }
-  if (!inputType) return null;
   let Input = component;
-  if (!Input) Input = (COMPONENT_DICT as any)[inputType as any];
-  if (!Input) return <Fragment key={name as any} />;
+  if (!Input) {
+    if (!inputType) return null;
+    Input = (COMPONENT_DICT as any)[inputType as any];
+  }
+  if (!Input) return null;
   const inputProps: { [x: string]: any } = { name, label, rules, control, ...componentProps };
   if (!!componentProps?.sx || !!componentSx)
-    inputProps['sx'] = {
-      ...get(componentProps, 'sx', {}),
-      ...componentSx,
-    };
+    inputProps['sx'] = { ...get(componentProps, 'sx', {}), ...componentSx };
   if (hocs instanceof Array && hocs.length > 0) Input = withHOCs(...hocs)(Input);
   return (
     <FormGridItem {...itemProps} key={name as any}>
@@ -72,4 +88,16 @@ export default function FormGridFields<T extends FieldValues>(props: FormGridPro
     return <>{fields.map(renderField)}</>;
   }, [fields, renderField]);
   return $Fields;
+}
+export function FormGridFieldsWithNamePrefix<T extends FieldValues>(
+  props: FormGridProps<T> & {
+    namePrefix: string;
+  }
+) {
+  const { namePrefix, fields: fieldsProp } = props;
+  const fields = useMemo(
+    () => fieldsProp.map((f) => ({ ...f, name: `${namePrefix}.${f.name as string}` })),
+    [fieldsProp, namePrefix]
+  );
+  return <FormGridFields fields={fields} />;
 }

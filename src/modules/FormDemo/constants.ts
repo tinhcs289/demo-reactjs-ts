@@ -1,25 +1,20 @@
-import { field } from '@/components/form';
+import { field, fieldArray, formItemSx } from '@/components/form';
 import type { CheckGroupOption } from '@/components/rhfInputs/RHFCheckGroup';
 import type { RadioGroupOption } from '@/components/rhfInputs/RHFRadioGroup';
 import type { AutoCompleteOption } from '@/components/rhfInputs/RHFSelect';
-import { required } from '@/constants/rhfRules';
+import { maxLength, minLength, required } from '@/constants/rhfRules';
 import consecutiveNumbers from '@/helpers/arrayHelpers/consecutiveNumbers';
+import { contactFields } from '@/modules/FormContact';
 import { i18n } from '@/translation';
-import type { SxProps, Theme } from '@mui/material';
-import type { FormValues } from './_types';
-import { fields as ContactFields } from '@/modules/FormContact';
-import withDisplayBySwitch from './hocs/withDisplayBySwitch';
-import { ToggledOption } from '@/components/inputs/CommonToggledField';
 import FormatBoldIcon from '@mui/icons-material/FormatBold';
 import FormatColorFillIcon from '@mui/icons-material/FormatColorFill';
 import FormatItalicIcon from '@mui/icons-material/FormatItalic';
 import FormatUnderlinedIcon from '@mui/icons-material/FormatUnderlined';
-const toggledOptions: ToggledOption[] = [
-  { value: 'bold', icon: FormatBoldIcon },
-  { value: 'italic', icon: FormatItalicIcon },
-  { value: 'underlined', icon: FormatUnderlinedIcon },
-  { value: 'color', icon: FormatColorFillIcon, disabled: true },
-];
+import type { SxProps, Theme } from '@mui/material';
+import type { FormValues } from './_types';
+import withAddContactButton from './hocs/withAddContactButton';
+import withDisplayBySwitch from './hocs/withDisplayBySwitch';
+import ContactArrayItemForm from './components/ContactArrayItemForm';
 export const LABEL = 'Lorem ipsum dolor sit amet';
 export const LABEL1 =
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
@@ -81,6 +76,26 @@ export const fields = [
     sx: fieldSx,
   }),
   field({
+    name: 'Toggle2',
+    inputType: 'toggle',
+    label: 'Các ngày trong tuần',
+    md: 3,
+    sx: fieldSx,
+    componentProps: {
+      fullWidth: true,
+      multiple: true,
+      options: [
+        { value: 'MON', label: 'T2' },
+        { value: 'TUE', label: 'T3' },
+        { value: 'WED', label: 'T4' },
+        { value: 'THU', label: 'T5' },
+        { value: 'FRI', label: 'T6' },
+        { value: 'SAT', label: 'T7' },
+        { value: 'SUN', label: 'CN' },
+      ],
+    },
+  }),
+  field({
     name: 'Toggle',
     inputType: 'toggle',
     label: 'Lựa chọn định dạng',
@@ -88,7 +103,13 @@ export const fields = [
     md: 3,
     sx: fieldSx,
     componentProps: {
-      options: toggledOptions,
+      fullWidth: true,
+      options: [
+        { value: 'bold', label: 'Đậm', startIcon: FormatBoldIcon },
+        { value: 'italic', label: 'Nghiêng', startIcon: FormatItalicIcon },
+        { value: 'underlined', label: 'Gạch dưới', startIcon: FormatUnderlinedIcon },
+        { value: 'color', icon: FormatColorFillIcon, disabled: true },
+      ],
     },
   }),
   field({
@@ -276,7 +297,46 @@ export const fields = [
   }),
   field({
     name: 'Contact',
-    label: 'Thông tin liên hệ',
-    fields: ContactFields,
+    fields: contactFields,
+  }),
+  fieldArray({
+    name: 'Contacts2',
+    fields: contactFields,
+    gridFieldHocs: [withAddContactButton],
+    sx: formItemSx,
+    rules: {
+      ...required('Dữ liệu bắt buộc'),
+      ...minLength(2, 'tối thiểu 2 bản ghi'),
+      ...maxLength(4, 'tối đa 4 bản ghi'),
+    }
+  }),
+  fieldArray({
+    name: 'Contacts',
+    fields: contactFields,
+    gridFieldHocs: [withAddContactButton],
+    itemComponent: ContactArrayItemForm,
+    sx: formItemSx,
+    rules: {
+      validate: {
+        fieldIsRequired: (value: any[]) => {
+          if (!value) return 'Dữ liệu bắt buộc';
+          if (!(value instanceof Array)) return 'Dữ liệu bắt buộc';
+          if (value.length === 0) return 'Dữ liệu bắt buộc';
+          return true;
+        },
+        minimumTotalOfItemsIs2: (value: any[]) => {
+          if (!value) return true;
+          if (!(value instanceof Array)) return true;
+          if (value.length >= 2) return true;
+          return 'tối thiểu 2 bản ghi';
+        },
+        maximumTotalOfItemsIs4: (value: any[]) => {
+          if (!value) return true;
+          if (!(value instanceof Array)) return true;
+          if (value.length <= 3) return true;
+          return 'tối đa 4 bản ghi';
+        },
+      }
+    }
   }),
 ];
