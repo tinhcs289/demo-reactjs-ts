@@ -1,17 +1,15 @@
-import { field } from "@/components/form";
+import { field, formItemSx } from "@/components/form";
 import { email, required } from "@/constants/rhfRules";
+import { contactFields } from '@/modules/FormContact';
 import { i18n } from "@/translation";
-import type { SxProps, Theme } from "@mui/material";
 import withPasswordAndPasswordReEnterdMustMatch from './hocs/withPasswordAndPasswordReEnterdMustMatch';
-import { fields as contactFields } from '@/modules/FormContact';
-export const fieldSx: SxProps<Theme> = { p: 1, mb: 2 };
 export const fields = [
   field({
     name: 'FirstName',
     inputType: 'text',
     label: i18n.t<string>('register:firstName'),
     rules: required(i18n.t<string>('common:pleaseEnter')),
-    sx: fieldSx,
+    sx: formItemSx,
     md: 6,
   }),
   field({
@@ -19,7 +17,7 @@ export const fields = [
     inputType: 'text',
     label: i18n.t<string>('register:lastName'),
     rules: required(i18n.t<string>('common:pleaseEnter')),
-    sx: fieldSx,
+    sx: formItemSx,
     md: 6,
   }),
   field({
@@ -30,14 +28,14 @@ export const fields = [
       ...required(i18n.t<string>('common:pleaseEnter')),
       ...email(i18n.t<string>('common:invalidEmail')),
     },
-    sx: fieldSx,
+    sx: formItemSx,
   }),
   field({
     name: 'Password',
     inputType: 'text',
     label: i18n.t<string>('register:password'),
     rules: required(i18n.t<string>('common:pleaseEnter')),
-    sx: fieldSx,
+    sx: formItemSx,
     componentProps: { type: 'password' }
   }),
   field({
@@ -46,14 +44,14 @@ export const fields = [
     label: i18n.t<string>('register:passwordReEnter'),
     rules: required(i18n.t<string>('register:pleaseEnter')),
     hocs: [withPasswordAndPasswordReEnterdMustMatch],
-    sx: fieldSx,
+    sx: formItemSx,
     componentProps: { type: 'password' }
   }),
   field({
     name: 'IAcceptWithTermAndCondition',
     inputType: 'check',
     label: i18n.t<string>('register:iAcceptWithTermAndCondition'),
-    sx: fieldSx,
+    sx: formItemSx,
     rules: required(i18n.t<string>('common:pleaseSelect')),
   }),
   field({

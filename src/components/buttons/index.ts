@@ -1,2 +1,2 @@
-export { ButtonCommon, ButtonSubmit, ButtonCancel, ButtonLink } from './components'
-export type { ButtonLinkProps, ButtonCommonProps } from './components';
+export { ButtonBadge, ButtonCancel, ButtonCommon, ButtonLink, ButtonNegative, ButtonPositive, ButtonSubmit, ButtonError } from './components';
+export type { ButtonBadgeProps, ButtonCommonProps, ButtonLinkProps, ButtonErrorProps } from './components';

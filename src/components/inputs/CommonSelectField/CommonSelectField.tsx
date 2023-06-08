@@ -84,7 +84,7 @@ const CommonSelectField: ComponentType<CommonSelectFieldProps> = forwardRef(func
         _props.InputLabelProps = {
           ...params?.InputLabelProps,
           ...TextFieldProps?.InputLabelProps,
-           shrink: false,
+          shrink: false,
         };
       }
       if (placeholder) _props.placeholder = placeholder;
@@ -110,6 +110,7 @@ const CommonSelectField: ComponentType<CommonSelectFieldProps> = forwardRef(func
   return (
     <AutocompleteStyled
       size="small"
+      fullWidth
       {...(otherProps as any)}
       value={memoValue}
       ref={ref}

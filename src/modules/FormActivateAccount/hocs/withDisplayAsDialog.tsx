@@ -1,4 +1,5 @@
 import { CommonDialog } from '@/components/dialogs';
+import type { CommonDialogOnClose } from '@/components/dialogs';
 import { REGEX_EMAIL, REGEX_PHONE } from '@/constants/regex';
 import { accoutNeedToBeActivatedSelector, actions } from '@/redux/userAccount';
 import Alert from '@mui/material/Alert';
@@ -8,7 +9,8 @@ import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import { useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import type { FormComponent } from '../_types';
+import type { ComponentType } from 'react';
+import type { FormProps } from '../_types';
 function ActivatingRequiredAlert() {
   const accoutNeedToBeActivated = useSelector(accoutNeedToBeActivatedSelector);
   const contactType = useMemo(() => {
@@ -38,16 +40,23 @@ function ButtonReSentOtp() {
     </Box>
   );
 }
-export default function withDialog(WrappedComponent: FormComponent): FormComponent {
-  return function (props) {
+export default function withDisplayAsDialog(
+  WrappedComponent: ComponentType<FormProps>
+): ComponentType<FormProps> {
+  return function FormWithDisplayAsDialog(props: FormProps) {
     const { loading, onClose, ...otherProps } = props;
     const dispatch = useDispatch();
-    const handleClose = useCallback(() => {
-      dispatch(actions.unMarkAsNotBeenActivated({}));
-      onClose?.();
-    }, [dispatch, onClose]);
+    const handleDialogClose: CommonDialogOnClose = useCallback(
+      (event, reason) => {
+        if (reason === 'backdropClick' || reason === 'escapeKeyDown') {
+          dispatch(actions.unMarkAsNotBeenActivated({}));
+        }
+        onClose?.();
+      },
+      [dispatch, onClose]
+    );
     return (
-      <CommonDialog open onClose={handleClose} loading={loading} title="Kích hoạt tài khoản">
+      <CommonDialog open onClose={handleDialogClose} loading={loading} title="Kích hoạt tài khoản">
         <ActivatingRequiredAlert />
         <ButtonReSentOtp />
         <Box sx={{ width: '100%', mb: 2 }}>

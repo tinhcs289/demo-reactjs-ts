@@ -1,7 +1,14 @@
+import { withRHF, withRHFSubmitHandler } from '@/components/form';
 import withHOCs from '@/hocs/withHocs';
-import FormFields from './FormFields';
-import withDialog from '../hocs/withDialog';
-import withHookForm from '../hocs/withHookForm';
+import withDisplayAsDialog from '../hocs/withDisplayAsDialog';
 import withReduxActivateAccount from '../hocs/withReduxActivateAccount';
-const FormDialog = withHOCs(withReduxActivateAccount, withDialog, withHookForm)(FormFields);
+import withSubmitButton from '../hocs/withSubmitButton';
+import FormFields from './FormFields';
+const FormDialog = withHOCs(
+  withReduxActivateAccount,
+  withDisplayAsDialog,
+  withRHF,
+  withRHFSubmitHandler,
+  withSubmitButton
+)(FormFields);
 export default FormDialog;

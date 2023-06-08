@@ -1,10 +1,19 @@
 import InfoIcon from '@mui/icons-material/Info';
-import type { Theme } from '@mui/material';
+import type { SvgIconTypeMap, Theme } from '@mui/material';
 import { styled } from '@mui/material';
 import type { TypographyProps } from '@mui/material/Typography';
 import Typography from '@mui/material/Typography';
-import type { ComponentType } from 'react';
-import type { InputHelperTextWithIconProps } from './_types';
+import type { OverridableComponent } from '@mui/types';
+import type { ComponentType, HTMLAttributes, ReactNode } from 'react';
+export type InputHelperTextWithIconProps = {
+  children?: ReactNode;
+  textProps?: TypographyProps;
+  icon?:
+    | ReactNode
+    | (OverridableComponent<SvgIconTypeMap<{}, 'svg'>> & {
+        muiName: string;
+      });
+} & HTMLAttributes<HTMLDivElement>;
 const TypographyStyled = styled(Typography)<TypographyProps>((args: { theme: Theme }) => {
   const { theme } = args;
   return {

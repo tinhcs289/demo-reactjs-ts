@@ -22,14 +22,14 @@ function redirectToNextPage(returnUri?: string) {
  */
 export default function withLoginViaInternalApi(WrappedComponent: ComponentType<FormProps>) {
   return function FormLoginWithLoginViaInternalApi(props: FormProps) {
-    const { onRequestLoginViaSSO: _, loading: loadingProp, returnUri, ...otherProps } = props;
+    const { loading: loadingProp, returnUri, ...otherProps } = props;
     const { t } = useTranslation();
     const [loading, setLoading] = useState<boolean>(!!loadingProp);
     const { showErrorNotify } = useSnackbarNotify();
-    const handleRequestLoginViaApi = async (fd: FormValues): Promise<void> => {
-      if (!fd?.Account || !fd?.Password) return;
+    const handleRequestLoginViaApi = async (values: FormValues): Promise<void> => {
+      if (!values?.Account || !values?.Password) return;
       setLoading(true);
-      const payload = { username: fd?.Account, password: fd?.Password };
+      const payload = { username: values?.Account, password: values?.Password };
       const [error, result] = await callHttp(loginApi(payload)).waitFor(validAuthentication);
       setLoading(false);
       if (error) {
@@ -42,8 +42,6 @@ export default function withLoginViaInternalApi(WrappedComponent: ComponentType<
       redirectToNextPage(returnUri);
       return;
     };
-    return (
-      <WrappedComponent {...otherProps} loading={loading} onSubmitFormLogin={handleRequestLoginViaApi} />
-    );
+    return <WrappedComponent {...otherProps} loading={loading} onSubmit={handleRequestLoginViaApi as any} />;
   };
 }

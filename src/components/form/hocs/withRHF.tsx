@@ -1,25 +1,25 @@
 import usePrevious from '@/hooks/usePrevious';
-import type { AnyObject, GenericFormProps } from '@/types';
+import type { AnyObject, CommonFormProps } from '@/types';
 import isEqual from 'lodash/isEqual';
 import type { ComponentType } from 'react';
 import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-export default function withHookForm<FormValues extends AnyObject>(
-  WrappedComponent: ComponentType<GenericFormProps<FormValues>>
-): ComponentType<GenericFormProps<FormValues>> {
-  return function FormWithRHF(props: GenericFormProps<FormValues>) {
+export default function withRHF<FormValues extends AnyObject = AnyObject>(
+  WrappedComponent: ComponentType<CommonFormProps<FormValues>>
+) {
+  return function FormWithRHF(props: CommonFormProps<FormValues>) {
     const { defaultValues, ...otherProps } = props;
-    const preDefaultValues = usePrevious(defaultValues);
+    const preValues = usePrevious(defaultValues);
     const form = useForm<FormValues>({ defaultValues: defaultValues as any });
     useEffect(() => {
-      if (isEqual(defaultValues, preDefaultValues)) return;
+      if (isEqual(defaultValues, preValues)) return;
       const currentValues = form.getValues();
       form.reset({ ...defaultValues, ...currentValues });
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [defaultValues]);
     return (
       <FormProvider {...form}>
-        <WrappedComponent {...otherProps} />
+        <WrappedComponent {...(otherProps as any)} />
       </FormProvider>
     );
   };

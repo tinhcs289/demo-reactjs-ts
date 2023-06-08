@@ -17,7 +17,7 @@ export default class ExceptionHandlingProvider extends React.Component<Props, St
   }
 
   componentDidCatch(error: any, errorInfo: any) {
-    console.log(error, errorInfo);
+    console.warn(error, errorInfo);
   }
 
   render() {

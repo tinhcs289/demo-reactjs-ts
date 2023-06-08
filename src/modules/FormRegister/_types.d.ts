@@ -1,4 +1,4 @@
-import type { GridProps } from '@mui/material/Grid';
+import type { CommonFormProps } from '@/types';
 export type FormValues = {
   FirstName: string;
   LastName: string;
@@ -7,10 +7,7 @@ export type FormValues = {
   PasswordReEntered: string;
   IAcceptWithTermAndCondition: boolean;
 };
-export type FormSubmitHandler = (values: FormValues) => void;
-export type FormProps = GridProps & {
-  onSubmit?: FormSubmitHandler;
-  loading?: boolean;
+export type FormProps = CommonFormProps<FormValues> & {
   returnUri?: string;
 };
 export type FormComponent = ComponentType<FormProps>;

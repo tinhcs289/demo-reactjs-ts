@@ -3,7 +3,7 @@ const tryParseJsonString = (value: any): string | null => {
   try {
     return JSON.parse(value.trim());
   } catch (error) {
-    console.log(error);
+    console.warn(error);
     return null;
   }
 };

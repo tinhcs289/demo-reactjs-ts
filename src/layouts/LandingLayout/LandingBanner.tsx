@@ -4,13 +4,12 @@ import Container from '@mui/material/Container';
 import React from 'react';
 import LandingBannerSubTitle from './LandingBannerSubTitle';
 import LandingBannerTitle from './LandingBannerTitle';
-const LandingBanner: React.FC<
-  {
-    heading?: React.ReactNode;
-    subHeading?: React.ReactNode;
-    children?: React.ReactNode;
-  } & BoxProps
-> = (props) => {
+export type LandingBannerProps = BoxProps & {
+  heading?: React.ReactNode;
+  subHeading?: React.ReactNode;
+  children?: React.ReactNode;
+};
+export default function LandingBanner(props: LandingBannerProps) {
   const { heading, subHeading, children, ...otherProps } = props;
   const memoHeading = React.useMemo(() => {
     if (!heading) return null;
@@ -36,5 +35,4 @@ const LandingBanner: React.FC<
       </Container>
     </Box>
   );
-};
-export default LandingBanner;
+}
