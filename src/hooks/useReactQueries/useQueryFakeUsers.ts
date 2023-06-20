@@ -1,6 +1,7 @@
 import { http } from '@/api';
 import callHttp from '@/functions/callHttp';
 import { useQuery } from 'react-query';
+const LINK = 'https://fakestoreapi.com/users';
 export type UserFakeName = {
   firstname: string;
   lastname: string;
@@ -26,13 +27,10 @@ export type UserFake = {
   phone: string;
 };
 async function getFromApi() {
-  const [error, data] = await callHttp<UserFake[]>(http.get('https://fakestoreapi.com/users')).waitFor(
-    (r) => r?.data instanceof Array
-  );
+  const [error, data] = await callHttp<UserFake[]>(http.get(LINK)).waitFor((r) => r?.data instanceof Array);
   if (error) return [];
   return data;
 }
-export default function useQueryFakeProductList() {
-  const query = useQuery<UserFake[]>('fakeUser/all', getFromApi);
-  return query;
+export default function useQueryFakeUsers() {
+  return useQuery<UserFake[]>('fakeUser/all', getFromApi);
 }
