@@ -170,7 +170,7 @@ export default function fieldArray<T extends FieldValues, U extends FormInputTyp
     itemComponent?: ComponentType<FielArrayItemProps>;
   }
 ): FormField<T, U> {
-  const { fields, ...otherArgs } = args;
+  const { fields, itemComponent, ...otherArgs } = args;
   const gridFieldHocs = [
     withFieldArrayContext(args?.name as string),
     ...(!!args?.name && !!args?.rules && Object.keys(args.rules).length > 0
@@ -185,7 +185,7 @@ export default function fieldArray<T extends FieldValues, U extends FormInputTyp
       ...args?.componentProps,
       name: args?.name as string,
       fields,
-      itemComponent: args?.itemComponent,
+      itemComponent: itemComponent,
     } as any,
     gridFieldHocs,
   };
