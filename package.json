@@ -88,7 +88,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "env": "sync-dotenv --env ./env/_.env --samples \"*.env\"",
-    "gen": "node src/_codeTemplates/generate.js",
+    "codegen": "node .codegen/generate.js",
     "apisync": "node ./.swagger/%from%/codegen.js",
     "pretty": "prettier --write \"./**/*.{js,jsx,ts,tsx}\""
   },
