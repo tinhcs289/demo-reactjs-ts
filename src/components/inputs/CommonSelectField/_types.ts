@@ -28,6 +28,8 @@ export type CommonSelectFieldProps = Pick<
   Omit<BaseAutocompleteProps, 'renderInput' | 'options'> & {
     options?: AutoCompleteOption[];
     TextFieldProps?: Partial<CommonTextFieldProps>;
+    enableClientFilter?: boolean;
+    filter?: ((option: AutoCompleteOption, inputValue: string) => boolean) | 'startWith' | 'contains';
   };
 export type CommonSelectFieldOnChange = (
   event: React.SyntheticEvent<Element, Event>,

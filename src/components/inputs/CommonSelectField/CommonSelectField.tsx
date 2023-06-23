@@ -1,5 +1,5 @@
-import CommonTextField from '@/components/inputs/CommonTextField';
 import type { CommonTextFieldProps } from '@/components/inputs/CommonTextField';
+import CommonTextField from '@/components/inputs/CommonTextField';
 import arrayOrEmpty from '@/helpers/formatHelpers/arrayOrEmpty';
 import type {
   AutocompleteInputChangeReason,
@@ -11,11 +11,12 @@ import debounce from 'lodash/debounce';
 import type { ComponentType, Ref, SyntheticEvent } from 'react';
 import { forwardRef, useCallback, useMemo } from 'react';
 import AutocompleteStyled from './AutocompleteStyled';
-import defaultFilterOptions from './defaultFilterOptions';
+import type { CommonSelectFieldProps, CommonSelectRenderTags } from './_types';
+import { createFilterOptions } from './defaultFilterOptions';
 import defaultGetOptionLabel from './defaultGetOptionLabel';
 import defaultRenderOption from './defaultRenderOption';
 import isOptionEqualToValue from './isOptionEqualToValue';
-import type { CommonSelectFieldProps, CommonSelectRenderTags } from './_types';
+
 const CommonSelectField: ComponentType<CommonSelectFieldProps> = forwardRef(function CommonSelectFieldWithRef(
   props,
   ref?: Ref<unknown>
@@ -37,6 +38,8 @@ const CommonSelectField: ComponentType<CommonSelectFieldProps> = forwardRef(func
     color,
     value,
     placeholder,
+    enableClientFilter = false,
+    filter,
     ...otherProps
   } = props;
   const memoOptions = useMemo(() => arrayOrEmpty(propOptions), [propOptions]);
@@ -47,8 +50,9 @@ const CommonSelectField: ComponentType<CommonSelectFieldProps> = forwardRef(func
     [renderOption, multiple]
   );
   const memoFilterOptions = useMemo(
-    () => (typeof filterOptions === 'function' ? filterOptions : defaultFilterOptions),
-    [filterOptions]
+    () =>
+      typeof filterOptions === 'function' ? filterOptions : createFilterOptions(enableClientFilter, filter),
+    [filterOptions, enableClientFilter, filter]
   );
   const memoGetOptionLabel = useMemo(
     () => (typeof getOptionLabel === 'function' ? getOptionLabel : defaultGetOptionLabel),
