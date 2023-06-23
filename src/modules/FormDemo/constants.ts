@@ -15,6 +15,7 @@ import type { FormValues } from './_types';
 import withAddContactButton from './hocs/withAddContactButton';
 import withDisplayBySwitch from './hocs/withDisplayBySwitch';
 import ContactArrayItemForm from './components/ContactArrayItemForm';
+import withQueryUserOptions from '@/modules/FormDemo/hocs/withQueryUserOptions';
 export const LABEL = 'Lorem ipsum dolor sit amet';
 export const LABEL1 =
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
@@ -130,8 +131,8 @@ export const fields = [
     rules: required(i18n.t<string>('common:pleaseSelect')),
     componentProps: {
       placeholder: i18n.t<string>('common:pleaseSelect'),
-      options: options,
     },
+    hocs: [withQueryUserOptions],
     md: 3,
     sx: fieldSx,
   }),
@@ -308,7 +309,7 @@ export const fields = [
       ...required('Dữ liệu bắt buộc'),
       ...minLength(2, 'tối thiểu 2 bản ghi'),
       ...maxLength(4, 'tối đa 4 bản ghi'),
-    }
+    },
   }),
   fieldArray({
     name: 'Contacts',
@@ -336,7 +337,7 @@ export const fields = [
           if (value.length <= 3) return true;
           return 'tối đa 4 bản ghi';
         },
-      }
-    }
+      },
+    },
   }),
 ];
