@@ -1,4 +1,4 @@
-import { InputErrorTextWithIcon, InputHelperTextWithIcon } from '@/components/formGroup';
+import { InputHelperTextWithIcon } from '@/components/formGroup';
 import NavLinkNoStyle from '@/components/nav/NavLinkNoStyle';
 import type { MuiIconProps } from '@/types';
 import ErrorIcon from '@mui/icons-material/Error';
