@@ -9,10 +9,10 @@ export default function RHFNumber(props: RHFNumberProps) {
     ({ field: { onBlur, onChange, value, name, ref }, fieldState: { invalid, error } }) => (
       <CommonNumberFieldDebounced
         name={name}
-        value={value}
+        value={value || null}
         {...(!!defaultValue ? { defaultValue } : {})}
         onValueChange={({ floatValue }) => {
-          onChange(floatValue);
+          onChange(floatValue || null);
         }}
         onBlur={onBlur}
         inputRef={ref}
