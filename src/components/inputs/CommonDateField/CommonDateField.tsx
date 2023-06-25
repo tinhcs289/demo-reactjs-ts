@@ -18,7 +18,7 @@ export default function CommonDateField(props: CommonDateFieldProps) {
     TextFieldProps,
     buttonOk,
     buttonClear,
-    buttonCancel,
+    ButtonNegative,
     closeOnSelect,
     ...otherProps
   } = props;
@@ -39,7 +39,7 @@ export default function CommonDateField(props: CommonDateFieldProps) {
         actionBar: {
           buttonOk,
           buttonClear,
-          buttonCancel,
+          ButtonNegative,
           closeOnSelect,
           ...slotProps?.actionBar,
         } as any,

@@ -11,7 +11,7 @@ export type CommonDateTimeFieldProps = MobileDateTimePickerProps<Moment> & {
   TextFieldProps?: CommonTextFieldProps;
   buttonOk?: string;
   buttonClear?: string;
-  buttonCancel?: string;
+  ButtonNegative?: string;
 };
 export type CustomToolbarProps = DateTimePickerToolbarProps<Moment> & {
   label?: string;

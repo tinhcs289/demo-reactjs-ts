@@ -1,5 +1,4 @@
-/* eslint-disable */
-//@ts-nocheck
+//@ts-nocheck --entire-file
 import { field, formItemSx } from '@/components/form';
 import { required } from '@/constants/rhfRules';
 import { i18n } from '@/translation';

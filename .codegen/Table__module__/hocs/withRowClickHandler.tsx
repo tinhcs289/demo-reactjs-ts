@@ -1,3 +1,4 @@
+//@ts-nocheck --entire-file
 import type { BodyRowProps } from '@/components/table';
 import { useAsyncListAction } from '../context';
 import type { AnyObject } from '@/types';

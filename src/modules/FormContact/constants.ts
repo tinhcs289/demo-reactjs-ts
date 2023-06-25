@@ -18,7 +18,7 @@ export const GENDERS: { [x: string]: AutoCompleteOption } = {
 export const genderOptions = Object.values(GENDERS);
 export const defaultContact: FormValues = {
   Id: EMPTY_GUID,
-  Title: i18n.t<string>('contact:mrOrMrs'),
+  Title: i18n.t('contact:mrOrMrs'),
   FirstName: '',
   MiddleName: '',
   LastName: '',

@@ -47,7 +47,7 @@ export default function DialogConfirmDelete() {
       open={open}
       loading={loading}
       onClose={handleClose as any}
-      title={t<string>('common:pleaseConfirmForPerformThisAction')}
+      title={t('common:pleaseConfirmForPerformThisAction')}
       actions={
         <>
           <ButtonNegative onClick={handleClose}>{t('common:cancel')}</ButtonNegative>

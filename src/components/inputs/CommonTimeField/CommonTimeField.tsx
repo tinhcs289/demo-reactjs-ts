@@ -25,7 +25,7 @@ export default function CommonTimeField(props: CommonTimeFieldProps) {
     TextFieldProps,
     buttonOk,
     buttonClear,
-    buttonCancel,
+    ButtonNegative,
     closeOnSelect,
     ...otherProps
   } = props;
@@ -50,7 +50,7 @@ export default function CommonTimeField(props: CommonTimeFieldProps) {
           actionBar: {
             buttonOk,
             buttonClear,
-            buttonCancel,
+            ButtonNegative,
             closeOnSelect,
             ...slotProps?.actionBar,
           } as any,
