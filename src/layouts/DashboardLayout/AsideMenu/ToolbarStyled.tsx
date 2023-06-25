@@ -6,7 +6,7 @@ const ToolbarStyled = styled(Toolbar)<ToolbarProps>(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'flex-end',
-  paddingLeft: theme.spacing(1),
-  paddingRight: theme.spacing(1),
+  paddingLeft: `${theme.spacing(1)} !important`,
+  paddingRight: `${theme.spacing(1)} !important`,
 }));
 export default ToolbarStyled;
