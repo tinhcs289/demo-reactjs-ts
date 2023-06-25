@@ -8,6 +8,7 @@ generateTemplateFiles([
       folderPath: `.codegen/Form__module__/`,
     },
     stringReplacers: [{ question: 'Insert module name', slot: '__module__' }],
+    dynamicReplacers: [{ slot: '//@ts-nocheck --entire-file', slotValue: '' }],
     output: {
       path: `./src/modules/Form__module__(pascalCase)`,
       pathAndFileNameDefaultCase: '(pascalCase)',
@@ -23,7 +24,10 @@ generateTemplateFiles([
     entry: {
       folderPath: `.codegen/Table__module__/`,
     },
-    stringReplacers: [{ question: 'Insert module name', slot: '__module__' }],
+    stringReplacers: [
+      { question: 'Insert module name', slot: '__module__' },
+    ],
+    dynamicReplacers: [{ slot: '//@ts-nocheck --entire-file', slotValue: '' }],
     output: {
       path: `./src/modules/Table__module__(pascalCase)`,
       pathAndFileNameDefaultCase: '(pascalCase)',

@@ -9,7 +9,7 @@ const DialogActionsStyled = styled(DialogActions)<DialogActionsProps>(() => ({
   justifyContent: 'space-between',
 }));
 export default function CustomPickerActionBar(props: CustomPickerActionBarProps) {
-  const { onAccept, onClear, onCancel, className, buttonOk, buttonClear, buttonCancel, closeOnSelect } =
+  const { onAccept, onClear, onCancel, className, buttonOk, buttonClear, ButtonNegative, closeOnSelect } =
     props;
   const $ButtonClear = useMemo(() => {
     if (!buttonClear) return null;
@@ -27,15 +27,15 @@ export default function CustomPickerActionBar(props: CustomPickerActionBarProps)
       </Button>
     );
   }, [buttonOk, closeOnSelect, onAccept]);
-  const $ButtonCancel = useMemo(() => {
-    if (!buttonCancel) return null;
-    return <Button onClick={onCancel}>{buttonCancel}</Button>;
-  }, [buttonCancel, onCancel]);
+  const $ButtonNegative = useMemo(() => {
+    if (!ButtonNegative) return null;
+    return <Button onClick={onCancel}>{ButtonNegative}</Button>;
+  }, [ButtonNegative, onCancel]);
   return (
     <DialogActionsStyled className={className}>
       {$ButtonClear}
       {$ButtonOk}
-      {$ButtonCancel}
+      {$ButtonNegative}
     </DialogActionsStyled>
   );
 }

@@ -1,3 +1,4 @@
+//@ts-nocheck --entire-file
 import { withRHF, withRHFSubmitHandler } from '@/components/form';
 import withHOCs from '@/hocs/withHocs';
 import type { FormComponent } from '../_types';

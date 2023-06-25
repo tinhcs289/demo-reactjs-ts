@@ -1,3 +1,4 @@
+//@ts-nocheck --entire-file
 import { createMenuActionItem } from '@/components/table';
 import EditIcon from '@mui/icons-material/Edit';
 import ListItemIcon from '@mui/material/ListItemIcon';

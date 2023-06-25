@@ -12,7 +12,7 @@ export type CommonTimeFieldProps = {
   TextFieldProps?: CommonTextFieldProps;
   buttonOk?: string;
   buttonClear?: string;
-  buttonCancel?: string;
+  ButtonNegative?: string;
 } & TimePickerProps<Moment>;
 export type CustomToolbarProps = TimePickerToolbarProps<Moment> & {
   label?: string;
