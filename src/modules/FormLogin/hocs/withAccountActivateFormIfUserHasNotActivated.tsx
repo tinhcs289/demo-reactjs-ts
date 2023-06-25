@@ -2,7 +2,7 @@ import PATHS from '@/constants/paths';
 import wait from '@/functions/wait';
 import { AccountActivateDialog } from '@/modules/FormActivateAccount';
 import { hasNotBeenActivatedSelector } from '@/redux/userAccount';
-import { CommonFormOnClose } from '@/types';
+import { CommonFormOnClose, CommonFormOnCloseParams } from '@/types';
 import type { ComponentType } from 'react';
 import { useCallback, useMemo } from 'react';
 import { useSelector } from 'react-redux';
@@ -19,7 +19,7 @@ export default function withAccountActivateFormIfUserHasNotActivated(
     const hasNotBeenActivated = useSelector(hasNotBeenActivatedSelector);
     const shouldShowWarning = useMemo(() => hasNotBeenActivated === true, [hasNotBeenActivated]);
     const handleClose: CommonFormOnClose = useCallback(
-      (args) => {
+      (args?: CommonFormOnCloseParams) => {
         if (args?.reason === 'after_success') {
           wait(500).then(() => {
             redirectToNextPage(returnUri);
