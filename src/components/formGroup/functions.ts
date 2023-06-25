@@ -11,10 +11,12 @@ export function optionBackground(theme: Theme) {
 }
 export function inputLabelStyles(theme?: Theme) {
   return {
-    fontWeight: '400',
+    fontWeight: '700',
     fontSize: '1rem',
     lineHeight: '1.4375em',
     letterSpacing: '0.00938em',
     transform: 'translate(-48px, 0px) scale(0.75)',
+    color: `rgb(94, 108, 132)`,
+    zIndex: 1,
   };
 }

@@ -1,4 +1,4 @@
-import { ASIDE_MENU_WIDTH } from '@/layouts/DashboardLayout/constants';
+import { APP_BAR_HEIGHT, ASIDE_MENU_WIDTH } from '@/layouts/DashboardLayout/constants';
 import MuiDrawer from '@mui/material/Drawer';
 import type { DrawerProps } from '@mui/material/Drawer';
 import { styled } from '@mui/material/styles';
@@ -22,12 +22,16 @@ const DrawerStyled = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== '
         }),
         width: 0,
         [theme.breakpoints.up('sm')]: {
-          width: theme.spacing(9),
+          width: theme.spacing(7),
         },
       }),
       // '& div.MuiListItemIcon-root': {
       //   minWidth: theme.spacing(4),
       // },
+    },
+    '& .MuiToolbar-root': {
+      height: `${APP_BAR_HEIGHT}px !important`,
+      minHeight: `${APP_BAR_HEIGHT}px !important`,
     },
   })
 ) as ComponentType<DrawerProps>;

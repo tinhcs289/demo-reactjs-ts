@@ -1,10 +1,10 @@
 import ButtonLanguage from '@/layouts/DashboardLayout/AppBar/ButtonLanguage';
-import { ASIDE_MENU_WIDTH } from '@/layouts/DashboardLayout/constants';
+import { APP_BAR_HEIGHT, ASIDE_MENU_WIDTH } from '@/layouts/DashboardLayout/constants';
 import { useDashboardLayoutState } from '@/providers/DashboardLayoutProvider';
 import type { AppBarProps } from '@mui/material/AppBar';
 import MuiAppBar from '@mui/material/AppBar';
-import { styled } from '@mui/material/styles';
 import Toolbar, { ToolbarProps } from '@mui/material/Toolbar';
+import { styled } from '@mui/material/styles';
 import { memo, useMemo } from 'react';
 import ButtonLogout from './ButtonLogout';
 import ButtonMenu from './ButtonMenu';
@@ -12,6 +12,7 @@ import PageTitle from './PageTitle';
 const AppBarStyled = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
 })<AppBarProps & { open?: boolean }>(({ theme, open }) => ({
+  height: `${APP_BAR_HEIGHT}px !important`,
   zIndex: theme.zIndex.drawer + 1,
   transition: theme.transitions.create(['width', 'margin'], {
     easing: theme.transitions.easing.sharp,
@@ -27,7 +28,10 @@ const AppBarStyled = styled(MuiAppBar, {
   }),
 }));
 const ToolbarStyled = styled(Toolbar)<ToolbarProps>(({ theme }) => ({
-  paddingRight: theme.spacing(3),
+  height: `${APP_BAR_HEIGHT}px !important`,
+  minHeight: `${APP_BAR_HEIGHT}px !important`,
+  paddingRight: `${theme.spacing(1)} !important`,
+  paddingLeft: `${theme.spacing(1)} !important`,
 }));
 function AppBar() {
   const isAsideOpen = useDashboardLayoutState((s) => s.isAsideOpen);
