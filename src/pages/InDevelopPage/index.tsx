@@ -1,4 +1,4 @@
-import { ButtonLink } from '@/components/buttons';
+import { ButtonNavigate } from '@/components/buttons';
 import { GridContainer, GridItem } from '@/components/grid';
 import PATHS from '@/constants/paths';
 import { DashboardPageContainer } from '@/layouts/DashboardLayout';
@@ -15,7 +15,7 @@ export default function InDevelopPage() {
           <Typography color="GrayText">{`Vui lòng quay lại sau để trải nghiệm`}</Typography>
         </GridItem>
         <GridItem contentProps={{ justifyContent: 'center' }}>
-          <ButtonLink to={PATHS.dashboard} variant="contained">{`Quay về trang chủ`}</ButtonLink>
+          <ButtonNavigate to={PATHS.dashboard} variant="contained">{`Quay về trang chủ`}</ButtonNavigate>
         </GridItem>
         <GridItem
           contentProps={{ justifyContent: 'center' }}

@@ -39,16 +39,19 @@ export function ButtonSubmit(props: ButtonCommonProps) {
     </ButtonPositive>
   );
 }
-export function ButtonCancel(props: ButtonCommonProps) {
-  const { children, ...otherProps } = props;
-  return (
-    <ButtonCommon {...otherProps} color="primary" size="small">
-      {children}
-    </ButtonCommon>
-  );
-}
 export type ButtonLinkProps = ButtonCommonProps & { to: string };
 export function ButtonLink(props: ButtonLinkProps) {
+  const { children, to, ...otherProps } = props;
+  return (
+    <NavLinkNoStyle to={to || '#'}>
+      <ButtonCommon color="primary" variant="text" size="small" noTextTransform {...otherProps}>
+        {children}
+      </ButtonCommon>
+    </NavLinkNoStyle>
+  );
+}
+export type ButtonNavigateProps = ButtonCommonProps & { to: string };
+export function ButtonNavigate(props: ButtonNavigateProps) {
   const { children, to, ...otherProps } = props;
   return (
     <NavLinkNoStyle to={to || '#'}>
