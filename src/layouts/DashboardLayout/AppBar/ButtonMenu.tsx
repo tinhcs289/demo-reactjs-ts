@@ -13,6 +13,7 @@ export default function ButtonMenu() {
   const style: SxProps = useMemo(() => {
     return {
       mr: theme.spacing(4.5),
+      ml: 0,
       ...(memoOpen ? { display: 'none' } : {}),
     };
   }, [theme, memoOpen]);

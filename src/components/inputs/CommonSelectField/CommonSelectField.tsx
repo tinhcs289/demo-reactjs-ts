@@ -16,7 +16,6 @@ import { createFilterOptions } from './defaultFilterOptions';
 import defaultGetOptionLabel from './defaultGetOptionLabel';
 import defaultRenderOption from './defaultRenderOption';
 import isOptionEqualToValue from './isOptionEqualToValue';
-
 const CommonSelectField: ComponentType<CommonSelectFieldProps> = forwardRef(function CommonSelectFieldWithRef(
   props,
   ref?: Ref<unknown>
