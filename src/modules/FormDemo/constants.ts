@@ -340,4 +340,11 @@ export const fields = [
       },
     },
   }),
+  field({
+    name: 'PageContent',
+    label: 'Bài viết mô tả',
+    inputType: 'ckeditor',
+    sx: formItemSx,
+    rules: required(i18n.t<string>('common:pleaseEnter')),
+  }),
 ];

@@ -1,5 +1,5 @@
 import authentication from '@/appCookies/authentication';
-import { ButtonLink } from '@/components/buttons';
+import { ButtonNavigate } from '@/components/buttons';
 import { GridContainer, GridItem } from '@/components/grid';
 import CommonImage from '@/components/media/CommonImage';
 import { CommonTypography, H4 } from '@/components/typo';
@@ -21,13 +21,13 @@ export default function Content404() {
       </GridItem>
       <GridItem contentProps={{ justifyContent: 'center' }}>
         {!accessToken ? (
-          <ButtonLink to={PATHS.login} startIcon={<LoginIcon />} variant="contained">
+          <ButtonNavigate to={PATHS.login} startIcon={<LoginIcon />} variant="contained">
             {t('notFound:backToSignin')}
-          </ButtonLink>
+          </ButtonNavigate>
         ) : (
-          <ButtonLink to={PATHS.dashboard} startIcon={<ArrowBackIcon />} variant="contained">
+          <ButtonNavigate to={PATHS.dashboard} startIcon={<ArrowBackIcon />} variant="contained">
             {t('notFound:backToDashboard')}
-          </ButtonLink>
+          </ButtonNavigate>
         )}
       </GridItem>
       <GridItem

@@ -8,14 +8,10 @@ export default function ActionLinks(props: GridProps) {
   return (
     <Grid container justifyContent="space-between" {...props}>
       <Grid item>
-        <ButtonLink color="primary" variant="text" to={PATHS.forgetPassword} noTextTransform>
-          {t('login:forgotPassword')}
-        </ButtonLink>
+        <ButtonLink to={PATHS.forgetPassword}>{t('login:forgotPassword')}</ButtonLink>
       </Grid>
       <Grid item>
-        <ButtonLink color="primary" variant="text" to={PATHS.register} noTextTransform>
-          {t('login:dontHaveAccount_register')}
-        </ButtonLink>
+        <ButtonLink to={PATHS.register}>{t('login:dontHaveAccount_register')}</ButtonLink>
       </Grid>
     </Grid>
   );

@@ -38,6 +38,8 @@ import type { RHFTimeProps } from '@/components/rhfInputs/RHFTime';
 import RHFTime from '@/components/rhfInputs/RHFTime';
 import type { RHFToggleProps } from '@/components/rhfInputs/RHFToggle';
 import RHFToggle from '@/components/rhfInputs/RHFToggle';
+import type { RHFCKEditorProps } from '@/components/rhfInputs/RHFCKEditor';
+import RHFCKEditor from '@/components/rhfInputs/RHFCKEditor';
 import type { ComponentProps } from 'react';
 //#region Types of input
 export enum FieldType {
@@ -63,6 +65,7 @@ export enum FieldType {
   'google-place' = 'google-place',
   'google-places' = 'google-places',
   'toggle' = 'toggle',
+  'ckeditor' = 'ckeditor',
 }
 export type FormInputType = `${FieldType}`;
 //#endregion
@@ -90,6 +93,7 @@ export const DICT = {
   'google-place': RHFGooglePlace,
   'google-places': RHFGooglePlace,
   toggle: RHFToggle,
+  ckeditor: RHFCKEditor,
 };
 //#endregion
 //#region RHF Component Props
@@ -137,5 +141,7 @@ export type RHFComponentProps<T extends FormInputType> = T extends 'text'
   ? RHFGooglePlaceProps
   : T extends 'toggle'
   ? RHFToggleProps
+  : T extends 'ckeditor'
+  ? RHFCKEditorProps
   : ComponentProps<any>;
 //#endregion
