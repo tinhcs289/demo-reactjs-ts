@@ -35,9 +35,26 @@ function localStorageUpdateItem<T>(key: string, value: T) {
   return window.localStorage.setItem(key, JSON.stringify(value));
 };
 function localStorageGetItem<T>(
+  /**
+   * the key in the LocalStorage.
+   */
   key: string,
+  /**
+  * A function for validating the type of the current value of the `key` which was stored in the LocalStorage.
+  * the `validate` function will returns `true` if the current value matches with the type of T, otherwise returns `false`.
+  */
   validate?: LocalStorageItemValidator<T>,
+  /**
+  * if the current value of the `key` which was stored in the LocalStorage has a conflict type with T,
+  * the `migrate` function will be used to convert or re-model the value into the type of T.
+  * This will help the `localStorageGetItem` function always returns a valid value or null.
+  */
   migrate?: LocalStorageItemMigrate<T>,
+  /**
+  * if the current value of the `key` which was stored in the LocalStorage has a conflict type with T,
+  * provide the `overrideValueIfInvalid` to `true`/`false` to update the value in the LocalStorage with a new valid value or clear if the new value are null.
+  */
+  overrideValueIfInvalid?: boolean
 ): T | null {
   if (
     !key ||
@@ -51,12 +68,14 @@ function localStorageGetItem<T>(
   const value = window.localStorage.getItem(key);
   if (!value) return null;
   let returns = null;
+  let isInvalid = false;
   try {
     const val = JSON.parse(value) as T;
     if (typeof validate === 'function') {
       if (validate(val) === true)
         returns = val;
       else {
+        isInvalid = true;
         if (typeof migrate !== 'function')
           returns = null
         else
@@ -66,18 +85,23 @@ function localStorageGetItem<T>(
   } catch (error) {
     returns = value as T;
   } finally {
+    if (isInvalid && !!overrideValueIfInvalid) {
+      if (returns === null) localStorageRemoveItem(key);
+      else localStorageUpdateItem(key, returns);
+    }
     return returns;
   }
 };
 export type CreateNewLocalStorageItemArgs<T> = Partial<Omit<LocalStorageItem<T>, 'key'>> & {
   key: string;
-  validate?: LocalStorageItemValidator<T>,
-  migrate?: LocalStorageItemMigrate<T>,
+  validate?: LocalStorageItemValidator<T>;
+  migrate?: LocalStorageItemMigrate<T>;
+  overrideValueIfInvalid?: boolean;
 }
 export function newLocalStorageItem<T>(args: CreateNewLocalStorageItemArgs<T>) {
   return {
     key: args.key,
-    get: args?.get || (() => localStorageGetItem(args.key, args?.validate, args?.migrate)),
+    get: args?.get || (() => localStorageGetItem(args.key, args?.validate, args?.migrate, args?.overrideValueIfInvalid)),
     set: args?.set || ((value: T | null | undefined) => localStorageUpdateItem(args.key, value)),
     clear: args?.clear || (() => localStorageRemoveItem(args.key)),
   } as LocalStorageItem<T>;
@@ -268,6 +292,8 @@ export function newLocalStorageListenableItem<T>(args: {
   key: string;
   defaultValue?: T;
   validate?: LocalStorageItemValidator<T>;
+  migrate?: LocalStorageItemMigrate<T>;
+  overrideValueIfInvalid?: boolean;
 }): LocalStorageSyncItem<T> {
   const syncKey = `${prefix}${args.key}`;
   const previousValue = localStorageGetItem<string>(syncKey);

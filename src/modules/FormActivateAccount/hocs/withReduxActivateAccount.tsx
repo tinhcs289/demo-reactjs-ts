@@ -11,7 +11,7 @@ export default function withReduxActivateAccount(WrappedComponent: FormComponent
     const requestStatus = useSelector(activateAccountWithOtpRequestStatusSelector);
     const isSuccess = useMemo(() => requestStatus === EApiRequestStatus.REQUESTSUCCESS, [requestStatus]);
     const handleSubmit: CommomFormOnSubmit<FormValues> = useCallback(
-      (values) => {
+      (values: FormValues) => {
         if (!values) return;
         dispatch(actions.requestActivateAccountWithOtp(values));
         onSubmitProps?.(values);
