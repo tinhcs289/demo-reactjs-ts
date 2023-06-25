@@ -17,7 +17,7 @@ export default function withPasswordAndPasswordReEnterdMustMatch(RHFField: Compo
           validate: {
             ...rules?.validate,
             PasswordAndPasswordReEnterdMustMatch: (reEnteredPassword: string) =>
-              reEnteredPassword === password || t<string>('register:passwordDoesntMatch'),
+              reEnteredPassword === password || t('register:passwordDoesntMatch'),
           },
         }}
       />

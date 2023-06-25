@@ -1,3 +1,4 @@
+//@ts-nocheck --entire-file
 import type { RowData } from './_types';
 import createAsyncListContextWithComponent from '@/functions/createAsyncListContextWithComponents';
 const context = createAsyncListContextWithComponent<RowData>();

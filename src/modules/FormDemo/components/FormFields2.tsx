@@ -51,7 +51,7 @@ export default function FormByComponents() {
           label={LABEL}
           control={control}
           rules={required(t('common:pleaseEnter'))}
-          placeholder={t<string>('common:pleaseEnter')}
+          placeholder={t('common:pleaseEnter')}
         />
       </FormGridItem>
       <FormGridItem md={6} lg={3} sx={fieldSx}>
@@ -61,7 +61,7 @@ export default function FormByComponents() {
           name="SelectField"
           label={LABEL}
           rules={required(t('common:pleaseSelect'))}
-          placeholder={t<string>('common:pleaseSelect')}
+          placeholder={t('common:pleaseSelect')}
           options={options}
         />
       </FormGridItem>
@@ -74,8 +74,8 @@ export default function FormByComponents() {
           name="SelectMultiField"
           label={LABEL}
           rules={required(t('common:pleaseSelect'))}
-          placeholder={t<string>('common:pleaseSelect')}
-          TextFieldProps={{ placeholder: t<string>('common:pleaseSelect') }}
+          placeholder={t('common:pleaseSelect')}
+          TextFieldProps={{ placeholder: t('common:pleaseSelect') }}
           options={options}
         />
       </FormGridItem>
@@ -85,9 +85,9 @@ export default function FormByComponents() {
           control={control}
           name="SelectBooleanField"
           label={LABEL}
-          labelTrue={t<string>('common:yes')}
-          labelFalse={t<string>('common:no')}
-          TextFieldProps={{ placeholder: t<string>('common:pleaseSelect') }}
+          labelTrue={t('common:yes')}
+          labelFalse={t('common:no')}
+          TextFieldProps={{ placeholder: t('common:pleaseSelect') }}
         />
       </FormGridItem>
       <FormGridItem md={5} sx={fieldSx}>
@@ -97,7 +97,7 @@ export default function FormByComponents() {
           name="DateField"
           label={LABEL}
           rules={required(t('common:pleaseSelect'))}
-          placeholder={t<string>('common:pleaseSelect')}
+          placeholder={t('common:pleaseSelect')}
         />
       </FormGridItem>
       <FormGridItem md={5} sx={fieldSx}>
@@ -107,7 +107,7 @@ export default function FormByComponents() {
           name="DateTimeField"
           label={LABEL}
           rules={required(t('common:pleaseSelect'))}
-          placeholder={t<string>('common:pleaseSelect')}
+          placeholder={t('common:pleaseSelect')}
         />
       </FormGridItem>
       <FormGridItem md={2} sx={fieldSx}>
@@ -117,7 +117,7 @@ export default function FormByComponents() {
           name="TimeField"
           label={LABEL}
           rules={required(t('common:pleaseSelect'))}
-          placeholder={t<string>('common:pleaseSelect')}
+          placeholder={t('common:pleaseSelect')}
         />
       </FormGridItem>
       <FormGridItem md={4} sx={fieldSx}>
@@ -165,7 +165,7 @@ export default function FormByComponents() {
           control={control}
           name="NumberField"
           label={LABEL}
-          placeholder={t<string>('common:pleaseEnter')}
+          placeholder={t('common:pleaseEnter')}
           rules={required(t('common:pleaseEnter'))}
         />
       </FormGridItem>

@@ -1,5 +1,4 @@
-/* eslint-disable */
-//@ts-nocheck
+//@ts-nocheck --entire-file
 import { FormGridFields } from '@/components/form';
 import type { FormProps } from '../_types';
 import { fields } from '../constants';

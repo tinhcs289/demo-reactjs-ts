@@ -24,7 +24,7 @@ export default function CommonDateMultiField(props: CommonDateMultiFieldProps) {
     TextFieldProps,
     buttonOk,
     buttonClear,
-    buttonCancel,
+    ButtonNegative,
     closeOnSelect,
     onChange,
     ...otherProps
@@ -75,7 +75,7 @@ export default function CommonDateMultiField(props: CommonDateMultiFieldProps) {
         actionBar: {
           buttonOk,
           buttonClear,
-          buttonCancel,
+          ButtonNegative,
           closeOnSelect,
           onClear,
           ...slotProps?.actionBar,

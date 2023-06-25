@@ -15,7 +15,7 @@ export type CommonDateMultiFieldProps = Omit<MobileDatePickerProps<Moment>, 'val
   TextFieldProps?: Partial<CommonTextFieldProps>;
   buttonOk?: string;
   buttonClear?: string;
-  buttonCancel?: string;
+  ButtonNegative?: string;
 };
 export type CustomToolbarProps = DatePickerToolbarProps<Moment> & {
   label?: string;

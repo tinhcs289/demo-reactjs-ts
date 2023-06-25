@@ -1,5 +1,4 @@
- /* eslint-disable */
-//@ts-nocheck
+//@ts-nocheck --entire-file
 //#region  Components
 import { default as Form__module__ } from './components/Form';
 export default Form__module__;

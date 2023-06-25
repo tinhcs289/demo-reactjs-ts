@@ -1,5 +1,4 @@
-/* eslint-disable */
-//@ts-nocheck
+//@ts-nocheck --entire-file
 import type { CommonFormProps } from '@/types';
 import type { ComponentType } from 'react';
 export type FormValues = {

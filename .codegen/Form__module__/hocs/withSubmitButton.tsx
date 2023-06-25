@@ -1,5 +1,4 @@
-/* eslint-disable */
-//@ts-nocheck
+//@ts-nocheck --entire-file
 import { GridItem } from '@/components/grid';
 import type { FormComponent, FormProps } from '../_types';
 import { ButtonSubmit } from '@/components/buttons';

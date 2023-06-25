@@ -1,5 +1,4 @@
-/* eslint-disable */
-//@ts-nocheck
+//@ts-nocheck --entire-file
 import type { FormComponent, FormProps } from '../_types';
 export default function withApiGetDetail(WrappedComponent: FormComponent): FormComponent {
   return function FormWithApiGetDetail(props: FormProps) {

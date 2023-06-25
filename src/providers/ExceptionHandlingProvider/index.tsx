@@ -1,7 +1,7 @@
 import { ButtonPositive } from '@/components/buttons';
 import { CommonFallback } from '@/components/fallback';
 import { GridContainer, GridItem } from '@/components/grid';
-import { H2, H4 } from '@/components/typo';
+import { H4 } from '@/components/typo';
 import BlockIcon from '@mui/icons-material/Block';
 import type { ReactNode } from 'react';
 import React from 'react';

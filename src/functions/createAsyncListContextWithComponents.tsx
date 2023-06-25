@@ -95,20 +95,22 @@ export default function createAsyncListContextWithComponents<T extends RowData>(
     const isCheckAll = useAsyncListGetter((s) => s.isCheckAll);
     const idField = useAsyncListGetter((s) => s.idField);
     const selectedItemIds = useAsyncListGetter((s) => s.selectedItemIds);
-    const getId = useCallback((row: T) => get(row, idField), [idField]);
+    const selectable = useAsyncListGetter((s) => s.selectable);
+    const getId = useCallback((row: T) => get(row, idField) as string, [idField]);
     const isSelected = useCallback(
       (row: T) => selectedItemIds.includes(getId(row)),
       [selectedItemIds, getId]
     );
     const { checkAll, checkOrUncheck } = useAsyncListAction();
-    const selectability: Selectability<T> = useMemo(() => {
+    const selectability: Selectability<T> | undefined = useMemo(() => {
+      if (!selectable) return undefined;
       return {
         isCheckAll,
         onCheckAll: checkAll,
         onCheckRow: checkOrUncheck,
         isRowSelected: isSelected,
       };
-    }, [isCheckAll, checkAll, checkOrUncheck, isSelected]);
+    }, [isCheckAll, checkAll, checkOrUncheck, isSelected, selectable]);
     const loading = useMemo(() => {
       return fetchStatus === EApiRequestStatus.REQUESTING;
     }, [fetchStatus]);
