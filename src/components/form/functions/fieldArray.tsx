@@ -139,7 +139,7 @@ function FieldArrayComponent(props: FieldArrayComponentProps) {
   const { fields: fieldArray } = useRHFArrayContext();
   let ItemComponent = FielArrayItem as ComponentType<FielArrayItemProps>;
   if (!!itemComponent) ItemComponent = itemComponent;
-  return fieldArray.map((item, index) => (
+  return fieldArray.map((item: Record<'id', string>, index) => (
     <ItemComponent
       key={item.id}
       rootName={name}

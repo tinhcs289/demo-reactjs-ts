@@ -4,6 +4,8 @@
   "private": true,
   "homepage": "https://mui-react-ts-tinhcs289.web.app/",
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^38.0.1",
+    "@ckeditor/ckeditor5-react": "^6.0.0",
     "@date-io/moment": "2.16.1",
     "@emotion/react": "11.11.0",
     "@emotion/styled": "11.11.0",

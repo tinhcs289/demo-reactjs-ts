@@ -1,4 +1,4 @@
-import { ButtonCancel, ButtonSubmit } from '@/components/buttons';
+import { ButtonNegative, ButtonSubmit } from '@/components/buttons';
 import { CommonDialog } from '@/components/dialogs';
 import useSnackbarNotify from '@/hooks/useSnackbarNotify';
 import Typography from '@mui/material/Typography';
@@ -50,7 +50,7 @@ export default function DialogConfirmDelete() {
       title={t<string>('common:pleaseConfirmForPerformThisAction')}
       actions={
         <>
-          <ButtonCancel onClick={handleClose}>{t('common:cancel')}</ButtonCancel>
+          <ButtonNegative onClick={handleClose}>{t('common:cancel')}</ButtonNegative>
           <ButtonSubmit onClick={handleSubmit}>{t('common:confirm')}</ButtonSubmit>
         </>
       }

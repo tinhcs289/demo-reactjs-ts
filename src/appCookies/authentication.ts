@@ -1,5 +1,5 @@
 import isValidAsYupSchema from '@/functions/isValidAsYupSchema';
-import newCookieItem from '@/helpers/cookieHelpers/newCookieItem';
+import { newCookieItem } from '@/helpers/cookieHelpers';
 import type { AuthenticationJWT } from '@/types';
 import * as yup from 'yup';
 export function validate(value: AuthenticationJWT | null) {
