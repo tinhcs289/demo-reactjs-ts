@@ -16,6 +16,7 @@ import withAddContactButton from './hocs/withAddContactButton';
 import withDisplayBySwitch from './hocs/withDisplayBySwitch';
 import ContactArrayItemForm from './components/ContactArrayItemForm';
 import withQueryUserOptions from '@/modules/FormDemo/hocs/withQueryUserOptions';
+import { withCurrencyFormat, withPercentageFormat } from '@/components/inputs/CommonNumberField';
 export const LABEL = 'Lorem ipsum dolor sit amet';
 export const LABEL1 =
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
@@ -261,6 +262,31 @@ export const fields = [
     },
     md: 3,
     sx: fieldSx,
+  }),
+  field({
+    name: 'NumberField1',
+    inputType: 'number',
+    label: LABEL,
+    rules: required(i18n.t('common:pleaseEnter')),
+    componentProps: {
+      placeholder: i18n.t('common:pleaseEnter'),
+      suffix: ' VND',
+    },
+    md: 3,
+    sx: fieldSx,
+    hocs: [withCurrencyFormat as any],
+  }),
+  field({
+    name: 'NumberField2',
+    inputType: 'number',
+    label: LABEL,
+    rules: required(i18n.t('common:pleaseEnter')),
+    componentProps: {
+      placeholder: i18n.t('common:pleaseEnter'),
+    },
+    md: 3,
+    sx: fieldSx,
+    hocs: [withPercentageFormat as any],
   }),
   field({
     name: 'TagInputField',
