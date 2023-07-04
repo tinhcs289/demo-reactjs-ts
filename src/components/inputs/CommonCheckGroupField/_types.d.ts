@@ -10,7 +10,7 @@ export type CheckGroupOption = {
   [x: string]: any;
 };
 
-export type CommonCheckGroupFieldProps = {
+export type CommonCheckGroupFieldProps = Omit<FormGroupProps, 'onChange'> & {
   name?: string;
   label?: ReactNode;
   required?: boolean;
@@ -19,4 +19,12 @@ export type CommonCheckGroupFieldProps = {
   options?: CheckGroupOption[];
   value?: CheckGroupOption[];
   onChange?: (options?: CheckGroupOption[]) => void;
-} & Omit<FormGroupProps, 'onChange'>;
+  /**
+   * @default true
+   */
+  eventStopPropagation?: boolean;
+  /**
+   * @default false
+   */
+  eventPreventDefault?: boolean;
+};

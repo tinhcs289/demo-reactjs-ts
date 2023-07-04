@@ -10,7 +10,7 @@ export type RadioGroupOption = {
   InputProps?: FormControlLabelProps;
   [x: string]: any;
 };
-export type CommonRadioGroupFieldProps = {
+export type CommonRadioGroupFieldProps = Omit<FormGroupProps, 'onChange'> & {
   name?: string;
   label?: ReactNode;
   required?: boolean;
@@ -20,4 +20,12 @@ export type CommonRadioGroupFieldProps = {
   value?: RadioGroupOption;
   groupProps?: Omit<RadioGroupProps, 'name' | 'value' | 'onChange'>;
   onChange?: (option?: RadioGroupOption) => void;
-} & Omit<FormGroupProps, 'onChange'>;
+  /**
+   * @default true
+   */
+  eventStopPropagation?: boolean;
+  /**
+   * @default false
+   */
+  eventPreventDefault?: boolean;
+};

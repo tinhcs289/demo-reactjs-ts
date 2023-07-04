@@ -27,3 +27,8 @@ export type FormValues = {
 };
 export type FormProps = GenericFormProps<FormValue>;
 export type FormComponent = ComponentType<FormProps>;
+export type FileData = {
+  id?: string;
+  file?: File;
+  source?: string;
+};

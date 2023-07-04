@@ -8,7 +8,7 @@ import type { GridProps } from '@mui/material/Grid';
 import Grid from '@mui/material/Grid';
 import chunk from 'lodash/chunk';
 import { useCallback, useMemo } from 'react';
-import { Scrollbar, Virtual } from 'swiper';
+import { Scrollbar, Virtual } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';

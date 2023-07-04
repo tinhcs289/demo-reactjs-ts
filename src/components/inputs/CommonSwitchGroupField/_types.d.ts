@@ -1,7 +1,6 @@
 import type { CommonSwitchFieldProps } from '@/components/inputs/CommonSwitchField';
 import type { FormGroupProps } from '@mui/material/FormGroup';
 import type { ReactNode } from 'react';
-
 export type SwitchGroupOption = {
   label: ReactNode;
   value: string;
@@ -10,8 +9,7 @@ export type SwitchGroupOption = {
   InputProps?: Omit<CommonSwitchFieldProps, 'name' | 'label' | 'value' | 'checked' | 'disabled'>;
   [x: string]: any;
 };
-
-export type CommonSwitchGroupFieldProps = {
+export type CommonSwitchGroupFieldProps = Omit<FormGroupProps, 'onChange'> & {
   name?: string;
   label?: ReactNode;
   required?: boolean;
@@ -20,4 +18,12 @@ export type CommonSwitchGroupFieldProps = {
   options?: SwitchGroupOption[];
   value?: SwitchGroupOption[];
   onChange?: (options?: SwitchGroupOption[]) => void;
-} & Omit<FormGroupProps, 'onChange'>;
+  /**
+   * @default true
+   */
+  eventStopPropagation?: boolean;
+  /**
+   * @default false
+   */
+  eventPreventDefault?: boolean;
+};

@@ -54,12 +54,17 @@ export function GridContainerRelative(props: GridContainerProps) {
 }
 export type GridItemProps<D extends ElementType<any> = 'div'> = GridProps<D> & {
   contentProps?: Partial<GridProps>;
+  disabledXs?: boolean;
 };
 export function GridItem(props: GridItemProps) {
-  const { children, contentProps, ...otherProps } = props;
+  const { children, contentProps, disabledXs, ...otherProps } = props;
+  const xs = useMemo(() => {
+    if (!disabledXs) return { xs: 12 };
+    return { width: 'auto' };
+  }, [disabledXs]);
   return (
-    <Grid {...otherProps} item container>
-      <Grid {...contentProps} sx={{ ...contentProps?.sx, width: '100%' }} xs={12} item container>
+    <Grid {...otherProps} item container {...xs}>
+      <Grid {...contentProps} sx={{ width: '100%', ...contentProps?.sx }} xs={12} item container>
         {children}
       </Grid>
     </Grid>

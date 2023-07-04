@@ -14,9 +14,13 @@ import type { SxProps, Theme } from '@mui/material';
 import type { FormValues } from './_types';
 import withAddContactButton from './hocs/withAddContactButton';
 import withDisplayBySwitch from './hocs/withDisplayBySwitch';
-import ContactArrayItemForm from './components/ContactArrayItemForm';
+import ContactSubForm from './components/ContactSubForm';
 import withQueryUserOptions from '@/modules/FormDemo/hocs/withQueryUserOptions';
 import { withCurrencyFormat, withPercentageFormat } from '@/components/inputs/CommonNumberField';
+import SomeFileItem from '@/modules/FormDemo/components/SomeFileItem';
+import withUploadFileButton from '@/modules/FormDemo/hocs/withUploadFileButton';
+import OtherFileList from '@/modules/FormDemo/components/OtherFileList';
+import OtherFileItem from '@/modules/FormDemo/components/OtherFileItem';
 export const LABEL = 'Lorem ipsum dolor sit amet';
 export const LABEL1 =
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
@@ -329,7 +333,7 @@ export const fields = [
   fieldArray({
     name: 'Contacts2',
     fields: contactFields,
-    gridFieldHocs: [withAddContactButton],
+    hocs: [withAddContactButton],
     sx: formItemSx,
     rules: {
       ...required('Dữ liệu bắt buộc'),
@@ -340,8 +344,8 @@ export const fields = [
   fieldArray({
     name: 'Contacts',
     fields: contactFields,
-    gridFieldHocs: [withAddContactButton],
-    itemComponent: ContactArrayItemForm,
+    hocs: [withAddContactButton],
+    itemComponent: ContactSubForm,
     sx: formItemSx,
     rules: {
       validate: {
@@ -372,5 +376,30 @@ export const fields = [
     inputType: 'ckeditor',
     sx: formItemSx,
     rules: required(i18n.t('common:pleaseEnter')),
+  }),
+  fieldArray({
+    name: 'SomeFiles',
+    hocs: [withUploadFileButton],
+    itemComponent: SomeFileItem,
+    sx: formItemSx,
+    md: 6,
+    rules: {
+      validate: {
+        fieldIsRequired: (value: any[]) => {
+          if (!value) return 'Dữ liệu bắt buộc';
+          if (!(value instanceof Array)) return 'Dữ liệu bắt buộc';
+          if (value.length === 0) return 'Dữ liệu bắt buộc';
+          return true;
+        },
+      },
+    },
+  }),
+  fieldArray({
+    name: 'OtherFiles',
+    hocs: [withUploadFileButton],
+    component: OtherFileList,
+    itemComponent: OtherFileItem,
+    sx: formItemSx,
+    md: 6,
   }),
 ];

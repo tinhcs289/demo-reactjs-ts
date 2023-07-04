@@ -1,10 +1,36 @@
 import { NavLink } from 'react-router-dom';
 import type { LinkProps } from './_types';
-import type { ReactNode } from 'react';
-export default function NavLinkNoStyle(props: Partial<LinkProps & { children?: ReactNode; to: string }>) {
-  const { children, to, ...otherProps } = props as any;
+export default function NavLinkNoStyle(props: LinkProps) {
+  const {
+    children,
+    to,
+    style,
+    onClick,
+    fullWidth = false,
+    eventStopPropagation,
+    eventPreventDefault,
+    ...otherProps
+  } = props;
   return (
-    <NavLink {...otherProps} to={to as any} style={{ textDecoration: 'none', color: 'inherit' }}>
+    <NavLink
+      {...otherProps}
+      to={(to as string) || ''}
+      style={{
+        textDecoration: 'none',
+        color: 'inherit',
+        ...(fullWidth ? { width: '100%' } : {}),
+        ...style,
+      }}
+      onClick={(e) => {
+        if (eventStopPropagation) {
+          e?.stopPropagation?.();
+        }
+        if (eventPreventDefault) {
+          e?.preventDefault?.();
+        }
+        onClick?.(e);
+      }}
+    >
       {children}
     </NavLink>
   );
