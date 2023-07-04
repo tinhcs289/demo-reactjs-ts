@@ -19,6 +19,7 @@ const BoxExpandable = styled(function BoxCustom(props: BoxExpandableProps) {
     gridTemplateRows: '1fr',
   },
   '& > div': {
+    width: '100%',
     minHeight: 0,
   },
 });
