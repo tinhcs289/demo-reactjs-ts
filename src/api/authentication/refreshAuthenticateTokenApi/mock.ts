@@ -1,11 +1,8 @@
-import http from '@/api/http';
-import httpMock, { mockAdapter } from '@/api/httpMock';
-import endpoints from '@/constants/endpoints';
-import type { Authentication } from '@/types';
-import type { AxiosResponse } from 'axios';
-const LINK = endpoints['login'];
-function mockSetup() {
-  mockAdapter.onPost(LINK.url).reply(200, {
+import { mockAdapter } from '@/api/httpMock';
+import type { ApiReturns } from './_types';
+import { LINK } from './constants';
+export default function mock() {
+  mockAdapter.onGet(LINK.url).reply(200, {
     jwt: {
       accessToken:
         'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1laWQiOiIxMTY0IiwidW5pcXVlX25hbWUiOiJ0aW5oY3NAc29mdGNvbS52biIsImp0aSI6IjNiNGRkNWQ1LWI2YjEtNDhhNS05ZDgxLTJlZWFkNDhkMzVmMSIsInRlbmFudGlkIjoiNCIsInRlbmFudHdnaWQiOiIwIiwidXNlcnRlbmFudGlkIjoiMzE5NWFmNGYtODhiNS00NGYyLTgwMTAtMTY2NDkwZDIyYjllIiwiZGlzcGxheW5hbWUiOiJDYW8gU8ahbiAgVOG7i25oIDU0NSIsImF2YXRhciI6Ii8zMDA2ODg2MTMtNTM2NzMxNDgxMzMyMjM1NC00ODk1ODAwMTYzNDkyMDEwOTc0LW5fMTY2MTgzMDQwNC5qcGciLCJ0eXBlIjoiMSIsInJlZ2lvbiI6IlZOIiwibGFuZyI6InZpLVZOIiwiaXNzIjoiT3BlblZuSWQiLCJhdWQiOiI0MTRlMTkyN2EzODg0ZjY4YWJjNzlmNzI4MzgzN2ZkMSIsImV4cCI6MTY2MTk2MDIyNCwibmJmIjoxNjYxOTE3MDI0fQ.co-LP2900UAuEzvOfcpcEp2EW_qe14UZrwyjJ1KOZ84',
@@ -23,15 +20,5 @@ function mockSetup() {
       lastName: 'An',
       language: 'vi-VN',
     },
-    //hasNotBeenActivated: true,
-  } as Authentication);
-};
-if (LINK.isMock) mockSetup();
-export type LoginApiParams = {
-  username: string;
-  password: string;
+  } as ApiReturns);
 }
-export type LoginApiReturns = Authentication;
-export default async function loginApi(payload: LoginApiParams): Promise<AxiosResponse<Authentication>> {
-  return !LINK.isMock ? http.post(LINK.url, payload) : httpMock.post(LINK.url, payload);
-};
