@@ -18,7 +18,8 @@ import { required } from '@/constants/rhfRules';
 import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { LABEL, fieldSx, optionRadio, options, optionsCheck } from '../constants';
-export default function FormByComponents() {
+import type { FormProps } from '../_types';
+export default function FormByComponents(_props: FormProps) {
   const { t } = useTranslation();
   const { control } = useFormContext();
   return (

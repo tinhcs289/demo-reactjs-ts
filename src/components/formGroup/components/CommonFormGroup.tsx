@@ -37,16 +37,31 @@ const FormGroupStyled = styled(FormGroup)<FormGroupProps>(({ theme }) => ({
 export type CommonFormGroupProps = FormGroupProps & {
   label?: ReactNode;
   labelProps?: Partial<CommonFormLabelProps>;
+  disableLabelTransform?: boolean;
   required?: boolean;
   error?: boolean;
   errorText?: ReactNode;
 };
 export default function CommonFormGroup(props: CommonFormGroupProps) {
-  const { label, labelProps, required, error, errorText, children, ...otherProps } = props;
+  const {
+    label,
+    labelProps,
+    required,
+    error,
+    errorText,
+    children,
+    disableLabelTransform = false,
+    ...otherProps
+  } = props;
   const $Label = useMemo(() => {
     if (!label && !errorText) return;
     return (
-      <CommonFormLabel {...({ component: 'label' } as any)} error={error} {...labelProps}>
+      <CommonFormLabel
+        {...({ component: 'label' } as any)}
+        error={error}
+        disableTransform={disableLabelTransform}
+        {...labelProps}
+      >
         {!label ? null : <TextWithRequiredMark required={required}>{label}</TextWithRequiredMark>}
         {!!error && !!errorText ? (
           <>
@@ -55,7 +70,7 @@ export default function CommonFormGroup(props: CommonFormGroupProps) {
         ) : null}
       </CommonFormLabel>
     );
-  }, [error, errorText, label, required, labelProps]);
+  }, [error, errorText, label, required, labelProps, disableLabelTransform]);
   return (
     <FormGroupStyled {...otherProps}>
       {$Label}

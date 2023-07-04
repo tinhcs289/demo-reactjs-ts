@@ -10,7 +10,7 @@ export default function RHFSwitch(props: RHFSwitchProps) {
       <CommonSwitchField
         label={label}
         name={name}
-        value={value}
+        value={!!value}
         checked={value === true}
         {...(!!defaultValue ? { defaultValue } : {})}
         onChange={onChange}

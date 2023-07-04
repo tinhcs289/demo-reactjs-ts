@@ -4,7 +4,19 @@ import removeAt from '@/helpers/arrayHelpers/removeAt';
 import { useCallback, useMemo } from 'react';
 import type { CheckGroupOption, CommonCheckGroupFieldProps } from './_types';
 export default function CommonCheckGroupField(props: CommonCheckGroupFieldProps) {
-  const { name, label, required, error, onChange, errorText, options, value, ...otherProps } = props;
+  const {
+    name,
+    label,
+    required,
+    error,
+    onChange,
+    errorText,
+    options,
+    value,
+    eventStopPropagation = true,
+    eventPreventDefault = false,
+    ...otherProps
+  } = props;
   const memoOption = useMemo(() => {
     return options instanceof Array && options.length > 0 ? options : [];
   }, [options]);
@@ -22,6 +34,12 @@ export default function CommonCheckGroupField(props: CommonCheckGroupFieldProps)
   );
   const handleOnchange = useCallback(
     (event: any) => {
+      if (eventStopPropagation) {
+        event?.stopPropagation?.();
+      }
+      if (eventPreventDefault) {
+        event?.preventDefault?.();
+      }
       if (!event?.target?.value) return;
       const val = event.target.value as string;
       const checked = !!event?.target?.checked;
@@ -37,7 +55,7 @@ export default function CommonCheckGroupField(props: CommonCheckGroupFieldProps)
         onChange?.(removeAt(memoValue, j));
       }
     },
-    [memoOption, memoValue, onChange]
+    [memoOption, memoValue, onChange, eventStopPropagation, eventPreventDefault]
   );
   const $Options = useMemo(() => {
     return memoOption.map((option, index) => {
@@ -51,6 +69,7 @@ export default function CommonCheckGroupField(props: CommonCheckGroupFieldProps)
           label={option?.label || option?.name || ''}
           disabled={!!option?.disabled}
           error={error}
+          eventStopPropagation={false}
           {...option?.InputProps}
           sx={{ ...option?.InputProps?.sx, ...(index === 0 ? { mt: '12px' } : {}) }}
         />

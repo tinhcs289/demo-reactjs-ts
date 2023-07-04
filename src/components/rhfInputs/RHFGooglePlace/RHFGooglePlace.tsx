@@ -22,7 +22,7 @@ export default function RHFGooglePlace(props: RHFGooglePlaceProps) {
           ref={ref}
           multiple={multiple}
           value={value}
-          defaultValue={defaultValue || value}
+          defaultValue={defaultValue || value || undefined}
           onChange={(_, val) => {
             onChange(val);
           }}

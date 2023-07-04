@@ -1,1 +1,1 @@
-export type { RHFRules, RHFInputProps, RHFRenderInput, RHFRenderInputArgs } from './_types';
+export type { RHFRules, RHFInputProps, RHFRenderInput, RHFRenderInputArgs, RHFRuleValidate } from './_types';

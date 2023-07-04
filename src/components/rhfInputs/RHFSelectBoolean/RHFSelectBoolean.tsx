@@ -11,7 +11,7 @@ export default function RHFSelectBoolean(props: RHFSelectBooleanProps) {
         <CommonSelectBooleanField
           ref={ref}
           value={value}
-          defaultValue={typeof defaultValue === 'boolean' ? defaultValue : value}
+          defaultValue={typeof defaultValue === 'boolean' ? defaultValue : value || undefined}
           onChange={(_, val) => {
             onChange(val);
           }}

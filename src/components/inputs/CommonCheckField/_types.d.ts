@@ -10,4 +10,12 @@ export type CommonCheckFieldProps = Omit<FormControlLabelProps, 'control'> & {
   value?: unknown;
   onChange?: (event: ChangeEvent<HTMLInputElement>, checked: boolean) => void;
   inputProps?: Omit<CheckboxProps, 'checked' | 'error' | 'onChange' | 'value' | 'name'>;
+  /**
+   * @default true
+   */
+  eventStopPropagation?: boolean;
+  /**
+   * @default false
+   */
+  eventPreventDefault?: boolean;
 };

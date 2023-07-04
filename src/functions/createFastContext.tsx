@@ -91,13 +91,17 @@ export default function createFastContext<StoreValues extends { [x: string]: any
   }
   function useDefaultPropInit(
     field: string,
-    value?: number | string | boolean | Array<any> | { [x: string]: any }
+    value?: number | string | boolean | Array<any> | { [x: string]: any },
+    forceUpdate: boolean = false
   ) {
     const setState = useSetter();
     const state = useGetter((s) => get(s, field));
     const [init, setInit] = useState(false);
     useEffect(() => {
       if (init) return;
+      if ((typeof value === 'undefined' || value === null || value === '') && !forceUpdate) {
+        return;
+      }
       if (value instanceof Array || typeof value === 'object') {
         if (isEqual(value, state)) return;
         setInit(true);
