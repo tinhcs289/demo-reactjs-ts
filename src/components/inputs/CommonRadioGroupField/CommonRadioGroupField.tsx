@@ -17,6 +17,8 @@ export default function CommonRadioGroupField(props: CommonRadioGroupFieldProps)
     options,
     value,
     groupProps,
+    eventStopPropagation = true,
+    eventPreventDefault = false,
     ...otherProps
   } = props;
   const memoOption = useMemo(() => {
@@ -27,6 +29,12 @@ export default function CommonRadioGroupField(props: CommonRadioGroupFieldProps)
   }, [value]);
   const handleOnchange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
+      if (eventStopPropagation) {
+        event?.stopPropagation?.();
+      }
+      if (eventPreventDefault) {
+        event?.preventDefault?.();
+      }
       if (!event?.target?.value) return;
       const val = (event.target as HTMLInputElement).value as string;
       const checked = (event.target as HTMLInputElement).checked;
@@ -39,7 +47,7 @@ export default function CommonRadioGroupField(props: CommonRadioGroupFieldProps)
       if (i < 0) return;
       onChange?.(memoOption[i]);
     },
-    [memoOption, onChange]
+    [memoOption, onChange, eventStopPropagation, eventPreventDefault]
   );
   const $Options = useMemo(() => {
     return (

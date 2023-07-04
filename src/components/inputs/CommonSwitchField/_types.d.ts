@@ -1,7 +1,7 @@
 import type { FormControlLabelProps } from '@mui/material/FormControlLabelProps';
 import type { SwitchProps } from '@mui/material/Switch';
 import type { ChangeEvent, ReactNode } from 'react';
-export type CommonSwitchFieldProps = {
+export type CommonSwitchFieldProps = Omit<FormControlLabelProps, 'control'> & {
   name?: string;
   required?: boolean;
   error?: boolean;
@@ -10,4 +10,12 @@ export type CommonSwitchFieldProps = {
   value?: unknown;
   onChange?: (event: ChangeEvent<HTMLInputElement>, checked: boolean) => void;
   inputProps?: Omit<SwitchProps, 'checked' | 'error' | 'onChange' | 'value' | 'name'>;
-} & Omit<FormControlLabelProps, 'control'>;
+  /**
+   * @default true
+   */
+  eventStopPropagation?: boolean;
+  /**
+   * @default false
+   */
+  eventPreventDefault?: boolean;
+};

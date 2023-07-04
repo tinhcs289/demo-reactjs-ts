@@ -5,10 +5,14 @@ const DashboardTabsContainer = lazy(() => wait(0).then(() => import('@/container
 const FormDemo1 = lazy(() =>
   wait(0).then(() => import('@/modules/FormDemo').then((_) => ({ default: _.FormDemo1 })))
 );
+const FormFilterDemo = lazy(() => wait(0).then(() => import('@/modules/FormFilterDemo')));
 export default function DemoFormPage() {
   return (
     <DashboardTabsContainer>
       <GridContainer fullWidth>
+        <GridItemPaper sx={{ mb: 2 }}>
+          <FormFilterDemo />
+        </GridItemPaper>
         <GridItemPaper sx={{ mb: 2 }}>
           <FormDemo1 />
         </GridItemPaper>

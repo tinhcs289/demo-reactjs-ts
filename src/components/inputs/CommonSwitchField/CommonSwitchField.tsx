@@ -2,7 +2,8 @@ import { CommonFormControlLabel, InputErrorTextWithIcon } from '@/components/for
 import { TextWithRequiredMark } from '@/components/typo';
 import { useTheme } from '@mui/material';
 import Switch from '@mui/material/Switch';
-import { useMemo } from 'react';
+import { useMemo, useCallback } from 'react';
+import type { ChangeEvent } from 'react';
 import type { CommonSwitchFieldProps } from './_types';
 export default function CommonSwitchField(props: CommonSwitchFieldProps) {
   const {
@@ -15,6 +16,8 @@ export default function CommonSwitchField(props: CommonSwitchFieldProps) {
     errorText,
     required,
     inputProps,
+    eventStopPropagation = true,
+    eventPreventDefault = false,
     ...formControlProps
   } = props;
   const theme = useTheme();
@@ -22,19 +25,31 @@ export default function CommonSwitchField(props: CommonSwitchFieldProps) {
     if (!label) return null;
     return <TextWithRequiredMark required={required}>{label}</TextWithRequiredMark>;
   }, [label, required]);
+  const handleOnChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>, checked: boolean) => {
+      if (eventStopPropagation) {
+        event?.stopPropagation?.();
+      }
+      if (eventPreventDefault) {
+        event?.preventDefault?.();
+      }
+      onChange?.(event, checked);
+    },
+    [eventStopPropagation, eventPreventDefault, onChange]
+  );
   const $Switch = useMemo(() => {
     return (
       <Switch
         name={name}
         checked={!!checked}
-        onChange={onChange}
+        onChange={handleOnChange}
         value={value}
         color="primary"
         {...(!!error ? { style: { ...(inputProps?.style || {}), color: theme.palette.error.main } } : {})}
         {...inputProps}
       />
     );
-  }, [name, checked, onChange, value, error, inputProps, theme]);
+  }, [name, checked, handleOnChange, value, error, inputProps, theme]);
   const $Error = useMemo(() => {
     if (!error || !errorText) return null;
     return (

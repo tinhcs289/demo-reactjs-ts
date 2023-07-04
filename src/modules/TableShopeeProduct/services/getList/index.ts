@@ -32,14 +32,14 @@ const mockSetup = () => {
 if (isMock) mockSetup();
 async function api(payload: PaginatedListQuery): Promise<AxiosResponse<PaginatedListData<RowData>>> {
   return !isMock ? http.get(LINK, { params: payload }) : httpMock.get(LINK, { params: payload });
-};
+}
 const defaultReturns: OnQueryReturns<RowData> = {
   result: [],
   totalCount: 0,
 };
 function dataIsValid(r: any) {
   return isValidResult<RowData>(r?.data);
-};
+}
 export default async function getList(args: OnQueryArgs): Promise<OnQueryReturns<RowData>> {
   const payload = {
     pageIndex: args?.pageIndex || 1,
@@ -49,4 +49,4 @@ export default async function getList(args: OnQueryArgs): Promise<OnQueryReturns
   if (error) return defaultReturns;
   await tryDo(wait(500));
   return data;
-};
+}

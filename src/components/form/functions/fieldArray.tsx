@@ -99,7 +99,7 @@ function withRules(name: string, rules: RHFRules) {
   };
 }
 //#endregion
-export type FielArrayItemProps = {
+export type FieldArrayItemProps = {
   /**
    * name of FieldArray
    */
@@ -119,25 +119,25 @@ export type FielArrayItemProps = {
   /**
    * the fields config of
    */
-  subFields: FormField<AnyObject, any>[];
+  subFields?: FormField<AnyObject, any>[];
 };
-function FielArrayItem(props: FielArrayItemProps) {
+function FieldArrayItem(props: FieldArrayItemProps) {
   const { rootName, item, itemIndex, subFields } = props;
   return (
     <GridContainer key={item.id} sx={{ width: '100%' }}>
-      <FormGridFieldsWithNamePrefix namePrefix={`${rootName}.${itemIndex}`} fields={subFields} />
+      <FormGridFieldsWithNamePrefix namePrefix={`${rootName}.${itemIndex}`} fields={subFields as any} />
     </GridContainer>
   );
 }
 export type FieldArrayComponentProps = {
   name: string;
   fields: FormField<AnyObject, any>[];
-  itemComponent?: ComponentType<FielArrayItemProps>;
+  itemComponent?: ComponentType<FieldArrayItemProps>;
 };
 function FieldArrayComponent(props: FieldArrayComponentProps) {
   const { name, fields: fieldsSub, itemComponent } = props;
   const { fields: fieldArray } = useRHFArrayContext();
-  let ItemComponent = FielArrayItem as ComponentType<FielArrayItemProps>;
+  let ItemComponent = FieldArrayItem as ComponentType<FieldArrayItemProps>;
   if (!!itemComponent) ItemComponent = itemComponent;
   return fieldArray.map((item: Record<'id', string>, index) => (
     <ItemComponent
@@ -167,7 +167,7 @@ export default function fieldArray<T extends FieldValues, U extends FormInputTyp
   args: Omit<FormField<T, U>, 'component' | 'componentProps'> & {
     component?: ComponentType<FieldArrayComponentProps>;
     componentProps?: FieldArrayComponentProps;
-    itemComponent?: ComponentType<FielArrayItemProps>;
+    itemComponent?: ComponentType<FieldArrayItemProps>;
   }
 ): FormField<T, U> {
   const { fields, itemComponent, ...otherArgs } = args;

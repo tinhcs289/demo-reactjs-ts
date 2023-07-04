@@ -2,7 +2,8 @@ import { CommonFormControlLabel, InputErrorTextWithIcon } from '@/components/for
 import { TextWithRequiredMark } from '@/components/typo';
 import { useTheme } from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
-import { useMemo } from 'react';
+import { useMemo, useCallback } from 'react';
+import type { ChangeEvent } from 'react';
 import { CommonCheckFieldProps } from './_types';
 export default function CommonCheckField(props: CommonCheckFieldProps) {
   const {
@@ -15,6 +16,8 @@ export default function CommonCheckField(props: CommonCheckFieldProps) {
     errorText,
     required,
     inputProps,
+    eventStopPropagation = true,
+    eventPreventDefault = false,
     ...formControlProps
   } = props;
   const theme = useTheme();
@@ -26,13 +29,25 @@ export default function CommonCheckField(props: CommonCheckFieldProps) {
     if (!error) return {};
     return { style: { ...(inputProps?.style || {}), color: theme.palette.error.main } };
   }, [error, inputProps?.style, theme]);
+  const handleOnChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>, checked: boolean) => {
+      if (eventStopPropagation) {
+        event?.stopPropagation?.();
+      }
+      if (eventPreventDefault) {
+        event?.preventDefault?.();
+      }
+      onChange?.(event, checked);
+    },
+    [eventStopPropagation, eventPreventDefault, onChange]
+  );
   const $Control = useMemo(() => {
     return (
       <>
         <Checkbox
           name={name}
           checked={!!checked}
-          onChange={onChange}
+          onChange={handleOnChange}
           value={value}
           color="primary"
           {...(checkBoxStyle as any)}
@@ -48,7 +63,7 @@ export default function CommonCheckField(props: CommonCheckFieldProps) {
         )}
       </>
     );
-  }, [name, checked, onChange, value, error, errorText, inputProps, checkBoxStyle]);
+  }, [name, checked, value, error, errorText, inputProps, checkBoxStyle, handleOnChange]);
   return (
     <CommonFormControlLabel
       label={$Label}

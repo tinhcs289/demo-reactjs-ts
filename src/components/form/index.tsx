@@ -18,6 +18,8 @@ export type { FieldArrayContextValues, FieldArrayProviderProps } from './compone
 export { COMPONENT_DICT, EFormInputType, formItemSx } from './constants';
 export { default as field } from './functions/field';
 export { default as fieldArray } from './functions/fieldArray';
-export type { FielArrayItemProps, FieldArrayComponentProps } from './functions/fieldArray';
+export type { FieldArrayItemProps, FieldArrayComponentProps } from './functions/fieldArray';
+export { default as withDisplayAsPopper } from './hocs/withDisplayAsPopper';
+export type { WithDisplayAsPopperParams } from './hocs/withDisplayAsPopper';
 export { default as withRHF } from './hocs/withRHF';
-export { default as withRHFSubmitHandler } from './hocs/withRHFSubmitHandler';
+export { useRHFSubmitDispatch, default as withRHFSubmitHandler } from './hocs/withRHFSubmitHandler';

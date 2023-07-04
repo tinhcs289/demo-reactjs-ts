@@ -11,7 +11,7 @@ import DialogConfirmDelete from './DialogConfirmDelete';
 import LabelSelectedItemCount from './LabelSelectedItemCount';
 export default function TableList() {
   return (
-    <AsyncListProvider onQuery={getList} queryOnFirstLoad>
+    <AsyncListProvider onQuery={getList} queryOnFirstLoad defaultSelectable>
       <CommonTableContainer sx={{ pb: '32px' }}>
         <LabelSelectedItemCount />
         <AsyncListTablePaging />
