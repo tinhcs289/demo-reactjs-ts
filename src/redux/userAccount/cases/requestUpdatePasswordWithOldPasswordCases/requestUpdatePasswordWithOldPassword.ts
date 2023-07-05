@@ -12,7 +12,7 @@ import requestUpdatePasswordWithOldPasswordSuccess from './requestUpdatePassword
 const TYPE = `${rootName}/requestUpdatePasswordWithOldPassword`;
 const requestUpdatePasswordWithOldPassword = createCase<UpdatePasswordWithOldPasswordApiParams, State>(
   TYPE,
-  (action, state) => {
+  (_action, state) => {
     return {
       ...state,
       updatePasswordWithOldPasswordRequestStatus: EApiRequestStatus.REQUESTING,

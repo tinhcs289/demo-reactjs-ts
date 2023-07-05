@@ -8,13 +8,13 @@ import clearStatusOfRequestUpdatePasswordWithOldPassword from './clearStatusOfRe
 const TYPE = `${rootName}/requestUpdatePasswordWithOldPassword_success`;
 const requestUpdatePasswordWithOldPasswordSuccess = createCase<any, State>(
   TYPE,
-  (action, state) => {
+  (_action, state) => {
     return {
       ...state,
       updatePasswordWithOldPasswordRequestStatus: EApiRequestStatus.REQUESTSUCCESS,
     };
   },
-  takeLatest(TYPE, function* (action: ReduxAction<any>) {
+  takeLatest(TYPE, function* (_action: ReduxAction<any>) {
     yield put(clearStatusOfRequestUpdatePasswordWithOldPassword.action({}));
   }),
 );

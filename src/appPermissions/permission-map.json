@@ -1,0 +1,25 @@
+{
+    "someFeature": {
+        "type": "oneOf",
+        "permissions": [
+            "key1", 
+            "key2", 
+            {
+                "type": "matchAll",
+                "permissions": ["key3", "key4"]
+            }
+        ]
+    },
+    "anotherFeature": {
+        "type": "matchAll",
+        "permissions": [
+            "key5", 
+            "key6", 
+            "key7"
+        ]
+    },
+    "fullApp": {
+        "type": "oneOf",
+        "permissions": []
+    }
+}

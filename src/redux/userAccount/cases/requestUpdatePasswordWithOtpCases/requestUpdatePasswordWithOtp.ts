@@ -12,7 +12,7 @@ import requestUpdatePasswordWithOtpSuccess from './requestUpdatePasswordWithOtpS
 const TYPE = `${rootName}/requestUpdatePasswordWithOtp`;
 const requestUpdatePasswordWithOtp = createCase<UpdatePasswordWithOtpApiParams, State>(
   TYPE,
-  (action, state) => {
+  (_action, state) => {
     return {
       ...state,
       updatePasswordWithOptRequestStatus: EApiRequestStatus.REQUESTING,

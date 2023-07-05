@@ -5,7 +5,7 @@ import { rootName } from '../../state';
 const TYPE = `${rootName}/requestActivateAccountWithOtp_clearStatus`;
 const clearStatusOfRequestActivateAccountWithOtp = createCase<any, State>(
   TYPE,
-  (action, state) => {
+  (_action, state) => {
     return {
       ...state,
       activateAccountWithOtpRequestStatus: EApiRequestStatus.NONE,

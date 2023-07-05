@@ -8,13 +8,13 @@ import clearStatusOfRequestRegisterUserAccount from './clearStatusOfRequestRegis
 const TYPE = `${rootName}/requestRegisterUserAccount_success`;
 const requestRegisterUserAccountSuccess = createCase<any, State>(
   TYPE,
-  (action, state) => {
+  (_action, state) => {
     return {
       ...state,
       registerUserAccountRequestStatus: EApiRequestStatus.REQUESTSUCCESS,
     };
   },
-  takeLatest(TYPE, function* (action: ReduxAction<any>) {
+  takeLatest(TYPE, function* (_action: ReduxAction<any>) {
     yield put(clearStatusOfRequestRegisterUserAccount.action({}));
   }),
 );

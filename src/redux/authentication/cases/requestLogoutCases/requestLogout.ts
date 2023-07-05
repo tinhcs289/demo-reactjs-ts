@@ -18,7 +18,7 @@ const requestLogout = createCase<any, State>(
       logoutRequestStatus: EApiRequestStatus.REQUESTING,
     };
   },
-  takeLatest(TYPE, function* (action: ReduxAction<any>) {
+  takeLatest(TYPE, function* (_action: ReduxAction<any>) {
     const response = (yield logoutApi()) as AxiosResponse<LogoutApiReturns>;
     if (response?.status !== 200) {
       yield put(requestLogoutFail.action({}));

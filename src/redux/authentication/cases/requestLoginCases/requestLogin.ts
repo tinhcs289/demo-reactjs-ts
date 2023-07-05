@@ -17,7 +17,7 @@ type LoginApiReturns = AxiosResponse<Authentication>;
 const TYPE = `${rootName}/requestLogin`;
 const requestLogin = createCase<Payload, State>(
   TYPE,
-  (action, state) => {
+  (_action, state) => {
     return {
       ...(state as any),
       loginRequestStatus: EApiRequestStatus.REQUESTING,

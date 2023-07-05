@@ -5,7 +5,7 @@ import { rootName } from '../../state';
 const TYPE = `${rootName}/requestUpdatePasswordWithOtp_clearStatus`;
 const clearStatusOfRequestUpdatePasswordWithOtp = createCase<any, State>(
   TYPE,
-  (action, state) => {
+  (_action, state) => {
     return {
       ...state,
       updatePasswordWithOptRequestStatus: EApiRequestStatus.NONE,

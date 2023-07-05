@@ -4,7 +4,7 @@ import { rootName } from '../../state';
 const TYPE = `${rootName}/unMarkAsNotBeenActivated`;
 const unMarkAsNotBeenActivated = createCase<any, State>(
   TYPE,
-  (action, state) => {
+  (_action, state) => {
     return {
       ...state,
       hasNotBeenActivated: false,

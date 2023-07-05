@@ -8,13 +8,13 @@ import clearStatusOfRequestActivateAccountWithOtp from './clearStatusOfRequestAc
 const TYPE = `${rootName}/requestActivateAccountWithOtp_success`;
 const requestActivateAccountWithOtpSuccess = createCase<any, State>(
   TYPE,
-  (action, state) => {
+  (_action, state) => {
     return {
       ...state,
       activateAccountWithOtpRequestStatus: EApiRequestStatus.REQUESTSUCCESS,
     };
   },
-  takeLatest(TYPE, function* (action: ReduxAction<any>) {
+  takeLatest(TYPE, function* (_action: ReduxAction<any>) {
     yield put(clearStatusOfRequestActivateAccountWithOtp.action({}));
   }),
 );

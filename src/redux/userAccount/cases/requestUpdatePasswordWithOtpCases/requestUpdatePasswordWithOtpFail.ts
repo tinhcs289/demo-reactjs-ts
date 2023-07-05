@@ -10,13 +10,13 @@ import clearStatusOfRequestUpdatePasswordWithOtp from './clearStatusOfRequestUpd
 const TYPE = `${rootName}/requestUpdatePasswordWithOtp_fail`;
 const requestUpdatePasswordWithOtpFail = createCase<any, State>(
   TYPE,
-  (action, state) => {
+  (_action, state) => {
     return {
       ...state,
       updatePasswordWithOptRequestStatus: EApiRequestStatus.REQUESTFAIL,
     };
   },
-  takeLatest(TYPE, function* (action: ReduxAction<any>) {
+  takeLatest(TYPE, function* (_action: ReduxAction<any>) {
     yield put(snackbar.pushMessageError({ content: i18n.t('common:somethingWentWrong_pleaseTryAgainLater') }));
     yield put(clearStatusOfRequestUpdatePasswordWithOtp.action({}));
   }),
