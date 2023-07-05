@@ -12,7 +12,7 @@ import requestActivateAccountWithOtpSuccess from './requestActivateAccountWithOt
 const TYPE = `${rootName}/requestActivateAccountWithOtp`;
 const requestActivateAccountWithOtp = createCase<ActivateAccountWithOtpApiParams, State>(
   TYPE,
-  (action, state) => {
+  (_action, state) => {
     return {
       ...state,
       activateAccountWithOtpRequestStatus: EApiRequestStatus.REQUESTING,

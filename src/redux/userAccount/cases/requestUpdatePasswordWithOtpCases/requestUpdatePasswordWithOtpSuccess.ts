@@ -8,13 +8,13 @@ import clearStatusOfRequestUpdatePasswordWithOtp from './clearStatusOfRequestUpd
 const TYPE = `${rootName}/requestUpdatePasswordWithOtp_success`;
 const requestUpdatePasswordWithOtpSuccess = createCase<any, State>(
   TYPE,
-  (action, state) => {
+  (_action, state) => {
     return {
       ...state,
       updatePasswordWithOptRequestStatus: EApiRequestStatus.REQUESTSUCCESS,
     };
   },
-  takeLatest(TYPE, function* (action: ReduxAction<any>) {
+  takeLatest(TYPE, function* (_action: ReduxAction<any>) {
     yield put(clearStatusOfRequestUpdatePasswordWithOtp.action({}));
   }),
 );

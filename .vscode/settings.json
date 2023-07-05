@@ -26,5 +26,6 @@
     ".codegen": true,
     ".swagger": true
   },
-  "typescript.preferences.importModuleSpecifier": "non-relative"
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "editor.tabSize": 2
 }

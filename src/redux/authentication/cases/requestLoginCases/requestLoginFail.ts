@@ -10,13 +10,13 @@ import clearStatusOfRequestLogin from './clearStatusOfRequestLogin';
 const TYPE = `${rootName}/requestLogin_fail`;
 export const requestLoginFail = createCase<any, State>(
   TYPE,
-  (action, state) => {
+  (_action, state) => {
     return {
       ...(state as any),
       loginRequestStatus: EApiRequestStatus.REQUESTFAIL,
     };
   },
-  takeLatest(TYPE, function* (action: ReduxAction<any>) {
+  takeLatest(TYPE, function* (_action: ReduxAction<any>) {
     yield put(snackbar.pushMessageError({ content: i18n.t('common:somethingWentWrong_pleaseTryAgainLater') }));
     yield put(clearStatusOfRequestLogin.action({}));
   }),

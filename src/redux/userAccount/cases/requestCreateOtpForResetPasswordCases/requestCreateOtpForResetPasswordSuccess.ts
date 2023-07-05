@@ -8,13 +8,13 @@ import clearStatusOfRequestCreateOtpForResetPassword from './clearStatusOfReques
 const TYPE = `${rootName}/requestCreateOtpForResetPassword_success`;
 const requestCreateOtpForResetPasswordSuccess = createCase<any, State>(
   TYPE,
-  (action, state) => {
+  (_action, state) => {
     return {
       ...state,
       createOtpForResetPasswordRequestStatus: EApiRequestStatus.REQUESTSUCCESS,
     };
   },
-  takeLatest(TYPE, function* (action: ReduxAction<any>) {
+  takeLatest(TYPE, function* (_action: ReduxAction<any>) {
     yield put(clearStatusOfRequestCreateOtpForResetPassword.action({}));
   }),
 );

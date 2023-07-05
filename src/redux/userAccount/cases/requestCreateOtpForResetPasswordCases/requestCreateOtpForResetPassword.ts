@@ -12,7 +12,7 @@ import requestCreateOtpForResetPasswordSuccess from './requestCreateOtpForResetP
 const TYPE = `${rootName}/requestCreateOtpForResetPassword`;
 const requestCreateOtpForResetPassword = createCase<RequestOtpForResetPasswordApiParams, State>(
   TYPE,
-  (action, state) => {
+  (_action, state) => {
     return {
       ...state,
       createOtpForResetPasswordRequestStatus: EApiRequestStatus.REQUESTING,

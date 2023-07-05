@@ -5,7 +5,7 @@ import { rootName } from '../../state';
 const TYPE = `${rootName}/requestLogin_clearStatus`;
 const clearStatusOfRequestLogin = createCase<any, State>(
   TYPE,
-  (action, state) => {
+  (_action, state) => {
     return {
       ...(state as any),
       loginRequestStatus: EApiRequestStatus.NONE,

@@ -15,7 +15,10 @@ export const AbsoluteFallBack = styled(Backdrop)<BackdropProps>(({ theme }) => (
   zIndex: theme.zIndex.drawer + 1,
   position: 'absolute',
 }));
+const RouteFallbackStyled = styled(AbsoluteFallBack)<BackdropProps>(({ theme }) => ({
+  backgroundColor: theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900],
+}));
 export type RouteFallbackProps = Omit<BackdropProps, 'open'>;
 export function RouteFallback(props: RouteFallbackProps) {
-  return <AbsoluteFallBack {...props} open />;
+  return <RouteFallbackStyled {...props} open />;
 }
