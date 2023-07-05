@@ -12,7 +12,7 @@ import requestRegisterUserAccountSuccess from './requestRegisterUserAccountSucce
 const TYPE = `${rootName}/requestRegisterUserAccount`;
 const requestRegisterUserAccount = createCase<RegisterApiParams, State>(
   TYPE,
-  (action, state) => {
+  (_action, state) => {
     return {
       ...state,
       registerUserAccountRequestStatus: EApiRequestStatus.REQUESTING,

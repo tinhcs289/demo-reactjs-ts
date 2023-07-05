@@ -1,4 +1,5 @@
 import authentication from '@/appCookies/authentication';
+import userPermissions from '@/appCookies/userPermissions';
 import { default as authenticationInLocalStorage } from '@/appLocalStorages/authentication';
 import { EApiRequestStatus } from '@/constants/apiRequestStatus';
 import type { ReduxAction } from '@/helpers/reduxHelpers';
@@ -10,9 +11,10 @@ import clearStatusOfRequestLogout from './clearStatusOfRequestLogout';
 const TYPE = `${rootName}/requestLogout_success`;
 const requestLogoutSuccess = createCase<any, State>(
   TYPE,
-  (action, state) => {
+  (_action, state) => {
     authentication.clear();
     authenticationInLocalStorage.set(null, true);
+    userPermissions.clear();
     return {
       ...(state as any),
       user: null,
@@ -20,9 +22,9 @@ const requestLogoutSuccess = createCase<any, State>(
       logoutRequestStatus: EApiRequestStatus.REQUESTSUCCESS,
     };
   },
-  takeLatest(TYPE, function* (action: ReduxAction<any>) {
+  takeLatest(TYPE, function* (_action: ReduxAction<any>) {
     yield delay(0);
     yield put(clearStatusOfRequestLogout.action({}));
-  }),
+  })
 );
 export default requestLogoutSuccess;

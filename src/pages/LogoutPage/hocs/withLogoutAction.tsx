@@ -1,5 +1,6 @@
 import logoutApi from '@/api/authentication/logoutApi';
 import authentication from '@/appCookies/authentication';
+import userPermissions from '@/appCookies/userPermissions';
 import { default as authenticationInLocalStorage } from '@/appLocalStorages/authentication';
 import PATHS from '@/constants/paths';
 import callHttp from '@/functions/callHttp';
@@ -19,6 +20,7 @@ export default function withLogoutAction(WrappedComponent: ComponentType<LogoutP
       await callHttp(logoutApi).waitForNothing();
       authentication.clear();
       authenticationInLocalStorage.set(null, true);
+      userPermissions.clear();
       redirectToNextPage();
       setLoading(false);
       return;

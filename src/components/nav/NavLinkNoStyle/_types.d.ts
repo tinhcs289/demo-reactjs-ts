@@ -6,7 +6,8 @@ import type {
   ReactNode,
 } from 'react';
 import type { NavLinkProps } from 'react-router-dom';
-export type LinkProps = ForwardRefExoticComponent<NavLinkProps & RefAttributes<HTMLAnchorElement>> & {
+type BaseProps = Partial<ForwardRefExoticComponent<NavLinkProps & RefAttributes<HTMLAnchorElement>>>;
+export type LinkProps = BaseProps & {
   id?: string;
   fullWidth?: boolean;
   eventStopPropagation?: boolean;

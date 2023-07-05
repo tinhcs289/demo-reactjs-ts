@@ -10,13 +10,13 @@ import clearStatusOfRequestCreateOtpForResetPassword from './clearStatusOfReques
 const TYPE = `${rootName}/requestCreateOtpForResetPassword_fail`;
 const requestCreateOtpForResetPasswordFail = createCase<any, State>(
   TYPE,
-  (action, state) => {
+  (_action, state) => {
     return {
       ...state,
       createOtpForResetPasswordRequestStatus: EApiRequestStatus.REQUESTFAIL,
     };
   },
-  takeLatest(TYPE, function* (action: ReduxAction<any>) {
+  takeLatest(TYPE, function* (_action: ReduxAction<any>) {
     yield put(snackbar.pushMessageError({ content: i18n.t('common:somethingWentWrong_pleaseTryAgainLater') }));
     yield put(clearStatusOfRequestCreateOtpForResetPassword.action({}));
   }),

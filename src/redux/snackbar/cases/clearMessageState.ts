@@ -5,7 +5,7 @@ import { rootName } from '../state';
 const TYPE = `${rootName}/clearMessageState`;
 const clearMessageState = createCase<any, State>(
   TYPE,
-  (action, state) => {
+  (_action, state) => {
     return {
       ...state,
       id: null,

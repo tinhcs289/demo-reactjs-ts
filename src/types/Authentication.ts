@@ -1,5 +1,6 @@
+import type { Permission, Roles } from '@/types/Permission';
 export type AuthenticationUserInfo = {
-  id: string;
+  id: string | number;
   username: string;
   displayname?: string;
   firstName?: string;
@@ -8,7 +9,8 @@ export type AuthenticationUserInfo = {
   avatar?: string;
   email?: string;
   phone?: string;
-  polices?: string[];
+  roles?: Roles[];
+  polices?: Permission[];
 };
 export type AuthenticationJWT = {
   accessToken: string;

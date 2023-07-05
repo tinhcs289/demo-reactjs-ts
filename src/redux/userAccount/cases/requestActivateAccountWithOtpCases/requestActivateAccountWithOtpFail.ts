@@ -10,13 +10,13 @@ import clearStatusOfRequestActivateAccountWithOtp from './clearStatusOfRequestAc
 const TYPE = `${rootName}/requestActivateAccountWithOtp_fail`;
 export const requestActivateAccountWithOtpFail = createCase<any, State>(
   TYPE,
-  (action, state) => {
+  (_action, state) => {
     return {
       ...state,
       activateAccountWithOtpRequestStatus: EApiRequestStatus.REQUESTFAIL,
     };
   },
-  takeLatest(TYPE, function* (action: ReduxAction<any>) {
+  takeLatest(TYPE, function* (_action: ReduxAction<any>) {
     yield put(snackbar.pushMessageError({ content: i18n.t('common:somethingWentWrong_pleaseTryAgainLater') }));
     yield put(clearStatusOfRequestActivateAccountWithOtp.action({}));
   }),

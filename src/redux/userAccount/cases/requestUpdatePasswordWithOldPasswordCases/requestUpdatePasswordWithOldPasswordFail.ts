@@ -10,13 +10,13 @@ import clearStatusOfRequestUpdatePasswordWithOldPassword from './clearStatusOfRe
 const TYPE = `${rootName}/requestUpdatePasswordWithOldPassword_fail`;
 const requestUpdatePasswordWithOldPasswordFail = createCase<any, State>(
   TYPE,
-  (action, state) => {
+  (_action, state) => {
     return {
       ...state,
       updatePasswordWithOldPasswordRequestStatus: EApiRequestStatus.REQUESTFAIL,
     };
   },
-  takeLatest(TYPE, function* (action: ReduxAction<any>) {
+  takeLatest(TYPE, function* (_action: ReduxAction<any>) {
     yield put(snackbar.pushMessageError({ content: i18n.t('common:somethingWentWrong_pleaseTryAgainLater') }));
     yield put(clearStatusOfRequestUpdatePasswordWithOldPassword.action({}));
   }),

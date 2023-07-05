@@ -5,7 +5,7 @@ import { rootName } from '../../state';
 const TYPE = `${rootName}/requestCreateOtpForResetPassword_clearStatus`;
 const clearStatusOfRequestCreateOtpForResetPassword = createCase<any, State>(
   TYPE,
-  (action, state) => {
+  (_action, state) => {
     return {
       ...state,
       createOtpForResetPasswordRequestStatus: EApiRequestStatus.NONE,
