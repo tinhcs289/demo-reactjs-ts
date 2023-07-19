@@ -1,4 +1,3 @@
-
 import { BodyRowHoc, menuActions, tableConfig } from '@/components/table';
 import { i18n } from '@/translation';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';

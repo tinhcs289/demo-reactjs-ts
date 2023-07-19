@@ -17,8 +17,10 @@ const requestRegisterUserAccountFail = createCase<any, State>(
     };
   },
   takeLatest(TYPE, function* (_action: ReduxAction<any>) {
-    yield put(snackbar.pushMessageError({ content: i18n.t('common:somethingWentWrong_pleaseTryAgainLater') }));
+    yield put(
+      snackbar.pushMessageError({ content: i18n.t('common:somethingWentWrong_pleaseTryAgainLater') })
+    );
     yield put(clearStatusOfRequestRegisterUserAccount.action({}));
-  }),
+  })
 );
 export default requestRegisterUserAccountFail;

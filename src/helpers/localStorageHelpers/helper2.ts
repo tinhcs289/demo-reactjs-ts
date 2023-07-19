@@ -25,11 +25,11 @@
 // ) => void;
 // export type LocalStorageListenableItem<ValueType = any> = LocalStorageItem<ValueType> & {
 //   /**
-//    * @example 
+//    * @example
 //       auth.set(jwt)
 //       // used for normal cases the change event will affect all tabs which subscribe to changes of `auth`
-//    * @example 
-//       auth.set(jwt, true) 
+//    * @example
+//       auth.set(jwt, true)
 //       // the listener for `auth` in the current tab will be stopped till the next change happen.
 //       // used in case the change event will affect other tabs not the current
 //    */
@@ -109,11 +109,11 @@
 //   key: string;
 //   get: LocalStorageItemGetter<DataType>;
 //   /**
-//    * @example 
+//    * @example
 //       auth.set(jwt)
 //       // used for normal cases the change event will affect all tabs which subscribe to changes of `auth`
-//    * @example 
-//       auth.set(jwt, true) 
+//    * @example
+//       auth.set(jwt, true)
 //       // the listener for `auth` in the current tab will be stopped till the next change happen.
 //       // used in case the change event will affect other tabs not the current
 //    */

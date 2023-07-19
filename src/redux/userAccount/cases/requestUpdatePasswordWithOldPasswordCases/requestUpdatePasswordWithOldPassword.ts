@@ -1,4 +1,7 @@
-import type { UpdatePasswordWithOldPasswordApiParams, UpdatePasswordWithOldPasswordApiReturns } from '@/api/resetPassword/updatePasswordWithOldPasswordApi';
+import type {
+  UpdatePasswordWithOldPasswordApiParams,
+  UpdatePasswordWithOldPasswordApiReturns,
+} from '@/api/resetPassword/updatePasswordWithOldPasswordApi';
 import updatePasswordWithOldPasswordApi from '@/api/resetPassword/updatePasswordWithOldPasswordApi';
 import { EApiRequestStatus } from '@/constants/apiRequestStatus';
 import type { ReduxAction } from '@/helpers/reduxHelpers';
@@ -20,12 +23,14 @@ const requestUpdatePasswordWithOldPassword = createCase<UpdatePasswordWithOldPas
   },
   takeLatest(TYPE, function* (action: ReduxAction<UpdatePasswordWithOldPasswordApiParams>) {
     const { payload } = action;
-    const response = (yield updatePasswordWithOldPasswordApi(payload)) as AxiosResponse<UpdatePasswordWithOldPasswordApiReturns>;
+    const response = (yield updatePasswordWithOldPasswordApi(
+      payload
+    )) as AxiosResponse<UpdatePasswordWithOldPasswordApiReturns>;
     if (response?.status !== 200) {
       yield put(requestUpdatePasswordWithOldPasswordFail.action({}));
       return;
     }
     yield put(requestUpdatePasswordWithOldPasswordSuccess.action({}));
-  }),
+  })
 );
 export default requestUpdatePasswordWithOldPassword;

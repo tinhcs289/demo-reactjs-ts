@@ -4,4 +4,4 @@ export type AuthLayoutVariant = `${EAuthLayoutVariant}`;
 export type AuthLayoutProps = {
   children?: ReactNode;
   variant: AuthLayoutVariant;
-}
+};

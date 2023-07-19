@@ -11,4 +11,4 @@ export default async function getPromoBrands(): Promise<ShopeePromoBrandItem[]> 
   if (error) return [];
   await tryDo(wait(500));
   return data.shops;
-};
+}

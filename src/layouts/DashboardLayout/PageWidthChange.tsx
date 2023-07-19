@@ -1,4 +1,4 @@
-import contentMaxWidth from '@/appLocalStorages/contentMaxWidth';
+import contentMaxWidth from '@/browser/localStorage/contentMaxWidth';
 import { useDashboardLayout } from '@/providers/DashboardLayoutProvider';
 import LaptopMacIcon from '@mui/icons-material/LaptopMac';
 import MonitorIcon from '@mui/icons-material/Monitor';

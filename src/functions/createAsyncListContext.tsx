@@ -7,6 +7,7 @@ import { useCallback, useEffect, useMemo } from 'react';
 type Obj = { [x: string]: any };
 type NullableProps<T extends Obj = Obj> = { [P in keyof T]: T[P] | null };
 export type RowData = Obj;
+export type FilterData = Obj;
 const ID = 'id';
 const PAGE_INDEX = 1;
 const PAGE_SIZE = 10;
@@ -14,19 +15,22 @@ export type SortDirect = 'DESC' | 'ASC';
 export type Paging = { pageIndex: number; pageSize: number };
 export type Sort = { sortBy: string; sortDirection: SortDirect };
 export type QueryParams = Obj;
-export type ListState = Paging & NullableProps<Sort> & { filter?: QueryParams; totalCount: number };
-export type OnQueryArgs = Paging & NullableProps<Sort> & { filter?: QueryParams };
+export type ListState<U extends QueryParams = QueryParams> = Paging &
+  NullableProps<Sort> & { filter?: U; totalCount: number };
+export type OnQueryArgs<U extends QueryParams = QueryParams> = Paging & NullableProps<Sort> & { filter?: U };
 export type OnQueryReturns<T extends RowData = RowData> = { result: T[]; totalCount: number };
-export type OnQueryCallback<T extends RowData = RowData> = (args: OnQueryArgs) => Promise<OnQueryReturns<T>>;
-export type AsyncListConfig<T extends RowData> = {
+export type OnQueryCallback<T extends RowData = RowData, U extends QueryParams = QueryParams> = (
+  args: OnQueryArgs<U>
+) => Promise<OnQueryReturns<T>>;
+export type AsyncListConfig<T extends RowData, U extends QueryParams = QueryParams> = {
   idField?: string;
   onQuery?: OnQueryCallback<T>;
   infinite?: boolean;
   defaultSelectable?: boolean;
   defaultPagination?: Partial<Paging & { totalCount: number }>;
   defaultSort?: Partial<Sort>;
-  defaultExtendQueryParams?: QueryParams;
-  fixedExtendQueryParams?: QueryParams;
+  defaultExtendQueryParams?: Partial<U>;
+  fixedExtendQueryParams?: Partial<U>;
   queryOnFirstLoad?: boolean;
 };
 export type AsyncListData<T extends RowData = RowData> = {
@@ -51,13 +55,15 @@ export type ResetCallback = () => void;
 export type ReloadCallback = () => void;
 export type UpdatePagingCallback = (page: number, size: number) => void;
 export type UpdateSortCallback = (sortBy: string, sortDirection: SortDirect) => void;
-export type UpdateFilterCallback = (fitler: QueryParams) => void;
-export type AsyncListDataActions = {
+export type UpdateFilterCallback<U extends QueryParams = QueryParams> = (fitler: Partial<U> | null) => void;
+export type PatchFilterCallback<U extends QueryParams = QueryParams> = (fitler: Partial<U>) => void;
+export type AsyncListDataActions<U extends QueryParams = QueryParams> = {
   reset: ResetCallback;
   reload: ReloadCallback;
   updatePaging: UpdatePagingCallback;
   updateSort: UpdateSortCallback;
-  updateFilter: UpdateFilterCallback;
+  updateFilter: UpdateFilterCallback<U>;
+  patchFilter: PatchFilterCallback<U>;
 };
 export type AsyncListInteractAction<T extends RowData = RowData> = {
   action: string;
@@ -81,7 +87,7 @@ export type AsyncListToggleSelectCallback = (isOn: boolean) => void;
 export type AsyncListToggleClearSelectCallback = () => void;
 export type AsyncListCheckOrUncheckItemCallback<T extends RowData = RowData> = (item: T) => void;
 export type AsyncListCheckOrUncheckAllItemsCallback = (checked: boolean) => void;
-export type RequestAction =
+export type RequestAction<U extends QueryParams = QueryParams> =
   | {
       type: 'data:reset';
     }
@@ -98,9 +104,13 @@ export type RequestAction =
     }
   | {
       type: 'data:filter';
-      payload: QueryParams;
+      payload: Partial<U> | null;
+    }
+  | {
+      type: 'data:filter_patch';
+      payload: Partial<U>;
     };
-export type SelectAction =
+export type SelectAction<T extends RowData = RowData> =
   | {
       type: 'select:all';
       payload: [check: boolean];
@@ -111,21 +121,27 @@ export type SelectAction =
     }
   | {
       type: 'select';
-      payload: RowData;
+      payload: T;
     }
   | {
       type: 'select:clear';
     };
-export type InteractAction =
+export type InteractAction<T extends RowData = RowData> =
   | {
       type: 'interact:set';
-      payload: AsyncListInteractAction;
+      payload: AsyncListInteractAction<T>;
     }
   | {
       type: 'interact:clear';
     };
-export type AsyncListDispatch = RequestAction | SelectAction | InteractAction | null;
-export type AsyncListState<T extends RowData = RowData> = { dispatch: AsyncListDispatch } & ListState &
+export type AsyncListDispatch<T extends RowData = RowData, U extends QueryParams = QueryParams> =
+  | RequestAction<U>
+  | SelectAction<T>
+  | InteractAction<T>
+  | null;
+export type AsyncListState<T extends RowData = RowData, U extends QueryParams = QueryParams> = {
+  dispatch: AsyncListDispatch<T, U>;
+} & ListState<U> &
   AsyncListData<T> &
   AsyncListInteract<T> &
   AsyncListSelectability<T>;
@@ -147,18 +163,21 @@ export const DEFAULT_ASYNC_LIST: AsyncListState = {
   selectedItems: [],
   selectedItemIds: [],
   isCheckAll: false,
-  selectable: true,
+  selectable: false,
   dispatch: null,
 };
-type State<T extends RowData = RowData> = AsyncListState<T>;
-type Props<T extends RowData = RowData> = AsyncListConfig<T>;
-export default function createAsyncListContext<T extends RowData>(defaultState?: Partial<AsyncListState<T>>) {
+type State<T extends RowData = RowData, U extends QueryParams = QueryParams> = AsyncListState<T, U>;
+type Props<T extends RowData = RowData, U extends QueryParams = QueryParams> = AsyncListConfig<T, U>;
+export default function createAsyncListContext<
+  T extends RowData = RowData,
+  U extends QueryParams = QueryParams,
+>(defaultState?: Partial<AsyncListState<T, U>>) {
   const {
     Provider,
     useGetter: useAsyncListGetter,
     useSetter: useAsyncListSetter,
     useDefaultPropInit,
-  } = createFastContext<State<T>>({
+  } = createFastContext<State<T, U>>({
     ...(DEFAULT_ASYNC_LIST as any),
     ...defaultState,
   });
@@ -172,14 +191,8 @@ export default function createAsyncListContext<T extends RowData>(defaultState?:
       props || {};
     const isInfinite = useMemo(() => !!infinite, [infinite]);
     const firstLoadQuery = useMemo(() => !!queryOnFirstLoad, [queryOnFirstLoad]);
-    const fixedFilter = useMemo(
-      () => (fixedExtendQueryParams || {}) as QueryParams,
-      [fixedExtendQueryParams]
-    );
-    const initFilter = useMemo(
-      () => (defaultExtendQueryParams || {}) as QueryParams,
-      [defaultExtendQueryParams]
-    );
+    const fixedFilter = useMemo(() => (fixedExtendQueryParams || {}) as U, [fixedExtendQueryParams]);
+    const initFilter = useMemo(() => (defaultExtendQueryParams || {}) as U, [defaultExtendQueryParams]);
     const setState = useAsyncListSetter();
     const dispatch = useAsyncListGetter((s) => s.dispatch);
     const clearDispatch = useCallback(() => {
@@ -192,24 +205,30 @@ export default function createAsyncListContext<T extends RowData>(defaultState?:
     const filter = useAsyncListGetter((s) => s?.filter);
     const data = useAsyncListGetter((s) => s.data);
     const getQueryArgs = useCallback(
-      function getQueryArgs(payload?: Partial<OnQueryArgs>) {
-        const query: OnQueryArgs = {
+      function getQueryArgs(payload?: Partial<OnQueryArgs<U>>, overrideFilter?: boolean) {
+        const query: OnQueryArgs<U> = {
           pageIndex: payload?.pageIndex || pageIndex,
           pageSize: payload?.pageSize || pageSize,
           sortBy: payload?.sortBy || sortBy || null,
           sortDirection: payload?.sortDirection || sortDirection || null,
-          filter: { ...initFilter, ...filter, ...payload?.filter, ...fixedFilter },
+          filter: !overrideFilter
+            ? { ...initFilter, ...filter, ...payload?.filter, ...fixedFilter }
+            : {
+                ...payload?.filter,
+                ...fixedFilter,
+              },
         };
         return query;
       },
       [fixedFilter, initFilter, pageIndex, pageSize, filter, sortBy, sortDirection]
     );
     const fetchData = useCallback(
-      async function fetchData(payload?: Partial<ListState>) {
+      async function fetchDataAsync(payload?: Partial<ListState<U>>, overrideFilter?: boolean) {
+        const isOverrided = !!overrideFilter;
         if (!onQuery) return;
         let [result, totalCount]: [T[], number] = [[], 0];
         setState({ fetchStatus: EApiRequestStatus.REQUESTING });
-        const queryArgs = getQueryArgs(payload);
+        const queryArgs = getQueryArgs(payload, isOverrided);
         try {
           const response = await onQuery(queryArgs);
           result = Array.isArray(response?.result) ? response.result : [];
@@ -246,8 +265,15 @@ export default function createAsyncListContext<T extends RowData>(defaultState?:
       fetchData();
     }, [fetchData]);
     const updateFilter = useCallback(
-      (newFilter: QueryParams) => {
-        fetchData({ filter: newFilter, pageIndex: 1 });
+      (newFilter: Partial<U> | null) => {
+        fetchData({ filter: newFilter || {}, pageIndex: 1 } as any, true);
+        return;
+      },
+      [fetchData]
+    );
+    const patchFilter = useCallback(
+      (newFilter: Partial<U>) => {
+        fetchData({ filter: newFilter, pageIndex: 1 } as any);
         return;
       },
       [fetchData]
@@ -282,6 +308,10 @@ export default function createAsyncListContext<T extends RowData>(defaultState?:
           clearDispatch();
           updateFilter(dispatch.payload);
           break;
+        case 'data:filter_patch':
+          clearDispatch();
+          patchFilter(dispatch.payload);
+          break;
         case 'data:reset':
           clearDispatch();
           reload();
@@ -298,7 +328,7 @@ export default function createAsyncListContext<T extends RowData>(defaultState?:
     }, [dispatch, clearDispatch]);
     return <></>;
   }
-  function ListSelectableInit(props: Pick<Props<T>, 'idField'>) {
+  function ListSelectableInit(props: Pick<Props<T, U>, 'idField'>) {
     const { idField } = props;
     const _idField = useAsyncListGetter((s) => s.idField);
     const getId = useCallback((item?: T) => get(item, idField || _idField), [idField, _idField]);
@@ -476,7 +506,7 @@ export default function createAsyncListContext<T extends RowData>(defaultState?:
     return <></>;
   }
   function ListDefaultPropInit(
-    props: Pick<Props<T>, 'defaultSelectable' | 'defaultPagination' | 'defaultSort'>
+    props: Pick<Props<T, U>, 'defaultSelectable' | 'defaultPagination' | 'defaultSort'>
   ) {
     const { defaultSelectable, defaultPagination, defaultSort } = props || {};
     useDefaultPropInit('totalCount', defaultPagination?.totalCount);
@@ -550,9 +580,15 @@ export default function createAsyncListContext<T extends RowData>(defaultState?:
       },
       [setState]
     );
-    const updateFilter: UpdateFilterCallback = useCallback(
+    const updateFilter: UpdateFilterCallback<U> = useCallback(
       (payload) => {
-        setState({ dispatch: { type: 'data:filter', payload } });
+        setState({ dispatch: { type: 'data:filter', payload: payload as any } });
+      },
+      [setState]
+    );
+    const patchFilter: PatchFilterCallback<U> = useCallback(
+      (payload) => {
+        setState({ dispatch: { type: 'data:filter_patch', payload } });
       },
       [setState]
     );
@@ -596,6 +632,7 @@ export default function createAsyncListContext<T extends RowData>(defaultState?:
       updatePaging,
       updateSort,
       updateFilter,
+      patchFilter,
       reload,
       reset,
       setAction,
@@ -606,7 +643,7 @@ export default function createAsyncListContext<T extends RowData>(defaultState?:
       toggleSelectable,
     };
   }
-  function AsyncListProvider(props: Props<T> & { children?: ReactNode }) {
+  function AsyncListProvider(props: Props<T, U> & { children?: ReactNode }) {
     const {
       idField,
       children,

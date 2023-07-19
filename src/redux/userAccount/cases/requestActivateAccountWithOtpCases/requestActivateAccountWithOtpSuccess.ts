@@ -16,6 +16,6 @@ const requestActivateAccountWithOtpSuccess = createCase<any, State>(
   },
   takeLatest(TYPE, function* (_action: ReduxAction<any>) {
     yield put(clearStatusOfRequestActivateAccountWithOtp.action({}));
-  }),
+  })
 );
 export default requestActivateAccountWithOtpSuccess;

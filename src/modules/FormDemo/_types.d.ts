@@ -3,7 +3,7 @@ import type { RadioGroupOption } from '@/components/rhfInputs/RHFRadioGroup';
 import type { AutoCompleteOption } from '@/components/rhfInputs/RHFSelect';
 import type { SwitchGroupOption } from '@/components/rhfInputs/RHFSwitchGroup';
 import type { CommonTagInputItem } from '@/components/rhfInputs/RHFTagInput';
-import type { GenericFormProps } from '@/types';
+import type { CommonFormProps } from '@/types';
 import type { Moment } from 'moment';
 export type FormValues = {
   TextField?: string;
@@ -25,7 +25,7 @@ export type FormValues = {
   TagInputField?: CommonTagInputItem[];
   NumberField?: number;
 };
-export type FormProps = GenericFormProps<FormValue>;
+export type FormProps = CommonFormProps<FormValues>;
 export type FormComponent = ComponentType<FormProps>;
 export type FileData = {
   id?: string;

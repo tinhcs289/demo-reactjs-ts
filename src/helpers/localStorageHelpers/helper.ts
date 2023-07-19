@@ -1,7 +1,10 @@
 import isEqual from 'lodash/isEqual';
 export type LocalStorageItemGetter<T> = () => T | null | undefined;
 export type LocalStorageItemSetter<T> = (value: T | null | undefined) => void;
-export type LocalStorageSyncItemSetter<T> = (value: T | null | undefined, stopListenerInThisTab?: boolean) => void;
+export type LocalStorageSyncItemSetter<T> = (
+  value: T | null | undefined,
+  stopListenerInThisTab?: boolean
+) => void;
 export type LocalStorageItemValidator<T> = (value: T | null) => boolean;
 export type LocalStorageItemMigrate<T> = (value: string) => T | null;
 export type LocalStorageItem<T> = {
@@ -21,7 +24,7 @@ function localStorageRemoveItem(key: string) {
     return;
   }
   return window.localStorage.removeItem(key);
-};
+}
 function localStorageUpdateItem<T>(key: string, value: T) {
   if (
     !key ||
@@ -33,27 +36,27 @@ function localStorageUpdateItem<T>(key: string, value: T) {
     return;
   }
   return window.localStorage.setItem(key, JSON.stringify(value));
-};
+}
 function localStorageGetItem<T>(
   /**
    * the key in the LocalStorage.
    */
   key: string,
   /**
-  * A function for validating the type of the current value of the `key` which was stored in the LocalStorage.
-  * the `validate` function will returns `true` if the current value matches with the type of T, otherwise returns `false`.
-  */
+   * A function for validating the type of the current value of the `key` which was stored in the LocalStorage.
+   * the `validate` function will returns `true` if the current value matches with the type of T, otherwise returns `false`.
+   */
   validate?: LocalStorageItemValidator<T>,
   /**
-  * if the current value of the `key` which was stored in the LocalStorage has a conflict type with T,
-  * the `migrate` function will be used to convert or re-model the value into the type of T.
-  * This will help the `localStorageGetItem` function always returns a valid value or null.
-  */
+   * if the current value of the `key` which was stored in the LocalStorage has a conflict type with T,
+   * the `migrate` function will be used to convert or re-model the value into the type of T.
+   * This will help the `localStorageGetItem` function always returns a valid value or null.
+   */
   migrate?: LocalStorageItemMigrate<T>,
   /**
-  * if the current value of the `key` which was stored in the LocalStorage has a conflict type with T,
-  * provide the `overrideValueIfInvalid` to `true`/`false` to update the value in the LocalStorage with a new valid value or clear if the new value are null.
-  */
+   * if the current value of the `key` which was stored in the LocalStorage has a conflict type with T,
+   * provide the `overrideValueIfInvalid` to `true`/`false` to update the value in the LocalStorage with a new valid value or clear if the new value are null.
+   */
   overrideValueIfInvalid?: boolean
 ): T | null {
   if (
@@ -72,14 +75,11 @@ function localStorageGetItem<T>(
   try {
     const val = JSON.parse(value) as T;
     if (typeof validate === 'function') {
-      if (validate(val) === true)
-        returns = val;
+      if (validate(val) === true) returns = val;
       else {
         isInvalid = true;
-        if (typeof migrate !== 'function')
-          returns = null
-        else
-          returns = migrate(value || '');
+        if (typeof migrate !== 'function') returns = null;
+        else returns = migrate(value || '');
       }
     } else returns = val;
   } catch (error) {
@@ -91,21 +91,23 @@ function localStorageGetItem<T>(
     }
     return returns;
   }
-};
+}
 export type CreateNewLocalStorageItemArgs<T> = Partial<Omit<LocalStorageItem<T>, 'key'>> & {
   key: string;
   validate?: LocalStorageItemValidator<T>;
   migrate?: LocalStorageItemMigrate<T>;
   overrideValueIfInvalid?: boolean;
-}
+};
 export function newLocalStorageItem<T>(args: CreateNewLocalStorageItemArgs<T>) {
   return {
     key: args.key,
-    get: args?.get || (() => localStorageGetItem(args.key, args?.validate, args?.migrate, args?.overrideValueIfInvalid)),
+    get:
+      args?.get ||
+      (() => localStorageGetItem(args.key, args?.validate, args?.migrate, args?.overrideValueIfInvalid)),
     set: args?.set || ((value: T | null | undefined) => localStorageUpdateItem(args.key, value)),
     clear: args?.clear || (() => localStorageRemoveItem(args.key)),
   } as LocalStorageItem<T>;
-};
+}
 export type LocalStorageSyncKey = {
   value: string;
   name: string;
@@ -152,14 +154,14 @@ let stopList: string[] = [];
 function __markStopListen(key: string) {
   if (!key || stopList.includes(key)) return;
   stopList.push(key);
-};
+}
 function __unmarkStopListen(key: string) {
   if (!key || !stopList.includes(key)) return;
   stopList = stopList.filter((k) => k !== key);
-};
+}
 function __isMarkStopListen(key: string) {
   return !!key && stopList.includes(key);
-};
+}
 function __setSyncItem(key: string, value: string) {
   if (!key) return;
   const previousValue = localStorageGetItem<string>(key);
@@ -180,16 +182,16 @@ function __setSyncItem(key: string, value: string) {
       previousValue: undefined,
     });
   }
-};
+}
 function __getSyncItem(key: string) {
   if (!key) return null;
   const value = localStorageGetItem<string>(key);
   if (!value) return null;
   try {
     if (JSON.parse(value) === defaultSyncValue) return null;
-  } catch (error) { }
+  } catch (error) {}
   return value;
-};
+}
 function __detectChangeAndSync() {
   const changes: LocalStorageSyncKey[] = [];
   const state = {} as { [x: string]: string };
@@ -218,7 +220,7 @@ function __detectChangeAndSync() {
     initializedKeys[i].previousValue = change.previousValue;
   }
   return changes;
-};
+}
 function __pushEvent(key: string, detail: LocalStorageSyncKey) {
   if (
     typeof window === 'undefined' ||
@@ -229,7 +231,7 @@ function __pushEvent(key: string, detail: LocalStorageSyncKey) {
   }
   let event = new CustomEvent(`${prefixEventName}${key}`, { detail });
   document.dispatchEvent(event);
-};
+}
 function __triggerListeners(changes: LocalStorageSyncKey[] = []) {
   if (
     typeof document === 'undefined' ||
@@ -244,7 +246,7 @@ function __triggerListeners(changes: LocalStorageSyncKey[] = []) {
       previousValue: changes[i].previousValue !== defaultSyncValue ? changes[i].previousValue : undefined,
     } as LocalStorageSyncKey);
   }
-};
+}
 function __initListener() {
   if (isInitialized || typeof window === 'undefined' || typeof window.addEventListener !== 'function') return;
   window.addEventListener('storage', () => {
@@ -252,7 +254,7 @@ function __initListener() {
     __triggerListeners(changes);
   });
   isInitialized = true;
-};
+}
 function __extractJsonValue<T>(
   value: string | null | undefined,
   validate?: LocalStorageItemValidator<T>
@@ -279,15 +281,12 @@ function __extractJsonValue<T>(
     }
     return returns;
   }
-};
-function __addLocalStorageListener(
-  key: string,
-  handler: (event: LocalStorageChangeItemEvent) => void,
-) {
+}
+function __addLocalStorageListener(key: string, handler: (event: LocalStorageChangeItemEvent) => void) {
   if (typeof document !== 'undefined') {
     document.addEventListener(`${prefixEventName}${key}`, handler as any);
   }
-};
+}
 export function newLocalStorageListenableItem<T>(args: {
   key: string;
   defaultValue?: T;
@@ -323,7 +322,9 @@ export function newLocalStorageListenableItem<T>(args: {
       if (stopListenerInThisTab) __markStopListen(syncKey);
       __setSyncItem(syncKey, JSON.stringify(value || defaultSyncValue));
     },
-    onChange: (handler: (event: LocalStorageChangeItemEvent, value: LocalStorageChangeItemValue<T>) => void) => {
+    onChange: (
+      handler: (event: LocalStorageChangeItemEvent, value: LocalStorageChangeItemValue<T>) => void
+    ) => {
       if (__isMarkStopListen(syncKey)) {
         __unmarkStopListen(syncKey);
         return;
@@ -344,10 +345,9 @@ export function newLocalStorageListenableItem<T>(args: {
 export function resetAllSyncKeys() {
   if (!(Array.isArray(initializedKeys) && initializedKeys.length > 0)) return;
   for (let i = 0; i < initializedKeys.length; i++) {
-    if (typeof initializedKeys[i].name !== 'string')
-      continue;
+    if (typeof initializedKeys[i].name !== 'string') continue;
     initializedKeys[i].value = defaultSyncValue;
     initializedKeys[i].previousValue = undefined;
     localStorageUpdateItem(initializedKeys[i].name, defaultSyncValue);
   }
-};
+}

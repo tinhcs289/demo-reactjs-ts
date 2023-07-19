@@ -1,4 +1,4 @@
-import themeVariant from '@/appLocalStorages/themeVariant';
+import themeVariant from '@/browser/localStorage/themeVariant';
 import FabChangeTheme from '@/providers/MUIThemeV5Provider/FabChangeTheme';
 import type { PaletteMode } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';

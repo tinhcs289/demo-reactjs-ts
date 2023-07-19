@@ -1,4 +1,4 @@
-import contentMaxWidth from '@/appLocalStorages/contentMaxWidth';
+import contentMaxWidth from '@/browser/localStorage/contentMaxWidth';
 import asideMenuItems from '@/constants/asideMenuItems';
 import createFastContext from '@/functions/createFastContext';
 import type { ReactNode } from 'react';

@@ -1,4 +1,4 @@
-import contentMaxWidth from '@/appLocalStorages/contentMaxWidth';
+import contentMaxWidth from '@/browser/localStorage/contentMaxWidth';
 import asideMenuItems from '@/constants/asideMenuItems';
 import createFastContext from '@/functions/createFastContext';
 import type { LayoutContextValues } from './_types';
@@ -10,4 +10,3 @@ const { Provider, useStore: useDashboardLayout } = createFastContext<LayoutConte
   pageMaxWidth: contentMaxWidth.get() || 'lg',
 });
 export { Provider, useDashboardLayout };
-

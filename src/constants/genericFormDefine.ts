@@ -1,3 +1,5 @@
+import type { RHFCKEditorProps } from '@/components/rhfInputs/RHFCKEditor';
+import RHFCKEditor from '@/components/rhfInputs/RHFCKEditor';
 import type { RHFCheckProps } from '@/components/rhfInputs/RHFCheck';
 import RHFCheck from '@/components/rhfInputs/RHFCheck';
 import type { RHFCheckGroupProps } from '@/components/rhfInputs/RHFCheckGroup';
@@ -6,8 +8,12 @@ import type { RHFDateProps } from '@/components/rhfInputs/RHFDate';
 import RHFDate from '@/components/rhfInputs/RHFDate';
 import type { RHFDateMultiProps } from '@/components/rhfInputs/RHFDateMulti';
 import RHFDateMulti from '@/components/rhfInputs/RHFDateMulti';
+import type { RHFDateStaticProps } from '@/components/rhfInputs/RHFDateStatic';
+import RHFDateStatic from '@/components/rhfInputs/RHFDateStatic';
 import type { RHFDateTimeProps } from '@/components/rhfInputs/RHFDateTime';
 import RHFDateTime from '@/components/rhfInputs/RHFDateTime';
+import type { RHFDateTimeStaticProps } from '@/components/rhfInputs/RHFDateTimeStatic';
+import RHFDateTimeStatic from '@/components/rhfInputs/RHFDateTimeStatic';
 import type { RHFGooglePlaceProps } from '@/components/rhfInputs/RHFGooglePlace';
 import RHFGooglePlace from '@/components/rhfInputs/RHFGooglePlace';
 import type { RHFHiddenProps } from '@/components/rhfInputs/RHFHidden';
@@ -36,10 +42,10 @@ import type { RHFTextNumericProps } from '@/components/rhfInputs/RHFTextNumeric'
 import RHFTextNumeric from '@/components/rhfInputs/RHFTextNumeric';
 import type { RHFTimeProps } from '@/components/rhfInputs/RHFTime';
 import RHFTime from '@/components/rhfInputs/RHFTime';
+import type { RHFTimeStaticProps } from '@/components/rhfInputs/RHFTimeStatic';
+import RHFTimeStatic from '@/components/rhfInputs/RHFTimeStatic';
 import type { RHFToggleProps } from '@/components/rhfInputs/RHFToggle';
 import RHFToggle from '@/components/rhfInputs/RHFToggle';
-import type { RHFCKEditorProps } from '@/components/rhfInputs/RHFCKEditor';
-import RHFCKEditor from '@/components/rhfInputs/RHFCKEditor';
 import type { ComponentProps } from 'react';
 //#region Types of input
 export enum FieldType {
@@ -66,6 +72,9 @@ export enum FieldType {
   'google-places' = 'google-places',
   'toggle' = 'toggle',
   'ckeditor' = 'ckeditor',
+  'date-static' = 'date-static',
+  'time-static' = 'time-static',
+  'datetime-static' = 'datetime-static',
 }
 export type FormInputType = `${FieldType}`;
 //#endregion
@@ -94,6 +103,9 @@ export const DICT = {
   'google-places': RHFGooglePlace,
   toggle: RHFToggle,
   ckeditor: RHFCKEditor,
+  'date-static': RHFDateStatic,
+  'time-static': RHFTimeStatic,
+  'datetime-static': RHFDateTimeStatic,
 };
 //#endregion
 //#region RHF Component Props
@@ -143,5 +155,11 @@ export type RHFComponentProps<T extends FormInputType> = T extends 'text'
   ? RHFToggleProps
   : T extends 'ckeditor'
   ? RHFCKEditorProps
+  : T extends 'date-static'
+  ? RHFDateStaticProps
+  : T extends 'time-static'
+  ? RHFTimeStaticProps
+  : T extends 'datetime-static'
+  ? RHFDateTimeStaticProps
   : ComponentProps<any>;
 //#endregion

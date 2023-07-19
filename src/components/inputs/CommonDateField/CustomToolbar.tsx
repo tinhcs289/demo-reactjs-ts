@@ -4,6 +4,7 @@ import moment from 'moment';
 import { useMemo } from 'react';
 import { DEFAULT_FORMAT } from './constants';
 import type { CustomToolbarProps } from './_types';
+import formatMoment from '@/helpers/formatHelpers/formatMoment';
 export default function CustomToolbar(props: CustomToolbarProps) {
   const { className, label, value, toolbarFormat } = props;
   const $DateText = useMemo(() => {
@@ -13,7 +14,7 @@ export default function CustomToolbar(props: CustomToolbarProps) {
           {DEFAULT_FORMAT}
         </Typography>
       );
-    const text = moment(value).format(toolbarFormat || DEFAULT_FORMAT);
+    const text = formatMoment(value, toolbarFormat || DEFAULT_FORMAT);
     return <Typography variant="h6">{text}</Typography>;
   }, [value, toolbarFormat]);
   return (

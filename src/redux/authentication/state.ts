@@ -1,12 +1,16 @@
-import authentication from '@/appCookies/authentication';
-import userPermissions from '@/appCookies/userPermissions';
+import authentication from '@/browser/cookies/authentication';
+import userPermissions from '@/browser/localStorage/userPermissions';
+import userProfile from '@/browser/localStorage/userProfile';
+import userRoles from '@/browser/localStorage/userRoles';
 import { EApiRequestStatus } from '@/constants/apiRequestStatus';
-import type { AuthenticationJWT, AuthenticationUserInfo } from '@/types';
+import type { AuthenticationJWT, AuthenticationUserInfo, UserProfile } from '@/types';
 import Immutable from 'seamless-immutable';
 export const rootName = 'authentication';
 export type State = {
   token: AuthenticationJWT | null;
-  user: AuthenticationUserInfo | null;
+  user: UserProfile | null;
+  roles: Required<AuthenticationUserInfo['roles']> | null;
+  policies: Required<AuthenticationUserInfo['policies']> | null;
   loginRequestStatus: EApiRequestStatus;
   logoutRequestStatus: EApiRequestStatus;
   verifyTokenRequestStatus: EApiRequestStatus;
@@ -14,6 +18,8 @@ export type State = {
 };
 const tokenInfo = authentication.get();
 const policies = userPermissions.get();
+const roles = userRoles.get();
+const user = userProfile.get();
 const state = Immutable<State>({
   token: tokenInfo || null,
   user: {
@@ -26,9 +32,10 @@ const state = Immutable<State>({
     avatar: '',
     email: '',
     phone: '',
-    roles: [],
-    polices: policies || [],
+    ...user,
   },
+  roles: roles || [],
+  policies: policies || [],
   loginRequestStatus: EApiRequestStatus.NONE,
   logoutRequestStatus: EApiRequestStatus.NONE,
   verifyTokenRequestStatus: EApiRequestStatus.NONE,

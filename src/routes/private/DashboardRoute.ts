@@ -41,7 +41,7 @@ const DashboardRoute: RouteConfig[] = [
   },
   {
     name: 'DashboardNotFoundRoute',
-    path: PATHS.dashboard + "/*",
+    path: PATHS.dashboard + '/*',
     component: Content404,
   },
 ];

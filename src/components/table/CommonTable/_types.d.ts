@@ -12,26 +12,41 @@ export type SortState = {
   sortBy: string;
   sortDirection: SortDirect;
 };
-export type BodyCellInnerRenderFunctionArgs<RowData extends AnyObject, CellComponentProps extends AnyObject = AnyObject> = {
+export type BodyCellInnerRenderFunctionArgs<
+  RowData extends AnyObject,
+  CellComponentProps extends AnyObject = AnyObject,
+> = {
   row: RowData;
   rowIndex?: number;
 } & CellComponentProps;
-export type BodyCellRenderFunctionArgs<RowData extends AnyObject, CellComponentProps extends AnyObject = AnyObject> = TableCellProps &
-  BodyCellInnerRenderFunctionArgs<RowData, CellComponentProps>;
-export type BodyCellRenderFunction<RowData extends AnyObject, CellComponentProps extends AnyObject = AnyObject> = (
-  args: BodyCellRenderFunctionArgs<RowData, CellComponentProps>
-) => ReactNode;
-export type BodyCellInnerRenderFunction<RowData extends AnyObject, CellComponentProps extends AnyObject = AnyObject> = (
-  args: BodyCellInnerRenderFunctionArgs<RowData, CellComponentProps>
-) => ReactNode;
-export type BodyCellComponentProps<RowData extends AnyObject, CellComponentProps extends AnyObject = AnyObject> = BodyCellRenderFunctionArgs<RowData, CellComponentProps>
-export type BodyCellComponent<RowData extends AnyObject, CellComponentProps extends AnyObject = AnyObject> = ComponentType<
-  BodyCellRenderFunctionArgs<RowData, CellComponentProps>
->;
-export type BodyCellInnerComponentProps<RowData extends AnyObject, CellComponentProps extends AnyObject = AnyObject> = BodyCellInnerRenderFunctionArgs<RowData, CellComponentProps>
-export type BodyCellInnerComponent<RowData extends AnyObject, CellComponentProps extends AnyObject = AnyObject> = ComponentType<
-  BodyCellInnerRenderFunctionArgs<RowData, CellComponentProps>
->;
+export type BodyCellRenderFunctionArgs<
+  RowData extends AnyObject,
+  CellComponentProps extends AnyObject = AnyObject,
+> = TableCellProps & BodyCellInnerRenderFunctionArgs<RowData, CellComponentProps>;
+export type BodyCellRenderFunction<
+  RowData extends AnyObject,
+  CellComponentProps extends AnyObject = AnyObject,
+> = (args: BodyCellRenderFunctionArgs<RowData, CellComponentProps>) => ReactNode;
+export type BodyCellInnerRenderFunction<
+  RowData extends AnyObject,
+  CellComponentProps extends AnyObject = AnyObject,
+> = (args: BodyCellInnerRenderFunctionArgs<RowData, CellComponentProps>) => ReactNode;
+export type BodyCellComponentProps<
+  RowData extends AnyObject,
+  CellComponentProps extends AnyObject = AnyObject,
+> = BodyCellRenderFunctionArgs<RowData, CellComponentProps>;
+export type BodyCellComponent<
+  RowData extends AnyObject,
+  CellComponentProps extends AnyObject = AnyObject,
+> = ComponentType<BodyCellRenderFunctionArgs<RowData, CellComponentProps>>;
+export type BodyCellInnerComponentProps<
+  RowData extends AnyObject,
+  CellComponentProps extends AnyObject = AnyObject,
+> = BodyCellInnerRenderFunctionArgs<RowData, CellComponentProps>;
+export type BodyCellInnerComponent<
+  RowData extends AnyObject,
+  CellComponentProps extends AnyObject = AnyObject,
+> = ComponentType<BodyCellInnerRenderFunctionArgs<RowData, CellComponentProps>>;
 export type CommonTableConfig<RowData extends AnyObject = AnyObject> = {
   /**
    * a unique GUID string
@@ -40,7 +55,7 @@ export type CommonTableConfig<RowData extends AnyObject = AnyObject> = {
   /**
    * name of field which used to map value in table cell if custom render functions are not defined
    */
-  field?: keyof RowData | 'action';
+  field?: keyof RowData | `_${string}`;
   /**
    * render function of head cell
    */
@@ -81,7 +96,7 @@ export type CommonTableConfig<RowData extends AnyObject = AnyObject> = {
    * display column as sticky at the right-end
    */
   stickyLast?: boolean;
-}
+};
 export type Selectability<RowData extends AnyObject = AnyObject> = {
   /**
    * checked status of whole page data
@@ -102,16 +117,18 @@ export type Selectability<RowData extends AnyObject = AnyObject> = {
    */
   onCheckRow?: (row: RowData) => void;
 };
-export type BodyRowProps<RowData extends AnyObject = AnyObject> = TableRowProps<"tr", {}> & {
+export type BodyRowProps<RowData extends AnyObject = AnyObject> = TableRowProps<'tr', {}> & {
   id: string;
   rowId: string;
   row: RowData;
   rowIndex: number;
   totalOfCells: number;
   columns: CommonTableConfig<RowData>[];
-}
+};
 export type BodyRowComponent<RowData extends AnyObject = AnyObject> = ComponentType<BodyRowProps<RowData>>;
-export type BodyRowHoc<RowData extends AnyObject = AnyObject> = (WrappedComponent: BodyRowComponent<RowData>) => BodyRowComponent<RowData>;
+export type BodyRowHoc<RowData extends AnyObject = AnyObject> = (
+  WrappedComponent: BodyRowComponent<RowData>
+) => BodyRowComponent<RowData>;
 export interface CommonTableProps<RowData extends AnyObject = AnyObject> {
   /**
    * Props of the `TableContainer` component.
@@ -183,7 +200,10 @@ export interface CommonTableProps<RowData extends AnyObject = AnyObject> {
 }
 //#endregion
 //#region Table extensions
-export type DetailPanelComponent<RowData extends AnyObject = AnyObject> = BodyCellInnerComponent<RowData, { closePanel?: () => void }>;
+export type DetailPanelComponent<RowData extends AnyObject = AnyObject> = BodyCellInnerComponent<
+  RowData,
+  { closePanel?: () => void }
+>;
 export type DetailPanelToggleComponent<RowData extends AnyObject = AnyObject> = ComponentType<{
   open: boolean;
   toggle: (event: any, position?: 'top' | 'bottom') => void;

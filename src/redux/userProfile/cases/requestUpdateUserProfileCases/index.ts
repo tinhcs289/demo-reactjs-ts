@@ -10,4 +10,4 @@ export const actions = {
   requestUpdateUserProfile: requestUpdateUserProfile.action,
   requestUpdateUserProfileFail: requestUpdateUserProfileFail.action,
   requestUpdateUserProfileSuccess: requestUpdateUserProfileSuccess.action,
-}
+};

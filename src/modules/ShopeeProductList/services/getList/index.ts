@@ -9,11 +9,13 @@ const defaultReturns: OnQueryReturns<ShopeeProductItem> = {
   totalCount: 0,
 };
 function isValidData(r: any) {
-  return !!r?.data &&
+  return (
+    !!r?.data &&
     Number.isInteger(r.data.total) &&
     r.data.total > 0 &&
     Array.isArray(r.data.item) &&
     r.data.item.length > 0
+  );
 }
 export default async function getList(args: OnQueryArgs): Promise<OnQueryReturns<ShopeeProductItem>> {
   const payload: PaginatedListQuery = {
@@ -26,4 +28,4 @@ export default async function getList(args: OnQueryArgs): Promise<OnQueryReturns
     totalCount: data.total,
     result: data.item,
   };
-};
+}

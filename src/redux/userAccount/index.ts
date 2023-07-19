@@ -22,7 +22,7 @@ export default createReducer(
   ...requestCreateOtpForResetPassword.cases,
   ...requestRegisterUserAccount.cases,
   ...requestUpdatePasswordWithOldPassword.cases,
-  ...requestUpdatePasswordWithOtp.cases,
+  ...requestUpdatePasswordWithOtp.cases
 );
 //#endregion
 //#region export Action

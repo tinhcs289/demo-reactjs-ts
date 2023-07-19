@@ -7,7 +7,7 @@ export { default as FormRegisterFields } from './components/FormFields';
 export type {
   FormComponent as FormRegisterComponent,
   FormProps as FormRegisterProps,
-  FormValues as FormRegisterValues
+  FormValues as FormRegisterValues,
 } from './_types';
 //#endregion
 //#region constants

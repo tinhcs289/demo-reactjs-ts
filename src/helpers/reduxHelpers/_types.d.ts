@@ -38,6 +38,8 @@ export type ReduxState<T> = ImmutableObject<T>;
 export type ReduxCase<ActionPayload extends TObject, State> = (
   action: ReduxAction<ActionPayload>,
   state: ReduxState<State>
-) => State
-export type ReduxCaseSagaEffect<T extends TObject> = (action: TGenericAction<T>) => Generator<never, void, unknown>;
+) => State;
+export type ReduxCaseSagaEffect<T extends TObject> = (
+  action: TGenericAction<T>
+) => Generator<never, void, unknown>;
 //#endregion

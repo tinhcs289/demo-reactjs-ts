@@ -1,4 +1,4 @@
-import authentication from '@/appCookies/authentication';
+import authentication from '@/browser/cookies/authentication';
 import { RouteFallback } from '@/components/fallback';
 import PATHS from '@/constants/paths';
 import toEncodeUri from '@/helpers/stringHelpers/toEncodeUri';
@@ -21,7 +21,7 @@ export default function ifUnAuthenticated(WrappedComponent: AppRouterComponent):
       <BrowserRouter {...props}>
         <Routes>
           <Route element={<LandingLayout />}>{renderRoutes(publicRoutes)}</Route>
-          <Route element={<AuthLayout variant="side" />}>{renderRoutes(authRoutes)}</Route>
+          <Route element={<AuthLayout variant="fullWidth" />}>{renderRoutes(authRoutes)}</Route>
           {privateRoutes.map((route: RouteConfig) => {
             const returnHash = buildReturnHash(route);
             return (

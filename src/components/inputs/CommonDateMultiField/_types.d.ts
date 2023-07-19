@@ -4,7 +4,10 @@ import type { DatePickerToolbarProps, PickersDayProps } from '@mui/x-date-picker
 import type { MobileDatePickerProps } from '@mui/x-date-pickers/MobileDatePicker';
 import type { Moment } from 'moment';
 import type { ReactNode } from 'react';
-export type CommonDateMultiFieldProps = Omit<MobileDatePickerProps<Moment>, 'value' | 'onChange' | 'renderInput' | 'renderDay'> & {
+export type CommonDateMultiFieldProps = Omit<
+  MobileDatePickerProps<Moment>,
+  'value' | 'onChange' | 'renderInput' | 'renderDay'
+> & {
   value?: Moment[];
   onChange?: (value?: Moment[]) => void;
   error?: boolean;

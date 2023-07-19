@@ -9,7 +9,10 @@ function sumWidth(elements?: HTMLElement[]) {
 function reCalculateLeftOfElements(elements?: HTMLElement[], isScrollbarDisplayed?: boolean) {
   if (!Array.isArray(elements) || elements.length === 0) return;
   elements.forEach((e, i, es) => {
-    if (i === 0) return;
+    if (i === 0) {
+      e.style.left = '0';
+      return;
+    }
     e.style.left = sumWidth(es.filter((_, j) => j < i)) + 'px';
   });
 }
@@ -17,7 +20,10 @@ function reCalculateRightOfElements(elements?: HTMLElement[], isScrollbarDisplay
   if (!Array.isArray(elements) || elements.length === 0) return;
   elements.reverse().forEach((e, i, es) => {
     if (i !== es.length - 1) e.style.boxShadow = 'none';
-    if (i === 0) return;
+    if (i === 0) {
+      e.style.right = '0';
+      return;
+    }
     e.style.right = sumWidth(es.filter((_, j) => j < i)) + 'px';
   });
 }

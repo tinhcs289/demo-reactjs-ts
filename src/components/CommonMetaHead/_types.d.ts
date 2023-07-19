@@ -5,7 +5,7 @@ export type MetaTagProps = HTMLAttributes<'meta'> & {
   charset?: string;
   property?: string;
   httpEquiv?: string;
-}
+};
 export type LinkTagProps = HTMLAttributes<'link'> & {
   crossorigin?: string;
   href?: string;
@@ -16,10 +16,10 @@ export type LinkTagProps = HTMLAttributes<'link'> & {
   sizes?: string;
   title?: string;
   type?: string;
-}
+};
 export type CommonMetaHeadProps = {
   title: string;
   meta?: MetaTagProps[];
   links?: LinkTagProps[];
-  children?: ReactNode
+  children?: ReactNode;
 };

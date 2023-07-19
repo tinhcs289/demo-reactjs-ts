@@ -1,4 +1,7 @@
-import type { UpdateUserProfileApiReturns, UpdateUserProfileApiParams } from '@/api/userProfile/updateUserProfileApi';
+import type {
+  UpdateUserProfileApiReturns,
+  UpdateUserProfileApiParams,
+} from '@/api/userProfile/updateUserProfileApi';
 import updateUserProfileApi from '@/api/userProfile/updateUserProfileApi';
 import { EApiRequestStatus } from '@/constants/apiRequestStatus';
 import isOkWithData from '@/helpers/httpRequestHelpers/isOkWithData';
@@ -21,12 +24,12 @@ const requestUpdateUserProfile = createCase<AnyObject, State>(
     } as any;
   },
   takeLatest(TYPE, function* (action: ReduxAction<UpdateUserProfileApiParams>) {
-    const response: AxiosResponse<UpdateUserProfileApiReturns> = (yield updateUserProfileApi(action.payload));
+    const response: AxiosResponse<UpdateUserProfileApiReturns> = yield updateUserProfileApi(action.payload);
     if (!isOkWithData(response)) {
       yield put(requestUpdateUserProfileFail.action({}));
       return;
     }
     yield put(requestUpdateUserProfileSuccess.action({}));
-  }),
+  })
 );
 export default requestUpdateUserProfile;

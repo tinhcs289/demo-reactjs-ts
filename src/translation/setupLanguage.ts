@@ -1,4 +1,4 @@
-import language from '@/appLocalStorages/language';
+import language from '@/browser/localStorage/language';
 import { EAcceptLanguage } from '@/constants/language';
 import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';

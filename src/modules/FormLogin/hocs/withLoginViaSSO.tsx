@@ -2,10 +2,10 @@ import { ButtonPositive } from '@/components/buttons';
 import { formItemSx } from '@/components/form';
 import { GridItem } from '@/components/grid';
 import FacebookIcon from '@mui/icons-material/Facebook';
+import { Divider } from '@mui/material';
 import type { ComponentType, MouseEventHandler } from 'react';
 import { useCallback } from 'react';
 import type { FormProps } from '../_types';
-import { Divider } from '@mui/material';
 export default function withLoginViaSSO(WrappedComponent: ComponentType<FormProps>) {
   return function FormLoginWithLoginViaSSO(props: FormProps) {
     const handleRequestLoginViaSSO: MouseEventHandler<HTMLButtonElement> = useCallback((event) => {

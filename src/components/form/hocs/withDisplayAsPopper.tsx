@@ -2,6 +2,7 @@ import type { ButtonCommonProps } from '@/components/buttons';
 import { ButtonCommon, ButtonNegative, ButtonPositive } from '@/components/buttons';
 import type { FieldComponentProps, FormInputType } from '@/components/form/_types';
 import { useRHFSubmitDispatch } from '@/components/form/hocs/withRHFSubmitHandler';
+import createFastContext from '@/functions/createFastContext';
 import newGuid from '@/helpers/stringHelpers/newGuid';
 import { useRHFWatchValue } from '@/hooks/useRHF';
 import ClickAwayListener from '@mui/base/ClickAwayListener';
@@ -16,9 +17,29 @@ import type { CardContentProps } from '@mui/material/CardContent';
 import CardContent from '@mui/material/CardContent';
 import type { PopperProps } from '@mui/material/Popper';
 import Popper from '@mui/material/Popper';
+import { cloneDeep } from 'lodash';
 import type { ComponentType, MouseEvent } from 'react';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
+export type RHFFieldPoppersContextValues = {
+  appliedField: string[];
+};
+const {
+  Provider: RHFPopperProvider,
+  useGetter: useGetPopperState,
+  useSetter: useSetPopperState,
+  useDefaultPropInit: useInitializerPopperProp,
+} = createFastContext<RHFFieldPoppersContextValues>({ appliedField: [] });
+export { RHFPopperProvider, useGetPopperState, useInitializerPopperProp, useSetPopperState };
+export function withRHFPopperProvider(WrappedComponent: ComponentType<any>): ComponentType<any> {
+  return function FormWithRHFPopperProvider(props: any) {
+    return (
+      <RHFPopperProvider>
+        <WrappedComponent {...props} />
+      </RHFPopperProvider>
+    );
+  };
+}
 const CardStyled = styled(Card)<CardProps>({ minWidth: 375 });
 const CardActionsStyled = styled(CardActions)<CardActionsProps>({
   display: 'flex',
@@ -54,6 +75,10 @@ const ButtonCommonStyled = styled(ButtonCommon, { shouldForwardProp: (p) => p !=
     : {}),
 }));
 export type WithDisplayAsPopperParams = {
+  /**
+   * incase sub-form
+   */
+  namePrefix?: string;
   getLabelText?: (value: any) => string;
   /**
    * @default (value: any) => typeof value !== 'undefined' && value !== null && value !== ''
@@ -73,12 +98,38 @@ export type WithDisplayAsPopperParams = {
    */
   triggerSubmitOnApply?: boolean;
 };
+function usePopperContext(fieldName: string) {
+  const setPopperContext = useSetPopperState();
+  const appliedField = useGetPopperState((s) => s?.appliedField);
+  const isCurrentlyApplied = useMemo(() => {
+    if (!Array.isArray(appliedField)) return false;
+    if (appliedField.length === 0) return false;
+    return appliedField.includes(fieldName);
+  }, [appliedField, fieldName]);
+  const markFieldAsApplied = useCallback(() => {
+    if (isCurrentlyApplied) return;
+    const newAppliedField = cloneDeep(appliedField);
+    newAppliedField.push(fieldName);
+    setPopperContext({ appliedField: newAppliedField });
+  }, [fieldName, appliedField, isCurrentlyApplied, setPopperContext]);
+  const unmarkFieldAsApplied = useCallback(() => {
+    if (!isCurrentlyApplied) return;
+    const newAppliedField = appliedField.filter((f) => f !== fieldName);
+    setPopperContext({ appliedField: newAppliedField });
+  }, [fieldName, appliedField, isCurrentlyApplied, setPopperContext]);
+  return {
+    markFieldAsApplied,
+    unmarkFieldAsApplied,
+    isCurrentlyApplied,
+  };
+}
 export default function withDisplayAsPopper<U extends FormInputType>(config?: WithDisplayAsPopperParams) {
   return function withDisplayAsPopperHOC(
     WrappedComponent: ComponentType<FieldComponentProps<U>>
   ): ComponentType<FieldComponentProps<U>> {
     return function FieldWithDisplayAsPopper(props: FieldComponentProps<U>) {
       const {
+        namePrefix,
         getLabelText,
         hasValueWhen,
         toggleButtonLabel,
@@ -88,11 +139,11 @@ export default function withDisplayAsPopper<U extends FormInputType>(config?: Wi
         cardProps,
         cardContentProps,
         applyButtonLabel = 'áp dụng',
-        discardButtonLabel = 'hủy',
+        discardButtonLabel = 'đóng',
         clearButtonLabel = 'xóa',
         triggerSubmitOnApply = true,
       } = config || {};
-      const fieldName = useMemo(() => (props?.name || '') as string, [props?.name]);
+      const fieldName = useMemo(() => (props?.name || namePrefix || '') as string, [props?.name, namePrefix]);
       const fieldValue = useRHFWatchValue(fieldName);
       const previousValue = useRef();
       const { setValue } = useFormContext();
@@ -100,54 +151,70 @@ export default function withDisplayAsPopper<U extends FormInputType>(config?: Wi
       const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
       const open = useMemo(() => Boolean(anchorEl), [anchorEl]);
       const id = useMemo(() => newGuid(), []);
+      const { isCurrentlyApplied, markFieldAsApplied, unmarkFieldAsApplied } = usePopperContext(fieldName);
       const hasValue = useMemo(() => {
         if (typeof hasValueWhen !== 'function') {
           if (typeof fieldValue === 'undefined') return false;
           if (fieldValue === null) return false;
           if (fieldValue === '') return false;
+          if (Array.isArray(fieldValue) && fieldValue.length === 0) return false;
+          if (typeof fieldValue === 'object' && Object.keys(fieldValue).length === 0) return false;
           return true;
         }
-        return hasValueWhen(fieldValue) === true;
+        const _has = hasValueWhen(fieldValue) === true;
+        return _has;
       }, [hasValueWhen, fieldValue]);
       const handleToggle = useCallback(
         (event: MouseEvent<HTMLElement>) => {
           event?.stopPropagation?.();
           if (!open) {
-            previousValue.current = fieldValue as any;
+            previousValue.current = cloneDeep(fieldValue) as any;
+          } else {
+            previousValue.current = undefined;
           }
           setAnchorEl(anchorEl ? null : event?.currentTarget);
         },
         [setAnchorEl, anchorEl, open, fieldValue]
       );
-      const handleDiscard = useCallback(
+      const handleClose = useCallback(
         (event: MouseEvent<HTMLElement>) => {
           event?.stopPropagation?.();
           setAnchorEl(null);
           if (!previousValue.current) {
-            setValue(fieldName, null);
+            setTimeout(() => {
+              setValue(fieldName, null);
+            }, 0);
           } else {
-            setValue(fieldName, previousValue.current);
+            const preValues = cloneDeep(previousValue.current);
+            setTimeout(() => {
+              setValue(fieldName, preValues);
+            }, 0);
           }
         },
-        // eslint-disable-next-line react-hooks/exhaustive-deps
         [setAnchorEl, setValue, fieldName]
       );
       const handleApply = useCallback(
         (event: MouseEvent<HTMLElement>) => {
           event?.stopPropagation?.();
           setAnchorEl(null);
+          previousValue.current = undefined;
+          markFieldAsApplied();
           if (!triggerSubmitOnApply) return;
-          dispatchSubmit?.();
+          dispatchSubmit?.(`apply_${fieldName}`);
         },
-        [setAnchorEl, dispatchSubmit, triggerSubmitOnApply]
+        [setAnchorEl, dispatchSubmit, triggerSubmitOnApply, fieldName, markFieldAsApplied]
       );
       const handleClear = useCallback(
         (event: MouseEvent<HTMLElement>) => {
           event?.stopPropagation?.();
           setAnchorEl(null);
           setValue(fieldName, null);
+          previousValue.current = undefined;
+          unmarkFieldAsApplied();
+          if (!triggerSubmitOnApply) return;
+          dispatchSubmit?.(`clear_${fieldName}`);
         },
-        [setAnchorEl, setValue, fieldName]
+        [setAnchorEl, setValue, fieldName, dispatchSubmit, triggerSubmitOnApply, unmarkFieldAsApplied]
       );
       const $EndIcon = useMemo(() => {
         if (open) return <ExpandLessIcon />;
@@ -155,7 +222,6 @@ export default function withDisplayAsPopper<U extends FormInputType>(config?: Wi
       }, [open]);
       const labelText = useMemo(() => {
         if (!!open) return toggleButtonLabel;
-        if (!getLabelText) return toggleButtonLabel;
         if (typeof getLabelText !== 'function') return toggleButtonLabel;
         return getLabelText(fieldValue);
       }, [fieldValue, getLabelText, toggleButtonLabel, open]);
@@ -179,22 +245,25 @@ export default function withDisplayAsPopper<U extends FormInputType>(config?: Wi
         (event: globalThis.MouseEvent | TouchEvent) => {
           if (!open) return;
           event?.stopPropagation?.();
-          handleDiscard(event as any);
+          handleClose(event as any);
           return;
         },
-        [open, handleDiscard]
+        [open, handleClose]
       );
+      const $ButtonClear = useMemo(() => {
+        if (!isCurrentlyApplied) return null;
+        return <ButtonNegative onClick={handleClear}>{clearButtonLabel}</ButtonNegative>;
+      }, [isCurrentlyApplied, handleClear, clearButtonLabel]);
       return (
         <>
           {$Toggle}
           <ClickAwayListener onClickAway={handleClickAway}>
             <Popper
               placement="bottom-start"
-              sx={{ zIndex: 1 }}
+              sx={{ zIndex: 1300 }}
               id={id}
               open={open}
               anchorEl={anchorEl}
-              keepMounted
               {...popperProps}
             >
               <CardStyled elevation={5} {...cardProps}>
@@ -203,8 +272,8 @@ export default function withDisplayAsPopper<U extends FormInputType>(config?: Wi
                 </CardContent>
                 <CardActionsStyled {...cardActionProps}>
                   <ButtonPositive onClick={handleApply}>{applyButtonLabel}</ButtonPositive>
-                  <ButtonNegative onClick={handleDiscard}>{discardButtonLabel}</ButtonNegative>
-                  <ButtonNegative onClick={handleClear}>{clearButtonLabel}</ButtonNegative>
+                  <ButtonNegative onClick={handleClose}>{discardButtonLabel}</ButtonNegative>
+                  {$ButtonClear}
                 </CardActionsStyled>
               </CardStyled>
             </Popper>

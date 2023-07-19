@@ -1,4 +1,7 @@
-import type { UpdatePasswordWithOtpApiParams, UpdatePasswordWithOtpApiReturns } from '@/api/resetPassword/updatePasswordWithOtpApi';
+import type {
+  UpdatePasswordWithOtpApiParams,
+  UpdatePasswordWithOtpApiReturns,
+} from '@/api/resetPassword/updatePasswordWithOtpApi';
 import updatePasswordWithOtpApi from '@/api/resetPassword/updatePasswordWithOtpApi';
 import { EApiRequestStatus } from '@/constants/apiRequestStatus';
 import type { ReduxAction } from '@/helpers/reduxHelpers';
@@ -20,12 +23,14 @@ const requestUpdatePasswordWithOtp = createCase<UpdatePasswordWithOtpApiParams, 
   },
   takeLatest(TYPE, function* (action: ReduxAction<UpdatePasswordWithOtpApiParams>) {
     const { payload } = action;
-    const response = (yield updatePasswordWithOtpApi(payload)) as AxiosResponse<UpdatePasswordWithOtpApiReturns>;
+    const response = (yield updatePasswordWithOtpApi(
+      payload
+    )) as AxiosResponse<UpdatePasswordWithOtpApiReturns>;
     if (response?.status !== 200) {
       yield put(requestUpdatePasswordWithOtpFail.action({}));
       return;
     }
     yield put(requestUpdatePasswordWithOtpSuccess.action({}));
-  }),
+  })
 );
 export default requestUpdatePasswordWithOtp;

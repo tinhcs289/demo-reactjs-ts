@@ -56,7 +56,7 @@ export default function CommonDateTimeField(props: CommonDateTimeFieldProps) {
               ...TextFieldProps?.InputProps,
             },
             sx,
-            placeholder,
+            placeholder: placeholder || TextFieldProps?.placeholder || undefined,
             error,
             errorText,
           } as any;

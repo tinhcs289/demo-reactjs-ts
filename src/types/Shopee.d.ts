@@ -1,4 +1,4 @@
-import type { AnyObject } from "@/types/AnyObject";
+import type { AnyObject } from '@/types/AnyObject';
 export type ShopeeCategoryItem = {
   catid?: number;
   parent_catid?: number;

@@ -1,4 +1,4 @@
-import acceptLanguage from '@/appLocalStorages/acceptLanguage';
+import acceptLanguage from '@/browser/localStorage/acceptLanguage';
 import { EAcceptLanguage } from '@/constants/language';
 import { i18n } from '@/translation';
 import { AcceptLanguage } from '@/types';

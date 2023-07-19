@@ -10,6 +10,15 @@ export type CookieItem<T> = {
   set: CookieItemValueSetter<T>;
   clear: CookieItemValueClear;
 };
+function cookieRemoveItem(key: string) {
+  if (!key) return;
+  return Cookies.remove(key);
+}
+function cookieUpdateItem<T>(key: string, value: T) {
+  if (!key) return;
+  const valueStringified = JSON.stringify(value);
+  return Cookies.set(key, valueStringified);
+}
 function cookieGetItem<T>(
   /**
    * the key in the cookies.
@@ -56,14 +65,6 @@ function cookieGetItem<T>(
     }
     return returns;
   }
-}
-function cookieRemoveItem(key: string) {
-  if (!key) return;
-  return Cookies.remove(key);
-}
-function cookieUpdateItem<T>(key: string, value: T) {
-  if (!key) return;
-  return Cookies.set(key, JSON.stringify(value));
 }
 export function newCookieItem<T>(
   args: {

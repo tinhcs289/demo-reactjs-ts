@@ -2,7 +2,8 @@ import type { FormControlLabelProps } from '@mui/material/FormControlLabel';
 import type { RadioGroupProps } from '@mui/material/RadioGroup';
 import type { FormGroupProps } from '@mui/material/FormGroup';
 import type { ReactNode } from 'react';
-export type RadioGroupOption = {
+import { AnyObject } from '@/types';
+export type RadioGroupOption<OptionData extends AnyObject = AnyObject> = OptionData & {
   label: ReactNode;
   value: string;
   checked?: boolean;

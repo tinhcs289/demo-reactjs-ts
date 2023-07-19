@@ -1,6 +1,7 @@
+import { CommonFallback } from '@/components/fallback';
 import { EApiRequestStatus } from '@/constants/apiRequestStatus';
-import { actions, loginRequestStatusSelector } from '@/redux/authentication';
 import PATHS from '@/constants/paths';
+import { actions, loginRequestStatusSelector } from '@/redux/authentication';
 import type { ComponentType } from 'react';
 import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -29,6 +30,15 @@ export default function withReduxAuthentication(WrappedComponent: ComponentType<
       redirectToNextPage(returnUri);
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isSuccess]);
-    return <WrappedComponent {...otherProps} loading={loading} onSubmit={handleRequestLoginViaApi as any} />;
+    const $LoadingFallback = useMemo(() => {
+      if (!loading) return null;
+      return <CommonFallback />;
+    }, [loading]);
+    return (
+      <>
+        {$LoadingFallback}
+        <WrappedComponent {...otherProps} onSubmit={handleRequestLoginViaApi as any} />
+      </>
+    );
   };
 }

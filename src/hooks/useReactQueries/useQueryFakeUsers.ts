@@ -32,5 +32,10 @@ async function getFromApi() {
   return data;
 }
 export default function useQueryFakeUsers() {
-  return useQuery<UserFake[]>('fakeUser/all', getFromApi);
+  return useQuery<UserFake[]>({
+    queryKey: ['fakeUser/all'],
+    queryFn: getFromApi,
+    staleTime: Infinity,
+    cacheTime: Infinity,
+  });
 }

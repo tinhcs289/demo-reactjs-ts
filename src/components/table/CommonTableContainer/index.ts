@@ -5,7 +5,7 @@ const CommonTableContainer = styled(Box)<BoxProps>({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  height: '100%',
+  height: 'fit-content',
   width: '100%',
 });
 export default CommonTableContainer;

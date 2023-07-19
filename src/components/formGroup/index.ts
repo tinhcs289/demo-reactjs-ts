@@ -8,4 +8,3 @@ export { default as InputHelperTextWithIcon } from './components/InputHelperText
 export type { InputHelperTextWithIconProps } from './components/InputHelperTextWithIcon';
 export { inputLabelStyles, optionBackground } from './functions';
 export { default as CommonFormControlLabel } from './components/CommonFormControlLabel';
-

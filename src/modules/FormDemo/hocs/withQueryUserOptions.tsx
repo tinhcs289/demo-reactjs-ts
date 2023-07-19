@@ -22,7 +22,7 @@ export default function withQueryUserOptions(
             ...user,
             label: `${user?.name?.firstname || ''} ${user?.name?.lastname || ''}`.trim(),
             value: `${user.id}`,
-          } as AutoCompleteOption)
+          }) as AutoCompleteOption
       );
     }, [data]);
     return <WrappedComponent {...otherProps} loading={loading} options={options} />;

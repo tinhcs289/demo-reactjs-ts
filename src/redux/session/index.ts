@@ -14,7 +14,7 @@ export default createReducer(
   state,
   //
   sessionTimeoutWarningHide,
-  sessionTimeoutWarningShow,
+  sessionTimeoutWarningShow
 );
 //#endregion
 //#region export Action
@@ -23,4 +23,3 @@ export const actions = {
   sessionTimeoutWarningShow: sessionTimeoutWarningShow.action,
 };
 //#endregion
-

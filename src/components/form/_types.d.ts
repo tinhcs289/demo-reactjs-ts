@@ -8,12 +8,16 @@ import type { ComponentType, FormEventHandler, ReactNode } from 'react';
 import type { FieldValues } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 export { FormInputType, FieldComponentProps };
-export type FormFieldHoc<U extends FormInputType> = (RHFField: ComponentType<FieldComponentProps<U>>) => ComponentType<FieldComponentProps<U>>;
-export type FormGridFieldHoc = (FormGridItem: ComponentType<FormGridProps<AnyObject>>) => ComponentType<FormGridProps<AnyObject>>;
+export type FormFieldHoc<U extends FormInputType> = (
+  RHFField: ComponentType<FieldComponentProps<U>>
+) => ComponentType<FieldComponentProps<U>>;
+export type FormGridFieldHoc = (
+  FormGridItem: ComponentType<FormGridProps<AnyObject>>
+) => ComponentType<FormGridProps<AnyObject>>;
 type FormFieldGridProps = Pick<
   FormGridItemProps,
   'sx' | 'className' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'disabledXs' | 'contentProps'
->
+>;
 export type FormField<T extends FieldValues, U extends FormInputType> = {
   name: keyof T;
   inputType?: U;
@@ -29,7 +33,7 @@ export type FormField<T extends FieldValues, U extends FormInputType> = {
 export type ReactHookForm<T extends FieldValues> = ReturnType<typeof useForm<T>>;
 export type FormGridProps<T extends FieldValues> = {
   fields: Array<FormField<T, any>>;
-  variant?: 'linear' | 'vertical'
+  variant?: 'linear' | 'vertical';
 };
 export type FormGridContainerProps = GridContainerProps & {
   onSubmit?: FormEventHandler<HTMLFormElement>;
