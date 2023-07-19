@@ -9,7 +9,7 @@ export type CommonTagInputItem = {
 export type TagComponentProps = {
   tag: CommonTagInputItem;
   index: number;
-  deleteTag: (tag: CommonTagInputItem) => void
+  deleteTag: (tag: CommonTagInputItem) => void;
 };
 export type TagComponent = ComponentType<TagComponentProps>;
 export type TagComponentRender = (props: TagComponentProps) => ReactNode;

@@ -1,4 +1,3 @@
-
 import NavLinkNoStyle from '@/components/nav/NavLinkNoStyle';
 import { createCellInnerComponent } from '@/components/table';
 import PATHS from '@/constants/paths';

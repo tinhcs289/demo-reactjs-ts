@@ -1,4 +1,4 @@
-import contentMaxWidth from '@/appLocalStorages/contentMaxWidth';
+import contentMaxWidth from '@/browser/localStorage/contentMaxWidth';
 import asideMenuItems from '@/constants/asideMenuItems';
 import usePrevious from '@/hooks/usePrevious';
 import type { TAsideMenuItem } from '@/layouts/DashboardLayout';

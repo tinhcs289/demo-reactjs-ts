@@ -1,27 +1,11 @@
+import getDefaultBackendEndpoint from '@/environments/getDefaultBackendEndpoint';
 import { HttpApiEndpoint } from '@/types';
-//#region Type
-export type EndpointDictionaries = {
-  login: HttpApiEndpoint;
-  logout: HttpApiEndpoint;
-  refreshAuthenticateToken: HttpApiEndpoint;
-  verifyAuthenticateToken: HttpApiEndpoint;
-  activateAccountWithOtp: HttpApiEndpoint;
-  register: HttpApiEndpoint;
-  requestOtpForResetPassword: HttpApiEndpoint;
-  updatePasswordWithOtp: HttpApiEndpoint;
-  updatePasswordWithOldPassword: HttpApiEndpoint;
-  uploadFile: HttpApiEndpoint;
-  getUserProfile: HttpApiEndpoint;
-  updateUserProfile: HttpApiEndpoint;
-};
-//#endregion
-//#region Constant
-const endpoints: EndpointDictionaries = {
-  login: { url: '/api/auth/sign-in', isMock: true },
+const DEFAULT = getDefaultBackendEndpoint();
+const endpoints = {
+  login: { url: `${DEFAULT}/auth/login` },
   logout: { url: '/api/auth/sign-out', isMock: true },
   refreshAuthenticateToken: {
-    url: '/api/auth/refresh-auth-token',
-    isMock: true,
+    url: `${DEFAULT}/auth/refresh-token`,
   },
   verifyAuthenticateToken: { url: '/api/auth/verify-auth-token', isMock: true },
   activateAccountWithOtp: { url: '/api/auth/account-activate', isMock: true },
@@ -39,8 +23,8 @@ const endpoints: EndpointDictionaries = {
     isMock: true,
   },
   uploadFile: { url: '/api/file/upload-single', isMock: true },
-  getUserProfile: { url: '/api/user', isMock: true },
+  getUserProfile: { url: `${DEFAULT}/can-bo/get-canbo-info` },
   updateUserProfile: { url: '/api/user', isMock: true },
 };
-export default endpoints;
-//#endregion
+export type EndpointDictionary = { [key in keyof typeof endpoints]: HttpApiEndpoint };
+export default endpoints as EndpointDictionary;

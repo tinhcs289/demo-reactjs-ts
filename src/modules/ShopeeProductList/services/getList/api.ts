@@ -27,13 +27,11 @@ const mockSetup = () => {
   mockAdapter.onGet(LINK, { params: { pageIndex: 9, pageSize: PAGE_SIZE } }).reply(200, page9);
 };
 if (isMock) mockSetup();
-export default async function api(
-  payload: PaginatedListQuery
-): Promise<
+export default async function api(payload: PaginatedListQuery): Promise<
   AxiosResponse<{
     total: number;
     item: ShopeeProductItem[];
   }>
 > {
   return !isMock ? http.get(LINK, { params: payload }) : httpMock.get(LINK, { params: payload });
-};
+}

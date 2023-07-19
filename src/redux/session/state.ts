@@ -1,8 +1,8 @@
 import Immutable from 'seamless-immutable';
 export type State = {
   /**
-  * `true` incase `refresh-token` request failed
-  */
+   * `true` incase `refresh-token` request failed
+   */
   isSessionTimeout: boolean;
   /**
    * `true` incase current `access-token` are changes (eg: login in with another account or using external authorized `access-token`)

@@ -10,9 +10,10 @@ export type ItemMenuActionRenderArgs<RowData extends AnyObject, OtherProps exten
   label: () => ReactNode;
   props: Omit<MenuProps, 'children'>;
 } & OtherProps;
-export type ItemMenuActionComponent<RowData extends AnyObject, OtherProps extends AnyObject = AnyObject> = ComponentType<
-  ItemMenuActionRenderArgs<RowData, OtherProps>
->;
+export type ItemMenuActionComponent<
+  RowData extends AnyObject,
+  OtherProps extends AnyObject = AnyObject,
+> = ComponentType<ItemMenuActionRenderArgs<RowData, OtherProps>>;
 export type ItemMenuActionRenderFunction<RowData extends AnyObject, ComponentOtherProps extends AnyObject> = (
   args: ItemMenuActionRenderArgs<RowData, ComponentOtherProps>
 ) => ReactNode;

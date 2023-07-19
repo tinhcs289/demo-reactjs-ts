@@ -15,4 +15,4 @@ export default async function api(): Promise<
   }>
 > {
   return !isMock ? http.get(LINK) : httpMock.get(LINK);
-};
+}

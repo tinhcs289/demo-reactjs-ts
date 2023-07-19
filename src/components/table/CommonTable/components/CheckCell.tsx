@@ -24,8 +24,9 @@ export default function CheckCell(
   return (
     <TableCell align="center" padding="checkbox" {...cellProps}>
       <CheckBox
-        disableRipple
-        disableTouchRipple
+        //disableRipple
+        //disableTouchRipple
+        sx={{ padding: `4px !important` }}
         color="primary"
         {...otherProps}
         checked={checked}

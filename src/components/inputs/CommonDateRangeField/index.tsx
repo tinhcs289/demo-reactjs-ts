@@ -1,3 +1,3 @@
 import CommonDateRangeField from './CommonDateRangeField';
 export default CommonDateRangeField;
-export type { TCommonDateRangeFieldProps, TCommonDateRangeFieldValue } from './_types';
+export type { CommonDateRangeFieldProps, CommonDateRangeFieldValue } from './_types';

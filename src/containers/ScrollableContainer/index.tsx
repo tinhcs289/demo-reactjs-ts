@@ -1,6 +1,6 @@
 import render from '@/helpers/reactHelpers/render';
 import useToggle from '@/hooks/useToggle';
-import { MuiIcon } from '@/types';
+import type { MuiIcon } from '@/types';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import UnfoldLessIcon from '@mui/icons-material/UnfoldLess';
@@ -8,34 +8,43 @@ import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
 import { styled } from '@mui/material';
 import type { BoxProps } from '@mui/material/Box';
 import Box from '@mui/material/Box';
-import Grid, { GridProps } from '@mui/material/Grid';
-import IconButton, { IconButtonProps } from '@mui/material/IconButton';
-import { useCallback, useMemo, useRef, useState } from 'react';
+import type { GridProps } from '@mui/material/Grid';
+import Grid from '@mui/material/Grid';
+import type { IconButtonProps } from '@mui/material/IconButton';
+import IconButton from '@mui/material/IconButton';
+import debounce from 'lodash/debounce';
+import type { UIEventHandler } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 const BoxSrcollable = styled(Box, { shouldForwardProp: (p) => p !== 'expand' })<
   BoxProps & { expand?: boolean }
 >(({ expand }) => ({
   display: 'flex',
+  zIndex: 1,
   ...(!expand
     ? { flexDirection: 'row' }
     : {
         alignItems: 'flex-start',
       }),
 }));
-const GridScollable = styled(Grid)<GridProps>({
+const GridScollable = styled(Grid, { shouldForwardProp: (p) => p !== 'scrollable' && p !== 'expand' })<
+  GridProps & { scrollable?: boolean; expand?: boolean }
+>(({ scrollable: _scrollable, expand }) => ({
   display: 'flex',
   flex: 1,
-  alignItems: 'center',
   maxWidth: '100%',
   overflowX: 'scroll',
   scrollBehavior: 'smooth',
-  flexDirection: 'column',
+  flexDirection: expand ? 'row' : 'column',
+  alignItems: 'flex-start',
+  alignContent: 'flex-start',
+  justifyContent: expand ? 'flex-start' : 'column',
   '&::-webkit-scrollbar': {
     background: 'transparent',
     WebkitAppearance: 'none',
     width: 0,
     height: 0,
   },
-});
+}));
 const IconButtonStyled = styled(IconButton)<IconButtonProps>({
   flex: 0,
 });
@@ -62,26 +71,29 @@ export default function ScrollableContainer(props: ScrollableContainerProps) {
     height,
     ...otherProps
   } = props;
-  let scrl = useRef<HTMLElement>();
+  let scrollRef = useRef<HTMLElement>();
   const [expand, toggle] = useToggle(false);
+  const [scrollable, setScrollable] = useState<boolean>(false);
   const [scrollX, setscrollX] = useState<number>(0);
   const [scrolEnd, setscrolEnd] = useState<boolean>(false);
   const slide = useCallback(
     (shift: number) => {
-      if (!scrl?.current) return;
-      scrl.current.scrollLeft += shift;
+      if (!scrollRef?.current) return;
+      scrollRef.current.scrollLeft += shift;
       setscrollX(scrollX + shift);
       const isScollEnd =
-        Math.floor(scrl.current.scrollWidth - scrl.current.scrollLeft) <= scrl.current.offsetWidth;
+        Math.floor(scrollRef.current.scrollWidth - scrollRef.current.scrollLeft) <=
+        scrollRef.current.offsetWidth;
       setscrolEnd(isScollEnd);
     },
     [scrollX]
   );
-  const scrollCheck = useCallback(() => {
-    if (!scrl?.current) return;
-    setscrollX(scrl.current.scrollLeft);
+  const scrollCheck: UIEventHandler<HTMLDivElement> = useCallback(() => {
+    if (!scrollRef?.current) return;
+    setscrollX(scrollRef.current.scrollLeft);
     const isScollEnd =
-      Math.floor(scrl.current.scrollWidth - scrl.current.scrollLeft) <= scrl.current.offsetWidth;
+      Math.floor(scrollRef.current.scrollWidth - scrollRef.current.scrollLeft) <=
+      scrollRef.current.offsetWidth;
     setscrolEnd(isScollEnd);
   }, []);
   const $ButtonBack = useMemo(() => {
@@ -102,37 +114,55 @@ export default function ScrollableContainer(props: ScrollableContainerProps) {
   }, [scrolEnd, slide, scrollStep, IconNext]);
   const $ButtonExanpandOrCollapse = useMemo(() => {
     if (!togglable) return null;
+    if (!expand && !scrollable) return null;
     return (
-      <IconButtonStyled
-        onClick={() => {
-          toggle();
-        }}
-      >
+      <IconButtonStyled onClick={toggle as any}>
         {render(expand ? IconCollapse : IconExpand, { fontSize: 'inherit' })}
       </IconButtonStyled>
     );
-  }, [IconExpand, IconCollapse, expand, toggle, togglable]);
+  }, [IconExpand, IconCollapse, expand, toggle, togglable, scrollable]);
+  const handleOnChangeWidth = useCallback(
+    (div: HTMLElement) => {
+      if (!div) return;
+      const shouldToggled = div.scrollWidth > div.offsetWidth;
+      setScrollable(shouldToggled);
+      scrollCheck(null as any);
+    },
+    [scrollCheck]
+  );
+  useEffect(() => {
+    if (!scrollRef.current) return;
+    const handler = debounce(() => {
+      if (!scrollRef.current) return;
+      handleOnChangeWidth(scrollRef.current);
+    }, 200);
+    const resizeObserver = new ResizeObserver(handler);
+    resizeObserver.observe(scrollRef.current);
+    return () => resizeObserver.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const $Content = useMemo(
     () => (
-      <GridScollable ref={scrl as any} onScroll={scrollCheck} container {...contentProps}>
+      <GridScollable
+        ref={scrollRef as any}
+        container
+        {...(!scrollable ? { item: true, xs: 12 } : { onScroll: scrollCheck })}
+        {...contentProps}
+        scrollable={scrollable}
+        expand={expand}
+      >
         {children}
       </GridScollable>
     ),
-    [scrollCheck, contentProps, children]
+    [scrollCheck, contentProps, children, scrollable, expand]
   );
+  const shouldDisplayNavigator = useMemo(() => !expand && scrollable, [expand, scrollable]);
+  const heightComputed = useMemo(() => (!expand ? height : 'auto'), [expand, height]);
   return (
-    <BoxSrcollable width="100%" expand={expand} {...(!expand ? { height } : {})} {...otherProps}>
-      {!expand ? (
-        <>
-          {$ButtonBack}
-          {$Content}
-          {$ButtonNext}
-        </>
-      ) : (
-        <Grid item container xs={12}>
-          {children}
-        </Grid>
-      )}
+    <BoxSrcollable width="100%" expand={expand} height={heightComputed} {...otherProps}>
+      {shouldDisplayNavigator ? $ButtonBack : null}
+      {$Content}
+      {shouldDisplayNavigator ? $ButtonNext : null}
       {$ButtonExanpandOrCollapse}
     </BoxSrcollable>
   );

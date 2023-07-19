@@ -5,4 +5,3 @@ export type RHFTagInputProps = {
 } & RHFInputProps &
   Omit<CommonTagInputFieldProps, 'errorText' | 'error' | 'onChange' | 'value' | 'name'>;
 export type { CommonTagInputItem } from '@/components/inputs/CommonTagInputField';
-

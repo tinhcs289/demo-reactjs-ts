@@ -1,3 +1,3 @@
-import type { AnyObject, AuthenticationUserInfo } from '@/types';
-export type ApiPayload = AnyObject;
-export type ApiReturns = AuthenticationUserInfo;
+import type { AuthenticationUserInfo } from '@/types';
+export type ApiPayload = { id?: string; accessToken?: string };
+export type ApiReturns = Omit<AuthenticationUserInfo, 'roles' | 'policies'>;

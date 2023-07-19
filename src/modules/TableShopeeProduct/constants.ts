@@ -9,10 +9,7 @@ import MenuActionDelete from './components/MenuActionDelete';
 import MenuActionOpenDetail from './components/MenuActionOpenDetail';
 import withRowClickHandler from './hocs/withRowClickHandler';
 export const ID_FIELD = 'itemid';
-export const actions = menuActions<RowData>([
-  { render: MenuActionOpenDetail },
-  { render: MenuActionDelete },
-]);
+export const actions = menuActions<RowData>([{ render: MenuActionOpenDetail }, { render: MenuActionDelete }]);
 export const columns = tableConfig<RowData>(
   {
     field: 'id',
@@ -24,7 +21,7 @@ export const columns = tableConfig<RowData>(
   },
   {
     field: ID_FIELD,
-    headCell: "Mã",
+    headCell: 'Mã',
     headCellProps: { align: 'center', sx: { width: '0%' } },
     bodyCellInner: CellId,
     bodyCellProps: { sx: { padding: '4px' } },

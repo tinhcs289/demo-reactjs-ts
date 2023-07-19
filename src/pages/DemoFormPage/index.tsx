@@ -2,19 +2,17 @@ import { GridContainer, GridItemPaper } from '@/components/grid';
 import wait from '@/functions/wait';
 import { lazy } from 'react';
 const DashboardTabsContainer = lazy(() => wait(0).then(() => import('@/containers/DashboardTabsContainer')));
-const FormDemo1 = lazy(() =>
-  wait(0).then(() => import('@/modules/FormDemo').then((_) => ({ default: _.FormDemo1 })))
-);
-const FormFilterDemo = lazy(() => wait(0).then(() => import('@/modules/FormFilterDemo')));
+const Form = lazy(() => wait(0).then(() => import('@/modules/FormDocumentIncomming')));
+// const FormFilterDemo = lazy(() => wait(0).then(() => import('@/modules/FormFilterDemo')));
 export default function DemoFormPage() {
   return (
     <DashboardTabsContainer>
       <GridContainer fullWidth>
-        <GridItemPaper sx={{ mb: 2 }}>
+        {/* <GridItemPaper sx={{ mb: 2 }}>
           <FormFilterDemo />
-        </GridItemPaper>
+        </GridItemPaper> */}
         <GridItemPaper sx={{ mb: 2 }}>
-          <FormDemo1 />
+          <Form defaultValues={{ SelectBooleanField: true }} />
         </GridItemPaper>
       </GridContainer>
     </DashboardTabsContainer>

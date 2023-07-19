@@ -34,5 +34,5 @@ export function tagsFromDates(dates: Moment[], format?: string) {
   return dates.map((d) => {
     const text = d.format(format || DEFAULT_FORMAT);
     return { id: text, label: text, date: d };
-  })
+  });
 }

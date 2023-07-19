@@ -32,8 +32,8 @@ export type TAsideMenuItem = {
   linkProps?: LinkProps;
   // ----------------------------------------------
   /**
-  * @deprecated do not set this property manually
-  */
+   * @deprecated do not set this property manually
+   */
   active?: boolean;
   /**
    * @deprecated do not set this property manually

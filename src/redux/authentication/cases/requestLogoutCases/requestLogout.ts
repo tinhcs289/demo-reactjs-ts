@@ -25,6 +25,6 @@ const requestLogout = createCase<any, State>(
       return;
     }
     yield put(requestLogoutSuccess.action({}));
-  }),
+  })
 );
 export default requestLogout;

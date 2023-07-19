@@ -1,10 +1,10 @@
 import CommonTextField from '@/components/inputs/CommonTextField';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
-import { DEFAULT_FORMAT } from './constants';
 import CustomPickerActionBar from './CustomPickerActionBar';
 import CustomToolbar from './CustomToolbar';
 import EndIcon from './EndIcon';
 import type { CommonDateFieldProps } from './_types';
+import { DEFAULT_FORMAT } from './constants';
 export default function CommonDateField(props: CommonDateFieldProps) {
   const {
     format,
@@ -56,7 +56,7 @@ export default function CommonDateField(props: CommonDateFieldProps) {
               ...TextFieldProps?.InputProps,
             },
             sx,
-            placeholder,
+            placeholder: placeholder || TextFieldProps?.placeholder || undefined,
             error,
             errorText,
           } as any;

@@ -1,3 +1,6 @@
+import { styled } from '@mui/material';
+import type { DividerProps } from '@mui/material/Divider';
+import Divider from '@mui/material/Divider';
 import type { GridProps } from '@mui/material/Grid';
 import Grid from '@mui/material/Grid';
 import type { PaperProps } from '@mui/material/Paper';
@@ -91,5 +94,20 @@ export function GridItemPaper(props: GridItemPaperProps) {
         {children}
       </Grid>
     </Grid>
+  );
+}
+const DividerStyled = styled(Divider)<DividerProps>(({ theme }) => ({
+  //borderColor: theme.palette.common.black,
+  width: '100%',
+}));
+export type GridItemDividerProps = GridItemProps & {
+  dividerProps?: Partial<DividerProps>;
+};
+export function GridItemDivider(props: GridItemDividerProps) {
+  const { dividerProps, ...otherProps } = props;
+  return (
+    <GridItem {...otherProps}>
+      <DividerStyled {...dividerProps} />
+    </GridItem>
   );
 }

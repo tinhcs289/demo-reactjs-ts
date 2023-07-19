@@ -5,10 +5,10 @@ import { rootName } from './state';
 export const rootSelector = createRootSelector<State>(rootName);
 export function userProfileDataSelector(state: ReduxStore) {
   return rootSelector(state)?.data;
-};
+}
 export function getUserProfileRequestStatusSelector(state: ReduxStore) {
   return rootSelector(state)?.getUserProfileRequestStatus;
-};
+}
 export function updateUserProfileRequestStatusSelector(state: ReduxStore) {
   return rootSelector(state)?.updateUserProfileRequestStatus;
-};
+}

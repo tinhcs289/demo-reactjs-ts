@@ -96,7 +96,7 @@ export default function CommonDateMultiField(props: CommonDateMultiFieldProps) {
             },
             dates: tags,
             sx,
-            placeholder,
+            placeholder: placeholder || TextFieldProps?.placeholder || undefined,
             error,
             errorText,
             onChangeTags: handleChangeTags,

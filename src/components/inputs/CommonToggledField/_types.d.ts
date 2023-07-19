@@ -20,14 +20,14 @@ export type ToggledOption = Partial<ToggleButtonProps> &
     endIconProps?: MuiIconProps;
     [x: string]: any;
   };
-export type ToggleVariant = 'button-group' | 'icon-button' | 'whatever'
+export type ToggleVariant = 'button-group' | 'icon-button' | 'whatever';
 export type CustomToggleButtonProps = Partial<ToggleButtonProps> & {
   index: number;
   option: ToggledOptionnumber;
   isChecked: booleannumber;
   isFirst?: booleannumber;
   isLast?: booleannumber;
-}
+};
 export type CommonToggledFieldProps = Omit<ToggleButtonGroupProps, 'value' | 'onChange' | 'exclusive'> & {
   options?: ToggledOption[];
   value?: ToggledOptionValue | ToggledOptionValue[];
@@ -42,5 +42,5 @@ export type CommonToggledFieldProps = Omit<ToggleButtonGroupProps, 'value' | 'on
   error?: boolean;
   errorText?: ReactNode;
   formGroupProps?: Partial<FormGroupProps>;
-  buttonComponent?: ComponentType<CustomToggleButtonProps>
+  buttonComponent?: ComponentType<CustomToggleButtonProps>;
 };

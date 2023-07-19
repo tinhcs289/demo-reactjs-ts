@@ -7,7 +7,7 @@ export { default as FormLoginFields } from './components/FormFields';
 export type {
   FormComponent as FormLoginComponent,
   FormProps as FormLoginProps,
-  FormValues as FormLoginValues
+  FormValues as FormLoginValues,
 } from './_types';
 //#endregion
 //#region constants

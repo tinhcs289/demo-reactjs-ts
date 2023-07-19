@@ -2,17 +2,13 @@ import { GridContainer, GridItem } from '@/components/grid';
 import wait from '@/functions/wait';
 import { lazy } from 'react';
 const DashboardTabsContainer = lazy(() => wait(0).then(() => import('@/containers/DashboardTabsContainer')));
-const TableOrders = lazy(() => wait(0).then(() => import('@/modules/TableTest2')));
-const TableShopeeProduct = lazy(() => wait(0).then(() => import('@/modules/TableShopeeProduct')));
+const Table = lazy(() => wait(0).then(() => import('@/modules/TableDocumentIncomming')));
 export default function DemoTablePage() {
   return (
     <DashboardTabsContainer>
       <GridContainer>
-        <GridItem md={6} sx={{ p: 2 }}>
-          <TableShopeeProduct />
-        </GridItem>
-        <GridItem md={6} sx={{ p: 2 }}>
-          <TableOrders />
+        <GridItem px={1}>
+          <Table />
         </GridItem>
       </GridContainer>
     </DashboardTabsContainer>

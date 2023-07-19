@@ -1,5 +1,5 @@
 import { Loader } from '@googlemaps/js-api-loader';
-import getGoogleMapApiKey from "@/environments/getGoogleMapApiKey";
+import getGoogleMapApiKey from '@/environments/getGoogleMapApiKey';
 import tryDo from '@/functions/tryDo';
 const APIKEY = getGoogleMapApiKey();
 let isLoaded = false;
@@ -21,7 +21,9 @@ export function loadPlacesLibrary() {
     isLoaded = true;
   });
 }
-export async function getPlacesBySearchText(searchText: string): Promise<google.maps.places.AutocompletePrediction[]> {
+export async function getPlacesBySearchText(
+  searchText: string
+): Promise<google.maps.places.AutocompletePrediction[]> {
   if (!searchText || !searchText.trim()) return [];
   if (!placeService.current) return [];
   const promise = new Promise<google.maps.places.AutocompletePrediction[]>((resolve, reject) => {

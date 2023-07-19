@@ -8,6 +8,7 @@ const darkThemeOptions: ThemeOptions = {
   palette: {
     mode: 'dark',
   },
+  components: baseOptions.components,
   // TODO [MUI] custom dark theme here
 };
 export default darkThemeOptions;

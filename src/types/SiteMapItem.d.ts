@@ -16,5 +16,5 @@ export type SiteMapItem = {
   iconProps?: SiteMapItemIconProps;
   linkProps?: NavLinkProps;
   childs?: SiteMapItem[];
-  [x: string]: any,
+  [x: string]: any;
 };

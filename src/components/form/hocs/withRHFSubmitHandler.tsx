@@ -6,7 +6,12 @@ import { createContext, useCallback, useContext, useRef } from 'react';
 import { useFormContext } from 'react-hook-form';
 export type RHFSubmitContextValues = {
   formRef?: MutableRefObject<HTMLFormElement | undefined>;
-  dispatchSubmit?: () => void;
+  /**
+   * Dispatch submit event manualy
+   * @param reason reason for custom submit event: eg: "save_draft", "save_then_publish", ....
+   * @returns
+   */
+  dispatchSubmit?: (reason?: string) => void;
 };
 const SubmitContext = createContext<RHFSubmitContextValues>({} as any);
 export function useRHFSubmitDispatch() {
@@ -24,17 +29,24 @@ export default function withRHFSubmitHandler<FormValues extends AnyObject = AnyO
         event?.preventDefault?.();
         event?.stopPropagation?.();
         handleSubmit(function (formData) {
-          if (isNotProduction) console.log(formData);
-          onSubmit?.(formData);
+          if (isNotProduction) {
+            console.log(formData);
+            console.log(reasonRef?.current);
+          }
+          onSubmit?.(formData, reasonRef?.current || undefined);
+          reasonRef.current = null;
         })(event);
       },
       [handleSubmit, onSubmit]
     );
     const formRef = useRef<HTMLFormElement>();
-    const dispatchSubmit = useCallback(() => {
+    const reasonRef = useRef<string | null | undefined>(null);
+    const dispatchSubmit = useCallback((reason?: string) => {
       if (!formRef?.current?.dispatchEvent) return;
       if (typeof formRef.current.dispatchEvent !== 'function') return;
+      reasonRef.current = null;
       const SubmitEvent = new Event('submit', { cancelable: true, bubbles: true });
+      reasonRef.current = reason || 'main_action';
       return formRef.current.dispatchEvent(SubmitEvent);
     }, []);
     return (

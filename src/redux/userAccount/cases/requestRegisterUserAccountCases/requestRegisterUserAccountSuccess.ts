@@ -16,6 +16,6 @@ const requestRegisterUserAccountSuccess = createCase<any, State>(
   },
   takeLatest(TYPE, function* (_action: ReduxAction<any>) {
     yield put(clearStatusOfRequestRegisterUserAccount.action({}));
-  }),
+  })
 );
 export default requestRegisterUserAccountSuccess;

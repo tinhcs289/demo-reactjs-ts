@@ -4,7 +4,7 @@ import type { AutoCompleteOption } from '@/components/rhfInputs/RHFSelect';
 import type { SwitchGroupOption } from '@/components/rhfInputs/RHFSwitchGroup';
 import type { CommonTagInputItem } from '@/components/rhfInputs/RHFTagInput';
 import type { ToggledOption } from '@/components/rhfInputs/RHFToggle';
-import type { GenericFormProps } from '@/types';
+import type { CommonFormProps } from '@/types';
 import type { Moment } from 'moment';
 export type FormValues = {
   TextField: string | null;
@@ -30,7 +30,7 @@ export type FormValues = {
   Toggle: ToggledOption | null;
   Toggle2: ToggledOption[] | null;
 };
-export type FormProps = GenericFormProps<FormValue>;
+export type FormProps = CommonFormProps<FormValues>;
 export type FormComponent = ComponentType<FormProps>;
 export type FileData = {
   id?: string;

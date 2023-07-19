@@ -11,4 +11,4 @@ const mockSetup = () => {
 if (isMock) mockSetup();
 export default async function api(): Promise<AxiosResponse<ShopeeElementSet>> {
   return !isMock ? http.get(LINK) : httpMock.get(LINK);
-};
+}

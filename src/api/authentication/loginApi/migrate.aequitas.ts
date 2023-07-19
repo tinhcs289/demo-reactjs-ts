@@ -98,7 +98,7 @@ function migrateResponseData(orginal?: OrginalResponseData): ApiReturns | null {
           name: r || '',
           permissions: [],
         })) || [],
-      polices:
+      policies:
         orginal?.Data?.Permissions?.map?.((p) => ({
           id: p?.Id || EMPTY_GUID,
           name: p?.DisplayName || '',

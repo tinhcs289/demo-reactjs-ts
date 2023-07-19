@@ -5,6 +5,7 @@ import type { ThemeOptions } from '@mui/material/styles';
  */
 const lightThemeOptions: ThemeOptions = {
   typography: baseOptions.typography,
+  components: baseOptions.components,
   // TODO [MUI] custom light theme here
 };
 export default lightThemeOptions;

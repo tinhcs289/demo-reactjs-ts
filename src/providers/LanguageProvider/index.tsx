@@ -1,5 +1,5 @@
-import acceptLanguage from '@/appLocalStorages/acceptLanguage';
-import language from '@/appLocalStorages/language';
+import acceptLanguage from '@/browser/localStorage/acceptLanguage';
+import language from '@/browser/localStorage/language';
 import { LANGUAGE_DEFAULT, NUMERAL_FORMAT } from '@/constants/language';
 import i18n from '@/translation/setupLanguage';
 import numeral from 'numeral';

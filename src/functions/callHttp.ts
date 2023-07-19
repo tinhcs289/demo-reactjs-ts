@@ -1,14 +1,21 @@
-import type { AxiosResponse } from 'axios'
+import type { AxiosResponse } from 'axios';
 enum RES_ERROR {
   REQUEST_ERROR = 'REQUEST_ERROR',
   //TODO: add more key for specified case of error
 }
 type InvalidResponseError = `${RES_ERROR}`;
-export type AsyncAxiosFuntion<ResponseDataType> = (...args: any[]) => Promise<AxiosResponse<ResponseDataType, any>>;
+export type AsyncAxiosFuntion<ResponseDataType> = (
+  ...args: any[]
+) => Promise<AxiosResponse<ResponseDataType, any>>;
 export type AxiosPromise<ResponseDataType> = Promise<AxiosResponse<ResponseDataType, any>>;
 export type CallHttpReturnsSuccess<ResponseDataType> = [null, ResponseDataType];
-export type CallHttpReturnsError<ResponseDataType> = [AxiosResponse<ResponseDataType, any> | InvalidResponseError, null];
-export type CallHttpReturns<ResponseDataType> = CallHttpReturnsSuccess<ResponseDataType> | CallHttpReturnsError<ResponseDataType>;
+export type CallHttpReturnsError<ResponseDataType> = [
+  AxiosResponse<ResponseDataType, any> | InvalidResponseError,
+  null,
+];
+export type CallHttpReturns<ResponseDataType> =
+  | CallHttpReturnsSuccess<ResponseDataType>
+  | CallHttpReturnsError<ResponseDataType>;
 /**
  * An elegant way to do async/await api call
  * @example 
