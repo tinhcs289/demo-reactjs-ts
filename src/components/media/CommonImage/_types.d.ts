@@ -1,2 +1,2 @@
 import { LazyLoadImageProps } from 'react-lazy-load-image-component';
-export type CommonImageProps = LazyLoadImageProps
+export type CommonImageProps = LazyLoadImageProps;

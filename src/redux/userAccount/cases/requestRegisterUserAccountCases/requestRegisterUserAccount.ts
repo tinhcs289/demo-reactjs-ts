@@ -26,6 +26,6 @@ const requestRegisterUserAccount = createCase<RegisterApiParams, State>(
       return;
     }
     yield put(requestRegisterUserAccountSuccess.action({}));
-  }),
+  })
 );
 export default requestRegisterUserAccount;

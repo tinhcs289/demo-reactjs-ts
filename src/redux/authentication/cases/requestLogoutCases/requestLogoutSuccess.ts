@@ -1,7 +1,5 @@
-import authentication from '@/appCookies/authentication';
-import userPermissions from '@/appCookies/userPermissions';
-import { default as authenticationInLocalStorage } from '@/appLocalStorages/authentication';
 import { EApiRequestStatus } from '@/constants/apiRequestStatus';
+import userDataStorage from '@/functions/userDataStorage';
 import type { ReduxAction } from '@/helpers/reduxHelpers';
 import { createCase } from '@/helpers/reduxHelpers';
 import { delay, put, takeLatest } from 'redux-saga/effects';
@@ -12,9 +10,7 @@ const TYPE = `${rootName}/requestLogout_success`;
 const requestLogoutSuccess = createCase<any, State>(
   TYPE,
   (_action, state) => {
-    authentication.clear();
-    authenticationInLocalStorage.set(null, true);
-    userPermissions.clear();
+    userDataStorage.clear();
     return {
       ...(state as any),
       user: null,

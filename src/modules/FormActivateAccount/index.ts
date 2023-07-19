@@ -8,11 +8,14 @@ export { default as FormActivateAccountFields } from './components/FormFields';
 export type {
   FormComponent as FormActivateAccountComponent,
   FormProps as FormActivateAccountProps,
-  FormValues as FormActivateAccountValues
+  FormValues as FormActivateAccountValues,
 } from './_types';
 //#endregion
 //#region constants
-export { fields as activateAccountFields, defaultValues as defaultActivateAccountFormValues } from './constants';
+export {
+  fields as activateAccountFields,
+  defaultValues as defaultActivateAccountFormValues,
+} from './constants';
 //#endregion
 //#region hocs/funtions
 export { default as withDisplayAsDialog } from './hocs/withDisplayAsDialog';

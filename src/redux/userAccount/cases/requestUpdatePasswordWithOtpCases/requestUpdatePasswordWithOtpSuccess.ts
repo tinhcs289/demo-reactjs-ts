@@ -16,6 +16,6 @@ const requestUpdatePasswordWithOtpSuccess = createCase<any, State>(
   },
   takeLatest(TYPE, function* (_action: ReduxAction<any>) {
     yield put(clearStatusOfRequestUpdatePasswordWithOtp.action({}));
-  }),
+  })
 );
 export default requestUpdatePasswordWithOtpSuccess;

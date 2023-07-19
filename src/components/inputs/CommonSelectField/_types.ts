@@ -1,4 +1,5 @@
 import type { CommonTextFieldProps } from '@/components/inputs/CommonTextField';
+import { AnyObject } from '@/types';
 import type {
   AutocompleteChangeDetails,
   AutocompleteChangeReason,
@@ -8,7 +9,7 @@ import type {
 } from '@mui/material/Autocomplete';
 import type { ChipTypeMap } from '@mui/material/Chip';
 import type { ReactNode } from 'react';
-export type AutoCompleteOption = {
+export type AutoCompleteOption<OptionData extends AnyObject = AnyObject> = OptionData & {
   label: string;
   value: string;
   disabled?: boolean;

@@ -1,4 +1,4 @@
-import authentication from '@/appCookies/authentication';
+import authentication from '@/browser/cookies/authentication';
 import { ButtonNavigate } from '@/components/buttons';
 import { GridContainer, GridItem } from '@/components/grid';
 import CommonImage from '@/components/media/CommonImage';

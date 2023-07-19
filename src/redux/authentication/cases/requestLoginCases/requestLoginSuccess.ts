@@ -1,29 +1,24 @@
-import authentication from '@/appCookies/authentication';
-import { default as authenticationInLocalStorage } from '@/appLocalStorages/authentication';
 import { EApiRequestStatus } from '@/constants/apiRequestStatus';
+import userDataStorage from '@/functions/userDataStorage';
 import type { ReduxAction } from '@/helpers/reduxHelpers';
 import { createCase } from '@/helpers/reduxHelpers';
 import type { Authentication } from '@/types';
+import omit from 'lodash/omit';
 import { delay, put, takeLatest } from 'redux-saga/effects';
 import type { State } from '../../state';
 import { rootName } from '../../state';
 import clearStatusOfRequestLogin from './clearStatusOfRequestLogin';
-import userPermissions from '@/appCookies/userPermissions';
 const TYPE = `${rootName}/requestLogin_success`;
 const requestLoginSuccess = createCase<Authentication, State>(
   TYPE,
   (action, state) => {
     const { jwt, user } = action.payload;
-    authentication.set(jwt);
-    authenticationInLocalStorage.set(jwt, true);
-    if (user?.polices instanceof Array) {
-      userPermissions.set(user.polices);
-    } else {
-      userPermissions.set([]);
-    }
+    userDataStorage.set(action.payload);
     return {
       ...(state as any),
-      user: user,
+      user: omit(user, ['roles', 'policies']),
+      policies: user?.policies || [],
+      roles: user?.roles || [],
       token: jwt,
       loginRequestStatus: EApiRequestStatus.REQUESTSUCCESS,
     };

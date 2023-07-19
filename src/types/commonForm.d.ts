@@ -5,16 +5,22 @@ export type CommonFormOnCloseParams = {
   reason?: CommonFormCloseReason;
   feedback?: AnyObject;
 };
-export type CommomFormOnSubmit<FormValues extends AnyObject = AnyObject> = (values: FormValues) => void;
+export type CommomFormOnSubmit<FormValues extends AnyObject = AnyObject> = (
+  values: FormValues,
+  /**
+   * reason for custom submit event: eg: "save_draft", "save_then_publish", ....
+   */
+  reason?: string
+) => void;
 export type CommonFormOnClose = (params?: CommonFormOnCloseParams) => void;
 export type CommonFormProps<FormValues extends AnyObject = AnyObject> = {
   /**
    * field name in nested-form structure.
    * used in the case of this form corresponds to an object field of another form.
    */
-  namePrefix?: string,
+  namePrefix?: string;
   defaultValues?: FormValues;
-  onSubmit?: CommomFormOnSubmit;
+  onSubmit?: CommomFormOnSubmit<FormValues>;
   onClose?: CommonFormOnClose;
   loading?: boolean;
   [x: string]: any;

@@ -1,122 +1,186 @@
-import CommonTextField from '@/components/inputs/CommonTextField';
 import Grid from '@mui/material/Grid';
-import type { TextFieldProps } from '@mui/material/TextField';
-import type { PickersDayProps } from '@mui/x-date-pickers';
-import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
+import type { DayCalendarProps } from '@mui/x-date-pickers/internals';
 import type { Moment } from 'moment';
 import moment from 'moment';
-import type { MouseEventHandler } from 'react';
-import { createRef, useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState, useEffect } from 'react';
+import CustomPickerActionBar from './CustomPickerActionBar';
 import CustomPickersDay from './CustomPickersDay';
-import type { TCommonDateRangeFieldProps } from './_types';
-
-const toDay = moment(moment().format('YYYY/MM/DD') + ' 00:00:00', 'YYYY/MM/DD hh:mm:ss');
-
+import CustomToolbar from './CustomToolbar';
+import StaticDatePickerStyled from './StaticDatePickerStyled';
+import type { CommonDateRangeFieldProps } from './_types';
+import { defaultNextMonth, defautlThisMonth } from './constants';
 function dayOfWeekFormatter(day: string) {
   return day;
 }
-
-function renderInput(props: TextFieldProps) {
-  return <CommonTextField {...props} />;
-}
-
-type RenderDay = (
-  day: Moment,
-  selectedDays: Moment[],
-  pickersDayProps: PickersDayProps<Moment>
-) => JSX.Element;
-
-export default function CommonDateRangeField(props: TCommonDateRangeFieldProps) {
+export default function CommonDateRangeField(props: CommonDateRangeFieldProps) {
   const {
     value,
     onChange,
-    sx,
-    // ...otherProps
+    startDateLabel,
+    startDatePickerProps,
+    startDatePickerGridProps,
+    endDateLabel,
+    endDatePickerProps,
+    endDatePickerGridProps,
+    ...rootGridProps
   } = props;
-
-  const startDateRef = createRef<HTMLDivElement>();
-  const endDateRef = createRef<HTMLDivElement>();
-
+  const [previousAct, setPreviousAct] = useState<'changeStart' | 'changeEnd' | null>(null);
+  useEffect(
+    () => () => {
+      setPreviousAct(null);
+    },
+    []
+  );
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [thisMonth, setThisMonth] = useState<Moment>(defautlThisMonth);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [nextMonth, setNextMonth] = useState<Moment>(defaultNextMonth);
   const startDate = useMemo(() => {
-    if (!value?.from || !moment.isMoment(value.from)) return toDay;
+    if (!value?.from || !moment.isMoment(value.from)) return moment();
     return value.from;
   }, [value?.from]);
-
   const endDate = useMemo(() => {
-    if (!value?.to || !moment.isMoment(value.to)) return toDay;
+    if (!value?.to || !moment.isMoment(value.to)) return moment();
     return value.to;
   }, [value?.to]);
-
   const handleChangeStartDate = useCallback(
     (value: Moment | null | undefined) => {
-      onChange?.({ from: value || toDay, to: endDate });
+      const shouldChangeEndDate = previousAct === 'changeStart' && moment.isMoment(startDate);
+      if (shouldChangeEndDate) {
+        onChange?.({ from: startDate, to: value || moment() });
+        setPreviousAct('changeEnd');
+        return;
+      }
+      onChange?.({ from: value || moment(), to: endDate });
+      setPreviousAct('changeStart');
     },
-    [onChange, endDate]
+    [onChange, endDate, previousAct, startDate]
   );
-
   const handleChangeEndDate = useCallback(
     (value: Moment | null | undefined) => {
-      onChange?.({ from: startDate, to: value || toDay });
+      const shouldChangeStartDate = previousAct === 'changeEnd' && moment.isMoment(endDate);
+      if (shouldChangeStartDate) {
+        onChange?.({ from: value || moment(), to: endDate });
+        setPreviousAct('changeStart');
+        return;
+      }
+      onChange?.({ from: startDate, to: value || moment() });
+      setPreviousAct('changeEnd');
     },
-    [onChange, startDate]
+    [onChange, startDate, previousAct, endDate]
   );
-
-  const handleHoverOnDay: MouseEventHandler<HTMLButtonElement> = useCallback((event) => {}, []);
-
-  const renderDay: RenderDay = useCallback(
-    (day, _, pickersDayProps) => {
+  const getDayProps = useCallback(
+    (
+      ownerState: DayCalendarProps<Moment> & {
+        day: Moment;
+        selected: boolean;
+      }
+    ) => {
+      const { day, slotProps } = ownerState;
       const isHoverable = day.diff(endDate) > 0 || day.diff(startDate) < 0;
       const dayIsBetween = day.isBetween(startDate, endDate, null, '[]');
       const isFirstDay = day.diff(startDate) === 0;
       const isLastDay = day.diff(endDate) === 0;
-      return (
-        <CustomPickersDay
-          {...pickersDayProps}
-          disableMargin
-          isHoverable={isHoverable}
-          dayIsBetween={dayIsBetween}
-          isFirstDay={isFirstDay}
-          isLastDay={isLastDay}
-          onMouseOver={handleHoverOnDay}
-        />
-      );
+      const isToday = day.format('DD/MM/YYYY') === moment().format('DD/MM/YYYY');
+      return {
+        isHoverable,
+        dayIsBetween,
+        isFirstDay,
+        isLastDay,
+        isToday,
+        ...slotProps?.day,
+      };
     },
-    [startDate, endDate, handleHoverOnDay]
+    [startDate, endDate]
   );
-
-  // return (
-  //   <Grid container sx={sx}>
-  //     <Grid item xs={12} lg={6}>
-  //       <StaticDatePicker
-  //         ref={startDateRef}
-  //         dayOfWeekFormatter={dayOfWeekFormatter}
-  //         value={startDate}
-  //         onChange={handleChangeStartDate as any}
-  //         displayStaticWrapperAs="desktop"
-  //         slots={{
-  //           day: CustomPickersDay as any,
-  //         }}
-  //         //renderInput={renderInput}
-  //         //renderDay={renderDay}
-  //         maxDate={endDate}
-  //       />
-  //     </Grid>
-  //     <Grid item xs={12} lg={6}>
-  //       <StaticDatePicker
-  //         ref={endDateRef}
-  //         dayOfWeekFormatter={dayOfWeekFormatter}
-  //         value={endDate}
-  //         onChange={handleChangeEndDate as any}
-  //         displayStaticWrapperAs="desktop"
-  //         //renderInput={renderInput}
-  //         //renderDay={renderDay}
-  //         slots={{
-  //           day: CustomPickersDay as any,
-  //         }}
-  //         minDate={startDate}
-  //       />
-  //     </Grid>
-  //   </Grid>
-  // );
-  return <></>
+  const thisMonthMaxDate: Moment = useMemo(() => thisMonth.endOf('month'), [thisMonth]);
+  const nextMonthMinDate: Moment = useMemo(() => nextMonth.startOf('month'), [nextMonth]);
+  const $PickerStartDate = useMemo(() => {
+    return (
+      <StaticDatePickerStyled
+        dayOfWeekFormatter={dayOfWeekFormatter}
+        value={thisMonth}
+        onChange={handleChangeStartDate as any}
+        displayStaticWrapperAs="mobile"
+        slots={
+          {
+            actionBar: CustomPickerActionBar,
+            toolbar: CustomToolbar,
+            day: CustomPickersDay,
+            ...startDatePickerProps?.slots,
+          } as any
+        }
+        slotProps={
+          {
+            day: getDayProps,
+            toolbar: {
+              label: startDateLabel || 'from',
+              customDate: value?.from || undefined,
+              ...startDatePickerProps?.slotProps?.toolbar,
+            },
+            ...startDatePickerProps?.slotProps,
+          } as any
+        }
+        maxDate={thisMonthMaxDate}
+        {...(startDatePickerProps as any)}
+      />
+    );
+  }, [
+    handleChangeStartDate,
+    getDayProps,
+    startDateLabel,
+    startDatePickerProps,
+    thisMonth,
+    thisMonthMaxDate,
+    value?.from,
+  ]);
+  const $PickerEndDate = useMemo(() => {
+    return (
+      <StaticDatePickerStyled
+        dayOfWeekFormatter={dayOfWeekFormatter}
+        value={nextMonth}
+        onChange={handleChangeEndDate as any}
+        displayStaticWrapperAs="mobile"
+        slots={
+          {
+            actionBar: CustomPickerActionBar,
+            toolbar: CustomToolbar,
+            day: CustomPickersDay,
+            ...endDatePickerProps?.slots,
+          } as any
+        }
+        slotProps={
+          {
+            day: getDayProps,
+            toolbar: {
+              label: endDateLabel || 'to',
+              customDate: value?.to || undefined,
+              ...endDatePickerProps?.slotProps?.toolbar,
+            },
+            ...endDatePickerProps?.slotProps,
+          } as any
+        }
+        minDate={nextMonthMinDate}
+        {...(endDatePickerProps as any)}
+      />
+    );
+  }, [
+    handleChangeEndDate,
+    getDayProps,
+    endDateLabel,
+    endDatePickerProps,
+    nextMonth,
+    nextMonthMinDate,
+    value?.to,
+  ]);
+  return (
+    <Grid container {...rootGridProps}>
+      <Grid item xs={12} lg={6} {...startDatePickerGridProps}>
+        {$PickerStartDate}
+      </Grid>
+      <Grid item xs={12} lg={6} {...endDatePickerGridProps}>
+        {$PickerEndDate}
+      </Grid>
+    </Grid>
+  );
 }

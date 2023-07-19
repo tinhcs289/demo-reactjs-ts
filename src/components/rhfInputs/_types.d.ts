@@ -16,6 +16,9 @@ export type RHFRuleValidate = Required<RHFRules>['validate'];
 export type RHFInputProps = {
   name: string;
   control: Control<any, any>;
+  /**
+   * exclude this field value from form values if be not mounted or not displayed
+   */
   shouldUnregister?: boolean;
   rules?: RHFRules;
 };

@@ -17,9 +17,7 @@ const mockSetup = () => {
 };
 if (isMock) mockSetup();
 
-async function api(payload: {
-  id: string;
-}): Promise<AxiosResponse<ApiResponseWithMessageOnly>> {
+async function api(payload: { id: string }): Promise<AxiosResponse<ApiResponseWithMessageOnly>> {
   const url = `${LINK}/${payload.id}`;
   return !isMock ? http.delete(url) : httpMock.get(url);
 }

@@ -1,4 +1,7 @@
-import type { RequestOtpForResetPasswordApiParams, RequestOtpForResetPasswordApiReturns } from '@/api/resetPassword/requestOtpForResetPasswordApi';
+import type {
+  RequestOtpForResetPasswordApiParams,
+  RequestOtpForResetPasswordApiReturns,
+} from '@/api/resetPassword/requestOtpForResetPasswordApi';
 import requestOtpForResetPasswordApi from '@/api/resetPassword/requestOtpForResetPasswordApi';
 import { EApiRequestStatus } from '@/constants/apiRequestStatus';
 import type { ReduxAction } from '@/helpers/reduxHelpers';
@@ -20,12 +23,14 @@ const requestCreateOtpForResetPassword = createCase<RequestOtpForResetPasswordAp
   },
   takeLatest(TYPE, function* (action: ReduxAction<RequestOtpForResetPasswordApiParams>) {
     const { payload } = action;
-    const response = (yield requestOtpForResetPasswordApi(payload)) as AxiosResponse<RequestOtpForResetPasswordApiReturns>;
+    const response = (yield requestOtpForResetPasswordApi(
+      payload
+    )) as AxiosResponse<RequestOtpForResetPasswordApiReturns>;
     if (response?.status !== 200) {
       yield put(requestCreateOtpForResetPasswordFail.action({}));
       return;
     }
     yield put(requestCreateOtpForResetPasswordSuccess.action({}));
-  }),
+  })
 );
 export default requestCreateOtpForResetPassword;

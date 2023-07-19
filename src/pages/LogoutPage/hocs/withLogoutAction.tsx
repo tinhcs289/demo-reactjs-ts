@@ -1,9 +1,7 @@
 import logoutApi from '@/api/authentication/logoutApi';
-import authentication from '@/appCookies/authentication';
-import userPermissions from '@/appCookies/userPermissions';
-import { default as authenticationInLocalStorage } from '@/appLocalStorages/authentication';
 import PATHS from '@/constants/paths';
 import callHttp from '@/functions/callHttp';
+import userDataStorage from '@/functions/userDataStorage';
 import type { ComponentType } from 'react';
 import { useState } from 'react';
 import type { LogoutPageProps } from '../_types';
@@ -18,9 +16,7 @@ export default function withLogoutAction(WrappedComponent: ComponentType<LogoutP
     const handleLogout = async () => {
       setLoading(true);
       await callHttp(logoutApi).waitForNothing();
-      authentication.clear();
-      authenticationInLocalStorage.set(null, true);
-      userPermissions.clear();
+      userDataStorage.clear();
       redirectToNextPage();
       setLoading(false);
       return;

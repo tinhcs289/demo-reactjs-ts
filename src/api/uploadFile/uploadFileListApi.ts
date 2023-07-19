@@ -12,14 +12,16 @@ type TFileResponse = {
 export type UploadFileListApiParams = {
   folder: string;
   files: FileList | File[];
-}
+};
 export default async function uploadFileListApi(payload: UploadFileListApiParams): Promise<TFileResponse[]> {
   const [errors, filesData] = await tryDo(async () => {
     const results = await Promise.all(
       Array.from(payload.files).map((file) =>
         (async () => {
           const fileRes: TFileResponse = { bin: file, requestStatus: EApiRequestStatus.REQUESTING };
-          const [err, res] = await callHttp(uploadFileApi({ folder: payload.folder, file })).waitFor(isOkWithData);
+          const [err, res] = await callHttp(uploadFileApi({ folder: payload.folder, file })).waitFor(
+            isOkWithData
+          );
           if (!!err || !res?.message) {
             fileRes.requestStatus = EApiRequestStatus.REQUESTFAIL;
             fileRes.source = undefined;
@@ -35,4 +37,4 @@ export default async function uploadFileListApi(payload: UploadFileListApiParams
   });
   if (!!errors || !filesData) return [];
   return filesData;
-};
+}

@@ -1,4 +1,4 @@
-import themeVariant from '@/appLocalStorages/themeVariant';
+import themeVariant from '@/browser/localStorage/themeVariant';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import type { PaletteMode, SxProps } from '@mui/material';

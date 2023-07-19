@@ -14,7 +14,7 @@ export default createReducer(
   state,
   //
   ...requestUserProfile.cases,
-  ...requestUpdateUserProfile.cases,
+  ...requestUpdateUserProfile.cases
 );
 //#endregion
 //#region export Action

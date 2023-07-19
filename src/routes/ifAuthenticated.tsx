@@ -1,4 +1,4 @@
-import authentication from '@/appCookies/authentication';
+import authentication from '@/browser/cookies/authentication';
 import { RouteFallback } from '@/components/fallback';
 import PATHS from '@/constants/paths';
 import DashboardLayout from '@/layouts/DashboardLayout';

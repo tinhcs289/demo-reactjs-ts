@@ -18,7 +18,7 @@ export default createReducer(
   pushMessage,
   pushMessageError,
   pushMessageInfo,
-  clearMessageState,
+  clearMessageState
 );
 //#endregion
 //#region export Action
@@ -29,4 +29,3 @@ export const actions = {
   clearMessageState: clearMessageState.action,
 };
 //#endregion
-

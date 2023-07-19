@@ -9,9 +9,9 @@ export type GoogleMapProps = GoogleMapReactProps & {
 export type GoogleMapMarkerProps = GoogleMapReact.Coords & {
   children?: ReactNode;
 };
-export type GoogleMapPoint = { coords?: GoogleMapReact.Coords, data?: AnyObject };
+export type GoogleMapPoint = { coords?: GoogleMapReact.Coords; data?: AnyObject };
 export type MapContextValues = {
   center?: GoogleMapPoint;
   markers?: GoogleMapPoint[];
   zoom?: number;
-}
+};

@@ -1,13 +1,13 @@
 import type { CommonCheckFieldProps } from '@/components/inputs/CommonCheckField';
+import { AnyObject } from '@/types';
 import type { FormGroupProps } from '@mui/material/FormGroup';
 import type { ReactNode } from 'react';
-export type CheckGroupOption = {
+export type CheckGroupOption<OptionData extends AnyObject = AnyObject> = OptionData & {
   label: ReactNode;
   value: string;
   checked?: boolean;
   disabled?: boolean;
   InputProps?: Omit<CommonCheckFieldProps, 'name' | 'label' | 'value' | 'checked' | 'disabled'>;
-  [x: string]: any;
 };
 
 export type CommonCheckGroupFieldProps = Omit<FormGroupProps, 'onChange'> & {

@@ -1,2 +1,2 @@
-import { ShopeeProductItem } from "@/types/Shopee";
+import { ShopeeProductItem } from '@/types/Shopee';
 export type RowData = ShopeeProductItem;

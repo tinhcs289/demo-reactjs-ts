@@ -1,4 +1,7 @@
-import type { ActivateAccountWithOtpApiParams, ActivateAccountWithOtpApiReturns } from '@/api/registerAccount/activateAccountWithOtpApi';
+import type {
+  ActivateAccountWithOtpApiParams,
+  ActivateAccountWithOtpApiReturns,
+} from '@/api/registerAccount/activateAccountWithOtpApi';
 import activateAccountWithOtpApi from '@/api/registerAccount/activateAccountWithOtpApi';
 import { EApiRequestStatus } from '@/constants/apiRequestStatus';
 import type { ReduxAction } from '@/helpers/reduxHelpers';
@@ -20,12 +23,14 @@ const requestActivateAccountWithOtp = createCase<ActivateAccountWithOtpApiParams
   },
   takeLatest(TYPE, function* (action: ReduxAction<ActivateAccountWithOtpApiParams>) {
     const { payload } = action;
-    const response = (yield activateAccountWithOtpApi(payload)) as AxiosResponse<ActivateAccountWithOtpApiReturns>;
+    const response = (yield activateAccountWithOtpApi(
+      payload
+    )) as AxiosResponse<ActivateAccountWithOtpApiReturns>;
     if (response?.status !== 200) {
       yield put(requestActivateAccountWithOtpFail.action({}));
       return;
     }
     yield put(requestActivateAccountWithOtpSuccess.action({}));
-  }),
+  })
 );
 export default requestActivateAccountWithOtp;

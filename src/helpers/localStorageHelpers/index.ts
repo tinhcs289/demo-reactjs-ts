@@ -1,8 +1,4 @@
-export {
-  newLocalStorageItem,
-  newLocalStorageListenableItem,
-  resetAllSyncKeys
-} from './helper';
+export { newLocalStorageItem, newLocalStorageListenableItem, resetAllSyncKeys } from './helper';
 export type {
   CreateNewLocalStorageItemArgs,
   LocalStorageChangeItemEvent,
@@ -15,6 +11,5 @@ export type {
   LocalStorageItemValidator,
   LocalStorageSyncItem,
   LocalStorageSyncItemSetter,
-  LocalStorageSyncKey
+  LocalStorageSyncKey,
 } from './helper';
-

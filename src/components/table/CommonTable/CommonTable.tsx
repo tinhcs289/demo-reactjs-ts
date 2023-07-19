@@ -1,13 +1,12 @@
 import intOrDefault from '@/helpers/formatHelpers/intOrDefault';
 import withHOCs from '@/hocs/withHocs';
 import { AnyObject } from '@/types';
-import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import type { TableCellProps } from '@mui/material/TableCell';
 import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import debounce from 'lodash/debounce';
 import get from 'lodash/get';
 import type { Ref } from 'react';
 import { Fragment, createRef, forwardRef, useCallback, useEffect, useMemo } from 'react';
@@ -18,7 +17,9 @@ import LoadingBar from './components/LoadingBar';
 import LoadingText from './components/LoadingText';
 import NoDataText from './components/NoDataText';
 import PaperStyled from './components/PaperStyled';
+import TableContainerStyled from './components/TableContainerStyled';
 import TableRowDetailPanel from './components/TableRowDetailPanel';
+import TableStyled from './components/TableStyled';
 import { CheckSellBodySx, CheckSellHeadSx, stickyFirstClass } from './constants';
 import buildContainerProps from './functions/buildContainerProps';
 import buildTableHeadProps from './functions/buildTableHeadProps';
@@ -57,14 +58,12 @@ const CommonTable = forwardRef(function CommonTableWithRef<RowData extends AnyOb
   const tableHeadProps = useMemo(() => buildTableHeadProps(thProps), [thProps]);
   const tableHeadRowProps = useMemo(() => thrProps, [thrProps]);
   const isCheckAll = useMemo(() => selectability?.isCheckAll, [selectability?.isCheckAll]);
+  const isSelectable = useMemo(() => typeof isCheckAll === 'boolean', [isCheckAll]);
   const loading = useMemo(() => !!props?.loading, [props?.loading]);
   const columns = useMemo(() => clm || [], [clm]);
   const rows = useMemo(() => rws || [], [rws]);
   const totalOfRows = useMemo(() => intOrDefault(rows?.length, 0), [rows?.length]);
-  const totalOfCells = useMemo(
-    () => (typeof isCheckAll === 'boolean' ? 1 : 0) + columns.length,
-    [columns.length, isCheckAll]
-  );
+  const totalOfCells = useMemo(() => (isSelectable ? 1 : 0) + columns.length, [columns.length, isSelectable]);
   //#endregion
   //#region select action
   const checkAll = useCallback(
@@ -226,21 +225,32 @@ const CommonTable = forwardRef(function CommonTableWithRef<RowData extends AnyOb
     const tableEl = tableRef.current;
     initStickyColumn(tableEl as any);
   }, [$body, tableRef, columnStickyAsStack]);
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     if (!(tableRef?.current instanceof Element)) return;
-  //     const tableEl = tableRef.current as HTMLElement;
-  //     new ResizeObserver(function reInitSticky() {
-  //       console.log('initStickyColumn');
-  //       initStickyColumn(tableEl);
-  //     }).observe(tableEl.parentElement as any);
-  //   }, 0);
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
+  const handleOnChangeWidth = useCallback((table: HTMLElement) => {
+    if (!table) return;
+    initStickyColumn(table);
+  }, []);
+  useEffect(() => {
+    if (!(tableRef?.current instanceof Element)) return;
+    const tableEl = tableRef.current as HTMLElement;
+    initStickyColumn(tableEl);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSelectable]);
+  useEffect(() => {
+    const handler = debounce(() => {
+      if (!(tableRef?.current instanceof Element)) return;
+      handleOnChangeWidth(tableRef.current as HTMLElement);
+    }, 200);
+    if (!(tableRef?.current instanceof Element)) return;
+    const tableEl = tableRef.current as HTMLElement;
+    const resizeObserver = new ResizeObserver(handler);
+    resizeObserver.observe(tableEl.parentElement as any);
+    return () => resizeObserver.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
-    <TableContainer ref={ref} component={PaperStyled} {...containerProps}>
+    <TableContainerStyled ref={ref} {...({ component: PaperStyled } as any)} {...containerProps}>
       {$loading}
-      <Table stickyHeader {...tableProps} ref={tableRef as any}>
+      <TableStyled stickyHeader {...tableProps} ref={tableRef as any}>
         <TableHead {...tableHeadProps}>
           <TableRow {...tableHeadRowProps}>
             {$checkboxAll}
@@ -248,8 +258,8 @@ const CommonTable = forwardRef(function CommonTableWithRef<RowData extends AnyOb
           </TableRow>
         </TableHead>
         {$body}
-      </Table>
-    </TableContainer>
+      </TableStyled>
+    </TableContainerStyled>
   );
 }) as <RowData extends AnyObject>(props: CommonTableProps<RowData>, ref?: Ref<HTMLDivElement>) => JSX.Element;
 export default CommonTable;

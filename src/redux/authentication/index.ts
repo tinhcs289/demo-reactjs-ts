@@ -14,7 +14,7 @@ export default createReducer(
   state,
   //
   ...requestLogin.cases,
-  ...requestLogout.cases,
+  ...requestLogout.cases
 );
 //#endregion
 //#region export Action
@@ -23,4 +23,3 @@ export const actions = {
   ...requestLogout.actions,
 };
 //#endregion
-

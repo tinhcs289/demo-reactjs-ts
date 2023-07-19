@@ -22,7 +22,10 @@ function undefinedToNull(obj: AnyObject): any {
 }
 const nullabledDefaultValues = undefinedToNull(defaultValues);
 function ButtonClear() {
-  const { reset } = useFormContext();
+  const {
+    reset,
+    formState: { isSubmitted },
+  } = useFormContext();
   const formValues = useRHFFormValues<FormValues>();
   const nullabledValues = useMemo(() => undefinedToNull(formValues), [formValues]);
   const hasValues = useMemo(() => {
@@ -38,6 +41,7 @@ function ButtonClear() {
   );
   const $Button = useMemo(() => {
     if (!hasValues) return null;
+    if (!isSubmitted) return null; // only show if one filter applied
     return (
       <FormGridItem disabledXs sx={{ ...fieldSx, flex: 'unset !important' }}>
         <ButtonCommon
@@ -52,7 +56,7 @@ function ButtonClear() {
         </ButtonCommon>
       </FormGridItem>
     );
-  }, [hasValues, handleClick]);
+  }, [hasValues, handleClick, isSubmitted]);
   return $Button;
 }
 export default function withClearButton(WrappedComponent: FormComponent): FormComponent {

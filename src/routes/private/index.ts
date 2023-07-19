@@ -5,5 +5,11 @@ import LogoutRoute from './LogoutRoute';
 import OrdersRoute from './OrdersRoute';
 import ReportRoute from './ReportRoute';
 //TODO [Router] add more route for private pages here
-const routes: RouteConfig[] = [...DashboardRoute, ...ReportRoute, ...CustomersRoute, ...OrdersRoute, ...LogoutRoute];
+const routes: RouteConfig[] = [
+  ...DashboardRoute,
+  ...ReportRoute,
+  ...CustomersRoute,
+  ...OrdersRoute,
+  ...LogoutRoute,
+];
 export default routes;

@@ -1,14 +1,27 @@
+import userProfile from '@/browser/localStorage/userProfile';
 import { EApiRequestStatus } from '@/constants/apiRequestStatus';
-import type { AuthenticationUserInfo } from '@/types';
+import type { UserProfile } from '@/types';
 import Immutable from 'seamless-immutable';
 export type State = {
-  data: AuthenticationUserInfo | null;
+  data: UserProfile | null;
   getUserProfileRequestStatus: EApiRequestStatus;
   updateUserProfileRequestStatus: EApiRequestStatus;
 };
+const profile = userProfile.get();
 export const rootName = 'userProfile';
 const state = Immutable<State>({
-  data: null,
+  data: {
+    id: '',
+    username: '',
+    displayname: '',
+    firstName: '',
+    middleName: '',
+    lastName: '',
+    avatar: '',
+    email: '',
+    phone: '',
+    ...profile,
+  },
   getUserProfileRequestStatus: EApiRequestStatus.NONE,
   updateUserProfileRequestStatus: EApiRequestStatus.NONE,
 });

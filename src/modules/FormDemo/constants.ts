@@ -21,6 +21,8 @@ import SomeFileItem from '@/modules/FormDemo/components/SomeFileItem';
 import withUploadFileButton from '@/modules/FormDemo/hocs/withUploadFileButton';
 import OtherFileList from '@/modules/FormDemo/components/OtherFileList';
 import OtherFileItem from '@/modules/FormDemo/components/OtherFileItem';
+import withQueryUrgencyDegrees from '@/modules/FormDemo/hocs/withQueryUrgencyDegrees';
+import withRHFTurnBackToDefaultValueIfClear from '@/components/form/hocs/withRHFTurnBackToDefaultValueIfClear';
 export const LABEL = 'Lorem ipsum dolor sit amet';
 export const LABEL1 =
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
@@ -41,7 +43,7 @@ export const defaultValues: FormValues = {
   SelectField: undefined,
   SelectMultiField: undefined,
   RadioField: false,
-  CheckField: false,
+  CheckField: true,
   SwitchField: false,
   SelectBooleanField: undefined,
   DateField: undefined,
@@ -61,7 +63,7 @@ export const fields = [
     name: 'SwitchField',
     inputType: 'switch',
     label: LABEL,
-    rules: required(i18n.t('common:pleaseSelect')),
+    //rules: required(i18n.t('common:pleaseSelect')),
     md: 4,
     sx: fieldSx,
   }),
@@ -69,9 +71,12 @@ export const fields = [
     name: 'CheckField',
     inputType: 'check',
     label: LABEL,
-    rules: required(i18n.t('common:pleaseSelect')),
+    //rules: required(i18n.t('common:pleaseSelect')),
     md: 4,
-    gridFieldHocs: [withDisplayBySwitch],
+    gridFieldHocs: [withDisplayBySwitch, withRHFTurnBackToDefaultValueIfClear('CheckField')],
+    componentProps: {
+      shouldUnregister: true,
+    },
     sx: fieldSx,
   }),
   field({
@@ -144,26 +149,30 @@ export const fields = [
   field({
     name: 'SelectMultiField',
     inputType: 'select-multi',
-    label: LABEL,
+    label: 'Độ khẩn',
     rules: required(i18n.t('common:pleaseSelect')),
     componentProps: {
       placeholder: i18n.t('common:pleaseSelect'),
       options: options,
       multiple: true,
     },
+    hocs: [withQueryUrgencyDegrees],
     md: 3,
     sx: fieldSx,
   }),
   field({
-    name: 'SelectBooleanField',
+    name: 'SomeFieldName',
     inputType: 'select-boolean',
     label: LABEL,
-    rules: required(i18n.t('common:pleaseSelect')),
+    //rules: required(i18n.t('common:pleaseSelect')),
     componentProps: {
       placeholder: i18n.t('common:pleaseSelect'),
       labelTrue: i18n.t('common:yes'),
       labelFalse: i18n.t('common:no'),
+      shouldUnregister: true,
     },
+    gridFieldHocs: [withDisplayBySwitch],
+    //hocs: [withRHFTurnBackToDefaultValueIfClear('SomeFieldName')],
     md: 3,
     sx: fieldSx,
   }),

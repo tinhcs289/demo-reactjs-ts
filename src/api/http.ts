@@ -1,10 +1,11 @@
 import refreshAuthenticateTokenApi from '@/api/authentication/refreshAuthenticateTokenApi';
-import authentication from '@/appCookies/authentication';
-import language from '@/appLocalStorages/language';
+import authentication from '@/browser/cookies/authentication';
+import language from '@/browser/localStorage/language';
 import { actions as sessionAction } from '@/redux/session';
 import store from '@/redux/store';
 import type { AxiosError, AxiosResponse } from 'axios';
 import Axios from 'axios';
+import isRefreshingAccessToken from '@/browser/localStorage/isRefreshingAccessToken';
 const showWarning = () => {
   store.dispatch(sessionAction.sessionTimeoutWarningShow({}));
 };
@@ -17,7 +18,11 @@ const http = Axios.create({
   timeout: 30000,
   //withCredentials: true,
 });
-let isRefreshing = false;
+let isRefreshing = isRefreshingAccessToken.get() || false;
+isRefreshingAccessToken.onChange((_event, detail) => {
+  if (typeof detail?.value !== 'boolean') return;
+  isRefreshing = detail.value;
+});
 let failedQueue: { resolve: any; reject: any }[] = [];
 const processQueue = (error: any, token: string | null) => {
   failedQueue.forEach((prom) => (error ? prom.reject(error as any) : prom.resolve(token as any)));
@@ -25,7 +30,7 @@ const processQueue = (error: any, token: string | null) => {
 };
 http.interceptors.request.use(
   (config) => {
-    if (!!config?.headers?.common) {
+    if (!!config?.headers) {
       config.headers['Access-Control-Allow-Origin'] = '*';
       config.headers['Accept'] = 'application/json';
       config.headers['Content-Type'] = 'application/json';
@@ -68,6 +73,7 @@ http.interceptors.response.use(
           });
       }
       isRefreshing = true;
+      isRefreshingAccessToken.set(true, true);
       const refreshToken = authentication.get()?.refreshToken;
       if (refreshToken) {
         console.log('refreshing......');
@@ -78,17 +84,14 @@ http.interceptors.response.use(
                 showWarning();
               } else {
                 authentication.set(data.jwt);
-                Axios.defaults.headers.common['Authorization'] = `Bearer ${data.jwt.accessToken}`;
                 if (!!error?.config?.headers)
                   error.config.headers.Authorization = `Bearer ${data.jwt.accessToken}`;
-
                 //TODO [Refresh token] More handle for refreshing access token flow
                 // incase token includes `Accept-Language` and it changes header key should be update to
                 // use this code
                 //
                 // const lang = language.get();
                 // if (lang !== langInToken) {
-                //   Axios.defaults.headers.common['Accept-Language'] = langInToken;
                 //   if (!!error?.config?.headers) error.config.headers.['Accept-Language'] = langInToken;
                 // }
                 processQueue(null, data.jwt.accessToken);
@@ -102,6 +105,7 @@ http.interceptors.response.use(
             })
             .finally(() => {
               isRefreshing = false;
+              isRefreshingAccessToken.set(false, true);
             });
         });
       } else {

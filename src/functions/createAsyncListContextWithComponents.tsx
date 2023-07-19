@@ -14,7 +14,7 @@ import {
   CommonTablePagination,
 } from '@/components/table';
 import { EApiRequestStatus } from '@/constants/apiRequestStatus';
-import type { AsyncListState, RowData } from '@/functions/createAsyncListContext';
+import type { AsyncListState, RowData, QueryParams } from '@/functions/createAsyncListContext';
 import createAsyncListContext from '@/functions/createAsyncListContext';
 import { AnyObject } from '@/types';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -46,16 +46,16 @@ export type {
   OnQueryCallback,
   OnQueryReturns,
   Paging,
-  QueryParams,
   ReloadCallback,
   ResetCallback,
   Sort,
   SortDirect,
   UpdateFilterCallback,
+  PatchFilterCallback,
   UpdatePagingCallback,
   UpdateSortCallback,
 } from './createAsyncListContext';
-export type { AsyncListState, RowData };
+export type { AsyncListState, RowData, QueryParams };
 //#region
 export type AsyncListTableProps<T extends RowData> = Omit<
   CommonTableProps<T>,
@@ -78,9 +78,10 @@ export type AsyncListItemActionsPopoverProps<T extends RowData> = Omit<
 };
 const anchorOrigin = { vertical: 'top', horizontal: 'right' };
 const transformOrigin = { vertical: 'top', horizontal: 'right' };
-export default function createAsyncListContextWithComponents<T extends RowData>(
-  defaultState?: Partial<AsyncListState<T>>
-) {
+export default function createAsyncListContextWithComponents<
+  T extends RowData = RowData,
+  U extends QueryParams = QueryParams,
+>(defaultState?: Partial<AsyncListState<T, U>>) {
   const {
     AsyncListProvider,
     useAsyncListAction,

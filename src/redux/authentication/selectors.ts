@@ -22,8 +22,8 @@ export function refreshTokenRequestStatusSelector(state: ReduxStore) {
   return rootSelector(state)?.refreshTokenRequestStatus;
 }
 export function userPermissionsSelector(state: ReduxStore) {
-  return rootSelector(state)?.user?.polices || [];
+  return rootSelector(state)?.policies || [];
 }
 export function userRolesSelector(state: ReduxStore) {
-  return rootSelector(state)?.user?.roles || [];
+  return rootSelector(state)?.roles || [];
 }
