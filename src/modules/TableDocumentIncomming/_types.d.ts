@@ -24,7 +24,29 @@ export type RowData = {
   DonViNgoaiId?: string | null;
   DonViTrongId?: string | null;
   DonViVaoSoLanDauId?: string | null;
-  FileDinhKem?: any[];
+  FileDinhKem?: Array<{
+    DaKySo?: boolean | null;
+    DaKySoCoQuan?: boolean | null;
+    DungLuong?: string | number | null;
+    DuoiMoRong?: string | null;
+    DuongDan?: string | null;
+    Id?: string | null;
+    IdFileGoc?: string | null;
+    Index?: number | null;
+    IsCanDelete?: boolean | null;
+    IsSign?: boolean | null;
+    KieuDinhKem?: string | null;
+    LoaiFileDinhKem?: string | null;
+    NgayTao?: string | null;
+    NguoiTao?: string | null;
+    NguoiTaoId?: string | null;
+    PathFileGoc?: string | null;
+    PathIOC?: string | null;
+    ProcessId?: string | null;
+    QrCreated: unknown;
+    Ten?: string | null;
+    [x: string]: any;
+  }> | null;
   FileDinhKemJson?: string | null;
   HanXuLy?: string | null;
   HanXuLy_?: string | null;
@@ -109,6 +131,7 @@ export type RowData = {
   WDoKhan?: unknown;
   WTrangThai?: unknown;
   Weight?: unknown;
+  [x: string]: any;
 };
 export type QueryParams = {
   KeySearch?: string;

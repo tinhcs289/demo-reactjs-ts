@@ -1,11 +1,15 @@
 export { default as CommonPagination } from './CommonPagination';
 export type { CommonPaginationProps } from './CommonPagination';
 export {
+  ChangeColumnVisibilityIconButton,
   default as CommonTable,
+  CommonTableColumnVisibility,
   createCellComponent,
   createCellInnerComponent,
   createDetalPanel,
   tableConfig,
+  useColumnVisibility,
+  withColumnVisibility,
 } from './CommonTable';
 export type {
   BodyCellComponent,
@@ -19,6 +23,9 @@ export type {
   BodyRowComponent,
   BodyRowHoc,
   BodyRowProps,
+  ChangeColumnVisibilityIconButtonProps,
+  CommonTableColumnVisibilityContextValues,
+  CommonTableColumnVisibilityProps,
   CommonTableConfig,
   CommonTableProps,
   DetailPanelComponent,

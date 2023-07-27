@@ -14,5 +14,7 @@ const BoxMain = styled(Box)<BoxProps>(({ theme }) => ({
     height: `${APP_BAR_HEIGHT}px !important`,
     minHeight: `${APP_BAR_HEIGHT}px !important`,
   },
+  display: 'flex',
+  flexDirection: 'column',
 }));
 export default BoxMain;
