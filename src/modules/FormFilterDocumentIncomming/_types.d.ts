@@ -1,16 +1,10 @@
-import type { CommonFormProps } from '@/types';
-import type { Moment } from 'moment';
 import type { CheckGroupOption } from '@/components/rhfInputs/RHFCheckGroup';
+import type { CommonFormProps, DateRange } from '@/types';
 export type FormValues = {
   Keyword?: string | null;
-  DateReceived?: {
-    From?: Moment | null;
-    To?: Moment | null;
-  } | null;
-  DateProcess?: {
-    From?: Moment | null;
-    To?: Moment | null;
-  } | null;
+  DateReceived?: DateRange | null;
+  DateProcess?: DateRange | null;
+  DatePublish?: DateRange | null;
   Status?: CheckGroupOption<>[] | null;
 };
 export type FormProps = CommonFormProps<FormValues>;

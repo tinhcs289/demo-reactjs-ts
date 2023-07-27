@@ -12,9 +12,10 @@ import {
   CommonTable,
   CommonTableActionsPopover,
   CommonTablePagination,
+  withColumnVisibility,
 } from '@/components/table';
 import { EApiRequestStatus } from '@/constants/apiRequestStatus';
-import type { AsyncListState, RowData, QueryParams } from '@/functions/createAsyncListContext';
+import type { AsyncListState, QueryParams, RowData } from '@/functions/createAsyncListContext';
 import createAsyncListContext from '@/functions/createAsyncListContext';
 import { AnyObject } from '@/types';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -22,7 +23,7 @@ import IconButton from '@mui/material/IconButton';
 import type { MenuProps } from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import get from 'lodash/get';
-import type { MouseEventHandler } from 'react';
+import type { ComponentType, MouseEventHandler } from 'react';
 import { useCallback, useMemo } from 'react';
 //#region  export from createAsyncListContext
 export { isValidResult } from './createAsyncListContext';
@@ -46,16 +47,16 @@ export type {
   OnQueryCallback,
   OnQueryReturns,
   Paging,
+  PatchFilterCallback,
   ReloadCallback,
   ResetCallback,
   Sort,
   SortDirect,
   UpdateFilterCallback,
-  PatchFilterCallback,
   UpdatePagingCallback,
   UpdateSortCallback,
 } from './createAsyncListContext';
-export type { AsyncListState, RowData, QueryParams };
+export type { AsyncListState, QueryParams, RowData };
 //#region
 export type AsyncListTableProps<T extends RowData> = Omit<
   CommonTableProps<T>,
@@ -130,6 +131,9 @@ export default function createAsyncListContextWithComponents<
     );
     return $Return;
   }
+  const AsyncListTableWithColumnVisibility = withColumnVisibility(AsyncListTable) as ComponentType<
+    AsyncListTableProps<T>
+  >;
   function AsyncListTablePaging(props: AsyncListTablePagingProps) {
     const pageIndex = useAsyncListGetter((s) => s.pageIndex);
     const pageSize = useAsyncListGetter((s) => s.pageSize);
@@ -277,6 +281,7 @@ export default function createAsyncListContextWithComponents<
     useAsyncListSetter,
     useAsyncListInteract,
     AsyncListTable,
+    AsyncListTableWithColumnVisibility,
     AsyncListTablePaging,
     AsyncListPaging,
     AsyncListItemActionsPopoverToggle,
