@@ -11,6 +11,8 @@ const ContainerStyled = styled(Container)<ContainerProps>(({ theme }) => ({
   [theme.breakpoints.up('sm')]: {
     padding: `${LAYOUT_PADDING}px !important`,
   },
+  // display: 'flex',
+  // flexDirection: 'column',
 }));
 export default function DashboardPageContainer(props: ContainerProps) {
   const { children, ...otherProps } = props;

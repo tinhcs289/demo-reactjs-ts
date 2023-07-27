@@ -24,3 +24,5 @@ export type {
   CommonFormOnCloseParams,
   CommonFormProps,
 } from './commonForm';
+export type { ArrayElement } from './ArrayElement';
+export type { DateRange } from './Date';

@@ -28,7 +28,7 @@ import buildTableRowProps from './functions/buildTableRowProps';
 import initStickyColumn from './functions/initStickyColumn';
 import renderHeadCell from './functions/renderHeadCell';
 import withRemoveHocProps from './functions/withRemoveHocProps';
-const CommonTable = forwardRef(function CommonTableWithRef<RowData extends AnyObject>(
+const CommonTable = forwardRef(function CommonTableWithRef<RowData extends AnyObject = AnyObject>(
   props: CommonTableProps<RowData>,
   ref?: Ref<HTMLDivElement>
 ) {
@@ -250,7 +250,7 @@ const CommonTable = forwardRef(function CommonTableWithRef<RowData extends AnyOb
   return (
     <TableContainerStyled ref={ref} {...({ component: PaperStyled } as any)} {...containerProps}>
       {$loading}
-      <TableStyled stickyHeader {...tableProps} ref={tableRef as any}>
+      <TableStyled stickyHeader size="small" {...tableProps} ref={tableRef as any}>
         <TableHead {...tableHeadProps}>
           <TableRow {...tableHeadRowProps}>
             {$checkboxAll}

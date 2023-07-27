@@ -1,12 +1,14 @@
 import themeVariant from '@/browser/localStorage/themeVariant';
 import FabChangeTheme from '@/providers/MUIThemeV5Provider/FabChangeTheme';
+import { globalStyleMaker } from '@/themes/baseOptions';
 import type { PaletteMode } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
+import GlobalStylesProps from '@mui/material/GlobalStyles';
 import { ThemeProvider } from '@mui/material/styles';
 import isEqual from 'lodash/isEqual';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import THEMES from './themes';
 import type { MUIThemeV5ProviderProps } from './_types';
+import THEMES from './themes';
 export default function MUIThemeV5Provider(props: MUIThemeV5ProviderProps<any>) {
   const { children, ...otherProps } = props;
   const [mode, setMode] = useState<PaletteMode>(themeVariant.get() || 'light');
@@ -30,6 +32,7 @@ export default function MUIThemeV5Provider(props: MUIThemeV5ProviderProps<any>) 
   return (
     <ThemeProvider {...otherProps} theme={memoTheme as any}>
       <CssBaseline />
+      <GlobalStylesProps styles={globalStyleMaker} />
       {children}
       {$SwitchThemeFab}
     </ThemeProvider>

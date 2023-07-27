@@ -2,6 +2,7 @@ import { BodyRowHoc, menuActions, tableConfig } from '@/components/table';
 import { DOCUMENT_STATUS } from '@/constants/document';
 import type { RowData } from './_types';
 import CellAction from './components/CellAction';
+import CellAttachment from './components/CellAttachment';
 import CellStatus from './components/CellStatus';
 import MenuActionDelete from './components/MenuActionDelete';
 import MenuActionOpenDetail from './components/MenuActionOpenDetail';
@@ -27,6 +28,11 @@ export const columns = tableConfig<RowData>(
     headCell: 'Trạng thái',
     bodyCellInner: CellStatus,
     stickyFirst: true,
+  },
+  {
+    field: 'FileDinhKem',
+    headCell: 'File',
+    bodyCellInner: CellAttachment,
   },
   {
     field: 'NgayDen',
