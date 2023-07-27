@@ -1,8 +1,8 @@
 import { ButtonPositive } from '@/components/buttons';
-import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import PublicIcon from '@mui/icons-material/Public';
 import { useCallback, useMemo } from 'react';
 import { useAsyncListAction, useAsyncListGetter } from '../context';
-export default function ButtonExportExcel() {
+export default function ButtonPublish() {
   const items = useAsyncListGetter((s) => s?.selectedItems);
   const selectCount = useMemo(() => items?.length || 0, [items?.length]);
   const disabled = useMemo(() => selectCount === 0, [selectCount]);
@@ -13,12 +13,12 @@ export default function ButtonExportExcel() {
   return (
     <ButtonPositive
       disabled={disabled}
-      color="info"
-      startIcon={<FileDownloadIcon />}
+      color="success"
+      startIcon={<PublicIcon />}
       onClick={handleClick}
       noWrap
     >
-      {!selectCount ? 'Xuất dữ liệu' : `Xuất dữ liệu (${selectCount})`}
+      {!selectCount ? 'Ban hành' : `Ban hành (${selectCount})`}
     </ButtonPositive>
   );
 }

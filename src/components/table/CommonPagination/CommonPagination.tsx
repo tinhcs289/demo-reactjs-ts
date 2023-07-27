@@ -8,7 +8,6 @@ import type { CommonPaginationProps } from './_types';
 const PaginationStyled = styled(Pagination)<PaginationProps>({
   display: 'flex',
   justifyContent: 'center',
-  minHeight: '52px !important',
 });
 export default function CommonPagination(props: CommonPaginationProps) {
   const { pageIndex = 1, pageSize = 10, totalCount = 0, onChange, loading, ...otherProps } = props;

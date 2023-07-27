@@ -8,5 +8,7 @@ const BoxContent = styled(Box)<BoxProps>(() => ({
   height: `calc(100vh - ${APP_BAR_HEIGHT}px)`,
   overflow: 'auto',
   position: 'relative',
+  display: 'flex',
+  flexDirection: 'column',
 }));
 export default BoxContent;

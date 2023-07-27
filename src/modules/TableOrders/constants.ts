@@ -101,7 +101,7 @@ export const columns = tableConfig<RowData>(
     stickyLast: true,
   },
   {
-    field: 'action',
+    field: '_action',
     headCell: i18n.t('booking:table.action'),
     headCellProps: { align: 'center', sx: { width: '0%' } },
     bodyCellInner: CellAction,

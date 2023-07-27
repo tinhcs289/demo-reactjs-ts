@@ -1,6 +1,7 @@
 import { EApiRequestStatus } from '@/constants/apiRequestStatus';
 import createFastContext from '@/functions/createFastContext';
 import concatArray from '@/helpers/arrayHelpers/concatArray';
+import { debounce } from 'lodash';
 import get from 'lodash/get';
 import type { ReactNode } from 'react';
 import { useCallback, useEffect, useMemo } from 'react';
@@ -23,32 +24,110 @@ export type OnQueryCallback<T extends RowData = RowData, U extends QueryParams =
   args: OnQueryArgs<U>
 ) => Promise<OnQueryReturns<T>>;
 export type AsyncListConfig<T extends RowData, U extends QueryParams = QueryParams> = {
+  /**
+   * the name of the data field corresponding to the identifier of the element in the list
+   * @default 'id'
+   */
   idField?: string;
-  onQuery?: OnQueryCallback<T>;
+  /**
+   * the async function to get Data of the list
+   */
+  onQuery?: OnQueryCallback<T, U>;
+  /**
+   * set the list to be cumulativable
+   * @default false
+   */
   infinite?: boolean;
+  /**
+   * turn on selecting function by default
+   * @default false
+   */
   defaultSelectable?: boolean;
+  /**
+   * default pagination parameters
+   */
   defaultPagination?: Partial<Paging & { totalCount: number }>;
+  /**
+   * default sorting parameters
+   */
   defaultSort?: Partial<Sort>;
+  /**
+   * default extended query parameters, these values can be changed by the life-time of the context
+   */
   defaultExtendQueryParams?: Partial<U>;
+  /**
+   * fixed extended query parameters, these values can not be changed by the life-time of the context
+   */
   fixedExtendQueryParams?: Partial<U>;
+  /**
+   * execute the request at the first load of the context
+   * @default true
+   */
   queryOnFirstLoad?: boolean;
 };
 export type AsyncListData<T extends RowData = RowData> = {
+  /**
+   * the name of the data field corresponding to the identifier of the element in the list
+   * @default 'id'
+   */
   idField: string;
+  /**
+   * the array of all items of the list. this equals to the `dataInPage` by default.
+   * if `isInfinite=true`, this is the cumulativable list of all the recordings in real time
+   */
   data: T[];
+  /**
+   * the array of items which is a part of the list extracted by the pagination parameters
+   */
   dataInPage: T[];
+  /**
+   * the status of the call of the async request to get data of list.
+   * - `1`: the request is idle.
+   * - `2`: the request is sending
+   * - `3`: the request is sent successful
+   * - `4`: fail to send request
+   */
   fetchStatus: EApiRequestStatus;
+  /**
+   * set the list to be cumulativable
+   */
   isInfinite: boolean;
 };
+/**
+ * Interaction to an speciafiled item of the list is an event such as:
+ * selecting an item, click on item then open a menu dialog, click on item then open detail view, etc.
+ */
 export type AsyncListInteract<T extends RowData = RowData> = {
+  /**
+   * an unique string key corresponding to the interaction to an speciafiled item of the list
+   * @eg `DELETE_ITEM`, `VIEW_ITEM`,
+   */
   itemAction: string;
+  /**
+   * the speciafiled item of the list, which is interactted
+   */
   interactItem: T | null;
+  /**
+   * the HTMLElement which is the target of the event.
+   */
   anchorEl: any;
 };
 export type AsyncListSelectability<T extends RowData = RowData> = {
+  /**
+   * enable/disabled selecting function of the list
+   */
   selectable: boolean;
+  /**
+   * Array of seleted items
+   */
   selectedItems: T[];
+  /**
+   * Array of seleted item identifify keys.
+   */
   selectedItemIds: any[];
+  /**
+   * All items are selected
+   */
   isCheckAll: boolean;
 };
 export type ResetCallback = () => void;
@@ -57,12 +136,43 @@ export type UpdatePagingCallback = (page: number, size: number) => void;
 export type UpdateSortCallback = (sortBy: string, sortDirection: SortDirect) => void;
 export type UpdateFilterCallback<U extends QueryParams = QueryParams> = (fitler: Partial<U> | null) => void;
 export type PatchFilterCallback<U extends QueryParams = QueryParams> = (fitler: Partial<U>) => void;
+export type RefetchCallback<U extends QueryParams = QueryParams> = (
+  params: Partial<Paging & Sort & { filter: Partial<U> }>,
+  /**
+   * - `false`: refetch only by values of `params`, the state of the context will be replace by the values of `params`
+   * - `true`: refetch by merged values of `params` and current state of the context.
+   * @default false
+   */
+  overrideParams?: boolean
+) => void;
 export type AsyncListDataActions<U extends QueryParams = QueryParams> = {
+  /**
+   * execute the the request to get list by default parameters
+   */
   reset: ResetCallback;
+  /**
+   * execute the the request to get list by current parameters
+   */
   reload: ReloadCallback;
+  /**
+   * execute the the request to get list by parameters which provided
+   */
+  refetch: RefetchCallback<U>;
+  /**
+   * execute the the request to get list by pagination parameters which provided
+   */
   updatePaging: UpdatePagingCallback;
+  /**
+   * execute the the request to get list by sorting parameters which provided
+   */
   updateSort: UpdateSortCallback;
+  /**
+   * execute the the request to get list by query parameters which provided
+   */
   updateFilter: UpdateFilterCallback<U>;
+  /**
+   * execute the the request to get list by merged values of current query parameters and the provided parameters
+   */
   patchFilter: PatchFilterCallback<U>;
 };
 export type AsyncListInteractAction<T extends RowData = RowData> = {
@@ -77,10 +187,26 @@ export type AsyncListSetActionCallback<T extends RowData = RowData> = (
 ) => void;
 export type AsyncListClearActionCallback = () => void;
 export type AsyncListInteractActions<T extends RowData = RowData> = {
+  /**
+   * set the interaction to an speciafiled item of the list is an event such as:
+   * selecting an item, click on item then open a menu dialog, click on item then open detail view, etc.
+   */
   setAction: AsyncListSetActionCallback<T>;
+  /**
+   * verify the current interaction state by a string key
+   */
   isAction: (action: string) => boolean;
+  /**
+   * verify the current interaction state by a string key and item
+   */
   isItemInteractAction: (action: string) => boolean;
+  /**
+   * verify the current interaction state by a string key, item and anchor element
+   */
   isItemInteractWithAnchorAction: (action: string) => boolean;
+  /**
+   * clear the interaction state
+   */
   clearAction: AsyncListClearActionCallback;
 };
 export type AsyncListToggleSelectCallback = (isOn: boolean) => void;
@@ -109,6 +235,10 @@ export type RequestAction<U extends QueryParams = QueryParams> =
   | {
       type: 'data:filter_patch';
       payload: Partial<U>;
+    }
+  | {
+      type: 'data:refetch';
+      payload: [params: Partial<Paging & Sort & { filter: Partial<U> }>, overrideParams?: boolean];
     };
 export type SelectAction<T extends RowData = RowData> =
   | {
@@ -222,38 +352,39 @@ export default function createAsyncListContext<
       },
       [fixedFilter, initFilter, pageIndex, pageSize, filter, sortBy, sortDirection]
     );
-    const fetchData = useCallback(
-      async function fetchDataAsync(payload?: Partial<ListState<U>>, overrideFilter?: boolean) {
-        const isOverrided = !!overrideFilter;
-        if (!onQuery) return;
-        let [result, totalCount]: [T[], number] = [[], 0];
-        setState({ fetchStatus: EApiRequestStatus.REQUESTING });
-        const queryArgs = getQueryArgs(payload, isOverrided);
-        try {
-          const response = await onQuery(queryArgs);
-          result = Array.isArray(response?.result) ? response.result : [];
-          totalCount = Number.isInteger(response?.totalCount) ? response.totalCount : 0;
-          setState({ dataInPage: result });
-          if (isInfinite) {
-            const newData = concatArray(data, result);
-            setState({ data: newData });
+    const fetchData = useMemo(
+      () =>
+        debounce(async function fetchDataAsync(payload?: Partial<ListState<U>>, overrideFilter?: boolean) {
+          const isOverrided = !!overrideFilter;
+          if (!onQuery) return;
+          let [result, totalCount]: [T[], number] = [[], 0];
+          setState({ fetchStatus: EApiRequestStatus.REQUESTING });
+          const queryArgs = getQueryArgs(payload, isOverrided);
+          try {
+            const response = await onQuery(queryArgs);
+            result = Array.isArray(response?.result) ? response.result : [];
+            totalCount = Number.isInteger(response?.totalCount) ? response.totalCount : 0;
+            setState({ dataInPage: result });
+            if (isInfinite) {
+              const newData = concatArray(data, result);
+              setState({ data: newData });
+            }
+            setState({
+              totalCount: totalCount,
+              pageIndex: queryArgs.pageIndex,
+              pageSize: queryArgs.pageSize,
+              sortBy: queryArgs.sortBy,
+              sortDirection: queryArgs.sortDirection,
+              filter: queryArgs.filter,
+            });
+            setState({ fetchStatus: EApiRequestStatus.REQUESTSUCCESS });
+          } catch (error) {
+            console.log(error);
+            setState({ fetchStatus: EApiRequestStatus.REQUESTFAIL });
+          } finally {
+            setState({ fetchStatus: EApiRequestStatus.NONE });
           }
-          setState({
-            totalCount: totalCount,
-            pageIndex: queryArgs.pageIndex,
-            pageSize: queryArgs.pageSize,
-            sortBy: queryArgs.sortBy,
-            sortDirection: queryArgs.sortDirection,
-            filter: queryArgs.filter,
-          });
-          setState({ fetchStatus: EApiRequestStatus.REQUESTSUCCESS });
-        } catch (error) {
-          console.log(error);
-          setState({ fetchStatus: EApiRequestStatus.REQUESTFAIL });
-        } finally {
-          setState({ fetchStatus: EApiRequestStatus.NONE });
-        }
-      },
+        }, 200),
       [onQuery, getQueryArgs, isInfinite, data, setState]
     );
     useEffect(() => {
@@ -293,6 +424,34 @@ export default function createAsyncListContext<
       },
       [fetchData]
     );
+    const refetch = useCallback(
+      (params: Partial<Paging & Sort & { filter: Partial<U> }>, overrideParams?: boolean) => {
+        if (!overrideParams) {
+          fetchData(
+            {
+              pageIndex,
+              pageSize,
+              sortBy,
+              sortDirection,
+              ...params,
+              filter: { ...filter, ...params?.filter } as any,
+            },
+            false
+          );
+          return;
+        } else {
+          fetchData(
+            {
+              ...params,
+              filter: { ...params?.filter } as any,
+            },
+            true
+          );
+          return;
+        }
+      },
+      [fetchData, pageIndex, pageSize, sortBy, sortDirection, filter]
+    );
     useEffect(() => {
       if (!dispatch) return;
       switch (dispatch.type) {
@@ -320,6 +479,10 @@ export default function createAsyncListContext<
           clearDispatch();
           reload();
           break;
+        case 'data:refetch':
+          clearDispatch();
+          refetch(...dispatch.payload);
+          break;
         default:
           clearDispatch();
           return;
@@ -337,6 +500,7 @@ export default function createAsyncListContext<
     const dataInPage = useAsyncListGetter((s) => s.dataInPage);
     const selectedItems = useAsyncListGetter((s) => s.selectedItems);
     const selectedItemIds = useAsyncListGetter((s) => s.selectedItemIds);
+    const isSelectable = useAsyncListGetter((s) => s?.selectable);
     const dispatch = useAsyncListGetter((s) => s.dispatch);
     const clearDispatch = useCallback(() => {
       setState({ dispatch: null });
@@ -359,6 +523,7 @@ export default function createAsyncListContext<
     );
     const checkAllItems = useCallback(
       (checked: boolean = true) => {
+        if (!isSelectable) return;
         setState({ isCheckAll: checked });
         setTimeout(() => {
           if (!Array.isArray(dataInPage) || dataInPage.length === 0) return;
@@ -386,10 +551,11 @@ export default function createAsyncListContext<
         }, 0);
         return;
       },
-      [getId, selectedItems, dataInPage, setState]
+      [getId, selectedItems, dataInPage, isSelectable, setState]
     );
     const checkOneItem = useCallback(
       (item: T) => {
+        if (!isSelectable) return;
         if (!item) return;
         const id = getId(item);
         if (!id) return;
@@ -423,7 +589,7 @@ export default function createAsyncListContext<
           return;
         }
       },
-      [getId, selectedItems, selectedItemIds, dataInPage, isCheckAll, setState]
+      [getId, selectedItems, selectedItemIds, dataInPage, isSelectable, isCheckAll, setState]
     );
     const toggleSelectable = useCallback(
       (isOn: boolean) => {
@@ -592,6 +758,12 @@ export default function createAsyncListContext<
       },
       [setState]
     );
+    const refetch: RefetchCallback<U> = useCallback(
+      (params, overrideParams) => {
+        setState({ dispatch: { type: 'data:refetch', payload: [params, overrideParams] } });
+      },
+      [setState]
+    );
     const reload: ReloadCallback = useCallback(() => {
       setState({ dispatch: { type: 'data:reload' } });
     }, [setState]);
@@ -635,6 +807,7 @@ export default function createAsyncListContext<
       patchFilter,
       reload,
       reset,
+      refetch,
       setAction,
       clearAction,
       checkOrUncheck,

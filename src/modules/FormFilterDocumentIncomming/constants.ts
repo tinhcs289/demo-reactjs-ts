@@ -24,6 +24,10 @@ export const defaultValues: FormValues = {
     From: null,
     To: null,
   },
+  DatePublish: {
+    From: null,
+    To: null,
+  },
   Status: null,
 };
 export const fieldSx: SxProps<Theme> = { p: '4px' };
@@ -122,7 +126,7 @@ export const fields = [
     hocs: [
       withDisplayAsPopper<any>({
         namePrefix: 'DateProcess',
-        toggleButtonLabel: 'Ngày xử lý',
+        toggleButtonLabel: 'Hạn xử lý',
         hasValueWhen: (value: FormValues['DateProcess']) =>
           (!!value?.From && moment.isMoment(value.From)) || (!!value?.To && moment.isMoment(value.To)),
         getLabelText: (value: FormValues['DateProcess']) =>
@@ -131,10 +135,56 @@ export const fields = [
             value?.To
           )({
             format: 'DD/MM/YYYY',
-            hasFromAndTo: (f, t) => `Ngày xử lý: ${f} đến ${t}`,
-            hasOnlyFrom: (f) => `Ngày xử lý từ ${f} trở về sau`,
-            hasOnlyTo: (t) => `Ngày xử lý từ trước đến ${t}`,
-          }) || 'Ngày xử lý',
+            hasFromAndTo: (f, t) => `Hạn xử lý: ${f} đến ${t}`,
+            hasOnlyFrom: (f) => `Hạn xử lý từ ${f} trở về sau`,
+            hasOnlyTo: (t) => `Hạn xử lý từ trước đến ${t}`,
+          }) || 'Hạn xử lý',
+      }),
+    ],
+  }),
+  field({
+    name: 'DatePublish',
+    fields: [
+      field({
+        name: 'From',
+        inputType: 'date',
+        label: 'Từ',
+        componentProps: {
+          placeholder: i18n.t('common:pleaseSelect'),
+          clearText: 'Xóa',
+        },
+        sx: { ...fieldSx, mb: 2 },
+      }),
+      field({
+        name: 'To',
+        inputType: 'date',
+        label: 'Đến',
+        componentProps: {
+          placeholder: i18n.t('common:pleaseSelect'),
+          clearText: 'Xóa',
+        },
+        hocs: [withMinOrMaxDateByAnotherDate('minDate', 'DatePublish.From')] as any,
+        sx: fieldSx,
+      }),
+    ],
+    disabledXs: true,
+    sx: fieldSx,
+    hocs: [
+      withDisplayAsPopper<any>({
+        namePrefix: 'DatePublish',
+        toggleButtonLabel: 'Ngày ban hành',
+        hasValueWhen: (value: FormValues['DatePublish']) =>
+          (!!value?.From && moment.isMoment(value.From)) || (!!value?.To && moment.isMoment(value.To)),
+        getLabelText: (value: FormValues['DatePublish']) =>
+          toDateRangeText(
+            value?.From,
+            value?.To
+          )({
+            format: 'DD/MM/YYYY',
+            hasFromAndTo: (f, t) => `Ngày ban hành: ${f} đến ${t}`,
+            hasOnlyFrom: (f) => `Ngày ban hành từ ${f} trở về sau`,
+            hasOnlyTo: (t) => `Ngày ban hành từ trước đến ${t}`,
+          }) || 'Ngày ban hành',
       }),
     ],
   }),
