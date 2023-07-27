@@ -6,8 +6,8 @@ const Table = lazy(() => wait(0).then(() => import('@/modules/TableDocumentIncom
 export default function DemoTablePage() {
   return (
     <DashboardTabsContainer>
-      <GridContainer>
-        <GridItem px={1}>
+      <GridContainer fullHeight>
+        <GridItem contentProps={{ flexDirection: 'column' }}>
           <Table />
         </GridItem>
       </GridContainer>
