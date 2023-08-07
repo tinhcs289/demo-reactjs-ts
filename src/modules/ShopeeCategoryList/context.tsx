@@ -1,4 +1,4 @@
-import createFastContext from '@/functions/createFastContext';
+import createFastContext from '@/helpers/contextHelpers/createFastContext';
 import type { ShopeeCategoryItem } from '@/types/Shopee';
 import { ReactNode, useEffect } from 'react';
 import getCategories from './services/getCategories';

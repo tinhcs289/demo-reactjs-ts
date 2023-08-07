@@ -1,5 +1,6 @@
 import type { CommonCheckFieldProps } from '@/components/inputs/CommonCheckField';
-import { AnyObject } from '@/types';
+import type { AnyObject } from '@/types';
+import type { BoxProps } from '@mui/material/Box';
 import type { FormGroupProps } from '@mui/material/FormGroup';
 import type { ReactNode } from 'react';
 export type CheckGroupOption<OptionData extends AnyObject = AnyObject> = OptionData & {
@@ -27,4 +28,5 @@ export type CommonCheckGroupFieldProps = Omit<FormGroupProps, 'onChange'> & {
    * @default false
    */
   eventPreventDefault?: boolean;
+  optionsBoxProps?: Partial<BoxProps>;
 };

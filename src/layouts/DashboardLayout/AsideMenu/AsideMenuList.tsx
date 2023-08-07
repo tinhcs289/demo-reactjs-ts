@@ -1,4 +1,4 @@
-import CommonTooltip from '@/components/CommonTooltip';
+import CommonTooltip from '@/components/box/CommonTooltip';
 import arrayOrEmpty from '@/helpers/formatHelpers/arrayOrEmpty';
 import type { TAsideMenuItem } from '@/layouts/DashboardLayout';
 import { useDashboardLayoutState } from '@/providers/DashboardLayoutProvider';

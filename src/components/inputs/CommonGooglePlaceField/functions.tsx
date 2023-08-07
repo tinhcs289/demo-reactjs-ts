@@ -1,4 +1,4 @@
-import isValidAsYupSchema from '@/functions/isValidAsYupSchema';
+import isValidAsYupSchema from '@/helpers/commonHelpers/isValidAsYupSchema';
 import type { AutocompleteRenderOptionState } from '@mui/material/Autocomplete';
 import Checkbox from '@mui/material/Checkbox';
 import Radio from '@mui/material/Radio';

@@ -12,7 +12,9 @@ export default function RHFRadioGroup(props: RHFRadioGroupProps) {
         name={name}
         value={value}
         {...(!!defaultValue ? { defaultValue } : {})}
-        onChange={onChange}
+        onChange={(newValue) => {
+          onChange(newValue || null);
+        }}
         onBlur={onBlur}
         error={invalid}
         {...(!!rules?.required ? { required: true } : {})}

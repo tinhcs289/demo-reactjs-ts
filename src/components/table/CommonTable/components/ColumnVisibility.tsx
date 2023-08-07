@@ -2,7 +2,7 @@ import { ButtonNegative } from '@/components/buttons';
 import type { CheckGroupOption, CommonCheckGroupFieldProps } from '@/components/inputs/CommonCheckGroupField';
 import CommonCheckGroupField from '@/components/inputs/CommonCheckGroupField';
 import type { CommonTableProps } from '@/components/table/CommonTable/_types';
-import createFastContext from '@/functions/createFastContext';
+import createFastContext from '@/helpers/contextHelpers/createFastContext';
 import arrayOrEmpty from '@/helpers/formatHelpers/arrayOrEmpty';
 import ClickAwayListener from '@mui/base/ClickAwayListener';
 import ViewColumnIcon from '@mui/icons-material/ViewColumn';

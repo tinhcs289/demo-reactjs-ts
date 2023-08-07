@@ -9,10 +9,16 @@ export default function NavLinkNoStyle(props: LinkProps) {
     fullWidth = false,
     eventStopPropagation,
     eventPreventDefault,
+    openInNewTab,
+    nagivateInParent,
+    navigateInRootParent,
     ...otherProps
   } = props;
   return (
     <NavLink
+      {...(!!openInNewTab ? { target: '_blank' } : {})}
+      {...(!!nagivateInParent ? { target: '_parent' } : {})}
+      {...(!!navigateInRootParent ? { target: '_top' } : {})}
       {...otherProps}
       to={(to as string) || ''}
       style={{

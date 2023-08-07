@@ -1,5 +1,5 @@
-import downloadFileToMyDevice from '@/functions/downloadFileToMyDevice';
-import tryDo from '@/functions/tryDo';
+import downloadFileToMyDevice from '@/helpers/fileHelpers/downloadFileToMyDevice';
+import tryDo from '@/helpers/asyncHelpers/tryDo';
 import { useCallback, useState } from 'react';
 export type DownloadFileToMyDeviceParams = {
   fileId?: string | null;

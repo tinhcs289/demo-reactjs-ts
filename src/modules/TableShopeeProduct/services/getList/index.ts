@@ -1,10 +1,13 @@
 import http from '@/api/http';
 import httpMock, { mockAdapter } from '@/api/httpMock';
-import callHttp from '@/functions/callHttp';
-import type { OnQueryArgs, OnQueryReturns } from '@/functions/createAsyncListContextWithComponents';
-import { isValidResult } from '@/functions/createAsyncListContextWithComponents';
-import tryDo from '@/functions/tryDo';
-import wait from '@/functions/wait';
+import callHttp from '@/helpers/asyncHelpers/callHttp';
+import type {
+  OnQueryArgs,
+  OnQueryReturns,
+} from '@/helpers/contextHelpers/createAsyncListContextWithComponents';
+import { isValidResult } from '@/helpers/contextHelpers/createAsyncListContextWithComponents';
+import tryDo from '@/helpers/asyncHelpers/tryDo';
+import wait from '@/helpers/asyncHelpers/wait';
 import type { PaginatedListData, PaginatedListQuery } from '@/types';
 import type { AxiosResponse } from 'axios';
 import type { RowData } from '../../_types';

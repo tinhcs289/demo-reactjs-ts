@@ -1,5 +1,5 @@
 import { http } from '@/api';
-import callHttp from '@/functions/callHttp';
+import callHttp from '@/helpers/asyncHelpers/callHttp';
 import useSnackbarNotify from '@/hooks/useSnackbarNotify';
 import type { ComponentType } from 'react';
 import { useCallback, useState } from 'react';

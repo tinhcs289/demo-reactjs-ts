@@ -1,4 +1,4 @@
-import isValidAsYupSchema from '@/functions/isValidAsYupSchema';
+import isValidAsYupSchema from '@/helpers/commonHelpers/isValidAsYupSchema';
 import { newLocalStorageItem } from '@/helpers/localStorageHelpers';
 import type { UserProfile } from '@/types';
 import * as yup from 'yup';

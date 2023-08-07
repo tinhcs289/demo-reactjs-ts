@@ -1,7 +1,10 @@
 import http from '@/api/http';
 import getDefaultBackendEndpoint from '@/environments/getDefaultBackendEndpoint';
-import callHttp from '@/functions/callHttp';
-import type { OnQueryArgs, OnQueryReturns } from '@/functions/createAsyncListContextWithComponents';
+import callHttp from '@/helpers/asyncHelpers/callHttp';
+import type {
+  OnQueryArgs,
+  OnQueryReturns,
+} from '@/helpers/contextHelpers/createAsyncListContextWithComponents';
 import arrayOrEmpty from '@/helpers/formatHelpers/arrayOrEmpty';
 import intOrDefault from '@/helpers/formatHelpers/intOrDefault';
 import type { AxiosResponse } from 'axios';

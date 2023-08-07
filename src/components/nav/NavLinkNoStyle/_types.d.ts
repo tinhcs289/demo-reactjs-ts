@@ -16,4 +16,7 @@ export type LinkProps = BaseProps & {
   children?: ReactNode;
   to: string;
   style?: Partial<StyleHTMLAttributes<'a'>>;
+  openInNewTab?: boolean;
+  nagivateInParent?: boolean;
+  navigateInRootParent?: boolean;
 };

@@ -1,5 +1,5 @@
-import createAsyncListContext from '@/functions/createAsyncListContext';
-import createFastContext from '@/functions/createFastContext';
+import createAsyncListContext from '@/helpers/contextHelpers/createAsyncListContext';
+import createFastContext from '@/helpers/contextHelpers/createFastContext';
 import type {
   ShopeeProductItem,
   ShopeeProductItemImageFlag,

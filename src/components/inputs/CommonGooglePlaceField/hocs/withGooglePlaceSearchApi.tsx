@@ -17,7 +17,7 @@ import type {
   RequestError,
 } from '../_types';
 import { toOption } from '../functions';
-import tryDo from '@/functions/tryDo';
+import tryDo from '@/helpers/asyncHelpers/tryDo';
 export default function withGooglePlaceSearchApi(WrappedComponent: ComponentType<GooglePlaceFieldProps>) {
   return forwardRef(function CommonGooglePlaceFieldWithSearchApi(
     props: GooglePlaceFieldProps,
