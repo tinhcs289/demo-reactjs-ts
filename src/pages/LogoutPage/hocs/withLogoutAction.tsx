@@ -1,7 +1,7 @@
 import logoutApi from '@/api/authentication/logoutApi';
 import PATHS from '@/constants/paths';
-import callHttp from '@/functions/callHttp';
-import userDataStorage from '@/functions/userDataStorage';
+import callHttp from '@/helpers/asyncHelpers/callHttp';
+import userDataStorage from '@/browser/userDataStorage';
 import type { ComponentType } from 'react';
 import { useState } from 'react';
 import type { LogoutPageProps } from '../_types';

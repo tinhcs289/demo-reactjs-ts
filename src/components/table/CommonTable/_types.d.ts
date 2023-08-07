@@ -129,32 +129,32 @@ export type BodyRowComponent<RowData extends AnyObject = AnyObject> = ComponentT
 export type BodyRowHoc<RowData extends AnyObject = AnyObject> = (
   WrappedComponent: BodyRowComponent<RowData>
 ) => BodyRowComponent<RowData>;
-export interface CommonTableProps<RowData extends AnyObject = AnyObject> {
+export type CommonTableProps<RowData extends AnyObject = AnyObject> = {
   /**
    * Props of the `TableContainer` component.
    */
-  containerProps?: TableContainerProps;
+  containerProps?: Partial<TableContainerProps>;
   /**
    * Props of the `Table` component.
    */
-  tableProps?: TableProps;
+  tableProps?: Partial<TableProps>;
   /**
    * Props of the `Table > TableHead` component.
    */
-  tableHeadProps?: TableHeadProps;
+  tableHeadProps?: Partial<TableHeadProps>;
   /**
    * Props of the `Table > TableHead > TableRow` component.
    */
-  tableHeadRowProps?: TableRowProps;
+  tableHeadRowProps?: Partial<TableRowProps>;
   /**
    * Props of the `Table > TableBody` component.
    */
-  tableBodyProps?: TableBodyProps;
+  tableBodyProps?: Partial<TableBodyProps>;
   /**
    * Props of the `Table > TableBody > TableRow` components.
    * You can define props for all table rows or specified props for each row.
    */
-  tableBodyRowProps?: TableRowProps | ((row: RowData) => TableRowProps);
+  tableBodyRowProps?: Partial<TableRowProps> | ((row: RowData) => Partial<TableRowProps>);
   /**
    * the configuration for columns
    */
@@ -195,9 +195,11 @@ export interface CommonTableProps<RowData extends AnyObject = AnyObject> {
    * Default as `id`
    */
   idField?: string;
+};
+export type CommonTableVirtualizedProps<RowData extends AnyObject = AnyObject> = CommonTableProps<RowData> & {
   virtualized?: boolean;
   rowHeight?: number;
-}
+};
 //#endregion
 //#region Table extensions
 export type DetailPanelComponent<RowData extends AnyObject = AnyObject> = BodyCellInnerComponent<

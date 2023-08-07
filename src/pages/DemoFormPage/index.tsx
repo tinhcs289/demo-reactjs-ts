@@ -1,9 +1,9 @@
 import { GridContainer, GridItemPaper } from '@/components/grid';
-import wait from '@/functions/wait';
+import wait from '@/helpers/asyncHelpers/wait';
 import { lazy } from 'react';
-const DashboardTabsContainer = lazy(() => wait(0).then(() => import('@/containers/DashboardTabsContainer')));
-const Form = lazy(() => wait(0).then(() => import('@/modules/FormDocumentIncomming')));
-// const FormFilterDemo = lazy(() => wait(0).then(() => import('@/modules/FormFilterDemo')));
+const DashboardTabsContainer = lazy(() => wait().then(() => import('@/containers/DashboardTabsContainer')));
+const Form = lazy(() => wait().then(() => import('@/modules/FormDocumentIncomming')));
+// const FormFilterDemo = lazy(() => wait().then(() => import('@/modules/FormFilterDemo')));
 export default function DemoFormPage() {
   return (
     <DashboardTabsContainer>

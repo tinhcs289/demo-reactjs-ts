@@ -1,7 +1,7 @@
 import uploadFileApi from '@/api/uploadFile/uploadFileApi';
 import { EApiRequestStatus } from '@/constants/apiRequestStatus';
-import callHttp from '@/functions/callHttp';
-import tryDo from '@/functions/tryDo';
+import callHttp from '@/helpers/asyncHelpers/callHttp';
+import tryDo from '@/helpers/asyncHelpers/tryDo';
 import isOkWithData from '@/helpers/httpRequestHelpers/isOkWithData';
 import type { ApiRequestStatus } from '@/types';
 type TFileResponse = {

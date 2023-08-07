@@ -1,4 +1,4 @@
-import CommonGridSlider from '@/components/CommonGridSlider';
+import CommonGridSlider from '@/components/box/CommonGridSlider';
 import type { BoxProps } from '@mui/material/Box';
 import { useMemo } from 'react';
 import { default as PromoBrandsProvider, usePromoBrandState } from '../context';

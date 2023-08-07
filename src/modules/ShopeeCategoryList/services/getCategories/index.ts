@@ -1,6 +1,6 @@
-import callHttp from '@/functions/callHttp';
-import tryDo from '@/functions/tryDo';
-import wait from '@/functions/wait';
+import callHttp from '@/helpers/asyncHelpers/callHttp';
+import tryDo from '@/helpers/asyncHelpers/tryDo';
+import wait from '@/helpers/asyncHelpers/wait';
 import { ShopeeCategoryItem } from '@/types/Shopee';
 import api from './api';
 function isValidData(r: any) {

@@ -1,6 +1,6 @@
 import contentMaxWidth from '@/browser/localStorage/contentMaxWidth';
 import asideMenuItems from '@/constants/asideMenuItems';
-import createFastContext from '@/functions/createFastContext';
+import createFastContext from '@/helpers/contextHelpers/createFastContext';
 import type { ReactNode } from 'react';
 import type { LayoutContextValues } from './_types';
 const {

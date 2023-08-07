@@ -1,4 +1,4 @@
-import isValidAsYupSchema from '@/functions/isValidAsYupSchema';
+import isValidAsYupSchema from '@/helpers/commonHelpers/isValidAsYupSchema';
 import { newCookieItem } from '@/helpers/cookieHelpers';
 import type { AuthenticationJWT } from '@/types';
 import * as yup from 'yup';

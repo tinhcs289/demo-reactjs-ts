@@ -3,6 +3,7 @@ import CommonCheckField from '@/components/inputs/CommonCheckField';
 import removeAt from '@/helpers/arrayHelpers/removeAt';
 import { useCallback, useMemo } from 'react';
 import type { CheckGroupOption, CommonCheckGroupFieldProps } from './_types';
+import BoxScrollOnHover from '@/components/box/BoxScrollOnHover';
 export default function CommonCheckGroupField(props: CommonCheckGroupFieldProps) {
   const {
     name,
@@ -15,6 +16,7 @@ export default function CommonCheckGroupField(props: CommonCheckGroupFieldProps)
     value,
     eventStopPropagation = true,
     eventPreventDefault = false,
+    optionsBoxProps,
     ...otherProps
   } = props;
   const memoOption = useMemo(() => {
@@ -86,7 +88,9 @@ export default function CommonCheckGroupField(props: CommonCheckGroupFieldProps)
       errorText={errorText}
       required={required}
     >
-      {$Options}
+      <BoxScrollOnHover {...optionsBoxProps} width="100%">
+        {$Options}
+      </BoxScrollOnHover>
     </CommonFormGroup>
   );
 }

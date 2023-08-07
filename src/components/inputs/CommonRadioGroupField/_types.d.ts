@@ -1,8 +1,9 @@
+import type { AnyObject } from '@/types';
+import type { BoxProps } from '@mui/material/Box';
 import type { FormControlLabelProps } from '@mui/material/FormControlLabel';
-import type { RadioGroupProps } from '@mui/material/RadioGroup';
 import type { FormGroupProps } from '@mui/material/FormGroup';
+import type { RadioGroupProps } from '@mui/material/RadioGroup';
 import type { ReactNode } from 'react';
-import { AnyObject } from '@/types';
 export type RadioGroupOption<OptionData extends AnyObject = AnyObject> = OptionData & {
   label: ReactNode;
   value: string;
@@ -29,4 +30,5 @@ export type CommonRadioGroupFieldProps = Omit<FormGroupProps, 'onChange'> & {
    * @default false
    */
   eventPreventDefault?: boolean;
+  optionsBoxProps?: Partial<BoxProps>;
 };

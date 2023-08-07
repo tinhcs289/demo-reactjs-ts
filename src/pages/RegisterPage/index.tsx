@@ -1,8 +1,8 @@
-import wait from '@/functions/wait';
+import wait from '@/helpers/asyncHelpers/wait';
 import { lazy } from 'react';
-const FormHeading = lazy(() => wait(0).then(() => import('./components/FormHeading')));
-const ActionLinks = lazy(() => wait(0).then(() => import('./components/ActionLinks')));
-const FormRegister = lazy(() => wait(0).then(() => import('@/modules/FormRegister')));
+const FormHeading = lazy(() => wait().then(() => import('./components/FormHeading')));
+const ActionLinks = lazy(() => wait().then(() => import('./components/ActionLinks')));
+const FormRegister = lazy(() => wait().then(() => import('@/modules/FormRegister')));
 export default function RegisterPage() {
   return (
     <>

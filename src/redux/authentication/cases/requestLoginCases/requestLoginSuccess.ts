@@ -1,5 +1,5 @@
 import { EApiRequestStatus } from '@/constants/apiRequestStatus';
-import userDataStorage from '@/functions/userDataStorage';
+import userDataStorage from '@/browser/userDataStorage';
 import type { ReduxAction } from '@/helpers/reduxHelpers';
 import { createCase } from '@/helpers/reduxHelpers';
 import type { Authentication } from '@/types';

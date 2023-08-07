@@ -1,4 +1,4 @@
-import CommonTooltip from '@/components/CommonTooltip';
+import CommonTooltip from '@/components/box/CommonTooltip';
 import { createCellInnerComponent } from '@/components/table';
 import type { AnyObject } from '@/types';
 import AirplaneTicketIcon from '@mui/icons-material/AirplaneTicket';

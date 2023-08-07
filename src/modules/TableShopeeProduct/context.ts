@@ -1,4 +1,4 @@
-import createAsyncListContextWithComponent from '@/functions/createAsyncListContextWithComponents';
+import createAsyncListContextWithComponent from '@/helpers/contextHelpers/createAsyncListContextWithComponents';
 import type { RowData } from './_types';
 const context = createAsyncListContextWithComponent<RowData>({ idField: 'itemid', pageSize: 60 });
 export const {

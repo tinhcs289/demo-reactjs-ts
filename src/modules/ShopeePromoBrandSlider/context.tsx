@@ -1,4 +1,4 @@
-import createFastContext from '@/functions/createFastContext';
+import createFastContext from '@/helpers/contextHelpers/createFastContext';
 import type { ShopeePromoBrandItem } from '@/types/Shopee';
 import type { ReactNode } from 'react';
 import { useEffect } from 'react';

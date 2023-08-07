@@ -1,5 +1,5 @@
 import { GridContainer, GridContainerProps, GridItem } from '@/components/grid';
-import ScrollableContainer from '@/containers/ScrollableContainer';
+import BoxHorizontalSrcoll from '@/components/box/BoxHorizontalSrcoll';
 import ButtonAddDocument from './ButtonAddDocument';
 import ButtonExportExcel from './ButtonExportExcel';
 import ButtonRequestComment from './ButtonRequestComment';
@@ -7,7 +7,7 @@ import ButtonPublish from './ButtonPublish';
 export default function ListActions(props: Partial<GridContainerProps>) {
   return (
     <GridContainer {...props} justifyContent="flex-end">
-      <ScrollableContainer height="40px" togglable>
+      <BoxHorizontalSrcoll height="40px" togglable>
         <GridItem disabledXs sx={{ py: '7px', px: 0.5 }}>
           <ButtonAddDocument />
         </GridItem>
@@ -20,7 +20,7 @@ export default function ListActions(props: Partial<GridContainerProps>) {
         <GridItem disabledXs sx={{ py: '7px', px: 0.5 }}>
           <ButtonPublish />
         </GridItem>
-      </ScrollableContainer>
+      </BoxHorizontalSrcoll>
     </GridContainer>
   );
 }

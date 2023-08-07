@@ -1,9 +1,9 @@
 import { ApiResponseWithMessageOnly } from '@/types';
 import http from '@/api/http';
 import httpMock, { mockAdapter } from '@/api/httpMock';
-import callHttp from '@/functions/callHttp';
-import tryDo from '@/functions/tryDo';
-import wait from '@/functions/wait';
+import callHttp from '@/helpers/asyncHelpers/callHttp';
+import tryDo from '@/helpers/asyncHelpers/tryDo';
+import wait from '@/helpers/asyncHelpers/wait';
 import type { AxiosResponse } from 'axios';
 
 const LINK = '/api/booking/sell/detail';

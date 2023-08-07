@@ -1,12 +1,12 @@
 import { GridContainer, GridContainerProps } from '@/components/grid';
-import wait from '@/functions/wait';
+import wait from '@/helpers/asyncHelpers/wait';
 import type { FormFilterDocumentIncommingProps } from '@/modules/FormFilterDocumentIncomming';
 import { useMediaQuery, useTheme } from '@mui/material';
 import { lazy, useCallback, useMemo } from 'react';
 import type { QueryParams } from '../_types';
 import { useAsyncListAction } from '../context';
 const FormFilterDocumentIncomming = lazy(() =>
-  wait(0).then(() => import('@/modules/FormFilterDocumentIncomming'))
+  wait().then(() => import('@/modules/FormFilterDocumentIncomming'))
 );
 type OnSubmitHandler = Required<FormFilterDocumentIncommingProps>['onSubmit'];
 export default function FilterForm(props: GridContainerProps) {

@@ -19,6 +19,7 @@ export default function CommonRadioGroupField(props: CommonRadioGroupFieldProps)
     groupProps,
     eventStopPropagation = true,
     eventPreventDefault = false,
+    optionsBoxProps,
     ...otherProps
   } = props;
   const memoOption = useMemo(() => {
@@ -27,6 +28,18 @@ export default function CommonRadioGroupField(props: CommonRadioGroupFieldProps)
   const memoValue = useMemo(() => {
     return !!value?.value ? value : null;
   }, [value]);
+  const handleUnCheck = useCallback(
+    (event: any) => {
+      if (eventStopPropagation) {
+        event?.stopPropagation?.();
+      }
+      if (eventPreventDefault) {
+        event?.preventDefault?.();
+      }
+      onChange?.(undefined);
+    },
+    [eventStopPropagation, eventPreventDefault, onChange]
+  );
   const handleOnchange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       if (eventStopPropagation) {
@@ -44,8 +57,12 @@ export default function CommonRadioGroupField(props: CommonRadioGroupFieldProps)
       }
       if (memoOption.length === 0) return;
       const i = memoOption.findIndex((o) => o.value === val);
-      if (i < 0) return;
+      if (i < 0) {
+        onChange?.(undefined);
+        return;
+      }
       onChange?.(memoOption[i]);
+      return;
     },
     [memoOption, onChange, eventStopPropagation, eventPreventDefault]
   );
@@ -61,9 +78,13 @@ export default function CommonRadioGroupField(props: CommonRadioGroupFieldProps)
               label={option?.label || option?.name || ''}
               disabled={!!option?.disabled}
               {...option?.InputProps}
-              sx={{ ...option?.InputProps?.sx, ...(index === 0 ? { mt: '12px' } : {}) }}
+              sx={{
+                ...option?.InputProps?.sx,
+                ...(index === 0 ? { mt: '12px' } : {}),
+              }}
               control={
                 <Radio
+                  onClick={handleUnCheck}
                   {...(!!color ? { color: color as any } : {})}
                   {...(!!error ? { color: 'error' } : {})}
                 />
@@ -73,7 +94,7 @@ export default function CommonRadioGroupField(props: CommonRadioGroupFieldProps)
         })}
       </>
     );
-  }, [name, memoOption, error, color]);
+  }, [name, memoOption, error, color, handleUnCheck]);
   return (
     <CommonFormGroup
       {...otherProps}

@@ -1,6 +1,6 @@
 import { http } from '@/api';
 import getDefaultBackendEndpoint from '@/environments/getDefaultBackendEndpoint';
-import callHttp from '@/functions/callHttp';
+import callHttp from '@/helpers/asyncHelpers/callHttp';
 import { useQuery } from 'react-query';
 const LINK = `${getDefaultBackendEndpoint()}/VanBan/LoadOptionDoKhan`;
 export type UrgencyDegree = {

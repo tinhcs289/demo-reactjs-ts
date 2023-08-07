@@ -1,6 +1,6 @@
 import { Loader } from '@googlemaps/js-api-loader';
 import getGoogleMapApiKey from '@/environments/getGoogleMapApiKey';
-import tryDo from '@/functions/tryDo';
+import tryDo from '@/helpers/asyncHelpers/tryDo';
 const APIKEY = getGoogleMapApiKey();
 let isLoaded = false;
 /**

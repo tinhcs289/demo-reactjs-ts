@@ -1,5 +1,5 @@
 import paths from '@/constants/paths';
-import wait from '@/functions/wait';
+import wait from '@/helpers/asyncHelpers/wait';
 import type { RouteConfig } from '@/routes/_types';
 import { lazy } from 'react';
 const LoginPage = lazy(() => wait().then(() => import('@/pages/LoginPage')));

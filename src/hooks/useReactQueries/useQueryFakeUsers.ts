@@ -1,5 +1,5 @@
 import { http } from '@/api';
-import callHttp from '@/functions/callHttp';
+import callHttp from '@/helpers/asyncHelpers/callHttp';
 import { useQuery } from 'react-query';
 const LINK = 'https://fakestoreapi.com/users';
 export type UserFakeName = {

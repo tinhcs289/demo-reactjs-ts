@@ -1,6 +1,6 @@
 import { http } from '@/api';
 import getDefaultBackendEndpoint from '@/environments/getDefaultBackendEndpoint';
-import callHttp from '@/functions/callHttp';
+import callHttp from '@/helpers/asyncHelpers/callHttp';
 import toEncodeUri from '@/helpers/stringHelpers/toEncodeUri';
 import { useQuery } from 'react-query';
 const LINK = toEncodeUri(`${getDefaultBackendEndpoint()}/don-vi-trong/get-opt-don-vi`, { isAllDonVi: true });
