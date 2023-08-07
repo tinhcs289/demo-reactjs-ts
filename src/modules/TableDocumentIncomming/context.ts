@@ -1,5 +1,5 @@
 import type { RowData, QueryParams } from './_types';
-import createAsyncListContextWithComponent from '@/functions/createAsyncListContextWithComponents';
+import createAsyncListContextWithComponent from '@/helpers/contextHelpers/createAsyncListContextWithComponents';
 const context = createAsyncListContextWithComponent<RowData, QueryParams>({
   idField: 'Id',
 });

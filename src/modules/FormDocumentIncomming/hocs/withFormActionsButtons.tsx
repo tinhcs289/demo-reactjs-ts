@@ -1,7 +1,7 @@
 import { ButtonNegative, ButtonPositive } from '@/components/buttons';
 import { useRHFSubmitDispatch } from '@/components/form';
 import { GridItem, GridItemDivider } from '@/components/grid';
-import ScrollableContainer from '@/containers/ScrollableContainer';
+import BoxHorizontalSrcoll from '@/components/box/BoxHorizontalSrcoll';
 import AssignmentReturnIcon from '@mui/icons-material/AssignmentReturn';
 import CloseIcon from '@mui/icons-material/Close';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
@@ -30,7 +30,7 @@ function FormActionGroup(props: { onClose?: FormProps['onClose'] }) {
   return (
     <GridItem xs={12} sx={{ px: 0.5 }} justifyContent="space-between">
       <Grid item xs={10} md={11} container>
-        <ScrollableContainer height="40px" togglable>
+        <BoxHorizontalSrcoll height="40px" togglable>
           <GridItem disabledXs sx={{ py: '7px', px: 0.5 }}>
             <ButtonPositive startIcon={<NoteAddIcon />} onClick={handleAction('create')}>
               {`Tạo mới`}
@@ -61,7 +61,7 @@ function FormActionGroup(props: { onClose?: FormProps['onClose'] }) {
               {`Tạo và đóng`}
             </ButtonPositive>
           </GridItem>
-        </ScrollableContainer>
+        </BoxHorizontalSrcoll>
       </Grid>
       <Grid item xs={2} md={1} container justifyContent="flex-end">
         <Grid item sx={{ py: 1, px: 0.5 }}>

@@ -14,7 +14,7 @@ const Dashboard = withHOCs(withAuthChangeWarning)(function Dashboard() {
     <BoxRoot>
       <AppBar />
       <AsideMenu />
-      <BoxMain component="main">
+      <BoxMain {...{ component: 'main' }}>
         <Toolbar />
         <BoxContent>
           <Outlet />

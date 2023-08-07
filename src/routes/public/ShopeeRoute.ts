@@ -1,4 +1,4 @@
-import wait from '@/functions/wait';
+import wait from '@/helpers/asyncHelpers/wait';
 import paths from '@/constants/paths';
 import type { RouteConfig } from '@/routes/_types';
 import { lazy } from 'react';

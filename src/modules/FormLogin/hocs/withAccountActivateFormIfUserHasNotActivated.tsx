@@ -1,5 +1,5 @@
 import PATHS from '@/constants/paths';
-import wait from '@/functions/wait';
+import wait from '@/helpers/asyncHelpers/wait';
 import { AccountActivateDialog } from '@/modules/FormActivateAccount';
 import { hasNotBeenActivatedSelector } from '@/redux/userAccount';
 import { CommonFormOnClose, CommonFormOnCloseParams } from '@/types';

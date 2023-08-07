@@ -2,7 +2,7 @@ import type { ButtonCommonProps } from '@/components/buttons';
 import { ButtonCommon, ButtonNegative, ButtonPositive } from '@/components/buttons';
 import type { FieldComponentProps, FormInputType } from '@/components/form/_types';
 import { useRHFSubmitDispatch } from '@/components/form/hocs/withRHFSubmitHandler';
-import createFastContext from '@/functions/createFastContext';
+import createFastContext from '@/helpers/contextHelpers/createFastContext';
 import newGuid from '@/helpers/stringHelpers/newGuid';
 import { useRHFWatchValue } from '@/hooks/useRHF';
 import ClickAwayListener from '@mui/base/ClickAwayListener';
@@ -23,13 +23,14 @@ import { useCallback, useMemo, useRef, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 export type RHFFieldPoppersContextValues = {
   appliedField: string[];
+  currentFocusField: string;
 };
 const {
   Provider: RHFPopperProvider,
   useGetter: useGetPopperState,
   useSetter: useSetPopperState,
   useDefaultPropInit: useInitializerPopperProp,
-} = createFastContext<RHFFieldPoppersContextValues>({ appliedField: [] });
+} = createFastContext<RHFFieldPoppersContextValues>({ appliedField: [], currentFocusField: '' });
 export { RHFPopperProvider, useGetPopperState, useInitializerPopperProp, useSetPopperState };
 export function withRHFPopperProvider(WrappedComponent: ComponentType<any>): ComponentType<any> {
   return function FormWithRHFPopperProvider(props: any) {
@@ -101,11 +102,20 @@ export type WithDisplayAsPopperParams = {
 function usePopperContext(fieldName: string) {
   const setPopperContext = useSetPopperState();
   const appliedField = useGetPopperState((s) => s?.appliedField);
+  const currentFocusField = useGetPopperState((s) => s?.currentFocusField);
+  const isCurrentFocus = useMemo(() => currentFocusField === fieldName, [fieldName, currentFocusField]);
   const isCurrentlyApplied = useMemo(() => {
     if (!Array.isArray(appliedField)) return false;
     if (appliedField.length === 0) return false;
     return appliedField.includes(fieldName);
   }, [appliedField, fieldName]);
+  const setCurrentFocus = useCallback(() => {
+    if (isCurrentFocus) return;
+    setPopperContext({ currentFocusField: fieldName });
+  }, [setPopperContext, fieldName, isCurrentFocus]);
+  const clearCurrentFocus = useCallback(() => {
+    setPopperContext({ currentFocusField: '' });
+  }, [setPopperContext]);
   const markFieldAsApplied = useCallback(() => {
     if (isCurrentlyApplied) return;
     const newAppliedField = cloneDeep(appliedField);
@@ -121,6 +131,9 @@ function usePopperContext(fieldName: string) {
     markFieldAsApplied,
     unmarkFieldAsApplied,
     isCurrentlyApplied,
+    isCurrentFocus,
+    setCurrentFocus,
+    clearCurrentFocus,
   };
 }
 export default function withDisplayAsPopper<U extends FormInputType>(config?: WithDisplayAsPopperParams) {
@@ -151,7 +164,13 @@ export default function withDisplayAsPopper<U extends FormInputType>(config?: Wi
       const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
       const open = useMemo(() => Boolean(anchorEl), [anchorEl]);
       const id = useMemo(() => newGuid(), []);
-      const { isCurrentlyApplied, markFieldAsApplied, unmarkFieldAsApplied } = usePopperContext(fieldName);
+      const {
+        isCurrentlyApplied,
+        markFieldAsApplied,
+        unmarkFieldAsApplied,
+        setCurrentFocus,
+        clearCurrentFocus,
+      } = usePopperContext(fieldName);
       const hasValue = useMemo(() => {
         if (typeof hasValueWhen !== 'function') {
           if (typeof fieldValue === 'undefined') return false;
@@ -164,18 +183,6 @@ export default function withDisplayAsPopper<U extends FormInputType>(config?: Wi
         const _has = hasValueWhen(fieldValue) === true;
         return _has;
       }, [hasValueWhen, fieldValue]);
-      const handleToggle = useCallback(
-        (event: MouseEvent<HTMLElement>) => {
-          event?.stopPropagation?.();
-          if (!open) {
-            previousValue.current = cloneDeep(fieldValue) as any;
-          } else {
-            previousValue.current = undefined;
-          }
-          setAnchorEl(anchorEl ? null : event?.currentTarget);
-        },
-        [setAnchorEl, anchorEl, open, fieldValue]
-      );
       const handleClose = useCallback(
         (event: MouseEvent<HTMLElement>) => {
           event?.stopPropagation?.();
@@ -193,6 +200,21 @@ export default function withDisplayAsPopper<U extends FormInputType>(config?: Wi
         },
         [setAnchorEl, setValue, fieldName]
       );
+      const handleToggle = useCallback(
+        (event: MouseEvent<HTMLElement>) => {
+          //event?.stopPropagation?.();
+          if (!open) {
+            previousValue.current = cloneDeep(fieldValue) as any;
+            setAnchorEl(event?.currentTarget);
+            setTimeout(() => {
+              setCurrentFocus();
+            }, 0);
+          } else {
+            handleClose(event);
+          }
+        },
+        [setAnchorEl, handleClose, open, fieldValue, setCurrentFocus]
+      );
       const handleApply = useCallback(
         (event: MouseEvent<HTMLElement>) => {
           event?.stopPropagation?.();
@@ -201,8 +223,9 @@ export default function withDisplayAsPopper<U extends FormInputType>(config?: Wi
           markFieldAsApplied();
           if (!triggerSubmitOnApply) return;
           dispatchSubmit?.(`apply_${fieldName}`);
+          clearCurrentFocus();
         },
-        [setAnchorEl, dispatchSubmit, triggerSubmitOnApply, fieldName, markFieldAsApplied]
+        [setAnchorEl, dispatchSubmit, triggerSubmitOnApply, fieldName, markFieldAsApplied, clearCurrentFocus]
       );
       const handleClear = useCallback(
         (event: MouseEvent<HTMLElement>) => {
@@ -213,8 +236,17 @@ export default function withDisplayAsPopper<U extends FormInputType>(config?: Wi
           unmarkFieldAsApplied();
           if (!triggerSubmitOnApply) return;
           dispatchSubmit?.(`clear_${fieldName}`);
+          clearCurrentFocus();
         },
-        [setAnchorEl, setValue, fieldName, dispatchSubmit, triggerSubmitOnApply, unmarkFieldAsApplied]
+        [
+          setAnchorEl,
+          setValue,
+          fieldName,
+          dispatchSubmit,
+          triggerSubmitOnApply,
+          unmarkFieldAsApplied,
+          clearCurrentFocus,
+        ]
       );
       const $EndIcon = useMemo(() => {
         if (open) return <ExpandLessIcon />;
@@ -230,6 +262,7 @@ export default function withDisplayAsPopper<U extends FormInputType>(config?: Wi
           <ButtonCommonStyled
             variant="contained"
             size="small"
+            className={`btn-toggle__${fieldName}`}
             onClick={handleToggle}
             noTextTransform
             endIcon={$EndIcon}
@@ -240,15 +273,21 @@ export default function withDisplayAsPopper<U extends FormInputType>(config?: Wi
             {labelText}
           </ButtonCommonStyled>
         );
-      }, [handleToggle, $EndIcon, open, toggleButtonProps, labelText, hasValue]);
+      }, [handleToggle, $EndIcon, open, toggleButtonProps, labelText, hasValue, fieldName]);
       const handleClickAway = useCallback(
         (event: globalThis.MouseEvent | TouchEvent) => {
           if (!open) return;
+          if (
+            event?.target instanceof Element &&
+            event.target.classList.contains(`btn-toggle__${fieldName}`)
+          ) {
+            return;
+          }
           event?.stopPropagation?.();
           handleClose(event as any);
           return;
         },
-        [open, handleClose]
+        [open, handleClose, fieldName]
       );
       const $ButtonClear = useMemo(() => {
         if (!isCurrentlyApplied) return null;

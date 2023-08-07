@@ -1,4 +1,4 @@
-import isValidAsYupArraySchema from '@/functions/isValidAsYupArraySchema';
+import isValidAsYupArraySchema from '@/helpers/commonHelpers/isValidAsYupArraySchema';
 import { newLocalStorageItem } from '@/helpers/localStorageHelpers';
 import type { Permission } from '@/types';
 import * as yup from 'yup';

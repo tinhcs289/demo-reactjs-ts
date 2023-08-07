@@ -1,5 +1,5 @@
 import PATHS from '@/constants/paths';
-import wait from '@/functions/wait';
+import wait from '@/helpers/asyncHelpers/wait';
 import type { RouteConfig } from '@/routes/_types';
 import { lazy } from 'react';
 const Content404 = lazy(() => wait().then(() => import('@/modules/Content404')));
