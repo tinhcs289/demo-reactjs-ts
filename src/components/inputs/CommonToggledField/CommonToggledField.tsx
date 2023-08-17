@@ -108,7 +108,7 @@ export default function CommonToggledField(props: CommonToggledFieldProps) {
     <CommonFormGroup
       {...formGroupProps}
       label={label}
-      labelProps={{ inputType: 'toggle' }}
+      disableFloatingLabel
       error={error}
       errorText={errorText}
       required={required}

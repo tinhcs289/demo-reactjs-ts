@@ -8,7 +8,7 @@ import FormFields from './FormFields';
 const Form = withHOCs(
   withApiGetDetail,
   withApiSaveChanges,
-  withRHF,
+  withRHF(),
   withRHFSubmitHandler,
   withSubmitButton
 )(FormFields as FormComponent) as FormComponent;

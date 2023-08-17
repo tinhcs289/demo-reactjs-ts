@@ -6,3 +6,11 @@ export default function getEnvironmentName(): EnvironmentName {
   if (listEnv.includes(envName)) return envName as EnvironmentName;
   return Environment.development;
 }
+export const environmentIs = {
+  local: () => getEnvironmentName() === 'local',
+  development: () => getEnvironmentName() === 'development',
+  staging: () => getEnvironmentName() === 'staging',
+  production: () => getEnvironmentName() === 'production',
+  // custom env here
+  qlvb: () => getEnvironmentName() === 'qlvb',
+};

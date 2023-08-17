@@ -89,7 +89,7 @@ export default function createAsyncListContextWithComponents<
     useAsyncListGetter,
     useAsyncListSetter,
     useAsyncListInteract,
-  } = createAsyncListContext<T>(defaultState);
+  } = createAsyncListContext<T, U>(defaultState);
   function AsyncListTable(props: AsyncListTableProps<T>) {
     const { columns, ...otherProps } = props;
     const data = useAsyncListGetter((s) => s.dataInPage);

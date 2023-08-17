@@ -4,6 +4,7 @@ import type { TAsideMenuItem } from '@/layouts/DashboardLayout';
 import { useDashboardLayoutState } from '@/providers/DashboardLayoutProvider';
 import Collapse from '@mui/material/Collapse';
 import List from '@mui/material/List';
+import Divider from '@mui/material/Divider';
 import ListSubheader from '@mui/material/ListSubheader';
 import { memo, useCallback, useMemo } from 'react';
 import MenuItem from './MenuItem';
@@ -24,6 +25,10 @@ function AsideMenuList() {
     return (
       <>
         {asideMenuItems?.map?.((item) => {
+          const isDivider = item?.type === 'divider';
+          if (isDivider) {
+            return <Divider variant="inset" component="li" key={item?.id} sx={{ ml: '0 !important' }} />;
+          }
           const hasChilds = Array.isArray(item.childs) && item.childs.length > 0;
           if (!hasChilds) {
             return <MenuItem key={item.id} data={item} active={!!item.active} depth={0} />;

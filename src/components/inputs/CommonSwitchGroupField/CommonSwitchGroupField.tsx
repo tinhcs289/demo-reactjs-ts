@@ -85,7 +85,7 @@ export default function CommonSwitchGroupField(props: CommonSwitchGroupFieldProp
       onChange={handleOnchange as any}
       {...otherProps}
       label={label}
-      labelProps={{ inputType: 'switchgroup' }}
+      disableFloatingLabel
       error={error}
       errorText={errorText}
       required={required}

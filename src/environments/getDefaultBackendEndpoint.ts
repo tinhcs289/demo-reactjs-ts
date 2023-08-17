@@ -1,3 +1,5 @@
+import getBackendEndpointKey from '@/environments/getBackendEndpointKey';
 export default function getDefaultBackendEndpoint(): string {
-  return (process.env.REACT_APP_AEQUITAS_API || '') as string;
+  const KEY = getBackendEndpointKey();
+  return (process.env[`REACT_APP_${KEY}_API`] || '') as string;
 }

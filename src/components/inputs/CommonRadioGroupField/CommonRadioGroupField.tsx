@@ -99,7 +99,7 @@ export default function CommonRadioGroupField(props: CommonRadioGroupFieldProps)
     <CommonFormGroup
       {...otherProps}
       label={label}
-      labelProps={{ inputType: 'radiogroup' }}
+      disableFloatingLabel
       error={error}
       errorText={errorText}
       required={required}

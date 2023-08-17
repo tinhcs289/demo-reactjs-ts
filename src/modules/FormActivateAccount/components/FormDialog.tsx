@@ -7,7 +7,7 @@ import FormFields from './FormFields';
 const FormDialog = withHOCs(
   withReduxActivateAccount,
   withDisplayAsDialog,
-  withRHF,
+  withRHF(),
   withRHFSubmitHandler,
   withSubmitButton
 )(FormFields);

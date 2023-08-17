@@ -3,7 +3,7 @@ import render from '@/helpers/reactHelpers/render';
 import { useDashboardLayoutSetState, useDashboardLayoutState } from '@/providers/DashboardLayoutProvider';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { useTheme } from '@mui/material';
+import { useTheme, useMediaQuery, Theme } from '@mui/material';
 import type { IconButtonProps } from '@mui/material/IconButton';
 import IconButton from '@mui/material/IconButton';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -34,7 +34,6 @@ function MenuItem(props: AsideMenuItemProps) {
   const setLayoutState = useDashboardLayoutSetState();
   const isAsideOpen = useDashboardLayoutState((s) => s.isAsideOpen);
   const urlOfInteractMenuItem = useDashboardLayoutState((s) => s.urlOfInteractMenuItem);
-
   const memoUrl = useMemo(() => {
     return stringOrEmpty(urlOfInteractMenuItem);
   }, [urlOfInteractMenuItem]);
@@ -92,10 +91,15 @@ function MenuItem(props: AsideMenuItemProps) {
       ...(active || childActive ? { color: 'primary' } : {}),
     };
   }, [active, childActive]);
-
+  const isMediumScreenOrLower = useMediaQuery((t: Theme) => t?.breakpoints?.down?.('lg'));
+  const handleClickItem = useCallback(() => {
+    if (!isMediumScreenOrLower) return;
+    if (!isAsideOpen) return;
+    setLayoutState({ isAsideOpen: false });
+  }, [isMediumScreenOrLower, isAsideOpen, setLayoutState]);
   return (
     <>
-      <NavLink {...linkProps}>
+      <NavLink {...linkProps} onClick={handleClickItem as any}>
         <ListItemButton {...listItemProps} disableTouchRipple disableRipple>
           {!item.icon ? null : (
             <ListItemIcon {...item.iconWrapProps}>
