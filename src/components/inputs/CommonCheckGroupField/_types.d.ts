@@ -28,5 +28,6 @@ export type CommonCheckGroupFieldProps = Omit<FormGroupProps, 'onChange'> & {
    * @default false
    */
   eventPreventDefault?: boolean;
+  scrollHeight?: string | number;
   optionsBoxProps?: Partial<BoxProps>;
 };

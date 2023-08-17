@@ -1,5 +1,7 @@
 import { TextWithRequiredMark } from '@/components/typo';
 import { styled } from '@mui/material';
+import type { BoxProps } from '@mui/material/Box';
+import Box from '@mui/material/Box';
 import type { FormGroupProps } from '@mui/material/FormGroup';
 import FormGroup from '@mui/material/FormGroup';
 import type { ReactNode } from 'react';
@@ -34,13 +36,37 @@ const FormGroupStyled = styled(FormGroup)<FormGroupProps>(({ theme }) => ({
     },
   },
 }));
+const BoxStyled = styled(Box, { shouldForwardProp: (p) => p !== 'inputBoxScrollHeight' })<
+  BoxProps & { inputBoxScrollHeight?: string | number }
+>(({ theme, inputBoxScrollHeight }) => ({
+  width: '100%',
+  ...(!!inputBoxScrollHeight
+    ? {
+        padding: theme.spacing(2, 0, 2, 2),
+        overflowY: 'scroll',
+        maskImage: `linear-gradient(to top, transparent, black), linear-gradient(to left, transparent 17px, black 17px)`,
+        maskSize: `100% 20000px`,
+        maskPosition: `left bottom`,
+        WebkitMaskImage: `linear-gradient(to top, transparent, black), linear-gradient(to left, transparent 17px, black 17px)`,
+        WebkitMaskSize: '100% 20000px',
+        WebkitMaskPosition: 'left bottom',
+        transition: 'mask-position 0.3s, -webkit-mask-position 0.3s',
+        '&:hover': {
+          WebkitMaskPosition: 'left top',
+        },
+        height: inputBoxScrollHeight,
+      }
+    : {}),
+}));
 export type CommonFormGroupProps = FormGroupProps & {
   label?: ReactNode;
   labelProps?: Partial<CommonFormLabelProps>;
-  disableLabelTransform?: boolean;
+  disableFloatingLabel?: boolean;
   required?: boolean;
   error?: boolean;
   errorText?: ReactNode;
+  inputBoxProps?: Partial<BoxProps>;
+  inputBoxScrollHeight?: string | number;
 };
 export default function CommonFormGroup(props: CommonFormGroupProps) {
   const {
@@ -50,7 +76,9 @@ export default function CommonFormGroup(props: CommonFormGroupProps) {
     error,
     errorText,
     children,
-    disableLabelTransform = false,
+    disableFloatingLabel = false,
+    inputBoxProps,
+    inputBoxScrollHeight,
     ...otherProps
   } = props;
   const $Label = useMemo(() => {
@@ -59,7 +87,7 @@ export default function CommonFormGroup(props: CommonFormGroupProps) {
       <CommonFormLabel
         {...({ component: 'label' } as any)}
         error={error}
-        disableTransform={disableLabelTransform}
+        disableFloatingLabel={disableFloatingLabel}
         {...labelProps}
       >
         {!label ? null : <TextWithRequiredMark required={required}>{label}</TextWithRequiredMark>}
@@ -70,11 +98,13 @@ export default function CommonFormGroup(props: CommonFormGroupProps) {
         ) : null}
       </CommonFormLabel>
     );
-  }, [error, errorText, label, required, labelProps, disableLabelTransform]);
+  }, [error, errorText, label, required, labelProps, disableFloatingLabel]);
   return (
     <FormGroupStyled {...otherProps}>
       {$Label}
-      {children}
+      <BoxStyled {...inputBoxProps} inputBoxScrollHeight={inputBoxScrollHeight}>
+        {children}
+      </BoxStyled>
     </FormGroupStyled>
   );
 }

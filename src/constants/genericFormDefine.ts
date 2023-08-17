@@ -47,8 +47,11 @@ import RHFTimeStatic from '@/components/rhfInputs/RHFTimeStatic';
 import type { RHFToggleProps } from '@/components/rhfInputs/RHFToggle';
 import RHFToggle from '@/components/rhfInputs/RHFToggle';
 import type { ComponentProps } from 'react';
+import { GridContainer } from '@/components/grid';
+import type { GridContainerProps } from '@/components/grid';
 //#region Types of input
 export enum FieldType {
+  'field-group' = 'field-group',
   'hidden' = 'hidden',
   'text' = 'text',
   'check' = 'check',
@@ -80,6 +83,7 @@ export type FormInputType = `${FieldType}`;
 //#endregion
 //#region Dictionaries of Component
 export const DICT = {
+  'field-group': GridContainer,
   text: RHFText,
   check: RHFCheck,
   'check-group': RHFCheckGroup,
@@ -109,7 +113,9 @@ export const DICT = {
 };
 //#endregion
 //#region RHF Component Props
-export type RHFComponentProps<T extends FormInputType> = T extends 'text'
+export type RHFComponentProps<T extends FormInputType> = T extends 'field-group'
+  ? GridContainerProps
+  : T extends 'text'
   ? RHFTextProps
   : T extends 'check'
   ? RHFCheckProps

@@ -1,11 +1,12 @@
 import { APP_BAR_HEIGHT, ASIDE_MENU_WIDTH } from '@/layouts/DashboardLayout/constants';
-import MuiDrawer from '@mui/material/Drawer';
 import type { DrawerProps } from '@mui/material/Drawer';
+import MuiDrawer from '@mui/material/Drawer';
 import { styled } from '@mui/material/styles';
 import type { ComponentType } from 'react';
 const DrawerStyled = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
     '& .MuiDrawer-paper': {
+      //background: ASIDE_COLOR.BACKGROUND,
       position: 'relative',
       whiteSpace: 'nowrap',
       width: ASIDE_MENU_WIDTH,

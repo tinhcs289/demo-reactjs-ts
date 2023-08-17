@@ -33,6 +33,18 @@ export default function CommonRadioField(props: CommonRadioFieldProps) {
     },
     [eventStopPropagation, eventPreventDefault, onChange]
   );
+  const handleUnCheck = useCallback(
+    (event: any) => {
+      if (eventStopPropagation) {
+        event?.stopPropagation?.();
+      }
+      if (eventPreventDefault) {
+        event?.preventDefault?.();
+      }
+      onChange?.(event, false);
+    },
+    [eventStopPropagation, eventPreventDefault, onChange]
+  );
   const $Label = useMemo(
     () => <TextWithRequiredMark required={required}>{label}</TextWithRequiredMark>,
     [required, label]
@@ -56,6 +68,7 @@ export default function CommonRadioField(props: CommonRadioFieldProps) {
           name={name}
           checked={!!checked}
           onChange={handleOnChange}
+          onClick={handleUnCheck}
           value={value || !!checked}
           color="primary"
           {...(!!error ? { style: { ...(inputProps?.style || {}), color: theme.palette.error.main } } : {})}
@@ -64,7 +77,7 @@ export default function CommonRadioField(props: CommonRadioFieldProps) {
         {$Error}
       </>
     ),
-    [$Error, handleOnChange, checked, error, inputProps, name, theme, value]
+    [$Error, handleOnChange, handleUnCheck, checked, error, inputProps, name, theme, value]
   );
   return (
     <CommonFormControlLabel

@@ -14,6 +14,12 @@ export type RHFSubmitContextValues = {
   dispatchSubmit?: (reason?: string) => void;
 };
 const SubmitContext = createContext<RHFSubmitContextValues>({} as any);
+/**
+ * @example 
+    const { dispatchSubmit } = useRHFSubmitDispatch();
+    //... some where in component 
+    dispatchSubmit("save_draft");
+ */
 export function useRHFSubmitDispatch() {
   return useContext(SubmitContext);
 }
@@ -29,11 +35,11 @@ export default function withRHFSubmitHandler<FormValues extends AnyObject = AnyO
         event?.preventDefault?.();
         event?.stopPropagation?.();
         handleSubmit(function (formData) {
+          const reason = reasonRef?.current || 'main_action';
           if (isNotProduction) {
-            console.log(formData);
-            console.log(reasonRef?.current);
+            console.log({ formData, reason });
           }
-          onSubmit?.(formData, reasonRef?.current || undefined);
+          onSubmit?.(formData, reason);
           reasonRef.current = null;
         })(event);
       },

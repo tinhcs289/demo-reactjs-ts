@@ -14,7 +14,7 @@ const Form = withHOCs(
   withReduxAuthentication,
   withLoginViaSSO,
   //
-  withRHF,
+  withRHF(),
   withRHFSubmitHandler,
   withSubmitButton
 )(FormFields);

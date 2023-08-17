@@ -4,7 +4,7 @@ import CommonCheckGroupField from '@/components/inputs/CommonCheckGroupField';
 import type { CommonTableProps } from '@/components/table/CommonTable/_types';
 import createFastContext from '@/helpers/contextHelpers/createFastContext';
 import arrayOrEmpty from '@/helpers/formatHelpers/arrayOrEmpty';
-import ClickAwayListener from '@mui/base/ClickAwayListener';
+import { ClickAwayListener } from '@mui/base/ClickAwayListener';
 import ViewColumnIcon from '@mui/icons-material/ViewColumn';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';

@@ -27,6 +27,13 @@ const baseOptions: ThemeOptions = {
         },
       },
     },
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          //background: '#efefef',
+        },
+      },
+    },
   },
   // TODO [MUI] base theme here
 };
