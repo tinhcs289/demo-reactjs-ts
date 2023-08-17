@@ -6,6 +6,7 @@ export interface LayoutContextValues {
   isAsideOpen: boolean;
   urlOfInteractMenuItem: string | null;
   menuItems: TAsideMenuItem[];
+  rootBreadcrumb: TAsideMenuItem[];
   pageTitle: ReactNode | null;
   pageMaxWidth?: Breakpoint;
 }

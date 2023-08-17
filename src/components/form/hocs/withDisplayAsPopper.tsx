@@ -5,7 +5,7 @@ import { useRHFSubmitDispatch } from '@/components/form/hocs/withRHFSubmitHandle
 import createFastContext from '@/helpers/contextHelpers/createFastContext';
 import newGuid from '@/helpers/stringHelpers/newGuid';
 import { useRHFWatchValue } from '@/hooks/useRHF';
-import ClickAwayListener from '@mui/base/ClickAwayListener';
+import { ClickAwayListener } from '@mui/base/ClickAwayListener';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { alpha, styled } from '@mui/material';

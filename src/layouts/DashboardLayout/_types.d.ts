@@ -10,7 +10,7 @@ type MuiIcon = OverridableComponent<SvgIconTypeMap<{}, 'svg'>> & {
   muiName: string;
 };
 type SvgImage = ComponentType<SvgIconProps<SvgIconTypeMap['defaultComponent'], {}>>;
-type TAsideMenuItemType = 'link' | 'label';
+type TAsideMenuItemType = 'link' | 'label' | 'divider';
 export type LinkProps = Omit<
   ForwardRefExoticComponent<NavLinkProps & RefAttributes<HTMLAnchorElement>>,
   'to' | 'href'

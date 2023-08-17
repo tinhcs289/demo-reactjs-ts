@@ -96,15 +96,20 @@ export default function LayoutInit() {
   }, [urlOfInteractMenuItem]);
   useEffect(() => {
     let title: ReactNode | null = null;
+    let breadcrumb: TAsideMenuItem[] = [];
     try {
       menuItems.forEach((item) => {
+        const tempBreadcrumb = [item];
         if (item.active) {
           title = item.label;
+          breadcrumb = tempBreadcrumb;
           throw new Error();
         }
         if (Array.isArray(item.childs)) {
           item.childs.forEach((child) => {
             if (child.active) {
+              tempBreadcrumb.push(child);
+              breadcrumb = tempBreadcrumb;
               title = child.label;
               throw new Error();
             }
@@ -114,6 +119,7 @@ export default function LayoutInit() {
     } catch (error) {}
     if (isEqual(title, pageTitle)) return;
     setState({ pageTitle: title });
+    setState({ rootBreadcrumb: breadcrumb });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [menuItems]);
   useEffect(() => {

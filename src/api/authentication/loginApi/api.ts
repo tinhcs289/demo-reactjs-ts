@@ -6,15 +6,25 @@ import tryDo from '@/helpers/asyncHelpers/tryDo';
 import type { AxiosResponse } from 'axios';
 import { ApiPayload, ApiReturns } from './_types';
 import { LINK } from './constants';
-import { migrate } from './migrate';
+import { migratePayload, migrateResponseData } from './migrate';
 import mock from './mock';
 if (LINK.isMock) mock();
-const { migratePayload, migrateResponseData } = migrate.AEQUITAS;
 export default async function api(payload: ApiPayload): Promise<AxiosResponse<ApiReturns>> {
-  if (LINK.isMock) return httpMock.post(LINK.url, payload);
+  if (LINK.isMock) {
+    const response = await httpMock.post(LINK.url, payload);
+    //@ts-ignore
+    response['originalData'] = response.data;
+    const getProfilePayload: GetUserProfileApiParams = {
+      id: `${response.data.user.id}`,
+      accessToken: response.data.jwt.accessToken,
+    };
+    const response2 = await getUserProfileApi(getProfilePayload);
+    response.data = { ...response.data, user: { ...response.data.user, ...response2.data } };
+    return response;
+  }
   // request Login
   const migratedPayload = migratePayload(payload);
-  const [error, response] = await tryDo<AxiosResponse<any>>(http.post(LINK.url, migratedPayload));
+  const [error, response] = await tryDo<AxiosResponse>(http.post(LINK.url, migratedPayload));
   if (error) return error as AxiosResponse<ApiReturns>;
   if (!response) return response as unknown as AxiosResponse<ApiReturns>;
   if (!response?.data) return response as AxiosResponse<ApiReturns>;

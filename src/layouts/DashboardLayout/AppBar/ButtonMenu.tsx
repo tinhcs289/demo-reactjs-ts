@@ -1,28 +1,27 @@
 import { useDashboardLayout } from '@/providers/DashboardLayoutProvider';
 import MenuIcon from '@mui/icons-material/Menu';
+import { styled } from '@mui/material';
+import type { IconButtonProps } from '@mui/material/IconButton';
 import IconButton from '@mui/material/IconButton';
-import { SxProps, useTheme } from '@mui/material/styles';
 import { useCallback, useMemo } from 'react';
+const IconButtonStyled = styled(IconButton, { shouldForwardProp: (p) => p !== 'show' })<
+  IconButtonProps & { show?: boolean }
+>(({ theme }) => ({
+  marginRight: theme.spacing(2),
+  marginLeft: 0,
+}));
 export default function ButtonMenu() {
-  const theme = useTheme();
   const [isAsideOpen, toggleAside] = useDashboardLayout((s) => s.isAsideOpen);
   const memoOpen = useMemo(() => !!isAsideOpen, [isAsideOpen]);
   const toggle = useCallback(() => {
     toggleAside({ isAsideOpen: !isAsideOpen });
   }, [toggleAside, isAsideOpen]);
-  const style: SxProps = useMemo(() => {
-    return {
-      mr: theme.spacing(4.5),
-      ml: 0,
-      ...(memoOpen ? { display: 'none' } : {}),
-    };
-  }, [theme, memoOpen]);
   const $Button = useMemo(() => {
     return (
-      <IconButton edge="start" color="inherit" onClick={toggle} sx={style}>
+      <IconButtonStyled edge="start" color="inherit" onClick={toggle} show={memoOpen}>
         <MenuIcon />
-      </IconButton>
+      </IconButtonStyled>
     );
-  }, [style, toggle]);
+  }, [toggle, memoOpen]);
   return $Button;
 }

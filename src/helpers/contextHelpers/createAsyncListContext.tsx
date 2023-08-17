@@ -1,7 +1,6 @@
 import { EApiRequestStatus } from '@/constants/apiRequestStatus';
-import createFastContext from '@/helpers/contextHelpers/createFastContext';
 import concatArray from '@/helpers/arrayHelpers/concatArray';
-import { debounce } from 'lodash';
+import createFastContext from '@/helpers/contextHelpers/createFastContext';
 import get from 'lodash/get';
 import type { ReactNode } from 'react';
 import { useCallback, useEffect, useMemo } from 'react';
@@ -352,39 +351,38 @@ export default function createAsyncListContext<
       },
       [fixedFilter, initFilter, pageIndex, pageSize, filter, sortBy, sortDirection]
     );
-    const fetchData = useMemo(
-      () =>
-        debounce(async function fetchDataAsync(payload?: Partial<ListState<U>>, overrideFilter?: boolean) {
-          const isOverrided = !!overrideFilter;
-          if (!onQuery) return;
-          let [result, totalCount]: [T[], number] = [[], 0];
-          setState({ fetchStatus: EApiRequestStatus.REQUESTING });
-          const queryArgs = getQueryArgs(payload, isOverrided);
-          try {
-            const response = await onQuery(queryArgs);
-            result = Array.isArray(response?.result) ? response.result : [];
-            totalCount = Number.isInteger(response?.totalCount) ? response.totalCount : 0;
-            setState({ dataInPage: result });
-            if (isInfinite) {
-              const newData = concatArray(data, result);
-              setState({ data: newData });
-            }
-            setState({
-              totalCount: totalCount,
-              pageIndex: queryArgs.pageIndex,
-              pageSize: queryArgs.pageSize,
-              sortBy: queryArgs.sortBy,
-              sortDirection: queryArgs.sortDirection,
-              filter: queryArgs.filter,
-            });
-            setState({ fetchStatus: EApiRequestStatus.REQUESTSUCCESS });
-          } catch (error) {
-            console.log(error);
-            setState({ fetchStatus: EApiRequestStatus.REQUESTFAIL });
-          } finally {
-            setState({ fetchStatus: EApiRequestStatus.NONE });
+    const fetchData = useCallback(
+      async function fetchDataAsync(payload?: Partial<ListState<U>>, overrideFilter?: boolean) {
+        const isOverrided = !!overrideFilter;
+        if (!onQuery) return;
+        let [result, totalCount]: [T[], number] = [[], 0];
+        setState({ fetchStatus: EApiRequestStatus.REQUESTING });
+        const queryArgs = getQueryArgs(payload, isOverrided);
+        try {
+          const response = await onQuery(queryArgs);
+          result = Array.isArray(response?.result) ? response.result : [];
+          totalCount = Number.isInteger(response?.totalCount) ? response.totalCount : 0;
+          setState({ dataInPage: result });
+          if (isInfinite) {
+            const newData = concatArray(data, result);
+            setState({ data: newData });
           }
-        }, 200),
+          setState({
+            totalCount: totalCount,
+            pageIndex: queryArgs.pageIndex,
+            pageSize: queryArgs.pageSize,
+            sortBy: queryArgs.sortBy,
+            sortDirection: queryArgs.sortDirection,
+            filter: queryArgs.filter,
+          });
+          setState({ fetchStatus: EApiRequestStatus.REQUESTSUCCESS });
+        } catch (error) {
+          console.log(error);
+          setState({ fetchStatus: EApiRequestStatus.REQUESTFAIL });
+        } finally {
+          setState({ fetchStatus: EApiRequestStatus.NONE });
+        }
+      },
       [onQuery, getQueryArgs, isInfinite, data, setState]
     );
     useEffect(() => {
@@ -392,6 +390,9 @@ export default function createAsyncListContext<
       fetchData({ pageIndex: 1 });
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+    /**
+     * refetch data with current parameters/filter
+     */
     const reload = useCallback(() => {
       fetchData();
     }, [fetchData]);
@@ -402,6 +403,9 @@ export default function createAsyncListContext<
       },
       [fetchData]
     );
+    /**
+     * refetch data with new filter but current pagination and sort
+     */
     const patchFilter = useCallback(
       (newFilter: Partial<U>) => {
         fetchData({ filter: newFilter, pageIndex: 1 } as any);
@@ -409,6 +413,9 @@ export default function createAsyncListContext<
       },
       [fetchData]
     );
+    /**
+     * refetch data with new pagination but current sort and filter
+     */
     const updatePaging = useCallback(
       (page: number, size: number) => {
         fetchData({ pageIndex: page, pageSize: size });
@@ -416,6 +423,9 @@ export default function createAsyncListContext<
       },
       [fetchData]
     );
+    /**
+     * refetch data with new sort but current pagination and filter
+     */
     const updateSort = useCallback(
       (sortBy: string, sortDirection: SortDirect) => {
         if (!sortBy) return;
@@ -824,7 +834,7 @@ export default function createAsyncListContext<
       defaultPagination,
       defaultSort,
       onQuery,
-      queryOnFirstLoad,
+      queryOnFirstLoad = false,
       fixedExtendQueryParams,
       defaultExtendQueryParams,
       infinite,

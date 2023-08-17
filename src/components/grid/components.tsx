@@ -87,6 +87,7 @@ export function GridItemPaper(props: GridItemPaperProps) {
         sx={{ ...contentProps?.sx, width: '100%' }}
         xs={12}
         item
+        container
         component={Paper}
         {...paperProps}
         elevation={elevation}

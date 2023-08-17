@@ -4,7 +4,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import debounce from 'lodash/debounce';
 import type { Ref } from 'react';
-import { createRef, forwardRef, useCallback, useEffect, useMemo } from 'react';
+import { createRef, forwardRef, useEffect, useMemo } from 'react';
 import type { CommonTableProps } from './_types';
 import LoadingBar from './components/LoadingBar';
 import LoadingOrNoDataText from './components/LoadingOrNoDataText';
@@ -37,7 +37,7 @@ const CommonTable = forwardRef(function CommonTableWithRef<RowData extends AnyOb
     loadingText,
     notFoundText,
     selectability,
-    columnStickyAsStack,
+    columnStickyAsStack = false,
     rowHocs,
   } = props;
   const tableRef = createRef();
@@ -65,31 +65,30 @@ const CommonTable = forwardRef(function CommonTableWithRef<RowData extends AnyOb
     ),
     [tableBodyProps, $BodyRows, loadingText, notFoundText]
   );
-  //#endregion
-  useEffect(() => {
-    if (!!columnStickyAsStack || !(tableRef?.current instanceof Element)) return;
-    const tableEl = tableRef.current;
-    initStickyColumn(tableEl as any);
-  }, [$TableBody, tableRef, columnStickyAsStack]);
-  const handleOnChangeWidth = useCallback((table: HTMLElement) => {
-    if (!table) return;
-    initStickyColumn(table);
-  }, []);
-  useEffect(() => {
+  const initSticky = () => {
     if (!(tableRef?.current instanceof Element)) return;
     const tableEl = tableRef.current as HTMLElement;
     initStickyColumn(tableEl);
+  };
+  //#endregion
+  useEffect(() => {
+    if (!!columnStickyAsStack) return;
+    setTimeout(() => {
+      initSticky();
+    }, 100);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSelectable]);
+  }, [$TableBody, columnStickyAsStack, rows, isSelectable]);
   useEffect(() => {
     const handler = debounce(() => {
-      if (!(tableRef?.current instanceof Element)) return;
-      handleOnChangeWidth(tableRef.current as HTMLElement);
-    }, 200);
-    if (!(tableRef?.current instanceof Element)) return;
-    const tableEl = tableRef.current as HTMLElement;
+      initSticky();
+    }, 100);
     const resizeObserver = new ResizeObserver(handler);
-    resizeObserver.observe(tableEl.parentElement as any);
+    setTimeout(() => {
+      initSticky();
+      if (!(tableRef?.current instanceof Element)) return;
+      const tableEl = tableRef.current as HTMLElement;
+      resizeObserver.observe(tableEl.parentElement as any);
+    }, 0);
     return () => resizeObserver.disconnect();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

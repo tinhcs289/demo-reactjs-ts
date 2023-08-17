@@ -6,6 +6,7 @@ const { Provider, useStore: useDashboardLayout } = createFastContext<LayoutConte
   isAsideOpen: true,
   urlOfInteractMenuItem: null,
   menuItems: asideMenuItems,
+  rootBreadcrumb: [],
   pageTitle: null,
   pageMaxWidth: contentMaxWidth.get() || 'lg',
 });

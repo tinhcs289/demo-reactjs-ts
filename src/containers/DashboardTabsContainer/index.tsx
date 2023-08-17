@@ -1,9 +1,9 @@
 import NavTabs from '@/components/nav/NavTabs';
 import asideMenuItems from '@/constants/asideMenuItems';
 import { DashboardPageContainer } from '@/layouts/DashboardLayout';
-import type { ComponentType, ReactNode } from 'react';
+import type { ReactNode } from 'react';
 const dataTabs = asideMenuItems[0].childs || [];
-function DashboardTabsContainer(props: { children?: ReactNode }) {
+export default function DashboardTabsContainer(props: { children?: ReactNode }) {
   const { children } = props;
   return (
     <>
@@ -12,4 +12,3 @@ function DashboardTabsContainer(props: { children?: ReactNode }) {
     </>
   );
 }
-export default DashboardTabsContainer as ComponentType<any>;

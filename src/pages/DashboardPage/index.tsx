@@ -1,5 +1,4 @@
-import PATHS from '@/constants/paths';
-import { Navigate } from 'react-router-dom';
+import { DashboardPageContainer } from '@/layouts/DashboardLayout';
 export default function DashboardPage() {
-  return <Navigate to={PATHS.demoForm} replace />;
+  return <DashboardPageContainer></DashboardPageContainer>;
 }

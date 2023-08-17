@@ -7,7 +7,7 @@ import FormFields from './FormFields';
 const Form = withHOCs(
   withReturnUri,
   withRegisterViaInternalApi,
-  withRHF,
+  withRHF(),
   withRHFSubmitHandler,
   withSubmitButton
 )(FormFields);
