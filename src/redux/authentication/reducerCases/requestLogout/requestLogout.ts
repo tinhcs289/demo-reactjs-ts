@@ -7,8 +7,8 @@ import type { AxiosResponse } from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 import type { State } from '../../state';
 import { rootName } from '../../state';
-import requestLogoutFail from './requestLogoutFail';
-import requestLogoutSuccess from './requestLogoutSuccess';
+import requestLogoutFail from './requestLogout.fail';
+import requestLogoutSuccess from './requestLogout.success';
 const TYPE = `${rootName}/requestLogout`;
 const requestLogout = createCase<any, State>(
   TYPE,

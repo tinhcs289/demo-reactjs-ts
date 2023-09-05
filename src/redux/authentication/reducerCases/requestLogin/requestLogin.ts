@@ -8,9 +8,9 @@ import type { AxiosResponse } from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 import type { State } from '../../state';
 import { rootName } from '../../state';
-import clearStatusOfRequestLogin from './clearStatusOfRequestLogin';
-import requestLoginFail from './requestLoginFail';
-import requestLoginSuccess from './requestLoginSuccess';
+import clearStatusOfRequestLogin from './requestLogin.clear';
+import requestLoginFail from './requestLogin.fail';
+import requestLoginSuccess from './requestLogin.success';
 export type Payload = { username: string; password: string };
 const TYPE = `${rootName}/requestLogin`;
 const requestLogin = createCase<Payload, State>(

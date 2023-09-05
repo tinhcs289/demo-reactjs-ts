@@ -18,8 +18,8 @@ const PATHS = {
   customers: '/khach-hang',
   report: '/bao-cao',
   orders: '/don-hang',
-  ordersBuy: '/don-mua',
-  ordersSell: '/don-ban',
-  ordersProcess: '/xu-ly-don-hang',
+  ordersBuy: '/don-hang/don-mua',
+  ordersSell: '/don-hang/don-ban',
+  ordersProcess: '/don-hang/xu-ly-don-hang',
 };
 export default PATHS;

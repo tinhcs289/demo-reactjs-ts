@@ -1,12 +1,12 @@
 import { createReducer } from '@/helpers/reduxHelpers';
 import state, { rootName } from './state';
 //#region import cases
-import * as markAsNotBeenActivated from './cases/markAsNotBeenActivatedCases';
-import * as requestActivateAccountWithOtp from './cases/requestActivateAccountWithOtpCases';
-import * as requestCreateOtpForResetPassword from './cases/requestCreateOtpForResetPasswordCases';
-import * as requestRegisterUserAccount from './cases/requestRegisterUserAccountCases';
-import * as requestUpdatePasswordWithOldPassword from './cases/requestUpdatePasswordWithOldPasswordCases';
-import * as requestUpdatePasswordWithOtp from './cases/requestUpdatePasswordWithOtpCases';
+import * as markAsNotBeenActivated from './reducerCases/markAsNotBeenActivatedCases';
+import * as requestActivateAccountWithOtp from './reducerCases/requestActivateAccountWithOtpCases';
+import * as requestCreateOtpForResetPassword from './reducerCases/requestCreateOtpForResetPasswordCases';
+import * as requestRegisterUserAccount from './reducerCases/requestRegisterUserAccountCases';
+import * as requestUpdatePasswordWithOldPassword from './reducerCases/requestUpdatePasswordWithOldPasswordCases';
+import * as requestUpdatePasswordWithOtp from './reducerCases/requestUpdatePasswordWithOtpCases';
 //#endregion
 //#region export Selector
 export * from './selectors';

@@ -13,7 +13,7 @@ const AppBarStyled = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
 })<AppBarProps & { open?: boolean }>(({ theme, open }) => ({
   height: `${APP_BAR_HEIGHT}px !important`,
-  zIndex: theme.zIndex.drawer + 1,
+  zIndex: theme.zIndex.modal + 1,
   transition: theme.transitions.create(['width', 'margin'], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -41,7 +41,7 @@ function AppBar() {
   const $ButtonLanguage = useMemo(() => <ButtonLanguage />, []);
   const $ButtonLogout = useMemo(() => <ButtonLogout />, []);
   return (
-    <AppBarStyled position="absolute" open={memoOpen}>
+    <AppBarStyled position="absolute" open={memoOpen} className="db-layout-top">
       <ToolbarStyled>
         {$ButtonMenu}
         {$PageTitle}

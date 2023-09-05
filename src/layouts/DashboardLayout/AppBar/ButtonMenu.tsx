@@ -1,8 +1,9 @@
 import { useDashboardLayout } from '@/providers/DashboardLayoutProvider';
-import MenuIcon from '@mui/icons-material/Menu';
+import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 import { styled } from '@mui/material';
 import type { IconButtonProps } from '@mui/material/IconButton';
 import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
 import { useCallback, useMemo } from 'react';
 const IconButtonStyled = styled(IconButton, { shouldForwardProp: (p) => p !== 'show' })<
   IconButtonProps & { show?: boolean }
@@ -18,9 +19,11 @@ export default function ButtonMenu() {
   }, [toggleAside, isAsideOpen]);
   const $Button = useMemo(() => {
     return (
-      <IconButtonStyled edge="start" color="inherit" onClick={toggle} show={memoOpen}>
-        <MenuIcon />
-      </IconButtonStyled>
+      <Tooltip title="Thu gọn">
+        <IconButtonStyled edge="start" color="inherit" onClick={toggle} show={memoOpen}>
+          <MenuOpenIcon />
+        </IconButtonStyled>
+      </Tooltip>
     );
   }, [toggle, memoOpen]);
   return $Button;
