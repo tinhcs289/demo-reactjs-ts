@@ -1,7 +1,7 @@
-import clearStatusOfRequestLogout from './clearStatusOfRequestLogout';
 import requestLogout from './requestLogout';
-import requestLogoutFail from './requestLogoutFail';
-import requestLogoutSuccess from './requestLogoutSuccess';
+import clearStatusOfRequestLogout from './requestLogout.clear';
+import requestLogoutFail from './requestLogout.fail';
+import requestLogoutSuccess from './requestLogout.success';
 export const cases = [clearStatusOfRequestLogout, requestLogout, requestLogoutFail, requestLogoutSuccess];
 export const actions = {
   requestLogout: requestLogout.action,

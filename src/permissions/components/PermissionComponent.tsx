@@ -6,7 +6,7 @@ export type PermissionComponentProps = {
   /**
    * Each `function|view|component` in the Application will correspond to a number of permissions. If the current user has those permissions, the `function|view|component` will be available. Otherwise, the `function|view|component` must be invisibled or disabled.
    */
-  clause: PermissionClause;
+  If: PermissionClause;
   children?: ReactNode;
   /**
    * fallback `Component` will be render if the children component do not pass the clause
@@ -18,19 +18,19 @@ export type PermissionComponentProps = {
   fallbackRender?: ReactNode;
 };
 /**
- * Wrapping a `Component` which is permitted to be visibled by a `PermissionClause` from the object `FEATURE` in `@/permissions/constants`.
+ * Wrapping a `Component` which is permitted to be visibled by a `PermissionClause` from the object `ALLOWED_TO_USE` in `@/permissions/constants`.
  * If the permissions do not match, a "fallback" Component will be visibled.
  * @param clause 
  * @example
-   import { FEATURE, withSwitchableVisiblityByPermissions } from '@/permissions';
+   import { ALLOWED_TO_USE, withSwitchableVisiblityByPermissions } from '@/permissions';
    .....
-   <PermissionComponent clause={FEATURE.someFeature} fallbackComponent={NotPermittedComponent}>
+   <PermissionComponent If={ALLOWED_TO_USE.someFeature} fallbackComponent={NotPermittedComponent}>
     <SomeComponent />
    </PermissionComponent>
  */
 export default function PermissionComponent(props: PermissionComponentProps) {
-  const { clause, children, fallbackComponent: Fallback, fallbackRender } = props;
-  const { isAllowed } = useAppPermissions(clause);
+  const { If, children, fallbackComponent: Fallback, fallbackRender } = props;
+  const { isAllowed } = useAppPermissions(If);
   const $Returns = useMemo(() => {
     if (!isAllowed) {
       if (!!Fallback) return <Fallback />;

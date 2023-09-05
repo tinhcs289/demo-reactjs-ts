@@ -11,7 +11,7 @@ export default function AsideDrawer(props: { children?: ReactNode }) {
   const isAsideOpen = useDashboardLayoutState((s) => s.isAsideOpen);
   const open = useMemo(() => !!isAsideOpen, [isAsideOpen]);
   return (
-    <DrawerStyled variant="permanent" open={open}>
+    <DrawerStyled variant="permanent" open={open} className="db-layout-left">
       <ToolbarStyled>
         <AsideToggleButton />
       </ToolbarStyled>

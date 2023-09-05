@@ -1,18 +1,8 @@
 import refreshAuthenticateTokenApi from '@/api/authentication/refreshAuthenticateTokenApi';
-import authentication from '@/browser/cookies/authentication';
-import language from '@/browser/localStorage/language';
-import { actions as sessionAction } from '@/redux/session';
-import store from '@/redux/store';
+import isRefreshingAccessToken from '@/browser/localStorage/isRefreshingAccessToken';
 import type { AxiosError, AxiosResponse } from 'axios';
 import Axios from 'axios';
-import isRefreshingAccessToken from '@/browser/localStorage/isRefreshingAccessToken';
-const showWarning = () => {
-  store.dispatch(sessionAction.sessionTimeoutWarningShow({}));
-};
-const doLogout = () => {
-  //TODO [logout] logout immediately or show waring then logout by user click
-  store.dispatch(sessionAction.sessionTimeoutWarningShow({}));
-};
+import handlers from './http.interceptorHandlers';
 const http = Axios.create({
   baseURL: process.env.REACT_APP_BASE_API_URL,
   timeout: 30000,
@@ -34,11 +24,11 @@ http.interceptors.request.use(
       config.headers['Access-Control-Allow-Origin'] = '*';
       config.headers['Accept'] = 'application/json';
       config.headers['Content-Type'] = 'application/json';
-      const lang = language.get();
+      const lang = handlers.getLanguage();
       if (!!lang) {
         config.headers['Accept-Language'] = lang;
       }
-      const token = authentication.get()?.accessToken;
+      const token = handlers.getAccessToken();
       if (token) config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
@@ -74,16 +64,16 @@ http.interceptors.response.use(
       }
       isRefreshing = true;
       isRefreshingAccessToken.set(true, true);
-      const refreshToken = authentication.get()?.refreshToken;
+      const refreshToken = handlers.getRefreshToken();
       if (refreshToken) {
         console.log('refreshing......');
         return new Promise((resolve, reject) => {
           refreshAuthenticateTokenApi({ refreshToken }, http)
             .then(({ data }) => {
               if (!data?.jwt?.accessToken || !data?.jwt?.refreshToken) {
-                showWarning();
+                handlers.onRefreshTokenFail();
               } else {
-                authentication.set(data.jwt);
+                handlers.onUpdateAuthentication(data.jwt);
                 if (!!error?.config?.headers)
                   error.config.headers.Authorization = `Bearer ${data.jwt.accessToken}`;
                 //TODO [Refresh token] More handle for refreshing access token flow
@@ -101,7 +91,7 @@ http.interceptors.response.use(
             })
             .catch((err) => {
               processQueue(err, null);
-              showWarning();
+              handlers.onRefreshTokenFail();
             })
             .finally(() => {
               isRefreshing = false;
@@ -109,7 +99,7 @@ http.interceptors.response.use(
             });
         });
       } else {
-        doLogout();
+        handlers.onForceLogout();
         return Promise.reject(error);
       }
     }

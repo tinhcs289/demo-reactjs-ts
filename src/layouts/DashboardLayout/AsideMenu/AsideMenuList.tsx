@@ -59,6 +59,7 @@ function AsideMenuList() {
                     })}
                   </List>
                 }
+                {...(!!item?.active || !!childActive ? { childrenProps: { className: 'active' } } : {})}
               >
                 <MenuItem
                   key={item.id}

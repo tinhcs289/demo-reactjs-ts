@@ -1,8 +1,8 @@
 import { createReducer } from '@/helpers/reduxHelpers';
 import state, { rootName } from './state';
 //#region import cases
-import sessionTimeoutWarningHide from './cases/sessionTimeoutWarningHide';
-import sessionTimeoutWarningShow from './cases/sessionTimeoutWarningShow';
+import sessionTimeoutWarningHide from './reducerCases/sessionTimeoutWarningHide';
+import sessionTimeoutWarningShow from './reducerCases/sessionTimeoutWarningShow';
 //#endregion
 //#region export Selector
 export * from './selectors';
