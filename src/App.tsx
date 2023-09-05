@@ -1,11 +1,15 @@
-import DateTimeProvider from '@/providers/DateTimeProvider';
-import ExceptionHandlingProvider from '@/providers/ExceptionHandlingProvider';
-import LanguageProvider from '@/providers/LanguageProvider';
-import MUIThemeV5Provider from '@/providers/MUIThemeV5Provider';
-import NotiStackProvider from '@/providers/NotiStackProvider';
-import ReduxProvider from '@/providers/ReduxProvider';
-import ReactQueryProvider from '@/providers/ReactQueryProvider';
-import AppRouter from './AppRouter';
+import wait from '@/helpers/asyncHelpers/wait';
+import { lazy } from 'react';
+const DateTimeProvider = lazy(() => wait().then(() => import('@/providers/DateTimeProvider')));
+const ExceptionHandlingProvider = lazy(() =>
+  wait().then(() => import('@/providers/ExceptionHandlingProvider'))
+);
+const LanguageProvider = lazy(() => wait().then(() => import('@/providers/LanguageProvider')));
+const MUIThemeV5Provider = lazy(() => wait().then(() => import('@/providers/MUIThemeV5Provider')));
+const NotiStackProvider = lazy(() => wait().then(() => import('@/providers/NotiStackProvider')));
+const ReactQueryProvider = lazy(() => wait().then(() => import('@/providers/ReactQueryProvider')));
+const ReduxProvider = lazy(() => wait().then(() => import('@/providers/ReduxProvider')));
+const AppRouter = lazy(() => wait().then(() => import('./AppRouter')));
 export default function App() {
   return (
     <ExceptionHandlingProvider>

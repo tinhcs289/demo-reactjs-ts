@@ -8,7 +8,7 @@ import type { AxiosResponse } from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 import type { State } from '../../state';
 import { rootName } from '../../state';
-import clearStatusOfRequestLogin from './clearStatusOfRequestLogin';
+import clearStatusOfRequestLogin from './requestLogin.clear';
 const TYPE = `${rootName}/requestLogin_fail`;
 type Payload = { response: AxiosResponse<LoginApiReturns> };
 export const requestLoginFail = createCase<Payload, State>(

@@ -6,7 +6,7 @@ import { i18n } from '@/translation';
 import { put, takeLatest } from 'redux-saga/effects';
 import type { State } from '../../state';
 import { rootName } from '../../state';
-import clearStatusOfRequestLogout from './clearStatusOfRequestLogout';
+import clearStatusOfRequestLogout from './requestLogout.clear';
 const TYPE = `${rootName}/requestLogout_fail`;
 const requestLogoutFail = createCase<any, State>(
   TYPE,

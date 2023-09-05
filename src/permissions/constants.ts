@@ -1,4 +1,4 @@
 import type { PermissionClause } from '@/types';
 import permisionMap from './permission-map.json';
-type PermissionMap = { [key in keyof typeof permisionMap]: PermissionClause };
-export const FEATURE = permisionMap as PermissionMap;
+export type PermissionMap = { [key in keyof typeof permisionMap]: PermissionClause };
+export const ALLOWED_TO_USE = permisionMap as PermissionMap;

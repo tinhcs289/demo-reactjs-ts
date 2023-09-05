@@ -1,8 +1,10 @@
 import NavLinkNoStyle from '@/components/nav/NavLinkNoStyle';
-import { CommonTypography, CommonTypographyProps } from '@/components/typo';
+import type { CommonTypographyProps } from '@/components/typo';
+import { CommonTypography } from '@/components/typo';
 import render from '@/helpers/reactHelpers/render';
 import { useDashboardLayout } from '@/providers/DashboardLayoutProvider';
 import { alpha, styled, useMediaQuery, useTheme } from '@mui/material';
+import type { BreadcrumbsProps } from '@mui/material/Breadcrumbs';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import { useMemo } from 'react';
 const TypographyStyled = styled(CommonTypography, {
@@ -21,30 +23,44 @@ const TypographyStyled = styled(CommonTypography, {
     background: alpha(theme.palette.primary.dark, 0.9),
   },
 }));
+const BreadcrumbsStyled = styled(Breadcrumbs)<BreadcrumbsProps>({
+  flex: 1,
+  '.MuiBreadcrumbs-separator': {
+    color: 'HighlightText',
+    fontWeight: 700,
+  },
+});
 export default function PageTitle() {
   const [pageTitle] = useDashboardLayout((s) => s.pageTitle);
   const [breadcrumb] = useDashboardLayout((s) => s.rootBreadcrumb);
   const theme = useTheme();
   const isSmallScreenOrLarger = useMediaQuery(theme.breakpoints.up('sm'));
+  const shouldShowBreadcrumbs = useMemo(() => {
+    if (!isSmallScreenOrLarger) return false;
+    if (!breadcrumb) return false;
+    if (!Array.isArray(breadcrumb)) return false;
+    if (breadcrumb.length === 0) return false;
+    return true;
+  }, [isSmallScreenOrLarger, breadcrumb]);
   const $Title = useMemo(() => {
-    if (!(breadcrumb instanceof Array && breadcrumb.length > 0) || !isSmallScreenOrLarger)
-      return (
-        <CommonTypography component="h1" variant="h6" color="inherit" maxLines={1} sx={{ flexGrow: 1 }}>
-          {pageTitle || ''}
-        </CommonTypography>
-      );
     return (
-      <Breadcrumbs
-        separator="›"
-        sx={{
-          flex: 1,
-          '.MuiBreadcrumbs-separator': {
-            color: 'HighlightText',
-            fontWeight: 700,
-          },
-        }}
+      <CommonTypography
+        className="db-page-title"
+        component="h1"
+        variant="h6"
+        color="inherit"
+        maxLines={1}
+        flexGrow={1}
       >
-        {breadcrumb.map((b, i) => {
+        {pageTitle}
+      </CommonTypography>
+    );
+  }, [pageTitle]);
+  const $BreadcrumbsOrTitle = useMemo(() => {
+    if (!shouldShowBreadcrumbs) return $Title;
+    return (
+      <BreadcrumbsStyled separator="›">
+        {breadcrumb?.map?.((b, i) => {
           const isLast = i === breadcrumb.length - 1;
           return (
             <NavLinkNoStyle to={b?.url || '#'} key={i}>
@@ -57,8 +73,8 @@ export default function PageTitle() {
             </NavLinkNoStyle>
           );
         })}
-      </Breadcrumbs>
+      </BreadcrumbsStyled>
     );
-  }, [pageTitle, breadcrumb, isSmallScreenOrLarger]);
-  return $Title;
+  }, [$Title, breadcrumb, shouldShowBreadcrumbs]);
+  return $BreadcrumbsOrTitle;
 }

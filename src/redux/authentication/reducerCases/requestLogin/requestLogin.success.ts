@@ -7,7 +7,7 @@ import omit from 'lodash/omit';
 import { delay, put, takeLatest } from 'redux-saga/effects';
 import type { State } from '../../state';
 import { rootName } from '../../state';
-import clearStatusOfRequestLogin from './clearStatusOfRequestLogin';
+import clearStatusOfRequestLogin from './requestLogin.clear';
 const TYPE = `${rootName}/requestLogin_success`;
 const requestLoginSuccess = createCase<Authentication, State>(
   TYPE,

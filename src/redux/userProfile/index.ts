@@ -1,8 +1,8 @@
 import { createReducer } from '@/helpers/reduxHelpers';
 import state, { rootName } from './state';
 //#region import cases
-import * as requestUserProfile from './cases/requestUserProfileCases';
-import * as requestUpdateUserProfile from './cases/requestUpdateUserProfileCases';
+import * as requestUserProfile from './reducerCases/requestUserProfileCases';
+import * as requestUpdateUserProfile from './reducerCases/requestUpdateUserProfileCases';
 //#endregion
 //#region export Selector
 export * from './selectors';

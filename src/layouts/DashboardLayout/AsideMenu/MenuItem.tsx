@@ -40,10 +40,10 @@ function MenuItem(props: AsideMenuItemProps) {
 
   const listItemProps = useMemo(() => {
     return {
-      selected: !!active,
+      selected: !!active || !!childActive,
       ...(depth > 0 && isAsideOpen ? { sx: { pl: theme.spacing(depth * 4) } } : {}),
     };
-  }, [theme, active, depth, isAsideOpen]);
+  }, [theme, active, depth, isAsideOpen, childActive]);
 
   const handleToggleSubMenu: MouseEventHandler<HTMLButtonElement> = useCallback(
     (event) => {

@@ -5,7 +5,7 @@ import { createCase } from '@/helpers/reduxHelpers';
 import { delay, put, takeLatest } from 'redux-saga/effects';
 import type { State } from '../../state';
 import { rootName } from '../../state';
-import clearStatusOfRequestLogout from './clearStatusOfRequestLogout';
+import clearStatusOfRequestLogout from './requestLogout.clear';
 const TYPE = `${rootName}/requestLogout_success`;
 const requestLogoutSuccess = createCase<any, State>(
   TYPE,

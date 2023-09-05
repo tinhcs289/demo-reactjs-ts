@@ -1,10 +1,10 @@
 import { createReducer } from '@/helpers/reduxHelpers';
 import state, { rootName } from './state';
 //#region import cases
-import clearMessageState from './cases/clearMessageState';
-import pushMessage from './cases/pushMessage';
-import pushMessageError from './cases/pushMessageError';
-import pushMessageInfo from './cases/pushMessageInfo';
+import clearMessageState from './reducerCases/clearMessageState';
+import pushMessage from './reducerCases/pushMessage';
+import pushMessageError from './reducerCases/pushMessageError';
+import pushMessageInfo from './reducerCases/pushMessageInfo';
 //#endregion
 //#region export Selector
 export * from './selectors';
