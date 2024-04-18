@@ -1,11 +1,11 @@
 import { GridContainer, GridContainerProps } from '@/components/grid';
 import wait from '@/helpers/asyncHelpers/wait';
 import { useMediaQuery, useTheme } from '@mui/material';
-import { lazy, useCallback, useMemo } from 'react';
+import { ComponentType, lazy, useCallback, useMemo } from 'react';
 import type { FormProps as FormFilterProps } from '../../Filter';
 import type { QueryParams } from '../_types';
 import { useAsyncListAction } from '../context';
-const Form = lazy(() => wait().then(() => import('../../Filter')));
+const Form = lazy(() => wait().then(() => import('../../Filter'))) as ComponentType<FormFilterProps>;
 type OnSubmitHandler = Required<FormFilterProps>['onSubmit'];
 export default function FormFilter(props: GridContainerProps) {
   const theme = useTheme();

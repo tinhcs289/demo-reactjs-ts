@@ -14,7 +14,7 @@ import {
   CommonTablePagination,
   withColumnVisibility,
 } from '@/components/table';
-import { EApiRequestStatus } from '@/constants/apiRequestStatus';
+import { HttpRequestStatus } from '@/constants/apiRequestStatus';
 import type { AsyncListState, QueryParams, RowData } from '@/helpers/contextHelpers/createAsyncListContext';
 import createAsyncListContext from '@/helpers/contextHelpers/createAsyncListContext';
 import { AnyObject } from '@/types';
@@ -114,7 +114,7 @@ export default function createAsyncListContextWithComponents<
       };
     }, [isCheckAll, checkAll, checkOrUncheck, isSelected, selectable]);
     const loading = useMemo(() => {
-      return fetchStatus === EApiRequestStatus.REQUESTING;
+      return fetchStatus === HttpRequestStatus.REQUESTING;
     }, [fetchStatus]);
     const $Return = useMemo(
       () => (

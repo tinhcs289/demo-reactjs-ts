@@ -5,6 +5,7 @@ import type { PickersActionBarProps } from '@mui/x-date-pickers/PickersActionBar
 import { StaticDateTimePickerProps } from '@mui/x-date-pickers/StaticDateTimePicker';
 import type { Moment } from 'moment';
 import type { ReactNode } from 'react';
+import type { PickersLayoutRootProps } from '@mui/x-date-pickers';
 export type CommonDateTimeStaticFieldProps = StaticDateTimePickerProps<Moment> & {
   error?: boolean;
   errorText?: ReactNode;

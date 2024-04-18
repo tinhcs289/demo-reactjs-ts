@@ -13,6 +13,7 @@ export default function CommonDateField(props: CommonDateFieldProps) {
     placeholder,
     sx,
     value,
+    required,
     slotProps,
     slots,
     TextFieldProps,
@@ -59,6 +60,7 @@ export default function CommonDateField(props: CommonDateFieldProps) {
             placeholder: placeholder || TextFieldProps?.placeholder || undefined,
             error,
             errorText,
+            required,
           } as any;
         },
       }}

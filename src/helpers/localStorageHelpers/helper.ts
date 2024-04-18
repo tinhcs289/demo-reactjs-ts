@@ -330,6 +330,7 @@ export function newLocalStorageListenableItem<T>(args: {
         return;
       }
       if (!handler) return;
+      console.log(`LocalStorage key <${syncKey}> value change listener`);
       __addLocalStorageListener(syncKey, (event: LocalStorageChangeItemEvent) => {
         const { detail } = event;
         const value: LocalStorageChangeItemValue<T> = {
@@ -337,6 +338,7 @@ export function newLocalStorageListenableItem<T>(args: {
           value: __extractJsonValue(detail.value, args?.validate),
           previousValue: __extractJsonValue(detail.previousValue, args?.validate),
         };
+        console.log(`LocalStorage key <${syncKey}> value has changed, event detail:`, value);
         handler(event, value);
       });
     },

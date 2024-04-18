@@ -3,7 +3,7 @@ import type {
   UpdatePasswordWithOtpApiReturns,
 } from '@/api/resetPassword/updatePasswordWithOtpApi';
 import updatePasswordWithOtpApi from '@/api/resetPassword/updatePasswordWithOtpApi';
-import { EApiRequestStatus } from '@/constants/apiRequestStatus';
+import { HttpRequestStatus } from '@/constants/apiRequestStatus';
 import type { ReduxAction } from '@/helpers/reduxHelpers';
 import { createCase } from '@/helpers/reduxHelpers';
 import type { AxiosResponse } from 'axios';
@@ -18,7 +18,7 @@ const requestUpdatePasswordWithOtp = createCase<UpdatePasswordWithOtpApiParams, 
   (_action, state) => {
     return {
       ...state,
-      updatePasswordWithOptRequestStatus: EApiRequestStatus.REQUESTING,
+      updatePasswordWithOptRequestStatus: HttpRequestStatus.REQUESTING,
     };
   },
   takeLatest(TYPE, function* (action: ReduxAction<UpdatePasswordWithOtpApiParams>) {

@@ -1,4 +1,4 @@
-import { EApiRequestStatus } from '@/constants/apiRequestStatus';
+import { HttpRequestStatus } from '@/constants/apiRequestStatus';
 import concatArray from '@/helpers/arrayHelpers/concatArray';
 import createFastContext from '@/helpers/contextHelpers/createFastContext';
 import get from 'lodash/get';
@@ -86,7 +86,7 @@ export type AsyncListData<T extends RowData = RowData> = {
    * - `3`: the request is sent successful
    * - `4`: fail to send request
    */
-  fetchStatus: EApiRequestStatus;
+  fetchStatus: HttpRequestStatus;
   /**
    * set the list to be cumulativable
    */
@@ -278,7 +278,7 @@ export const DEFAULT_ASYNC_LIST: AsyncListState = {
   idField: ID,
   data: [],
   dataInPage: [],
-  fetchStatus: EApiRequestStatus.NONE,
+  fetchStatus: HttpRequestStatus.NONE,
   isInfinite: false,
   totalCount: 0,
   pageIndex: PAGE_INDEX,
@@ -297,6 +297,7 @@ export const DEFAULT_ASYNC_LIST: AsyncListState = {
 };
 type State<T extends RowData = RowData, U extends QueryParams = QueryParams> = AsyncListState<T, U>;
 type Props<T extends RowData = RowData, U extends QueryParams = QueryParams> = AsyncListConfig<T, U>;
+//TODO: dispath ko đang ko thực hiện được nhiều action cùng lúc, cần đổi thành array
 export default function createAsyncListContext<
   T extends RowData = RowData,
   U extends QueryParams = QueryParams,
@@ -356,7 +357,7 @@ export default function createAsyncListContext<
         const isOverrided = !!overrideFilter;
         if (!onQuery) return;
         let [result, totalCount]: [T[], number] = [[], 0];
-        setState({ fetchStatus: EApiRequestStatus.REQUESTING });
+        setState({ fetchStatus: HttpRequestStatus.REQUESTING });
         const queryArgs = getQueryArgs(payload, isOverrided);
         try {
           const response = await onQuery(queryArgs);
@@ -375,12 +376,12 @@ export default function createAsyncListContext<
             sortDirection: queryArgs.sortDirection,
             filter: queryArgs.filter,
           });
-          setState({ fetchStatus: EApiRequestStatus.REQUESTSUCCESS });
+          setState({ fetchStatus: HttpRequestStatus.REQUESTSUCCESS });
         } catch (error) {
           console.log(error);
-          setState({ fetchStatus: EApiRequestStatus.REQUESTFAIL });
+          setState({ fetchStatus: HttpRequestStatus.REQUESTFAIL });
         } finally {
-          setState({ fetchStatus: EApiRequestStatus.NONE });
+          setState({ fetchStatus: HttpRequestStatus.NONE });
         }
       },
       [onQuery, getQueryArgs, isInfinite, data, setState]
@@ -494,7 +495,6 @@ export default function createAsyncListContext<
           refetch(...dispatch.payload);
           break;
         default:
-          clearDispatch();
           return;
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -652,7 +652,6 @@ export default function createAsyncListContext<
           toggleSelectable(...dispatch.payload);
           return;
         default:
-          clearDispatch();
           return;
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -735,7 +734,7 @@ export default function createAsyncListContext<
           clearItemAction();
           break;
         default:
-          clearDispatch();
+          //clearDispatch();
           return;
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps

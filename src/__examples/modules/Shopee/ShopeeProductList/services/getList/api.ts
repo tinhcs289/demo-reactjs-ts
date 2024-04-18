@@ -1,5 +1,4 @@
-import http from '@/api/http';
-import httpMock, { mockAdapter } from '@/api/httpMock';
+import { http, httpMock, mockAdapter } from '@/api';
 import type { PaginatedListQuery } from '@/types';
 import { ShopeeProductItem } from '@/types/Shopee';
 import type { AxiosResponse } from 'axios';

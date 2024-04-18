@@ -1,11 +1,11 @@
 import userProfile from '@/browser/localStorage/userProfile';
-import { EApiRequestStatus } from '@/constants/apiRequestStatus';
+import { HttpRequestStatus } from '@/constants/apiRequestStatus';
 import type { UserProfile } from '@/types';
 import Immutable from 'seamless-immutable';
 export type State = {
   data: UserProfile | null;
-  getUserProfileRequestStatus: EApiRequestStatus;
-  updateUserProfileRequestStatus: EApiRequestStatus;
+  getUserProfileRequestStatus: HttpRequestStatus;
+  updateUserProfileRequestStatus: HttpRequestStatus;
 };
 const profile = userProfile.get();
 export const rootName = 'userProfile';
@@ -22,8 +22,8 @@ const state = Immutable<State>({
     phone: '',
     ...profile,
   },
-  getUserProfileRequestStatus: EApiRequestStatus.NONE,
-  updateUserProfileRequestStatus: EApiRequestStatus.NONE,
+  getUserProfileRequestStatus: HttpRequestStatus.NONE,
+  updateUserProfileRequestStatus: HttpRequestStatus.NONE,
 });
 export default state;
 export type NextState = typeof state;

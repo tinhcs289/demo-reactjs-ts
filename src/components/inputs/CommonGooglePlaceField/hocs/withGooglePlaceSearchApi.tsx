@@ -1,4 +1,5 @@
-import { EApiRequestStatus } from '@/constants/apiRequestStatus';
+import { HttpRequestStatus } from '@/constants/apiRequestStatus';
+import tryDo from '@/helpers/asyncHelpers/tryDo';
 import {
   getPlaceById,
   getPlacesBySearchText,
@@ -17,7 +18,6 @@ import type {
   RequestError,
 } from '../_types';
 import { toOption } from '../functions';
-import tryDo from '@/helpers/asyncHelpers/tryDo';
 export default function withGooglePlaceSearchApi(WrappedComponent: ComponentType<GooglePlaceFieldProps>) {
   return forwardRef(function CommonGooglePlaceFieldWithSearchApi(
     props: GooglePlaceFieldProps,
@@ -26,15 +26,15 @@ export default function withGooglePlaceSearchApi(WrappedComponent: ComponentType
     const { loading: _, options: __, onChange, onQueryFail, ...otherProps } = props;
     const [preText, setPreText] = useState<string | null>(null);
     const [options, setOptions] = useState<GooglePlaceOption[]>([]);
-    const [requestStatus, setRequestStatus] = useState<ApiRequestStatus>(EApiRequestStatus.NONE);
+    const [requestStatus, setRequestStatus] = useState<ApiRequestStatus>(HttpRequestStatus.NONE);
     const clearData = () => {
       setPreText(null);
       setOptions([]);
-      setRequestStatus(EApiRequestStatus.NONE);
+      setRequestStatus(HttpRequestStatus.NONE);
     };
     const handleCallRequest = async (text: string) => {
       setPreText(text);
-      setRequestStatus(EApiRequestStatus.REQUESTING);
+      setRequestStatus(HttpRequestStatus.REQUESTING);
       try {
         const result = await getPlacesBySearchText(text);
         const error: RequestError = {};
@@ -61,13 +61,13 @@ export default function withGooglePlaceSearchApi(WrappedComponent: ComponentType
           )
         );
         setOptions(resultWithGeocode);
-        setRequestStatus(EApiRequestStatus.REQUESTSUCCESS);
+        setRequestStatus(HttpRequestStatus.REQUESTSUCCESS);
       } catch (error: RequestError | any) {
         setOptions([]);
-        setRequestStatus(EApiRequestStatus.REQUESTFAIL);
+        setRequestStatus(HttpRequestStatus.REQUESTFAIL);
         onQueryFail?.(text, error?.['reason'] as PlaceQueryFailReason);
       } finally {
-        setRequestStatus(EApiRequestStatus.NONE);
+        setRequestStatus(HttpRequestStatus.NONE);
       }
     };
     const handleQuery: OnInputChangeHandler = (event, text, reason) => {
@@ -81,7 +81,7 @@ export default function withGooglePlaceSearchApi(WrappedComponent: ComponentType
       if (reason === 'clear') clearData();
       onChange?.(event, value, reason, detail);
     };
-    const loading = useMemo(() => requestStatus === EApiRequestStatus.REQUESTING, [requestStatus]);
+    const loading = useMemo(() => requestStatus === HttpRequestStatus.REQUESTING, [requestStatus]);
     useEffect(() => {
       if (!placeService.current || !google) loadPlacesLibrary();
     }, []);
@@ -91,7 +91,7 @@ export default function withGooglePlaceSearchApi(WrappedComponent: ComponentType
         options={options}
         loading={loading}
         onInputChange={handleQuery}
-        onChange={handleChange}
+        onChange={handleChange as any}
         ref={ref}
       />
     );

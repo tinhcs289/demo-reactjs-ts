@@ -1,4 +1,4 @@
-import { EApiRequestStatus } from '@/constants/apiRequestStatus';
+import { HttpRequestStatus } from '@/constants/apiRequestStatus';
 import type { ReduxAction } from '@/helpers/reduxHelpers';
 import { createCase } from '@/helpers/reduxHelpers';
 import { actions as snackbar } from '@/redux/snackbar';
@@ -13,7 +13,7 @@ const requestCreateOtpForResetPasswordFail = createCase<any, State>(
   (_action, state) => {
     return {
       ...state,
-      createOtpForResetPasswordRequestStatus: EApiRequestStatus.REQUESTFAIL,
+      createOtpForResetPasswordRequestStatus: HttpRequestStatus.REQUESTFAIL,
     };
   },
   takeLatest(TYPE, function* (_action: ReduxAction<any>) {

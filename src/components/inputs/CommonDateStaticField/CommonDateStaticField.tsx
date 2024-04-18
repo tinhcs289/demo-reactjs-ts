@@ -14,6 +14,7 @@ export default function CommonDateStaticField(props: CommonDateStaticFieldProps)
     TextFieldProps,
     buttonOk,
     buttonClear,
+    clearable,
     ButtonNegative,
     noActionsBar = false,
     ...otherProps
@@ -34,6 +35,7 @@ export default function CommonDateStaticField(props: CommonDateStaticFieldProps)
               buttonOk,
               buttonClear,
               ButtonNegative,
+              clearable,
               ...slotProps?.actionBar,
             }
           : ({} as any),

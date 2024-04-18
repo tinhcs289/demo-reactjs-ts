@@ -1,5 +1,6 @@
 import type { AxiosResponse } from 'axios';
-export type ApiRequestStatus = 1 | 2 | 3 | 4;
+import { HttpRequestStatus } from '@/constants/apiRequestStatus';
+export type ApiRequestStatus = HttpRequestStatus;
 export type ApiResponseWithMessageOnly = { message: string };
 export type AsyncApi<T> = Promise<AxiosResponse<T, any>>;
 export type HttpApiEndpoint = { url: string; isMock?: boolean };

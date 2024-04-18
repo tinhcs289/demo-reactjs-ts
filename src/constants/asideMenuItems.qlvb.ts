@@ -4,6 +4,7 @@ import { menuItem } from '@/helpers/asideMenuHelpers';
 import toLink from '@/helpers/routerHelpers/toLink';
 import type { TAsideMenuItem } from '@/layouts/DashboardLayout';
 import { DOCUMENT_STATUS as DOCUMENT_INCOMING_STATUS } from '@/modules/DocumentIncoming/constants';
+import { DOCUMENT_STATUS as DOCUMENT_OUTGOING_STATUS } from '@/modules/DocumentOutgoing/constants';
 import InboxIcon from '@mui/icons-material/Inbox';
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -20,8 +21,8 @@ const linksByStatusIncoming = Object.keys(DOCUMENT_INCOMING_STATUS).reduce((chil
     }),
   ];
 }, [] as TAsideMenuItem[]);
-const linksByStatusOutgoing = Object.keys(DOCUMENT_INCOMING_STATUS).reduce((childs, key, _keys) => {
-  const status = DOCUMENT_INCOMING_STATUS[key as keyof typeof DOCUMENT_INCOMING_STATUS];
+const linksByStatusOutgoing = Object.keys(DOCUMENT_OUTGOING_STATUS).reduce((childs, key, _keys) => {
+  const status = DOCUMENT_OUTGOING_STATUS[key as keyof typeof DOCUMENT_OUTGOING_STATUS];
   const url = toLink(PATHS.documentOutgoingList, { documentStatus: status.value });
   return [
     ...childs,

@@ -1,22 +1,19 @@
 import type { AutoCompleteOption, RHFSelectProps } from '@/components/rhfInputs/RHFSelect';
-import useQueryDocumentReceivedType from '@/hooks/useReactQueries/useQueryDocumentReceivedType';
+import arrayOrEmpty from '@/helpers/formatHelpers/arrayOrEmpty';
+import { default as useReactQuery } from '@/hooks/useReactQueries/useQueryDocumentReceivedType';
 import { useMemo, type ComponentType } from 'react';
 export default function withQueryDocumentTypes(
   WrappedComponent: ComponentType<RHFSelectProps>
 ): ComponentType<RHFSelectProps> {
   return function FieldWithQueryDocumentTypes(props: RHFSelectProps) {
     const { loading: loadingProp, options: _, ...otherProps } = props;
-    const { data, isLoading, isFetching } = useQueryDocumentReceivedType();
-    const loading = useMemo(() => {
-      if (isLoading) return true;
-      if (isFetching) return true;
-      if (loadingProp) return true;
-      return false;
-    }, [isLoading, isFetching, loadingProp]);
+    const { data, isLoading, isFetching } = useReactQuery();
+    const loading = useMemo(
+      () => !!isLoading || !!isFetching || !!loadingProp,
+      [isLoading, isFetching, loadingProp]
+    );
     const options = useMemo(() => {
-      if (!data) return [];
-      if (!(data instanceof Array && data.length > 0)) return [];
-      return data.map(
+      return arrayOrEmpty(data).map(
         (receivedType) =>
           ({
             ...receivedType,

@@ -10,6 +10,7 @@ module.exports = override(
       crypto: require.resolve('crypto-browserify'),
       util: require.resolve('util/'),
       stream: require.resolve('stream-browserify'),
+      'process/browser': require.resolve('process/browser'),
     },
   }),
   addWebpackPlugin(

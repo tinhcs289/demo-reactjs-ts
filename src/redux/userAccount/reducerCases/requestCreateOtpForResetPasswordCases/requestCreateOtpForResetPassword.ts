@@ -3,7 +3,7 @@ import type {
   RequestOtpForResetPasswordApiReturns,
 } from '@/api/resetPassword/requestOtpForResetPasswordApi';
 import requestOtpForResetPasswordApi from '@/api/resetPassword/requestOtpForResetPasswordApi';
-import { EApiRequestStatus } from '@/constants/apiRequestStatus';
+import { HttpRequestStatus } from '@/constants/apiRequestStatus';
 import type { ReduxAction } from '@/helpers/reduxHelpers';
 import { createCase } from '@/helpers/reduxHelpers';
 import type { AxiosResponse } from 'axios';
@@ -18,7 +18,7 @@ const requestCreateOtpForResetPassword = createCase<RequestOtpForResetPasswordAp
   (_action, state) => {
     return {
       ...state,
-      createOtpForResetPasswordRequestStatus: EApiRequestStatus.REQUESTING,
+      createOtpForResetPasswordRequestStatus: HttpRequestStatus.REQUESTING,
     };
   },
   takeLatest(TYPE, function* (action: ReduxAction<RequestOtpForResetPasswordApiParams>) {

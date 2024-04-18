@@ -112,7 +112,7 @@ export default function FormGridFields<T extends FieldValues>(props: FormGridPro
   const { fields } = props;
   const renderField = useCallback((field: FormField<T, any>, index: number) => {
     const { gridFieldHocs: hocs, ..._field } = field;
-    const _props = { key: _field.name, ..._field };
+    const _props = { key: index, ..._field };
     if (!(hocs instanceof Array && hocs.length > 0)) {
       return <FormGridField {...(_props as any)} />;
     }

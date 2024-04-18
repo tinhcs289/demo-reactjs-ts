@@ -83,8 +83,31 @@ export default function CommonTableActionsPopover<RowData extends AnyObject>(
     return memoAction.map((action) => renderAction(action));
   }, [memoAction, renderAction]);
   if (memoAction.length > 0) {
-    return <Menu {...otherProps}>{actionsRendered}</Menu>;
+    return (
+      <Menu
+        {...otherProps}
+        slotProps={{
+          root: {
+            sx: { maxWidth: `400px !important` },
+          },
+        }}
+      >
+        {actionsRendered}
+      </Menu>
+    );
   }
-  if (!!children) return <Menu {...otherProps}>{children}</Menu>;
+  if (!!children)
+    return (
+      <Menu
+        {...otherProps}
+        slotProps={{
+          root: {
+            sx: { maxWidth: `400px !important` },
+          },
+        }}
+      >
+        {children}
+      </Menu>
+    );
   return null;
 }

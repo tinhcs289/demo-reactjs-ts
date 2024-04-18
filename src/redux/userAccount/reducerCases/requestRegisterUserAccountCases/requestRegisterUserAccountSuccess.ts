@@ -1,4 +1,4 @@
-import { EApiRequestStatus } from '@/constants/apiRequestStatus';
+import { HttpRequestStatus } from '@/constants/apiRequestStatus';
 import type { ReduxAction } from '@/helpers/reduxHelpers';
 import { createCase } from '@/helpers/reduxHelpers';
 import { put, takeLatest } from 'redux-saga/effects';
@@ -11,7 +11,7 @@ const requestRegisterUserAccountSuccess = createCase<any, State>(
   (_action, state) => {
     return {
       ...state,
-      registerUserAccountRequestStatus: EApiRequestStatus.REQUESTSUCCESS,
+      registerUserAccountRequestStatus: HttpRequestStatus.REQUESTSUCCESS,
     };
   },
   takeLatest(TYPE, function* (_action: ReduxAction<any>) {

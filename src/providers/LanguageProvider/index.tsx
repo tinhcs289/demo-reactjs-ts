@@ -8,6 +8,7 @@ import type { ReactNode } from 'react';
 import { I18nextProvider } from 'react-i18next';
 import './us';
 numeral.locale(NUMERAL_FORMAT[language.get() || LANGUAGE_DEFAULT]);
+console.log('Numeral initialized');
 acceptLanguage.onChange((event, detail) => {
   event?.stopPropagation?.();
   if (

@@ -24,7 +24,8 @@
     "firebase.json": true,
     "open-vscode.bat": true,
     ".codegen": true,
-    ".swagger": true
+    ".swagger": true,
+    "fork-ts-checker.config.js": true
   },
   "typescript.preferences.importModuleSpecifier": "non-relative",
   "editor.defaultFormatter": "esbenp.prettier-vscode",

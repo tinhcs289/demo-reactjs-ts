@@ -1,5 +1,4 @@
-import http from '@/api/http';
-import httpMock from '@/api/httpMock';
+import { http, httpMock } from '@/api/_axios';
 import type { GetUserProfileApiParams, GetUserProfileApiReturns } from '@/api/userProfile/getUserProfileApi';
 import getUserProfileApi from '@/api/userProfile/getUserProfileApi';
 import tryDo from '@/helpers/asyncHelpers/tryDo';

@@ -71,7 +71,7 @@ const withBooleanValue =
         value={value}
         defaultValue={defaultValue}
         options={options}
-        onChange={onChange}
+        onChange={onChange as any}
       />
     );
   };

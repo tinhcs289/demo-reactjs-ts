@@ -3,7 +3,7 @@ import type {
   ActivateAccountWithOtpApiReturns,
 } from '@/api/registerAccount/activateAccountWithOtpApi';
 import activateAccountWithOtpApi from '@/api/registerAccount/activateAccountWithOtpApi';
-import { EApiRequestStatus } from '@/constants/apiRequestStatus';
+import { HttpRequestStatus } from '@/constants/apiRequestStatus';
 import type { ReduxAction } from '@/helpers/reduxHelpers';
 import { createCase } from '@/helpers/reduxHelpers';
 import type { AxiosResponse } from 'axios';
@@ -18,7 +18,7 @@ const requestActivateAccountWithOtp = createCase<ActivateAccountWithOtpApiParams
   (_action, state) => {
     return {
       ...state,
-      activateAccountWithOtpRequestStatus: EApiRequestStatus.REQUESTING,
+      activateAccountWithOtpRequestStatus: HttpRequestStatus.REQUESTING,
     };
   },
   takeLatest(TYPE, function* (action: ReduxAction<ActivateAccountWithOtpApiParams>) {
