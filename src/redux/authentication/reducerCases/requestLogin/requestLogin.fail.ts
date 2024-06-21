@@ -1,5 +1,5 @@
 import type { LoginApiReturns } from '@/api/authentication/loginApi';
-import { EApiRequestStatus } from '@/constants/apiRequestStatus';
+import { HttpRequestStatus } from '@/constants/apiRequestStatus';
 import type { ReduxAction } from '@/helpers/reduxHelpers';
 import { createCase } from '@/helpers/reduxHelpers';
 import { actions as snackbar } from '@/redux/snackbar';
@@ -16,7 +16,7 @@ export const requestLoginFail = createCase<Payload, State>(
   (_action, state) => {
     return {
       ...(state as any),
-      loginRequestStatus: EApiRequestStatus.REQUESTFAIL,
+      loginRequestStatus: HttpRequestStatus.REQUESTFAIL,
     };
   },
   takeLatest(TYPE, function* (_action: ReduxAction<Payload>) {

@@ -19,7 +19,7 @@ type FormFieldGridProps = Pick<
   'sx' | 'className' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'disabledXs' | 'contentProps'
 >;
 export type FormField<T extends FieldValues, U extends FormInputType> = {
-  name: keyof T;
+  name?: keyof T;
   inputType?: U;
   label?: ReactNode;
   rules?: RHFRules;

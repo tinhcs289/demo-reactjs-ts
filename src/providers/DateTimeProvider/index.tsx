@@ -13,6 +13,7 @@ export type DateTimeProviderProps = Omit<
 >;
 const locale = DATETIME_LOCALE[language.get() || LANGUAGE_DEFAULT];
 moment.locale(locale);
+console.log('Moment initialized');
 export default function DateTimeProvider(props: DateTimeProviderProps) {
   const { children, ...otherProps } = props;
   return (

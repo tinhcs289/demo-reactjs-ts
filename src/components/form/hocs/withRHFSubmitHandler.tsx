@@ -1,5 +1,5 @@
-import getEnvironmentName from '@/environments/getEnvironmentName';
-import type { AnyObject, CommonFormProps } from '@/types';
+import { environmentIs } from '@/environments/getEnvironmentName';
+import type { AnyObject, CommonFormOnClose, CommonFormProps } from '@/types';
 import Grid from '@mui/material/Grid';
 import type { ComponentType, FormEventHandler, MutableRefObject } from 'react';
 import { createContext, useCallback, useContext, useRef } from 'react';
@@ -12,23 +12,26 @@ export type RHFSubmitContextValues = {
    * @returns
    */
   dispatchSubmit?: (reason?: string) => void;
+  dispatchClose?: CommonFormOnClose;
 };
 const SubmitContext = createContext<RHFSubmitContextValues>({} as any);
 /**
  * @example 
-    const { dispatchSubmit } = useRHFSubmitDispatch();
-    //... some where in component 
+    const { dispatchSubmit, dispatchClose } = useRHFSubmitDispatch();
+    //...submit form from somewhere in code 
     dispatchSubmit("save_draft");
+    //...close form from somewhere in code
+    dispatchClose({ reason: "force_close", feedback: {...someData }});
  */
 export function useRHFSubmitDispatch() {
   return useContext(SubmitContext);
 }
-const isNotProduction = getEnvironmentName() !== 'production';
+const isNotProduction = !environmentIs.production();
 export default function withRHFSubmitHandler<FormValues extends AnyObject = AnyObject>(
   WrappedComponent: ComponentType<CommonFormProps<FormValues>>
 ) {
   return function FormWithSubmitHandler(props: CommonFormProps<FormValues>) {
-    const { onSubmit, ...otherProps } = props;
+    const { onSubmit, onClose, ...otherProps } = props;
     const { handleSubmit } = useFormContext<FormValues>();
     const handleSubmitOverride: FormEventHandler<HTMLFormElement> = useCallback(
       (event) => {
@@ -55,8 +58,14 @@ export default function withRHFSubmitHandler<FormValues extends AnyObject = AnyO
       reasonRef.current = reason || 'main_action';
       return formRef.current.dispatchEvent(SubmitEvent);
     }, []);
+    const dispatchClose: CommonFormOnClose = useCallback(
+      (onCloseParams) => {
+        onClose?.(onCloseParams);
+      },
+      [onClose]
+    );
     return (
-      <SubmitContext.Provider value={{ formRef, dispatchSubmit }}>
+      <SubmitContext.Provider value={{ formRef, dispatchSubmit, dispatchClose }}>
         <Grid
           component="form"
           ref={formRef as any}
@@ -66,7 +75,7 @@ export default function withRHFSubmitHandler<FormValues extends AnyObject = AnyO
           container
           alignItems="flex-start"
         >
-          <WrappedComponent {...otherProps} />
+          <WrappedComponent {...otherProps} onClose={onClose} />
         </Grid>
       </SubmitContext.Provider>
     );

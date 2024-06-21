@@ -1,3 +1,4 @@
+import type { AnyObject } from '@/types';
 import type { ReactElement } from 'react';
 import type {
   Control,
@@ -13,7 +14,7 @@ export type RHFRules = Omit<
   'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'
 >;
 export type RHFRuleValidate = Required<RHFRules>['validate'];
-export type RHFInputProps = {
+export type RHFInputProps<ExtendProps extends AnyObject = AnyObject> = {
   name: string;
   control: Control<any, any>;
   /**
@@ -21,7 +22,7 @@ export type RHFInputProps = {
    */
   shouldUnregister?: boolean;
   rules?: RHFRules;
-};
+} & ExtendProps;
 export type RHFRenderInputArgs = {
   field: ControllerRenderProps<FieldValues, any>;
   fieldState: ControllerFieldState;

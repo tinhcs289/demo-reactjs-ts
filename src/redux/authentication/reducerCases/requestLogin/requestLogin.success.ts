@@ -1,4 +1,4 @@
-import { EApiRequestStatus } from '@/constants/apiRequestStatus';
+import { HttpRequestStatus } from '@/constants/apiRequestStatus';
 import userDataStorage from '@/browser/userDataStorage';
 import type { ReduxAction } from '@/helpers/reduxHelpers';
 import { createCase } from '@/helpers/reduxHelpers';
@@ -20,7 +20,7 @@ const requestLoginSuccess = createCase<Authentication, State>(
       policies: user?.policies || [],
       roles: user?.roles || [],
       token: jwt,
-      loginRequestStatus: EApiRequestStatus.REQUESTSUCCESS,
+      loginRequestStatus: HttpRequestStatus.REQUESTSUCCESS,
     };
   },
   takeLatest(TYPE, function* (_action: ReduxAction<any>) {

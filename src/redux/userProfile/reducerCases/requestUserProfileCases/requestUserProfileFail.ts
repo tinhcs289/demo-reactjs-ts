@@ -1,4 +1,4 @@
-import { EApiRequestStatus } from '@/constants/apiRequestStatus';
+import { HttpRequestStatus } from '@/constants/apiRequestStatus';
 import { createCase } from '@/helpers/reduxHelpers';
 import type { AnyObject } from '@/types';
 import type { State } from '../../state';
@@ -7,7 +7,7 @@ const TYPE = `${rootName}/requestUserProfile_fail`;
 const requestUserProfileFail = createCase<AnyObject, State>(TYPE, (action, state) => {
   return {
     ...state,
-    getUserProfileRequestStatus: EApiRequestStatus.REQUESTFAIL,
+    getUserProfileRequestStatus: HttpRequestStatus.REQUESTFAIL,
   } as any;
 });
 export default requestUserProfileFail;

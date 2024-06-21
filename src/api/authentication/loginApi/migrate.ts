@@ -1,10 +1,17 @@
-import getBackendEndpointKey from '@/environments/getBackendEndpointKey';
-import { default as defaultMigrate } from './migrate.default';
-import { default as qlvbMigrate } from './migrate.qlvb';
-// import more migration here;
-export const migrations = {
-  EXAMPLE: defaultMigrate,
-  QLVB: qlvbMigrate,
+import type { ApiPayload, ApiReturns } from './_types';
+type OrginalResponseData = {
+  // define the type of the api response of the backend service
+  [x: string]: any;
 };
-const KEY = getBackendEndpointKey();
-export const { migratePayload, migrateResponseData } = migrations[KEY as keyof typeof migrations];
+export function migrateResponseData(orginal?: OrginalResponseData): ApiReturns | null {
+  // some logic to convert response data to the type of `ApiReturns`
+  return orginal as ApiReturns;
+}
+type OrginalPayload = {
+  // define the type of the api payload of the backend service
+  [x: string]: any;
+};
+export function migratePayload(payload: ApiPayload): OrginalPayload {
+  // some logic to convert response payload to the type of `ApiPayload`
+  return payload as OrginalPayload;
+}

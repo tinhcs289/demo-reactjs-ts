@@ -1,6 +1,6 @@
 import type { GetUserProfileApiReturns, GetUserProfileApiParams } from '@/api/userProfile/getUserProfileApi';
 import getUserProfileApi from '@/api/userProfile/getUserProfileApi';
-import { EApiRequestStatus } from '@/constants/apiRequestStatus';
+import { HttpRequestStatus } from '@/constants/apiRequestStatus';
 import type { ReduxAction } from '@/helpers/reduxHelpers';
 import { createCase } from '@/helpers/reduxHelpers';
 import type { AxiosResponse } from 'axios';
@@ -16,7 +16,7 @@ const requestUserProfile = createCase<Payload, State>(
   (_action, state) => {
     return {
       ...state,
-      getUserProfileRequestStatus: EApiRequestStatus.REQUESTING,
+      getUserProfileRequestStatus: HttpRequestStatus.REQUESTING,
     } as any;
   },
   takeLatest(TYPE, function* (action: ReduxAction<Payload>) {

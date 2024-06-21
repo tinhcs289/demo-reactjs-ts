@@ -10,10 +10,10 @@ export type CommonDialogSlideProps = `${CommonDialogSlide}`;
 export type CommonDialogProps = DialogProps & {
   slide?: CommonDialogSlideProps;
   title?: ReactNode;
-  titleProps?: Omit<DialogTitleProps, 'children'>;
+  titleProps?: Omit<DialogTitleProps<'div'>, 'children'>;
   actions?: ReactNode;
   actionsProps?: Omit<DialogActionsProps, 'children'>;
-  gridContent?: true | Omit<GridProps, 'container' | 'children'>;
+  gridContent?: boolean | Omit<GridProps, 'container' | 'children'>;
   contentProps?: Omit<DialogContentProps, 'children'>;
   backdropProps?: Omit<BackdropProps, 'open' | 'children'>;
   loading?: boolean;

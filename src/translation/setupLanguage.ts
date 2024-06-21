@@ -25,4 +25,5 @@ i18n
       enabled: true,
     },
   });
+console.log('i18n initialized');
 export default i18n;

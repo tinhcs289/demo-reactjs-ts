@@ -1,4 +1,4 @@
-import { EApiRequestStatus } from '@/constants/apiRequestStatus';
+import { HttpRequestStatus } from '@/constants/apiRequestStatus';
 import userDataStorage from '@/browser/userDataStorage';
 import type { ReduxAction } from '@/helpers/reduxHelpers';
 import { createCase } from '@/helpers/reduxHelpers';
@@ -15,7 +15,7 @@ const requestLogoutSuccess = createCase<any, State>(
       ...(state as any),
       user: null,
       token: null,
-      logoutRequestStatus: EApiRequestStatus.REQUESTSUCCESS,
+      logoutRequestStatus: HttpRequestStatus.REQUESTSUCCESS,
     };
   },
   takeLatest(TYPE, function* (_action: ReduxAction<any>) {

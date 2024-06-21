@@ -2,7 +2,7 @@ import authentication from '@/browser/cookies/authentication';
 import userPermissions from '@/browser/localStorage/userPermissions';
 import userProfile from '@/browser/localStorage/userProfile';
 import userRoles from '@/browser/localStorage/userRoles';
-import { EApiRequestStatus } from '@/constants/apiRequestStatus';
+import { HttpRequestStatus } from '@/constants/apiRequestStatus';
 import type { AuthenticationJWT, AuthenticationUserInfo, UserProfile } from '@/types';
 import Immutable from 'seamless-immutable';
 export const rootName = 'authentication';
@@ -11,10 +11,10 @@ export type State = {
   user: UserProfile | null;
   roles: Required<AuthenticationUserInfo['roles']> | null;
   policies: Required<AuthenticationUserInfo['policies']> | null;
-  loginRequestStatus: EApiRequestStatus;
-  logoutRequestStatus: EApiRequestStatus;
-  verifyTokenRequestStatus: EApiRequestStatus;
-  refreshTokenRequestStatus: EApiRequestStatus;
+  loginRequestStatus: HttpRequestStatus;
+  logoutRequestStatus: HttpRequestStatus;
+  verifyTokenRequestStatus: HttpRequestStatus;
+  refreshTokenRequestStatus: HttpRequestStatus;
 };
 const tokenInfo = authentication.get();
 const policies = userPermissions.get();
@@ -36,9 +36,9 @@ const state = Immutable<State>({
   },
   roles: roles || [],
   policies: policies || [],
-  loginRequestStatus: EApiRequestStatus.NONE,
-  logoutRequestStatus: EApiRequestStatus.NONE,
-  verifyTokenRequestStatus: EApiRequestStatus.NONE,
-  refreshTokenRequestStatus: EApiRequestStatus.NONE,
+  loginRequestStatus: HttpRequestStatus.NONE,
+  logoutRequestStatus: HttpRequestStatus.NONE,
+  verifyTokenRequestStatus: HttpRequestStatus.NONE,
+  refreshTokenRequestStatus: HttpRequestStatus.NONE,
 });
 export default state;

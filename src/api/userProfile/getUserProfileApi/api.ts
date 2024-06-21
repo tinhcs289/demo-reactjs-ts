@@ -1,5 +1,4 @@
-import http from '@/api/http';
-import httpMock from '@/api/httpMock';
+import { http, httpMock } from '@/api/_axios';
 import tryDo from '@/helpers/asyncHelpers/tryDo';
 import type { AxiosResponse } from 'axios';
 import { ApiPayload, ApiReturns } from './_types';

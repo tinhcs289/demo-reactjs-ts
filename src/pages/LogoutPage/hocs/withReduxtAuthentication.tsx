@@ -1,4 +1,4 @@
-import { EApiRequestStatus } from '@/constants/apiRequestStatus';
+import { HttpRequestStatus } from '@/constants/apiRequestStatus';
 import PATHS from '@/constants/paths';
 import { actions, logoutRequestStatusSelector } from '@/redux/authentication';
 import type { ComponentType } from 'react';
@@ -13,8 +13,8 @@ export default function withReduxAuthentication(WrappedComponent: ComponentType<
   return function LogoutPageWithReduxAuthentication(props: LogoutPageProps) {
     const { onLogout: _, loading: loadingProp, ...otherProps } = props;
     const requestStatus = useSelector(logoutRequestStatusSelector);
-    const loading = useMemo(() => requestStatus === EApiRequestStatus.REQUESTING, [requestStatus]);
-    const isSuccess = useMemo(() => requestStatus === EApiRequestStatus.REQUESTSUCCESS, [requestStatus]);
+    const loading = useMemo(() => requestStatus === HttpRequestStatus.REQUESTING, [requestStatus]);
+    const isSuccess = useMemo(() => requestStatus === HttpRequestStatus.REQUESTSUCCESS, [requestStatus]);
     const dispatch = useDispatch();
     const handleLogout = async () => {
       dispatch(actions.requestLogout(null));

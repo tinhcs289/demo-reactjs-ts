@@ -1,5 +1,5 @@
 import type { GetUserProfileApiReturns } from '@/api/userProfile/getUserProfileApi';
-import { EApiRequestStatus } from '@/constants/apiRequestStatus';
+import { HttpRequestStatus } from '@/constants/apiRequestStatus';
 import { createCase } from '@/helpers/reduxHelpers';
 import type { State } from '../../state';
 import { rootName } from '../../state';
@@ -10,7 +10,7 @@ const requestUserProfileSuccess = createCase<{ data: GetUserProfileApiReturns },
     return {
       ...state,
       data: action.payload.data,
-      getUserProfileRequestStatus: EApiRequestStatus.REQUESTSUCCESS,
+      getUserProfileRequestStatus: HttpRequestStatus.REQUESTSUCCESS,
     };
   }
 );

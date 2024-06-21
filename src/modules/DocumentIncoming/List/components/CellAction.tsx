@@ -2,30 +2,135 @@ import { createCellInnerComponent } from '@/components/table';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import AssignmentReturnIcon from '@mui/icons-material/AssignmentReturn';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
 import ButtonGroup from '@mui/material/ButtonGroup';
+import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import IconButton from '@mui/material/IconButton';
+import { useCallback } from 'react';
+import { DOCUMENT_STATUS, MUTATE_ACTION } from '../../constants';
+import BorderColorIcon from '@mui/icons-material/BorderColor';
 import type { RowData } from '../_types';
-import { AsyncListItemActionsPopoverToggle } from '../context';
-const CellAction = createCellInnerComponent<RowData>(function BookingCode(props) {
+import { AsyncListItemActionsPopoverToggle, useAsyncListAction, useAsyncListGetter } from '../context';
+/**
+ * Xem luồng xử ký / lịch sử xử lý
+ */
+function ViewProccesFlow(_props: { row: RowData }) {
+  const toggleForm: Required<IconButtonProps>['onClick'] = useCallback((event) => {
+    event?.stopPropagation?.();
+    return;
+  }, []);
+  return (
+    <Tooltip title="Xem luồng xử lý">
+      <IconButton color="primary" onClick={toggleForm}>
+        <AccountTreeIcon />
+      </IconButton>
+    </Tooltip>
+  );
+}
+/**
+ * Tạo bản sao
+ */
+function Clone(_props: { row: RowData }) {
+  const toggleForm: Required<IconButtonProps>['onClick'] = useCallback((event) => {
+    event?.stopPropagation?.();
+    return;
+  }, []);
+  return (
+    <Tooltip title="Tạo bản sao">
+      <IconButton color="primary" onClick={toggleForm}>
+        <ContentCopyIcon />
+      </IconButton>
+    </Tooltip>
+  );
+}
+/**
+ * Duyệt
+ */
+function Approve(props: { row: RowData }) {
+  const { row } = props;
+  const { setAction } = useAsyncListAction();
+  const status = useAsyncListGetter((s) => s?.filter?.Status?.[0]);
+  const toggleForm: Required<IconButtonProps>['onClick'] = useCallback(
+    (event) => {
+      event?.stopPropagation?.();
+      setAction?.({ item: row, action: MUTATE_ACTION.APPROVE });
+      return;
+    },
+    [setAction, row]
+  );
+  return (
+    <>
+      {status === DOCUMENT_STATUS.PENDING_ASSIGNEE.value || status === DOCUMENT_STATUS.IN_PROCESS.value ? (
+        <Tooltip title="Duyệt">
+          <IconButton color="primary" onClick={toggleForm}>
+            <PlaylistAddCheckIcon />
+          </IconButton>
+        </Tooltip>
+      ) : null}
+    </>
+  );
+}
+/**
+ * Trình ký
+ */
+function RequestSign(props: { row: RowData }) {
+  const { row } = props;
+  const { setAction } = useAsyncListAction();
+  const status = useAsyncListGetter((s) => s?.filter?.Status?.[0]);
+  const toggleForm: Required<IconButtonProps>['onClick'] = useCallback(
+    (event) => {
+      event?.stopPropagation?.();
+      setAction?.({ item: row, action: MUTATE_ACTION.CREATE_REQUEST_SIGNATURE });
+      return;
+    },
+    [setAction, row]
+  );
+  return (
+    <>
+      {status === DOCUMENT_STATUS.PENDING_RECORDED.value ||
+      status === DOCUMENT_STATUS.PENDING_ASSIGNEE.value ||
+      status === DOCUMENT_STATUS.IN_PROCESS.value ? (
+        <Tooltip title="Trình ký">
+          <IconButton color="primary" onClick={toggleForm}>
+            <BorderColorIcon />
+          </IconButton>
+        </Tooltip>
+      ) : null}
+    </>
+  );
+}
+/**
+ * Phân xử lý
+ */
+function Assign(props: { row: RowData }) {
+  const { row } = props;
+  const { setAction } = useAsyncListAction();
+  const toggleForm: Required<IconButtonProps>['onClick'] = useCallback(
+    (event) => {
+      event?.stopPropagation?.();
+      setAction?.({ item: row, action: MUTATE_ACTION.CREATE_ASSIGNMENT });
+      return;
+    },
+    [setAction, row]
+  );
+  return (
+    <Tooltip title="Phân xử lý">
+      <IconButton color="primary" onClick={toggleForm}>
+        <AssignmentReturnIcon sx={{ transform: `rotateY(-180deg)` }} />
+      </IconButton>
+    </Tooltip>
+  );
+}
+// ======================
+const CellAction = createCellInnerComponent<RowData>(function Actions(props) {
   const { row } = props;
   return (
     <ButtonGroup fullWidth size="small">
-      <Tooltip title="Luồng xử lý">
-        <IconButton color="primary">
-          <AccountTreeIcon />
-        </IconButton>
-      </Tooltip>
-      <Tooltip title="Tạo bản sao">
-        <IconButton color="primary">
-          <ContentCopyIcon />
-        </IconButton>
-      </Tooltip>
-      <Tooltip title="Phân xử lý">
-        <IconButton color="primary">
-          <AssignmentReturnIcon sx={{ transform: `rotateY(-180deg)` }} />
-        </IconButton>
-      </Tooltip>
+      <ViewProccesFlow row={row} />
+      <Clone row={row} />
+      <Approve row={row} />
+      <RequestSign row={row} />
+      <Assign row={row} />
       <AsyncListItemActionsPopoverToggle row={row} />
     </ButtonGroup>
   );

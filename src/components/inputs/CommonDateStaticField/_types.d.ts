@@ -16,12 +16,14 @@ export type CommonDateStaticFieldProps = StaticDatePickerProps<Moment> & {
   buttonClear?: string;
   ButtonNegative?: string;
   noActionsBar?: boolean;
+  clearable?: boolean;
 };
 export type CustomPickerActionBarProps = PickersActionBarProps & {
   buttonOk?: string;
   buttonClear?: string;
   ButtonNegative?: string;
   closeOnSelect?: boolean;
+  clearable?: boolean;
 };
 export type CustomToolbarProps = DatePickerToolbarProps<Moment> & {
   label?: string;

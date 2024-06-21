@@ -34,7 +34,10 @@ export type RequestError = {
   reason?: PlaceQueryFailReason;
   [x: string]: any;
 };
-export type GooglePlaceFieldProps = Pick<CommonTextFieldProps, 'label' | 'error' | 'required' | 'errorText'> &
+export type GooglePlaceFieldProps = Pick<
+  CommonTextFieldProps,
+  'label' | 'error' | 'required' | 'errorText' | 'placeholder'
+> &
   Omit<BaseAutocompleteProps, 'renderInput' | 'options'> & {
     options?: GooglePlaceOption[];
     TextFieldProps?: Partial<CommonTextFieldProps>;

@@ -1,2 +1,2 @@
-export { default as http } from './http';
-export { default as httpMock, mockAdapter } from './httpMock';
+import { http, httpMock, mockAdapter, interceptors } from './_axios';
+export { http, httpMock, mockAdapter, interceptors };

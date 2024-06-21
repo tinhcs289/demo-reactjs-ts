@@ -8,7 +8,7 @@ import { get } from 'lodash';
 import { ComponentType, useEffect, useMemo } from 'react';
 import type { FieldValues, ValidateResult } from 'react-hook-form';
 import { useFieldArray, useFormContext } from 'react-hook-form';
-import type { FormField, FormInputType } from '../_types';
+import type { FormField } from '../_types';
 import RHFArrayProvider from '../components/RHFArrayProvider';
 //#region RHF Rules
 function validateArrayByRules(rules: RHFRules, value: Array<any>, formValues?: any): true | string {
@@ -100,7 +100,7 @@ function withRules(name: string, rules: RHFRules) {
   };
 }
 //#endregion
-export type FieldArrayItemProps = {
+export type FieldArrayItemProps<ArrayItemValues extends AnyObject = AnyObject> = {
   /**
    * name of FieldArray
    */
@@ -116,13 +116,15 @@ export type FieldArrayItemProps = {
   /**
    * value of item
    */
-  item: Record<'id', string>;
+  item: ArrayItemValues;
   /**
    * the fields config of
    */
-  subFields: FormField<AnyObject, any>[];
+  subFields: FormField<ArrayItemValues, any>[];
 };
-function FielArrayItem(props: FieldArrayItemProps) {
+function FielArrayItem<ArrayItemValues extends AnyObject = AnyObject>(
+  props: FieldArrayItemProps<ArrayItemValues>
+) {
   const { rootName, item, itemIndex, subFields } = props;
   return (
     <GridContainer key={item.id} sx={{ width: '100%' }}>
@@ -130,16 +132,18 @@ function FielArrayItem(props: FieldArrayItemProps) {
     </GridContainer>
   );
 }
-export type FieldArrayComponentProps = {
+export type FieldArrayComponentProps<ArrayItemValues extends AnyObject = AnyObject> = {
   name: string;
-  fields: FormField<AnyObject, any>[];
-  itemComponent?: ComponentType<FieldArrayItemProps>;
-  itemComponentHocs?: FieldArrayItemComponentHoc[];
+  fields: FormField<ArrayItemValues, any>[];
+  itemComponent?: ComponentType<FieldArrayItemProps<ArrayItemValues>>;
+  itemComponentHocs?: FieldArrayItemComponentHoc<ArrayItemValues>[];
 };
-function FieldArrayComponent(props: FieldArrayComponentProps) {
+function FieldArrayComponent<ArrayItemValues extends AnyObject = AnyObject>(
+  props: FieldArrayComponentProps<ArrayItemValues>
+) {
   const { name, fields: fieldsSub, itemComponent, itemComponentHocs } = props;
   const { fields: fieldArray } = useRHFArrayContext();
-  let ItemComponent = FielArrayItem as ComponentType<FieldArrayItemProps>;
+  let ItemComponent = FielArrayItem as ComponentType<FieldArrayItemProps<ArrayItemValues>>;
   if (!!itemComponent) ItemComponent = itemComponent;
   if (itemComponentHocs instanceof Array && itemComponentHocs.length > 0) {
     ItemComponent = withHOCs(...itemComponentHocs)(ItemComponent);
@@ -148,7 +152,7 @@ function FieldArrayComponent(props: FieldArrayComponentProps) {
     <ItemComponent
       key={item.id}
       rootName={name}
-      item={item}
+      item={item as any}
       itemIndex={index}
       itemName={`${name}.${index}`}
       subFields={fieldsSub}
@@ -168,17 +172,20 @@ function withFieldArrayContext(name: string) {
     };
   };
 }
-export type FieldArrayItemComponentHoc = (
-  WrappedComponent: ComponentType<FieldArrayItemProps>
-) => ComponentType<FieldArrayItemProps>;
-export default function fieldArray<T extends FieldValues, U extends FormInputType>(
-  args: Omit<FormField<T, U>, 'component' | 'componentProps'> & {
-    component?: ComponentType<FieldArrayComponentProps>;
-    componentProps?: FieldArrayComponentProps;
-    itemComponent?: ComponentType<FieldArrayItemProps>;
+export type FieldArrayItemComponentHoc<ArrayItemValues extends AnyObject = AnyObject> = (
+  WrappedComponent: ComponentType<FieldArrayItemProps<ArrayItemValues>>
+) => ComponentType<FieldArrayItemProps<ArrayItemValues>>;
+export default function fieldArray<
+  ArrayItemValues extends AnyObject = AnyObject,
+  T extends FieldValues = FieldValues,
+>(
+  args: Omit<FormField<T, 'field-array'>, 'inputType' | 'component' | 'componentProps'> & {
+    component?: ComponentType<FieldArrayComponentProps<ArrayItemValues>>;
+    componentProps?: FieldArrayComponentProps<ArrayItemValues>;
+    itemComponent?: ComponentType<FieldArrayItemProps<ArrayItemValues>>;
     itemComponentHocs?: FieldArrayItemComponentHoc[];
   }
-): FormField<T, U> {
+): FormField<T, 'field-array'> {
   const { fields, itemComponent, itemComponentHocs, ...otherArgs } = args;
   const gridFieldHocs = [
     withFieldArrayContext(args?.name as string),
@@ -189,6 +196,7 @@ export default function fieldArray<T extends FieldValues, U extends FormInputTyp
   ];
   return {
     ...otherArgs,
+    inputType: 'field-array',
     component: args?.component || (FieldArrayComponent as any),
     componentProps: {
       ...args?.componentProps,
