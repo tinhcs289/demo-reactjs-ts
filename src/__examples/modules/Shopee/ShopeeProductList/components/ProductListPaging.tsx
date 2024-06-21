@@ -1,5 +1,5 @@
 import { CommonPagination } from '@/components/table';
-import { EApiRequestStatus } from '@/constants/apiRequestStatus';
+import { HttpRequestStatus } from '@/constants/apiRequestStatus';
 import { useCallback, useMemo } from 'react';
 import { PAGE_SIZE } from '../constants';
 import { useAsyncListGetter, useAsyncListAction } from '../context';
@@ -8,7 +8,7 @@ export default function ProductListPaging() {
   const pageSize = useAsyncListGetter((s) => s.pageSize);
   const totalCount = useAsyncListGetter((s) => s.totalCount);
   const fetchStatus = useAsyncListGetter((s) => s.fetchStatus);
-  const isLoading = useMemo(() => fetchStatus === EApiRequestStatus.REQUESTING, [fetchStatus]);
+  const isLoading = useMemo(() => fetchStatus === HttpRequestStatus.REQUESTING, [fetchStatus]);
   const { updatePaging } = useAsyncListAction();
   const handleChangePage = useCallback(
     (page: number) => {

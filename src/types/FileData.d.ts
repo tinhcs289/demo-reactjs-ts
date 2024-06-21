@@ -4,5 +4,6 @@ export type FileData<FileInfo extends AnyObject = AnyObject> = FileInfo & {
   id: string | number;
   source?: string;
   file?: File;
+  base64?: string;
   uploadStatus?: ApiRequestStatus;
 };

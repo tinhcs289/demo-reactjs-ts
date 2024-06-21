@@ -1,13 +1,16 @@
 import { field, withDisplayAsPopper } from '@/components/form';
+import { CheckGroupOption } from '@/components/rhfInputs/RHFCheckGroup';
 import toDateRangeText from '@/helpers/formatHelpers/toDateRangeText';
+import { DOCUMENT_STATUS } from '@/modules/DocumentIncoming/constants';
 import { i18n } from '@/translation';
 import type { SxProps, Theme } from '@mui/material';
 import moment from 'moment';
 import type { FormValues } from './_types';
-import { DOCUMENT_STATUS } from '@/modules/DocumentIncoming/constants';
 import withMinOrMaxDateByAnotherDate from './hocs/withMinOrMaxDateByAnotherDate';
-import { CheckGroupOption } from '@/components/rhfInputs/RHFCheckGroup';
-const statusOptions = Object.keys(DOCUMENT_STATUS).map(
+import withQueryDocumentBooks from './hocs/withQueryDocumentBooks';
+import isToday from '@/helpers/commonHelpers/isToDay';
+import withQueryDocumentTypes from './hocs/withQueryDocumentTypes';
+export const statusOptions = Object.keys(DOCUMENT_STATUS).map(
   (k) =>
     ({
       value: (DOCUMENT_STATUS as any)[k].value,
@@ -16,18 +19,20 @@ const statusOptions = Object.keys(DOCUMENT_STATUS).map(
 );
 export const defaultValues: FormValues = {
   Keyword: null,
+  NumberInIssueBook: null,
+  DocumentNotation: null,
   DateReceived: {
     From: null,
     To: null,
   },
-  DateProcess: {
-    From: null,
-    To: null,
-  },
-  DatePublish: {
-    From: null,
-    To: null,
-  },
+  // DateProcess: {
+  //   From: null,
+  //   To: null,
+  // },
+  // DatePublish: {
+  //   From: null,
+  //   To: null,
+  // },
   Status: null,
 };
 export const fieldSx: SxProps<Theme> = { p: '4px' };
@@ -51,26 +56,58 @@ export const fields = [
     ],
   }),
   field({
+    name: 'NumberInIssueBook',
+    inputType: 'text',
+    componentProps: {
+      placeholder: i18n.t('common:pleaseEnter'),
+    },
+    disabledXs: true,
+    sx: fieldSx,
+    hocs: [
+      withDisplayAsPopper<'text'>({
+        toggleButtonLabel: 'Số đến',
+        getLabelText: (value: string) => (!value ? 'Số đến' : `Số đến: ${value}`),
+      }),
+    ],
+  }),
+  field({
+    name: 'DocumentNotation',
+    inputType: 'text',
+    componentProps: {
+      placeholder: i18n.t('common:pleaseEnter'),
+    },
+    disabledXs: true,
+    sx: fieldSx,
+    hocs: [
+      withDisplayAsPopper<'text'>({
+        toggleButtonLabel: 'Số/Ký hiệu',
+        getLabelText: (value: string) => (!value ? 'Số/Ký hiệu' : `Số/Ký hiệu: ${value}`),
+      }),
+    ],
+  }),
+  field({
     name: 'DateReceived',
     fields: [
       field({
         name: 'From',
-        inputType: 'date',
+        inputType: 'date-static',
         label: 'Từ',
         componentProps: {
           placeholder: i18n.t('common:pleaseSelect'),
-          clearText: 'Xóa',
+          clearable: true,
         },
+        md: 6,
         sx: { ...fieldSx, mb: 2 },
       }),
       field({
         name: 'To',
-        inputType: 'date',
+        inputType: 'date-static',
         label: 'Đến',
         componentProps: {
           placeholder: i18n.t('common:pleaseSelect'),
-          clearText: 'Xóa',
+          clearable: true,
         },
+        md: 6,
         hocs: [withMinOrMaxDateByAnotherDate('minDate', 'DateReceived.From')] as any,
         sx: fieldSx,
       }),
@@ -92,100 +129,143 @@ export const fields = [
             hasFromAndTo: (f, t) => `Ngày nhận: ${f} đến ${t}`,
             hasOnlyFrom: (f) => `Ngày nhận từ ${f} trở về sau`,
             hasOnlyTo: (t) => `Ngày nhận từ trước đến ${t}`,
+            dateText: (m) => `${isToday(m) ? 'Hôm nay' : m.format('DD/MM/YYYY')}`,
           }) || 'Ngày nhận',
       }),
     ],
   }),
+  // field({
+  //   name: 'DateProcess',
+  //   fields: [
+  //     field({
+  //       name: 'From',
+  //       inputType: 'date-static',
+  //       label: 'Từ',
+  //       componentProps: {
+  //         placeholder: i18n.t('common:pleaseSelect'),
+  //         clearable: true,
+  //       },
+  //       sx: { ...fieldSx, mb: 2 },
+  //     }),
+  //     field({
+  //       name: 'To',
+  //       inputType: 'date-static',
+  //       label: 'Đến',
+  //       componentProps: {
+  //         placeholder: i18n.t('common:pleaseSelect'),
+  //         clearable: true,
+  //       },
+  //       hocs: [withMinOrMaxDateByAnotherDate('minDate', 'DateProcess.From')] as any,
+  //       sx: fieldSx,
+  //     }),
+  //   ],
+  //   disabledXs: true,
+  //   sx: fieldSx,
+  //   hocs: [
+  //     withDisplayAsPopper<any>({
+  //       namePrefix: 'DateProcess',
+  //       toggleButtonLabel: 'Hạn xử lý',
+  //       hasValueWhen: (value: FormValues['DateProcess']) =>
+  //         (!!value?.From && moment.isMoment(value.From)) || (!!value?.To && moment.isMoment(value.To)),
+  //       getLabelText: (value: FormValues['DateProcess']) =>
+  //         toDateRangeText(
+  //           value?.From,
+  //           value?.To
+  //         )({
+  //           format: 'DD/MM/YYYY',
+  //           hasFromAndTo: (f, t) => `Hạn xử lý: ${f} đến ${t}`,
+  //           hasOnlyFrom: (f) => `Hạn xử lý từ ${f} trở về sau`,
+  //           hasOnlyTo: (t) => `Hạn xử lý từ trước đến ${t}`,
+  //         }) || 'Hạn xử lý',
+  //     }),
+  //   ],
+  // }),
+  // field({
+  //   name: 'DatePublish',
+  //   fields: [
+  //     field({
+  //       name: 'From',
+  //       inputType: 'date-static',
+  //       label: 'Từ',
+  //       componentProps: {
+  //         placeholder: i18n.t('common:pleaseSelect'),
+  //         clearable: true,
+  //       },
+  //       sx: { ...fieldSx, mb: 2 },
+  //     }),
+  //     field({
+  //       name: 'To',
+  //       inputType: 'date-static',
+  //       label: 'Đến',
+  //       componentProps: {
+  //         placeholder: i18n.t('common:pleaseSelect'),
+  //         clearable: true,
+  //       },
+  //       hocs: [withMinOrMaxDateByAnotherDate('minDate', 'DatePublish.From')] as any,
+  //       sx: fieldSx,
+  //     }),
+  //   ],
+  //   disabledXs: true,
+  //   sx: fieldSx,
+  //   hocs: [
+  //     withDisplayAsPopper<any>({
+  //       namePrefix: 'DatePublish',
+  //       toggleButtonLabel: 'Ngày ban hành',
+  //       hasValueWhen: (value: FormValues['DatePublish']) =>
+  //         (!!value?.From && moment.isMoment(value.From)) || (!!value?.To && moment.isMoment(value.To)),
+  //       getLabelText: (value: FormValues['DatePublish']) =>
+  //         toDateRangeText(
+  //           value?.From,
+  //           value?.To
+  //         )({
+  //           format: 'DD/MM/YYYY',
+  //           hasFromAndTo: (f, t) => `Ngày ban hành: ${f} đến ${t}`,
+  //           hasOnlyFrom: (f) => `Ngày ban hành từ ${f} trở về sau`,
+  //           hasOnlyTo: (t) => `Ngày ban hành từ trước đến ${t}`,
+  //         }) || 'Ngày ban hành',
+  //     }),
+  //   ],
+  // }),
+
   field({
-    name: 'DateProcess',
-    fields: [
-      field({
-        name: 'From',
-        inputType: 'date',
-        label: 'Từ',
-        componentProps: {
-          placeholder: i18n.t('common:pleaseSelect'),
-          clearText: 'Xóa',
-        },
-        sx: { ...fieldSx, mb: 2 },
-      }),
-      field({
-        name: 'To',
-        inputType: 'date',
-        label: 'Đến',
-        componentProps: {
-          placeholder: i18n.t('common:pleaseSelect'),
-          clearText: 'Xóa',
-        },
-        hocs: [withMinOrMaxDateByAnotherDate('minDate', 'DateProcess.From')] as any,
-        sx: fieldSx,
-      }),
-    ],
+    name: 'DocumentBook',
+    inputType: 'radio-group',
     disabledXs: true,
     sx: fieldSx,
     hocs: [
-      withDisplayAsPopper<any>({
-        namePrefix: 'DateProcess',
-        toggleButtonLabel: 'Hạn xử lý',
-        hasValueWhen: (value: FormValues['DateProcess']) =>
-          (!!value?.From && moment.isMoment(value.From)) || (!!value?.To && moment.isMoment(value.To)),
-        getLabelText: (value: FormValues['DateProcess']) =>
-          toDateRangeText(
-            value?.From,
-            value?.To
-          )({
-            format: 'DD/MM/YYYY',
-            hasFromAndTo: (f, t) => `Hạn xử lý: ${f} đến ${t}`,
-            hasOnlyFrom: (f) => `Hạn xử lý từ ${f} trở về sau`,
-            hasOnlyTo: (t) => `Hạn xử lý từ trước đến ${t}`,
-          }) || 'Hạn xử lý',
+      withDisplayAsPopper<'radio-group'>({
+        toggleButtonLabel: 'Sổ',
+        hasValueWhen: (value: FormValues['DocumentBook']) => !!value?.label,
+        getLabelText: (value: FormValues['DocumentBook']) =>
+          !!value?.value ? `Sổ: ${value?.label || ''}` : 'Sổ',
       }),
+      withQueryDocumentBooks,
     ],
   }),
   field({
-    name: 'DatePublish',
-    fields: [
-      field({
-        name: 'From',
-        inputType: 'date',
-        label: 'Từ',
-        componentProps: {
-          placeholder: i18n.t('common:pleaseSelect'),
-          clearText: 'Xóa',
-        },
-        sx: { ...fieldSx, mb: 2 },
-      }),
-      field({
-        name: 'To',
-        inputType: 'date',
-        label: 'Đến',
-        componentProps: {
-          placeholder: i18n.t('common:pleaseSelect'),
-          clearText: 'Xóa',
-        },
-        hocs: [withMinOrMaxDateByAnotherDate('minDate', 'DatePublish.From')] as any,
-        sx: fieldSx,
-      }),
-    ],
+    name: 'DocumentType',
+    inputType: 'radio-group',
     disabledXs: true,
     sx: fieldSx,
+    componentProps: {
+      groupProps: {
+        sx: {
+          maxHeight: '600px',
+          overflowY: 'auto',
+          '& .MuiFormControlLabel-root': {
+            marginTop: '12px',
+          },
+        },
+      },
+    },
     hocs: [
-      withDisplayAsPopper<any>({
-        namePrefix: 'DatePublish',
-        toggleButtonLabel: 'Ngày ban hành',
-        hasValueWhen: (value: FormValues['DatePublish']) =>
-          (!!value?.From && moment.isMoment(value.From)) || (!!value?.To && moment.isMoment(value.To)),
-        getLabelText: (value: FormValues['DatePublish']) =>
-          toDateRangeText(
-            value?.From,
-            value?.To
-          )({
-            format: 'DD/MM/YYYY',
-            hasFromAndTo: (f, t) => `Ngày ban hành: ${f} đến ${t}`,
-            hasOnlyFrom: (f) => `Ngày ban hành từ ${f} trở về sau`,
-            hasOnlyTo: (t) => `Ngày ban hành từ trước đến ${t}`,
-          }) || 'Ngày ban hành',
+      withDisplayAsPopper<'radio-group'>({
+        toggleButtonLabel: 'Loại',
+        hasValueWhen: (value: FormValues['DocumentType']) => !!value?.label,
+        getLabelText: (value: FormValues['DocumentType']) =>
+          !!value?.value ? `Loại: ${value?.label || ''}` : 'Loại',
       }),
+      withQueryDocumentTypes,
     ],
   }),
   field({

@@ -1,6 +1,6 @@
 import loginApi, { LoginApiReturns } from '@/api/authentication/loginApi';
 import { validate } from '@/browser/cookies/authentication';
-import { EApiRequestStatus } from '@/constants/apiRequestStatus';
+import { HttpRequestStatus } from '@/constants/apiRequestStatus';
 import type { ReduxAction } from '@/helpers/reduxHelpers';
 import { createCase } from '@/helpers/reduxHelpers';
 import { actions as userAccount } from '@/redux/userAccount';
@@ -18,7 +18,7 @@ const requestLogin = createCase<Payload, State>(
   (_action, state) => {
     return {
       ...(state as any),
-      loginRequestStatus: EApiRequestStatus.REQUESTING,
+      loginRequestStatus: HttpRequestStatus.REQUESTING,
     };
   },
   takeLatest(TYPE, function* (action: ReduxAction<Payload>) {

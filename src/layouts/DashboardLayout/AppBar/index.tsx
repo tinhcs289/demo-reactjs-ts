@@ -1,5 +1,7 @@
 import ButtonLanguage from '@/layouts/DashboardLayout/AppBar/ButtonLanguage';
 import { APP_BAR_HEIGHT, ASIDE_MENU_WIDTH } from '@/layouts/DashboardLayout/constants';
+import TopbarNotifyDisplay from '@/modules/TopbarNotifyDisplay';
+import TopbarUserDisplay from '@/modules/TopbarUserDisplay';
 import { useDashboardLayoutState } from '@/providers/DashboardLayoutProvider';
 import type { AppBarProps } from '@mui/material/AppBar';
 import MuiAppBar from '@mui/material/AppBar';
@@ -46,6 +48,8 @@ function AppBar() {
         {$ButtonMenu}
         {$PageTitle}
         {$ButtonLanguage}
+        <TopbarNotifyDisplay />
+        <TopbarUserDisplay />
         {$ButtonLogout}
       </ToolbarStyled>
     </AppBarStyled>

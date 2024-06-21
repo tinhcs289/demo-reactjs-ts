@@ -1,6 +1,8 @@
 import { alpha } from '@mui/material';
 import { GlobalStylesProps } from '@mui/material/GlobalStyles';
 const color = {
+  pageBgDark: '#1c1b25',
+  pageBgDarker: '#121212',
   nav: '#1C2536',
   navDarker: '#172131',
   navItem: '#9DA4AE',
@@ -21,8 +23,9 @@ const activeAsideItemStyleMaker =
     },
   });
 const appbarStyleMaker: Required<GlobalStylesProps>['styles'] = (theme) => ({
-  backgroundColor: theme.palette.background.paper,
+  //backgroundColor: theme.palette.mode === 'light' ? theme.palette.background.paper : color.pageBgDarker,
   '& > div.MuiToolbar-root': {
+    backgroundColor: theme.palette.mode === 'light' ? theme.palette.background.paper : color.pageBgDarker,
     // Page title (only show if there're no Breadcrumbs)
     '& > h1.MuiTypography-root.db-page-title': {
       color: theme.palette.text.primary,
@@ -121,6 +124,11 @@ const layoutStyleMaker: Required<GlobalStylesProps>['styles'] = (theme) => ({
     '& > header.MuiAppBar-root.db-layout-top': appbarStyleMaker(theme),
     '& > div.MuiDrawer-root.db-layout-left': asideStyleMaker(theme),
     '& > main.MuiBox-root.db-layout-right': {
+      ...(theme.palette.mode === 'dark'
+        ? {
+            background: color.pageBgDark,
+          }
+        : {}),
       // Right Content
       '̃& > div.MuiBox-root.db-page-content': {
         // Page Content

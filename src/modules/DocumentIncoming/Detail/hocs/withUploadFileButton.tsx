@@ -2,36 +2,38 @@ import { ButtonUploadFile } from '@/components/buttons';
 import { formItemSx, useRHFArrayContext } from '@/components/form';
 import { CommonFormGroup } from '@/components/formGroup';
 import { GridItem } from '@/components/grid';
-import { useRHFFieldError } from '@/hooks/useRHF';
+// import { useRHFFieldError } from '@/hooks/useRHF';
 import { FileData } from '@/types';
 import AddIcon from '@mui/icons-material/UploadFile';
-import get from 'lodash/get';
+// import get from 'lodash/get';
 import type { ComponentType } from 'react';
-import { useMemo } from 'react';
-import { useFormContext } from 'react-hook-form';
+// import { useMemo } from 'react';
+// import { useFormContext } from 'react-hook-form';
 export default function withUploadFileButton(WrappedComponent: ComponentType<any>): ComponentType<any> {
   return function FieldWithUploadFileButton(props: any) {
-    const { name, append } = useRHFArrayContext();
-    const {
-      formState: { isSubmitted },
-    } = useFormContext();
-    const fieldError = useRHFFieldError(name);
+    //const { name, append } = useRHFArrayContext();
+    const { append } = useRHFArrayContext();
+    // const {
+    //   formState: { isSubmitted },
+    // } = useFormContext();
+    // const fieldError = useRHFFieldError(name);
     const handleUpload = (files: File[]) => {
       files.forEach((file) => {
+        if (!file) return;
         append({ file } as FileData);
       });
     };
-    const errorMessage = useMemo(() => get(fieldError, 'message') as string | undefined, [fieldError]);
+    //const errorMessage = useMemo(() => get(fieldError, 'message') as string | undefined, [fieldError]);
     return (
       <>
         <GridItem sx={{ ...formItemSx, mb: 0 }}>
           <CommonFormGroup
-            label="Tệp tin đính kèm"
+            //label="Tệp tin đính kèm"
             disableFloatingLabel
-            error={!!isSubmitted && !!errorMessage}
-            errorText={errorMessage}
+            // error={!!isSubmitted && !!errorMessage}
+            // errorText={errorMessage}
           >
-            <GridItem sx={{ mt: '16px' }}>
+            <GridItem>
               <ButtonUploadFile
                 multiple
                 startIcon={<AddIcon />}

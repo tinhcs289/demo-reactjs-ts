@@ -14,6 +14,7 @@ export type CommonDateFieldProps = MobileDatePickerProps<Moment> & {
   buttonOk?: string;
   buttonClear?: string;
   ButtonNegative?: string;
+  required?: boolean;
 };
 export type CustomPickerActionBarProps = PickersActionBarProps & {
   buttonOk?: string;

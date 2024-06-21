@@ -1,5 +1,5 @@
 import { CommonFallback } from '@/components/fallback';
-import { EApiRequestStatus } from '@/constants/apiRequestStatus';
+import { HttpRequestStatus } from '@/constants/apiRequestStatus';
 import PATHS from '@/constants/paths';
 import { actions, loginRequestStatusSelector } from '@/redux/authentication';
 import type { ComponentType } from 'react';
@@ -14,8 +14,8 @@ export default function withReduxAuthentication(WrappedComponent: ComponentType<
   return function LogigFormWithReduxAuthentication(props: FormProps) {
     const { loading: loadingProp, returnUri, ...otherProps } = props;
     const requestStatus = useSelector(loginRequestStatusSelector);
-    const loading = useMemo(() => requestStatus === EApiRequestStatus.REQUESTING, [requestStatus]);
-    const isSuccess = useMemo(() => requestStatus === EApiRequestStatus.REQUESTSUCCESS, [requestStatus]);
+    const loading = useMemo(() => requestStatus === HttpRequestStatus.REQUESTING, [requestStatus]);
+    const isSuccess = useMemo(() => requestStatus === HttpRequestStatus.REQUESTSUCCESS, [requestStatus]);
     const dispatch = useDispatch();
     const handleRequestLoginViaApi = (values: FormValues) => {
       if (!values?.Account || !values?.Password) return;

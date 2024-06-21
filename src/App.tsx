@@ -10,6 +10,7 @@ const NotiStackProvider = lazy(() => wait().then(() => import('@/providers/NotiS
 const ReactQueryProvider = lazy(() => wait().then(() => import('@/providers/ReactQueryProvider')));
 const ReduxProvider = lazy(() => wait().then(() => import('@/providers/ReduxProvider')));
 const AppRouter = lazy(() => wait().then(() => import('./AppRouter')));
+const SessonTimeoutWarning = lazy(() => wait().then(() => import('@/modules/SessonTimeoutWarning')));
 export default function App() {
   return (
     <ExceptionHandlingProvider>
@@ -20,6 +21,7 @@ export default function App() {
               <MUIThemeV5Provider>
                 <NotiStackProvider>
                   <AppRouter />
+                  <SessonTimeoutWarning />
                 </NotiStackProvider>
               </MUIThemeV5Provider>
             </ReactQueryProvider>

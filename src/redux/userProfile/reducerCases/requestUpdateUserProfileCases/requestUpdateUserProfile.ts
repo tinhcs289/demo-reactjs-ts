@@ -3,7 +3,7 @@ import type {
   UpdateUserProfileApiParams,
 } from '@/api/userProfile/updateUserProfileApi';
 import updateUserProfileApi from '@/api/userProfile/updateUserProfileApi';
-import { EApiRequestStatus } from '@/constants/apiRequestStatus';
+import { HttpRequestStatus } from '@/constants/apiRequestStatus';
 import isOkWithData from '@/helpers/httpRequestHelpers/isOkWithData';
 import type { ReduxAction } from '@/helpers/reduxHelpers';
 import { createCase } from '@/helpers/reduxHelpers';
@@ -20,7 +20,7 @@ const requestUpdateUserProfile = createCase<AnyObject, State>(
   (action, state) => {
     return {
       ...state,
-      updateUserProfileRequestStatus: EApiRequestStatus.REQUESTING,
+      updateUserProfileRequestStatus: HttpRequestStatus.REQUESTING,
     } as any;
   },
   takeLatest(TYPE, function* (action: ReduxAction<UpdateUserProfileApiParams>) {

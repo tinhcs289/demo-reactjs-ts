@@ -6,7 +6,7 @@ export default function CommonCKEditorField(props: CommonCKEditorFieldProps) {
   const { label, required, error, errorText, value, helperText, sx, ...otherProps } = props;
   return (
     <FormGroupStyled label={label} required={required} error={error} errorText={errorText} sx={sx}>
-      <CKEditor {...otherProps} editor={ClassicEditor} data={value || ''} />
+      <CKEditor {...otherProps} editor={ClassicEditor as any} data={value || ''} />
     </FormGroupStyled>
   );
 }

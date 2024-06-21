@@ -114,6 +114,8 @@ const CommonSelectField: ComponentType<CommonSelectFieldProps> = forwardRef(func
     <AutocompleteStyled
       size="small"
       fullWidth
+      // set the z-index of the Dropdown always be higher than all the popups/dialogs.
+      disablePortal={true}
       {...(otherProps as any)}
       value={memoValue}
       ref={ref}

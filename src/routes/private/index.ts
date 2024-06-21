@@ -3,6 +3,7 @@ import GettingStartedRoute from '../../__examples/routes/GettingStartedRoute';
 import CustomersRoute from './CustomersRoute';
 import DashboardRoute from './DashboardRoute';
 import DocumentIncomingRoutes from './DocumentIncomingRoutes';
+import DocumentOutgoingRoutes from './DocumentOutgoingRoutes';
 import LogoutRoute from './LogoutRoute';
 import OrdersRoute from './OrdersRoute';
 import ReportRoute from './ReportRoute';
@@ -14,6 +15,7 @@ const routes: RouteConfig[] = [
   ...CustomersRoute,
   ...OrdersRoute,
   ...DocumentIncomingRoutes,
+  ...DocumentOutgoingRoutes,
   ...LogoutRoute,
 ];
 export default routes;

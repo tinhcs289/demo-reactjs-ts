@@ -3,8 +3,10 @@ import { ButtonCommon, ButtonNegative, ButtonPositive } from '@/components/butto
 import type { FieldComponentProps, FormInputType } from '@/components/form/_types';
 import { useRHFSubmitDispatch } from '@/components/form/hocs/withRHFSubmitHandler';
 import createFastContext from '@/helpers/contextHelpers/createFastContext';
+import getObjectFieldNamesWhichHaveValues from '@/helpers/formatHelpers/getObjectFieldNamesWhichHaveValues';
 import newGuid from '@/helpers/stringHelpers/newGuid';
 import { useRHFWatchValue } from '@/hooks/useRHF';
+import { CommonFormProps } from '@/types';
 import { ClickAwayListener } from '@mui/base/ClickAwayListener';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -17,9 +19,9 @@ import type { CardContentProps } from '@mui/material/CardContent';
 import CardContent from '@mui/material/CardContent';
 import type { PopperProps } from '@mui/material/Popper';
 import Popper from '@mui/material/Popper';
-import { cloneDeep } from 'lodash';
+import cloneDeep from 'lodash/cloneDeep';
 import type { ComponentType, MouseEvent } from 'react';
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 export type RHFFieldPoppersContextValues = {
   appliedField: string[];
@@ -32,16 +34,35 @@ const {
   useDefaultPropInit: useInitializerPopperProp,
 } = createFastContext<RHFFieldPoppersContextValues>({ appliedField: [], currentFocusField: '' });
 export { RHFPopperProvider, useGetPopperState, useInitializerPopperProp, useSetPopperState };
-export function withRHFPopperProvider(WrappedComponent: ComponentType<any>): ComponentType<any> {
-  return function FormWithRHFPopperProvider(props: any) {
+function PopperContextInit(props: Pick<CommonFormProps<any>, 'defaultValues' | 'values'>) {
+  const { defaultValues, values } = props;
+  const setPopperState = useSetPopperState();
+  useEffect(() => {
+    if (!defaultValues) return;
+    if (!values) return;
+    const initValues = { ...defaultValues, ...values };
+    if (Object.keys(initValues).length === 0) return;
+    const appliedField = getObjectFieldNamesWhichHaveValues(initValues);
+    if (appliedField.length === 0) return;
+    setPopperState({ appliedField });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaultValues, values]);
+  return <></>;
+}
+export function withRHFPopperProvider(
+  WrappedComponent: ComponentType<CommonFormProps<any>>
+): ComponentType<any> {
+  return function FormWithRHFPopperProvider(props: CommonFormProps<any>) {
     return (
       <RHFPopperProvider>
+        <PopperContextInit defaultValues={props?.defaultValues} values={props?.values} />
         <WrappedComponent {...props} />
       </RHFPopperProvider>
     );
   };
 }
 const CardStyled = styled(Card)<CardProps>({ minWidth: 375 });
+const CardContentStyled = styled(CardContent)<CardContentProps>({ display: 'flex' });
 const CardActionsStyled = styled(CardActions)<CardActionsProps>({
   display: 'flex',
   justifyContent: 'space-between',
@@ -306,9 +327,9 @@ export default function withDisplayAsPopper<U extends FormInputType>(config?: Wi
               {...popperProps}
             >
               <CardStyled elevation={5} {...cardProps}>
-                <CardContent {...cardContentProps}>
+                <CardContentStyled {...cardContentProps}>
                   <WrappedComponent {...props} />
-                </CardContent>
+                </CardContentStyled>
                 <CardActionsStyled {...cardActionProps}>
                   <ButtonPositive onClick={handleApply}>{applyButtonLabel}</ButtonPositive>
                   <ButtonNegative onClick={handleClose}>{discardButtonLabel}</ButtonNegative>

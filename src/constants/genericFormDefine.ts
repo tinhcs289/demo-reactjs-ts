@@ -51,7 +51,9 @@ import { GridContainer } from '@/components/grid';
 import type { GridContainerProps } from '@/components/grid';
 //#region Types of input
 export enum FieldType {
+  'field-unknown' = 'field-unknown',
   'field-group' = 'field-group',
+  'field-array' = 'field-array',
   'hidden' = 'hidden',
   'text' = 'text',
   'check' = 'check',
@@ -115,6 +117,8 @@ export const DICT = {
 //#region RHF Component Props
 export type RHFComponentProps<T extends FormInputType> = T extends 'field-group'
   ? GridContainerProps
+  : T extends 'field-array'
+  ? ComponentProps<any>
   : T extends 'text'
   ? RHFTextProps
   : T extends 'check'
@@ -167,5 +171,9 @@ export type RHFComponentProps<T extends FormInputType> = T extends 'field-group'
   ? RHFTimeStaticProps
   : T extends 'datetime-static'
   ? RHFDateTimeStaticProps
+  : T extends 'field-array'
+  ? ComponentProps<any>
+  : T extends 'field-unknown'
+  ? ComponentProps<any>
   : ComponentProps<any>;
 //#endregion

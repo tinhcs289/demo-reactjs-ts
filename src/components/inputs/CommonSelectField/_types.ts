@@ -24,7 +24,7 @@ export type BaseAutocompleteProps = AutocompleteProps<
 >;
 export type CommonSelectFieldProps = Pick<
   CommonTextFieldProps,
-  'label' | 'error' | 'required' | 'errorText'
+  'label' | 'error' | 'required' | 'errorText' | 'placeholder'
 > &
   Omit<BaseAutocompleteProps, 'renderInput' | 'options'> & {
     options?: AutoCompleteOption[];

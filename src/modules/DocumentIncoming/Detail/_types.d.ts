@@ -1,4 +1,10 @@
-import type { CommonFormProps, FileData } from '@/types';
+import type {
+  CommonFormProps,
+  CommonDialogFormProps,
+  CommonDialogFormComponentHoc,
+  CommonFormComponentHoc,
+  FileData,
+} from '@/types';
 import type { Moment } from 'moment';
 import type { ComponentType } from 'react';
 import type { DocumentReceivedType } from '@/hooks/useReactQueries/useQueryDocumentReceivedType';
@@ -28,9 +34,13 @@ export type FormValues = {
    */
   SentFromInternal?: AutoCompleteOption<PoliceUnitInternal>;
   /**
-   * Nơi gửi (nếu nhận từ đơn vị ngoài / liên thông)
+   * Nơi gửi (nếu nhận từ đơn vị ngoài)
    */
   SentFromExternal?: AutoCompleteOption<PoliceUnitExternal>;
+  /**
+   * Nơi gửi (nếu nhận từ đơn vị ngoài liên thông)
+   */
+  SentFromExternalTransition?: AutoCompleteOption<PoliceUnitExternal>;
   /**
    * Số đến
    */
@@ -107,10 +117,14 @@ export type FormValues = {
    * Ý kiến xử lý
    */
   Comment?: string;
-  /**
-   * Tệp đính kèm
-   */
-  CommentAttachments?: FileData[];
+  // /**
+  //  * Tệp đính kèm
+  //  */
+  // CommentAttachments?: FileData[];
 };
 export type FormProps = CommonFormProps<FormValues>;
 export type FormComponent = ComponentType<FormProps>;
+export type FormComponentHoc = CommonFormComponentHoc<FormValues>;
+export type DialogFormProps = CommonDialogFormProps<FormValues>;
+export type DialogFormComponent = ComponentType<DialogFormProps>;
+export type DialogFormComponentHoc = CommonDialogFormComponentHoc<FormValues>;

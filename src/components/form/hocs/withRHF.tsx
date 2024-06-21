@@ -11,15 +11,36 @@ export default function withRHF<FormValues extends AnyObject = AnyObject>(
     WrappedComponent: ComponentType<CommonFormProps<FormValues>>
   ) {
     return function FormWithRHF(props: CommonFormProps<FormValues>) {
-      const { defaultValues, ...otherProps } = props;
-      const preValues = usePrevious(defaultValues);
+      const { defaultValues, values, ...otherProps } = props;
+      const preValues = usePrevious(values);
+      const preDefaultValues = usePrevious(defaultValues);
       const form = useForm<FormValues>({ ...(formOptions as any), defaultValues: defaultValues as any });
-      useEffect(() => {
-        if (isEqual(defaultValues, preValues)) return;
-        const currentValues = form.getValues();
-        form.reset({ ...defaultValues, ...currentValues });
+      useEffect(
+        function initializeValues() {
+          setTimeout(() => {
+            if (isEqual(defaultValues, preDefaultValues)) return;
+            const currentValues = form.getValues();
+            if (isEqual(defaultValues, currentValues)) return;
+            const newValues = { ...defaultValues, ...currentValues };
+            form.reset(newValues);
+          }, 0);
+        },
         // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, [defaultValues]);
+        [defaultValues]
+      );
+      useEffect(
+        function controlValues() {
+          setTimeout(() => {
+            if (isEqual(values, preValues)) return;
+            const currentValues = form.getValues();
+            if (isEqual(values, currentValues)) return;
+            const newValues = { ...currentValues, ...values };
+            form.reset(newValues);
+          }, 0);
+        },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [values]
+      );
       return (
         <FormProvider {...form}>
           <WrappedComponent {...(otherProps as any)} />

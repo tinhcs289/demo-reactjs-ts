@@ -3,7 +3,7 @@ import type {
   UpdatePasswordWithOldPasswordApiReturns,
 } from '@/api/resetPassword/updatePasswordWithOldPasswordApi';
 import updatePasswordWithOldPasswordApi from '@/api/resetPassword/updatePasswordWithOldPasswordApi';
-import { EApiRequestStatus } from '@/constants/apiRequestStatus';
+import { HttpRequestStatus } from '@/constants/apiRequestStatus';
 import type { ReduxAction } from '@/helpers/reduxHelpers';
 import { createCase } from '@/helpers/reduxHelpers';
 import type { AxiosResponse } from 'axios';
@@ -18,7 +18,7 @@ const requestUpdatePasswordWithOldPassword = createCase<UpdatePasswordWithOldPas
   (_action, state) => {
     return {
       ...state,
-      updatePasswordWithOldPasswordRequestStatus: EApiRequestStatus.REQUESTING,
+      updatePasswordWithOldPasswordRequestStatus: HttpRequestStatus.REQUESTING,
     };
   },
   takeLatest(TYPE, function* (action: ReduxAction<UpdatePasswordWithOldPasswordApiParams>) {

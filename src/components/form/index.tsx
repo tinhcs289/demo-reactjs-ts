@@ -20,10 +20,15 @@ export { default as field } from './functions/field';
 export { default as fieldArray } from './functions/fieldArray';
 export type {
   FieldArrayComponentProps,
-  FieldArrayItemProps,
   FieldArrayItemComponentHoc,
+  FieldArrayItemProps,
 } from './functions/fieldArray';
+export { default as fieldCustom } from './functions/fieldCustom';
+export type { CustomInput, CustomInputHocs, CustomInputProps } from './functions/fieldCustom';
+export { default as fieldGroup } from './functions/fieldGroup';
 export { default as withDefaultValueProps } from './hocs/withDefaultValueProps';
+export { default as withDisplayAsDialog } from './hocs/withDisplayAsDialog';
+export { default as withFieldGroupLabel } from './hocs/withFieldGroupLabel';
 export {
   RHFPopperProvider,
   useGetPopperState,
@@ -36,4 +41,3 @@ export type { RHFFieldPoppersContextValues, WithDisplayAsPopperParams } from './
 export { default as withRHF } from './hocs/withRHF';
 export { useRHFSubmitDispatch, default as withRHFSubmitHandler } from './hocs/withRHFSubmitHandler';
 export { default as withRHFTurnBackToDefaultValueIfClear } from './hocs/withRHFTurnBackToDefaultValueIfClear';
-export { default as fieldGroup } from './functions/fieldGroup';

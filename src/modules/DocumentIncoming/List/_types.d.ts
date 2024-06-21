@@ -1,3 +1,4 @@
+import type { FormValues as FilterValues } from '../Filter/_types';
 import { EnumDocumentStatus } from './enums';
 export type RowDataStatus = `${EnumDocumentStatus}`;
 export type RowData = {
@@ -133,7 +134,8 @@ export type RowData = {
   Weight?: unknown;
   [x: string]: any;
 };
-export type QueryParams = {
-  KeySearch?: string;
-  Status?: string[];
+export type QueryParams = Partial<Omit<FilterValues, 'Status' | 'DocumentBook' | 'DocumentType'>> & {
+  Status?: RowDataStatus[];
+  DocumentBookId?: string;
+  DocumentTypeId?: string;
 };

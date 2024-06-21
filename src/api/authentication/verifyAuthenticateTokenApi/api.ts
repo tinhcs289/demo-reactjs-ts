@@ -1,5 +1,4 @@
-import http from '@/api/http';
-import httpMock from '@/api/httpMock';
+import { http, httpMock } from '@/api/_axios';
 import type { AxiosResponse } from 'axios';
 import { ApiPayload, ApiReturns } from './_types';
 import { LINK } from './constants';

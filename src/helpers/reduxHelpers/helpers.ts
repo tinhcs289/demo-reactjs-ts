@@ -1,5 +1,5 @@
 import { reduxBatch } from '@manaflair/redux-batch';
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import get from 'lodash/get';
 import { combineReducers } from 'redux';
 import { persistReducer } from 'redux-persist';
@@ -49,19 +49,24 @@ export function createReduxStore(
   shouldEnabledDevTools: boolean = false
 ) {
   const devTools = !!shouldEnabledDevTools;
-  const enhancers = [reduxBatch];
   const { reducer, sagas } = createRootReducer('', reducers);
   const sagaMiddleware = createSagaMiddleware();
-  const middleware = [
-    ...getDefaultMiddleware({
-      immutableCheck: false,
-      serializableCheck: false,
-      thunk: true,
-    }),
-    sagaMiddleware,
-  ];
-  const store = configureStore({ reducer, middleware, devTools, enhancers });
+  const store = configureStore({
+    reducer,
+    //@ts-ignore
+    middleware: (getDefaultMiddleware) => [
+      ...getDefaultMiddleware({
+        immutableCheck: false,
+        serializableCheck: false,
+        thunk: true,
+      }),
+      sagaMiddleware,
+    ],
+    devTools,
+    enhancers: (getDefaultEnhancers) => [...getDefaultEnhancers(), reduxBatch] as any,
+  });
   sagaMiddleware.run(sagas);
+  console.log('Redux store was created');
   return store;
 }
 function createAction<T extends { [x: string]: any }>(type: string) {

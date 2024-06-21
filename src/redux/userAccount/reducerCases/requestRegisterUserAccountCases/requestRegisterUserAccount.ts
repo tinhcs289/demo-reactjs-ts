@@ -1,6 +1,6 @@
 import type { RegisterApiParams, RegisterApiReturns } from '@/api/registerAccount/registerApi';
 import registerApi from '@/api/registerAccount/registerApi';
-import { EApiRequestStatus } from '@/constants/apiRequestStatus';
+import { HttpRequestStatus } from '@/constants/apiRequestStatus';
 import type { ReduxAction } from '@/helpers/reduxHelpers';
 import { createCase } from '@/helpers/reduxHelpers';
 import type { AxiosResponse } from 'axios';
@@ -15,7 +15,7 @@ const requestRegisterUserAccount = createCase<RegisterApiParams, State>(
   (_action, state) => {
     return {
       ...state,
-      registerUserAccountRequestStatus: EApiRequestStatus.REQUESTING,
+      registerUserAccountRequestStatus: HttpRequestStatus.REQUESTING,
     };
   },
   takeLatest(TYPE, function* (action: ReduxAction<RegisterApiParams>) {
