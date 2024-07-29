@@ -12,11 +12,10 @@ import { DEFAULT_COORDINATE, NO_DOC_SIZE, SIGNATURE } from '../contants';
 import DivContent from './DivContent';
 import DivWrapper from './DivWrapper';
 import SignatureComponent from './SignatureComponent';
-// register sevice worker required for 'read-pdf' 
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  'pdfjs-dist/build/pdf.worker.min.js',
-  import.meta.url
-).toString();
+
+// register sevice worker required for 'read-pdf'
+pdfjs.GlobalWorkerOptions.workerSrc = new URL('/scripts/pdfjs-dist/build/pdf.worker.min.js').toString();
+
 export default function CommonPDF(props: { fileBase64Value: string }) {
   const { fileBase64Value } = props;
   /**

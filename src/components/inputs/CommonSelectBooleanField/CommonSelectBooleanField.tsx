@@ -6,7 +6,8 @@ import type { CommonSelectBooleanFieldProps } from './_types';
 
 const CommonField: ComponentType<CommonSelectBooleanFieldProps> = withBooleanValue(CommonSelectField);
 
-const CommonSelectBooleanField: ComponentType<CommonSelectBooleanFieldProps> = forwardRef((props, ref) => {
+const CommonSelectBooleanField = forwardRef<unknown, CommonSelectBooleanFieldProps>((props, ref) => {
   return <CommonField {...props} inputRef={ref} />;
 });
-export default CommonSelectBooleanField;
+CommonSelectBooleanField.displayName = 'CommonSelectBooleanField';
+export default CommonSelectBooleanField as ComponentType<CommonSelectBooleanFieldProps>;

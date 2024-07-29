@@ -16,10 +16,7 @@ import { createFilterOptions } from './defaultFilterOptions';
 import defaultGetOptionLabel from './defaultGetOptionLabel';
 import defaultRenderOption from './defaultRenderOption';
 import isOptionEqualToValue from './isOptionEqualToValue';
-const CommonSelectField: ComponentType<CommonSelectFieldProps> = forwardRef(function CommonSelectFieldWithRef(
-  props,
-  ref?: Ref<unknown>
-) {
+const CommonSelectField = forwardRef<unknown, CommonSelectFieldProps>((props, ref?: Ref<unknown>) => {
   const {
     multiple,
     label,
@@ -134,4 +131,5 @@ const CommonSelectField: ComponentType<CommonSelectFieldProps> = forwardRef(func
     />
   );
 });
-export default CommonSelectField;
+CommonSelectField.displayName = 'CommonSelectField';
+export default CommonSelectField as ComponentType<CommonSelectFieldProps>;

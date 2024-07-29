@@ -27,10 +27,7 @@ const AutocompleteStyled = styled(Autocomplete)<BaseAutocompleteProps>(({ theme 
     //padding: '0 !important',
   },
 }));
-const PlaceField: ComponentType<GooglePlaceFieldProps> = forwardRef(function PlaceFieldWithRef(
-  props,
-  ref?: Ref<unknown>
-) {
+const PlaceField = forwardRef<unknown, GooglePlaceFieldProps>((props, ref?: Ref<unknown>) => {
   const {
     multiple,
     label,
@@ -67,6 +64,7 @@ const PlaceField: ComponentType<GooglePlaceFieldProps> = forwardRef(function Pla
   );
   const memoRenderTags: SelectedPlaceTagsRender = useMemo(() => {
     if (typeof renderTags === 'function') return renderTags;
+    // @ts-ignore
     return (v, g, o) => (
       <>
         {v?.map?.((opt, index) => (
@@ -139,4 +137,5 @@ const PlaceField: ComponentType<GooglePlaceFieldProps> = forwardRef(function Pla
     />
   );
 });
-export default PlaceField;
+PlaceField.displayName = 'PlaceField';
+export default PlaceField as ComponentType<GooglePlaceFieldProps>;

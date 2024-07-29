@@ -64,7 +64,7 @@ export default function CommonTablePagination(props: CommonTablePaginationProps)
     <TablePaginationStyled
       //@ts-ignore
       component="div"
-      rowsPerPageOptions={[10, 20, 50, 100]}
+      rowsPerPageOptions={[20, 50, 100, 200]}
       showFirstButton
       showLastButton
       {...otherProps}

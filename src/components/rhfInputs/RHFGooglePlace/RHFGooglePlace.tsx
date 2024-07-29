@@ -20,9 +20,11 @@ export default function RHFGooglePlace(props: RHFGooglePlaceProps) {
       return (
         <CommonGooglePlaceField
           ref={ref}
+          // @ts-ignore
           multiple={multiple}
           value={value}
           defaultValue={defaultValue || value || undefined}
+          // @ts-ignore
           onChange={(_, val) => {
             onChange(val);
           }}
